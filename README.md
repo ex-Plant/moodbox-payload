@@ -7,7 +7,7 @@ This template is right for you if you are working on:
 - A personal or enterprise-grade website, blog, or portfolio
 - A content publishing platform with a fully featured publication workflow
 - Exploring the capabilities of Payload
-
+- Sialala
 Core features:
 
 - [Pre-configured Payload Config](#how-it-works)
