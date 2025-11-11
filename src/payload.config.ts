@@ -1,5 +1,7 @@
 // storage-adapter-import-placeholder
-import { vercelBlobAdapter } from '@payloadcms/storage-vercel-blob'
+import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
+
+
 import sharp from 'sharp' // sharp-import
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
@@ -60,7 +62,7 @@ export default buildConfig({
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
-  db: vercelBlobAdapter({
+  db: vercelPostgresAdapter({
     pool: {
       connectionString: process.env.POSTGRES_URL || '',
     },
@@ -68,6 +70,7 @@ export default buildConfig({
   collections: [Pages, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
+
   plugins: [
     ...plugins,
     vercelBlobStorage({
@@ -76,26 +79,12 @@ export default buildConfig({
       },
       token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
-    // storage-adapter-placeholder
   ],
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  // email: nodemailerAdapter({
-  //   defaultFromAddress: process.env.EMAIL_USER ?? "",
-  //   defaultFromName: 'Moodbox admin',
-  //   transport: {
-  //     host: process.env.EMAIL_HOST,
-  //     port: 465,
-  //     secure: true,
-  //     auth: {
-  //       user: process.env.EMAIL_USER,
-  //       pass: process.env.EMAIL_PASS,
-  //     },
-  //   },
-  // }),
   email: nodemailerAdapter({
     defaultFromAddress: process.env.EMAIL_USER ?? "",
     defaultFromName: 'Moodbox admin',
