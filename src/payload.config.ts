@@ -23,6 +23,12 @@ import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+if (!process.env.BLOB_READ_WRITE_TOKEN ) {
+throw new Error(`❌ missing token`)
+} else {
+  console.log(`✅`)
+}
+
 export default buildConfig({
   admin: {
     components: {
