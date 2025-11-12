@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import { cn } from '@/utilities/ui'
-import { Inclusive_Sans } from 'next/font/google';
+import { Inclusive_Sans } from 'next/font/google'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
@@ -17,16 +17,19 @@ import Footer from '@/components/_custom_moodbox/footer/Footer'
 import { ToastContainer } from 'react-toastify'
 
 const inclusive_Sans = Inclusive_Sans({
-  variable: '--font-inclusive-sans',
+  variable: '--font-sans',
   subsets: ['latin'],
-});
-
+})
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={cn(inclusive_Sans.variable, 'bg-[#f4ece5] scroll-smooth')} lang="pl" suppressHydrationWarning>
+    <html
+      className={cn(inclusive_Sans.variable, 'bg-[#f4ece5] scroll-smooth font-sans')}
+      lang="pl"
+      suppressHydrationWarning
+    >
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
@@ -34,39 +37,33 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body
         className={cn(
-          inclusive_Sans.variable, ` flex min-h-screen flex-col antialiased`,
-          `bg-background relative`,
+          ` flex min-h-screen flex-col antialiased`,
+          `bg-background relative font-sans`,
           // `[&_*]:outline [&_*]:outline-[1px] [&_*]:outline-pink-400`
         )}
       >
-      <Providers>
-        {/*<AdminBar*/}
-        {/*  adminBarProps={{*/}
-        {/*    preview: isEnabled,*/}
-        {/*  }}*/}
-        {/*/>*/}
+        <Providers>
+          {/*<AdminBar*/}
+          {/*  adminBarProps={{*/}
+          {/*    preview: isEnabled,*/}
+          {/*  }}*/}
+          {/*/>*/}
 
-        <Header />
-        {children}
-        <Footer />
-        <ToastContainer />
-      </Providers>
+          <Header />
+          {children}
+          <Footer />
+          <ToastContainer />
+        </Providers>
       </body>
     </html>
-)
+  )
 }
 
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
-    openGraph
-:
-  mergeOpenGraph(),
-    twitter
-:
-  {
+  openGraph: mergeOpenGraph(),
+  twitter: {
     card: 'summary_large_image',
-      creator
-  :
-    '@payloadcms',
+    creator: '@payloadcms',
   },
 }
