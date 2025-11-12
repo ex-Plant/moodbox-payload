@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
 
 import { cn } from '@/utilities/ui'
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
+import { Inclusive_Sans } from 'next/font/google';
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
-import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
@@ -15,39 +13,60 @@ import { draftMode } from 'next/headers'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
+import Footer from '@/components/_custom_moodbox/footer/Footer'
+import { ToastContainer } from 'react-toastify'
+
+const inclusive_Sans = Inclusive_Sans({
+  variable: '--font-inclusive-sans',
+  subsets: ['latin'],
+});
+
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
+    <html className={cn(inclusive_Sans.variable, 'bg-[#f4ece5] scroll-smooth')} lang="pl" suppressHydrationWarning>
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body>
-        <Providers>
-          <AdminBar
-            adminBarProps={{
-              preview: isEnabled,
-            }}
-          />
+      <body
+        className={cn(
+          inclusive_Sans.variable, ` flex min-h-screen flex-col antialiased`,
+          `bg-background relative`,
+          // `[&_*]:outline [&_*]:outline-[1px] [&_*]:outline-pink-400`
+        )}
+      >
+      <Providers>
+        {/*<AdminBar*/}
+        {/*  adminBarProps={{*/}
+        {/*    preview: isEnabled,*/}
+        {/*  }}*/}
+        {/*/>*/}
 
-          <Header />
-          {children}
-          <Footer />
-        </Providers>
+        <Header />
+        {children}
+        <Footer />
+        <ToastContainer />
+      </Providers>
       </body>
     </html>
-  )
+)
 }
 
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
-  openGraph: mergeOpenGraph(),
-  twitter: {
+    openGraph
+:
+  mergeOpenGraph(),
+    twitter
+:
+  {
     card: 'summary_large_image',
-    creator: '@payloadcms',
+      creator
+  :
+    '@payloadcms',
   },
 }

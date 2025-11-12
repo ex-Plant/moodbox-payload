@@ -1,0 +1,43 @@
+import { cn } from '../../../../../../../moodbox.pl/src/lib/utils';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+type PropsT = {
+	disabled: boolean;
+	onClick?: () => void;
+	isFullScreen: boolean;
+	direction: 'left' | 'right';
+	className?: string;
+	sliderImgH: number;
+};
+
+export default function CollectionSliderBtn({
+	disabled,
+	onClick,
+	isFullScreen,
+	direction,
+	className,
+	sliderImgH,
+}: PropsT) {
+	const iconClass = cn(
+		`stroke-mood-brown w-auto stroke-[1.5px]`,
+		isFullScreen ? `h-12 xl:h-20 ` : `h-10 xl:h-14 xl:translate-y-[-28px] translate-y-[-20px]`
+	);
+
+	return (
+		<button
+			style={{
+				paddingTop: !isFullScreen ? `${sliderImgH / 2}px` : ``,
+			}}
+			disabled={disabled}
+			className={cn(
+				`disabled:opacity-20`,
+				isFullScreen ? `hidden lg:block` : '',
+				isFullScreen && disabled && 'disabled:opacity-0',
+				direction === 'right' ? 'pl-8' : 'pr-8',
+				className
+			)}
+			onClick={onClick}
+		>
+			{direction === 'left' ? <ChevronLeft className={iconClass} /> : <ChevronRight className={iconClass} />}
+		</button>
+	);
+}
