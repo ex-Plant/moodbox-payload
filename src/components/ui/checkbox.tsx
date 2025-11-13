@@ -12,7 +12,7 @@ const Checkbox: React.FC<
 > = ({ className, ref, ...props }) => (
   <CheckboxPrimitive.Root
     className={cn(
-      'peer h-4 w-4 shrink-0 rounded border border-primary bg-white ring-offset-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground border-black',
+      'peer h-4 w-4 shrink-0 rounded border border-primary bg-white ring-offset-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-white data-[state=checked]:text-black border-black',
       className,
       props['aria-invalid'] === true && ' border-destructive',
     )}
@@ -20,7 +20,7 @@ const Checkbox: React.FC<
     {...props}
   >
     <CheckboxPrimitive.Indicator className={cn('flex items-center justify-center text-current')}>
-      <Check className="h-4 w-4" />
+      <Check className="h-4 w-4 stroke-[4px]" />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 )
