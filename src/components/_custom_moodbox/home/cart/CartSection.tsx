@@ -19,7 +19,7 @@ export default function CartSection({ allProducts }: PropsT) {
   const selected = allVariants.filter((el) => cartItems.includes(el.node.id))
 
   return (
-    <section className={`pb-12 xl:pb-20`}>
+    <section className={`pb-12 xl:pb-20 `}>
       <Delimiter title={'Formularz'} />
       <div className={`xPaddings mx-auto grid max-w-[1440px] xl:grid-cols-12`}>
         <aside className={`xl:col-span-3 xl:pl-4`}>

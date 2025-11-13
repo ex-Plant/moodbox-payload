@@ -1,9 +1,10 @@
 'use client'
 
-import LogoSvg from '../common/Logo'
-import Link from 'next/link'
-import { tr } from '@/lib/translations/pl'
 import { Button } from '@/components/ui/button'
+import { tr } from '@/lib/translations/pl'
+import Link from 'next/link'
+import LogoSvg from '../common/Logo'
+import { cn } from '@/utilities/ui'
 
 export default function Hero() {
   return (
@@ -17,11 +18,11 @@ export default function Hero() {
             playsInline={true}
             muted={true}
             autoPlay={true}
-            className={`relative h-screen min-h-[600px] w-full object-cover xl:w-screen`}
+            className={`relative h-screen min-h-[600px] w-full object-cover xl:w-screen bg-`}
             src="/moodbox_intro.mp4"
             loop={true}
           />
-          <div className={`bg-mood-dark-brown absolute inset-0 opacity-10`}></div>
+          <div className={`bg-mood-dark-brown absolute inset-0 opacity-10 opacity-`}></div>
 
           <div
             className={`xPaddings absolute inset-0 mx-auto flex max-w-[1440px] grid-cols-12 flex-col pt-[180px] xl:grid`}
@@ -41,8 +42,8 @@ export default function Hero() {
               </div>
 
               <div className={`pt-12 xl:pt-28`}>
-                <Button asChild={true} variant={`mood`} size={`sm`}>
-                  <Link href="#collections" className={`cursor-pointer`}>
+                <Button variant={`mood`} size={`sm`} className="py-2">
+                  <Link href="#collections" className={cn(`cursor-pointer leading-normal 💥`)}>
                     {tr.heroButton}
                   </Link>
                 </Button>

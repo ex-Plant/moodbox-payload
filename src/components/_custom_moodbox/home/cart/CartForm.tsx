@@ -13,6 +13,7 @@ import { checkoutA } from '@/app/actions/checkoutA'
 import { Tip } from '@/components/ui/Tip'
 import { CircleHelp as CircleQuestionMark } from 'lucide-react'
 import { cn } from '@/utilities/ui'
+import { useEffect, useState } from 'react'
 
 export default function CartForm() {
   const { cartItems } = useCart()
@@ -76,7 +77,6 @@ export default function CartForm() {
               <CircleQuestionMark className={`fill-mood-dark-brown w-5 border-none stroke-white`} />
             </Tip>
           </header>
-          TS2304: Cannot find name CircleQuestionMark
           <div className={`grid gap-4 md:grid-cols-2 xl:mr-4`}>
             <form.AppField name="company_name">
               {(field) => <field.Input placeholder={'Nazwa firmy / pracowni'} />}
@@ -87,6 +87,8 @@ export default function CartForm() {
                 const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
                 return (
                   <Field data-invalid={isInvalid}>
+                    {isInvalid && <FieldError errors={field.state.meta.errors} />}
+
                     <Input
                       placeholder={'NIP'}
                       inputMode="numeric" // Shows numeric keyboard on mobile
@@ -104,8 +106,8 @@ export default function CartForm() {
                           field.handleChange(value)
                         }
                       }}
+                      className="text-foreground placeholder:text-foreground bg-white"
                     />
-                    {isInvalid && <FieldError errors={field.state.meta.errors} />}
                   </Field>
                 )
               }}

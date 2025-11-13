@@ -36,7 +36,9 @@
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
-    --destructive: 0 84.2% 60.2%;
+    /* --destructive: 0 84.2% 60.2%; */
+--destructive: 0 92% 38%;
+
     --destructive-foreground: 210 40% 98%;
 
     --border: 240 6% 80%;
@@ -50,7 +52,7 @@
     --error: 10 100% 86%;
   }
 
-  [data-theme='dark'] {
+  /* [data-theme='dark'] {
     --background: #f4ece5;
     --foreground: 210 40% 98%;
 
@@ -82,7 +84,7 @@
     --success: 196 100% 14%;
     --warning: 34 51% 25%;
     --error: 10 39% 43%;
-  }
+  } */
 }
 
 @layer base {
@@ -90,7 +92,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col font-sans;
+    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
   }
 }
 

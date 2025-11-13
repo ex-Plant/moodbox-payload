@@ -50,11 +50,11 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-      },
+      // borderRadius: {
+      //   lg: 'var(--radius)',
+      //   md: 'calc(var(--radius) - 2px)',
+      //   sm: 'calc(var(--radius) - 4px)',
+      // },
       colors: {
         'mood-brown': '#7b4a38',
         'mood-dark-brown': '#472f27',
@@ -62,11 +62,12 @@ const config = {
         'mood-gray': '#9d9c9c',
         orange: '#eeebe3',
         'orange-sec': '#f6f4f0',
+        background: '#f4ece5',
+        'mood-background': '#f4ece5',
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
-        background: 'hsl(var(--background))',
         border: 'hsla(var(--border))',
         card: {
           DEFAULT: 'hsl(var(--card))',

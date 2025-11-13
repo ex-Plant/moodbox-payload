@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import { cn } from '@/utilities/ui'
-import { Inclusive_Sans } from 'next/font/google'
+import { Geist, Inclusive_Sans } from 'next/font/google'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
@@ -26,7 +26,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html
-      className={cn(inclusive_Sans.variable, 'bg-[#f4ece5] scroll-smooth font-sans')}
+      className={cn(
+        inclusive_Sans.variable,
+        'bg-background scroll-smooth font-sans text-foreground',
+      )}
       lang="pl"
       suppressHydrationWarning
     >
@@ -38,7 +41,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body
         className={cn(
           ` flex min-h-screen flex-col antialiased`,
-          `bg-background relative font-sans`,
+          ` relative `,
           // `[&_*]:outline [&_*]:outline-[1px] [&_*]:outline-pink-400`
         )}
       >

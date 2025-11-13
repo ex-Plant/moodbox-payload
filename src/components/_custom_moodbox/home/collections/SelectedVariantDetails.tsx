@@ -13,23 +13,23 @@ export default function SelectedVariantDetails({ fullScreen, selected, title }: 
     <div>
       <p
         className={cn(
-          `line-clamp-1 pt-1 text-[10px] leading-tight font-bold text-[#9d9c9c]`,
-          fullScreen ? 'text-[20px]' : '',
+          `line-clamp-1 pt-1 text-[0.625rem] leading-tight font-bold text-[#9d9c9c]`,
+          fullScreen ? 'text-[1.25rem]' : '',
         )}
       >
         {selected.product?.productType}
       </p>
       <p
         className={cn(
-          `line-clamp-1 text-[14px] leading-tight font-bold`,
-          fullScreen ? 'text-[28px]' : '',
+          `line-clamp-1 text-[0.875rem] leading-tight font-bold text-foreground`,
+          fullScreen ? 'text-[1.75rem]' : '',
         )}
       >
         {selected.product?.description}
       </p>
       <h4
         className={cn(
-          `text-mood-dark-gray line-clamp-1 text-[12px] leading-tight`,
+          `text-mood-dark-gray line-clamp-1 text-[0.75rem] leading-tight`,
           fullScreen ? 'text-[1.5rem]' : '',
         )}
       >

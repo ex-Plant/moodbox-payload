@@ -10,7 +10,12 @@ export function TenStackSelect({ children, ...props }: FormControlProps & { chil
   return (
     <TenStackFormBase {...props}>
       <Select onValueChange={(e) => field.handleChange(e)} value={field.state.value}>
-        <SelectTrigger aria-invalid={isInvalid} id={field.name} onBlur={field.handleBlur}>
+        <SelectTrigger
+          className=" "
+          aria-invalid={isInvalid}
+          id={field.name}
+          onBlur={field.handleBlur}
+        >
           <SelectValue placeholder={props.placeholder} />
         </SelectTrigger>
         <SelectContent>{children}</SelectContent>

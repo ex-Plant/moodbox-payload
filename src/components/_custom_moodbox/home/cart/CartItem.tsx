@@ -16,20 +16,20 @@ export default function CartItem({ selected }: PropsT) {
 
   return (
     <li className={`flex gap-2`}>
-      <div className={`relative size-[60px] rounded outline`}>
+      <div className={`relative size-[60px] rounded `}>
         {src && (
           <Image width={60} height={60} className={`h-full w-full rounded`} src={src} alt={''} />
         )}
       </div>
 
       <div className={``}>
-        <p className={`line-clamp-1 pt-1 text-[10px] leading-tight font-bold text-[#9d9c9c]`}>
+        <p className={`line-clamp-1 pt-1 text-[0.625rem] leading-tight font-bold text-[#9d9c9c]`}>
           {selected.product?.productType}
         </p>
-        <p className={`line-clamp-1 text-[14px] leading-tight font-bold`}>
+        <p className={`line-clamp-1 text-[0.875rem] leading-tight font-bold text-black`}>
           {selected.product?.description}
         </p>
-        <h6 className={`text-mood-dark-gray line-clamp-1 text-[12px] leading-tight`}>
+        <h6 className={`text-mood-dark-gray line-clamp-1 text-[0.75rem] leading-tight`}>
           {selected.title}
         </h6>
       </div>
