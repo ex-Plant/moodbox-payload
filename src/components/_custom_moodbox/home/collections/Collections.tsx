@@ -1,7 +1,6 @@
 import CollectionSlider from './CollectionSlider'
 import { Suspense } from 'react'
 import { ProductT } from '@/lib/shopify/types'
-import Delimiter from '@/components/Delimiter/Delimiter'
 
 type PropsT = {
   productsByCollection: { collection: string; handle: string; products: ProductT[] }[]
@@ -10,7 +9,6 @@ type PropsT = {
 export default function Collections({ productsByCollection }: PropsT) {
   return (
     <section id={'collections'} className={`space-y-4 pb-20`}>
-      <Delimiter title={'Katalog próbek'} />
       <Suspense fallback={null}>
         {productsByCollection.map((collection) => (
           <CollectionSlider

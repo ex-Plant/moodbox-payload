@@ -12,6 +12,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 // import HomePage from '@/components/_custom_moodbox/home/HomePage'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Hero } from '@/components/Hero/Hero'
+import ShopifyProductsServer from '@/components/ShopifyProducts/ShopifyProductsServer'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -65,6 +66,8 @@ export default async function Page({ params: paramsPromise }: Args) {
     return <PayloadRedirects url={url} />
   }
 
+  console.log({ page })
+
   const { hero, layout } = page
 
   return (
@@ -78,6 +81,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <Hero {...hero} />
       <RenderBlocks blocks={layout} />
+      {slug === 'home' && <ShopifyProductsServer />}
     </article>
   )
 }

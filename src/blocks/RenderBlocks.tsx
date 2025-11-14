@@ -8,6 +8,8 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { Delimiter } from '@/components/Delimiter/Delimiter'
+import ShopifyProductsServer from '@/components/ShopifyProducts/ShopifyProductsServer'
+import ShopifyCartServer from '@/components/ShopifyCart/ShopifyCartServer'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -16,6 +18,8 @@ const blockComponents = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   delimiterBlock: Delimiter,
+  shopifyProductsBlock: ShopifyProductsServer,
+  shopifyCartBlock: ShopifyCartServer,
 }
 
 export const RenderBlocks: React.FC<{

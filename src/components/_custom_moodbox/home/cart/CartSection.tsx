@@ -1,6 +1,6 @@
 'use client'
 
-import Delimiter from '../../../Delimiter/Delimiter'
+import { Delimiter } from '@/components/Delimiter/Delimiter'
 import CartForm from './CartForm'
 import CartItems from './CartItems'
 import useCart from '@/lib/hooks/useCart'
@@ -20,7 +20,7 @@ export default function CartSection({ allProducts }: PropsT) {
 
   return (
     <section className={`pb-12 xl:pb-20 `}>
-      <Delimiter title={'Formularz'} />
+      <Delimiter title={'Formularz'} blockType={'delimiterBlock'} />
       <div className={`xPaddings mx-auto grid max-w-[1440px] xl:grid-cols-12`}>
         <aside className={`xl:col-span-3 xl:pl-4`}>
           <CartItems selected={selected} />

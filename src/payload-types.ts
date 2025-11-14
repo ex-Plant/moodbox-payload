@@ -184,7 +184,26 @@ export interface Page {
       url?: string | null;
     };
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | DelimiterBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | DelimiterBlock
+    | {
+        title: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'shopifyProductsBlock';
+      }
+    | {
+        title: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'shopifyCartBlock';
+      }
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -1076,6 +1095,20 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         delimiterBlock?: T | DelimiterBlockSelect<T>;
+        shopifyProductsBlock?:
+          | T
+          | {
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
+        shopifyCartBlock?:
+          | T
+          | {
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
