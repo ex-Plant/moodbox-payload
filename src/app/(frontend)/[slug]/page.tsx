@@ -11,7 +11,7 @@ import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 // import HomePage from '@/components/_custom_moodbox/home/HomePage'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { CustomHero } from '@/heros/Custom'
+import { Hero } from '@/components/Hero/Hero'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -76,7 +76,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       {draft && <LivePreviewListener />}
       {/* <HomePage /> */}
 
-      <CustomHero {...hero} />
+      <Hero {...hero} />
       {/* <RenderHero {...hero} /> */}
       <RenderBlocks blocks={layout} />
     </article>

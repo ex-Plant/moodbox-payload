@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 
-export const CustomHero: React.FC<Page['hero']> = ({
+export const Hero: React.FC<Page['hero']> = ({
   media,
   title,
   add_button,
