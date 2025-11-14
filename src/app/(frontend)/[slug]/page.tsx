@@ -9,7 +9,9 @@ import { homeStatic } from '@/endpoints/seed/home-static'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
-import HomePage from '@/components/_custom_moodbox/home/HomePage'
+// import HomePage from '@/components/_custom_moodbox/home/HomePage'
+import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { CustomHero } from '@/heros/Custom'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -72,10 +74,11 @@ export default async function Page({ params: paramsPromise }: Args) {
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
-      <HomePage />
+      {/* <HomePage /> */}
 
-      {/*<RenderHero {...hero} />*/}
-      {/*<RenderBlocks blocks={layout} />*/}
+      <CustomHero {...hero} />
+      {/* <RenderHero {...hero} /> */}
+      <RenderBlocks blocks={layout} />
     </article>
   )
 }

@@ -24,8 +24,6 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
   }, [])
 
   if (resource && typeof resource === 'object') {
-    const { filename } = resource
-
     return (
       <video
         autoPlay
@@ -37,10 +35,12 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
         playsInline
         ref={videoRef}
       >
-        <source src={getMediaUrl(`/media/${filename}`)} />
+        <source src={getMediaUrl(resource.url)} />
       </video>
     )
   }
+
+  console.log(`no video`)
 
   return null
 }
