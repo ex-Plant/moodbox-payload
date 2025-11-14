@@ -13,7 +13,6 @@ import { checkoutA } from '@/app/actions/checkoutA'
 import { Tip } from '@/components/ui/Tip'
 import { CircleHelp as CircleQuestionMark } from 'lucide-react'
 import { cn } from '@/utilities/ui'
-import { useEffect, useState } from 'react'
 
 export default function CartForm() {
   const { cartItems } = useCart()
