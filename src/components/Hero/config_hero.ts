@@ -7,7 +7,7 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
-export const hero: Field = {
+export const config_hero: Field = {
   name: 'hero',
   type: 'group',
   fields: [

@@ -1,6 +1,6 @@
 'use client'
 
-import Delimiter from '../../common/Delimiter'
+import Delimiter from '../../../Delimiter/Delimiter'
 import CartForm from './CartForm'
 import CartItems from './CartItems'
 import useCart from '@/lib/hooks/useCart'

@@ -1,7 +1,7 @@
 import CollectionSlider from './CollectionSlider'
 import { Suspense } from 'react'
 import { ProductT } from '@/lib/shopify/types'
-import Delimiter from '@/components/_custom_moodbox/common/Delimiter'
+import Delimiter from '@/components/Delimiter/Delimiter'
 
 type PropsT = {
   productsByCollection: { collection: string; handle: string; products: ProductT[] }[]

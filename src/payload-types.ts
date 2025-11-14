@@ -184,7 +184,7 @@ export interface Page {
       url?: string | null;
     };
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | DelimiterBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -765,6 +765,17 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Delimiter Block".
+ */
+export interface DelimiterBlock {
+  fullWidth?: boolean | null;
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'delimiterBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1064,6 +1075,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        delimiterBlock?: T | DelimiterBlockSelect<T>;
       };
   meta?:
     | T
@@ -1162,6 +1174,16 @@ export interface FormBlockSelect<T extends boolean = true> {
   introContent?: T;
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Delimiter Block_select".
+ */
+export interface DelimiterBlockSelect {
+  fullWidth?: boolean;
+  title?: boolean;
+  id?: boolean;
+  blockName?: boolean;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

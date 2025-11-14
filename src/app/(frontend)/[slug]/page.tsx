@@ -77,7 +77,6 @@ export default async function Page({ params: paramsPromise }: Args) {
       {/* <HomePage /> */}
 
       <Hero {...hero} />
-      {/* <RenderHero {...hero} /> */}
       <RenderBlocks blocks={layout} />
     </article>
   )

@@ -1,6 +1,6 @@
 import { getProductsByCollection } from '@/lib/shopify/api'
 import { Suspense } from 'react'
-import Delimiter from '@/components/_custom_moodbox/common/Delimiter'
+import Delimiter from '@/components/Delimiter/Delimiter'
 import Hero from '@/components/_custom_moodbox/home/Hero'
 import DelimiterFullW from '@/components/_custom_moodbox/common/DelimiterFullW'
 import Icons from '@/components/_custom_moodbox/home/iconsSection/Icons'
