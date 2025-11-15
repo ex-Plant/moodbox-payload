@@ -8,7 +8,5 @@ import Nav from '@/components/_custom_moodbox/nav/Nav'
 export async function Header() {
   const headerData: Header = await getCachedGlobal('header', 1)()
 
-  console.log({ headerData })
-
-  return <Nav />
+  return <Nav headerData={headerData} />
 }

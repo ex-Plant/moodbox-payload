@@ -6,11 +6,13 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import NavItem from './NavItem'
 import { cn } from '@/utilities/ui'
-
-export default function Nav() {
+import { Header } from '@/payload-types'
+export default function Nav({ headerData }: { headerData: Header }) {
   const [isOnTop, setIsOnTop] = useState(true)
 
   const animDuration = 'duration-200'
+
+  console.log({ headerData })
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -29,7 +31,7 @@ export default function Nav() {
     >
       <div
         className={cn(
-          `relative flex grid-cols-12 items-center justify-between border-b xl:grid`,
+          `relative flex  items-center justify-between border-b`,
           isOnTop ? 'border-background h-16 xl:h-20' : 'h-14 border-transparent',
           animDuration,
         )}
@@ -61,19 +63,17 @@ export default function Nav() {
             />
           </div>
         </Link>
-        <NavItem
-          className={`col-start-11 mr-4 ml-auto xl:mr-0 xl:ml-0`}
-          title="FAQ"
-          href={{ pathname: '/faq', hash: '' }}
-          isOnTop={isOnTop}
-          animationDuration={animDuration}
-        />
-        <NavItem
-          title="Kontakt"
-          href={{ pathname: '/contact', hash: '' }}
-          isOnTop={isOnTop}
-          animationDuration={animDuration}
-        />
+        <div className="flex items-center gap-8">
+          {headerData.navItems?.map((item) => (
+            <NavItem
+              key={item.id}
+              className={` mr-4 ml-auto xl:mr-0 xl:ml-0`}
+              item={item}
+              isOnTop={isOnTop}
+              animationDuration={animDuration}
+            />
+          ))}
+        </div>
       </div>
     </nav>
   )
