@@ -22,6 +22,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { config_shopify_products } from '@/components/ShopifyProducts/config_shopify_products'
 import { config_shopify_cart } from '@/components/ShopifyCart/config_shopify_cart'
+import { steps_config } from '@/components/StepsSection/steps_config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -83,6 +84,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 config_delimiter,
                 config_shopify_products,
                 config_shopify_cart,
+                steps_config,
               ],
               required: true,
               admin: {

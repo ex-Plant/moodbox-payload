@@ -9,6 +9,7 @@ import LogoSvg from '@/components/_custom_moodbox/common/Logo'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
+import { VideoMedia } from '../Media/VideoMedia'
 
 export const Hero: React.FC<Page['hero']> = ({
   media,
@@ -19,17 +20,18 @@ export const Hero: React.FC<Page['hero']> = ({
   button_link,
 }) => {
   return (
-    <section className={`relative min-h-[600px]`}>
+    <section className={`relative min-h-[600px] w-full`}>
       {/* logo in the center of the screen when the video is loading */}
       <div className={`pointer-events-none absolute inset-0 flex items-center justify-center`}>
         <LogoSvg asButon={false} className={`animate-bounce `} />
       </div>
       <Media
+        videoClassName={`relative h-screen min-h-[600px] w-full object-cover xl:w-screen `}
         resource={media}
-        className={`relative h-screen min-h-[600px] w-full object-cover xl:w-screen bg-`}
+        className={`relative h-screen min-h-[600px] w-full object-cover xl:w-screen `}
       />
       {/* mask over the video to make it more readable */}
-      <div className={`bg-mood-dark-brown absolute inset-0 opacity-20 opacity-`}></div>
+      <div className={`bg-mood-dark-brown absolute inset-0 opacity-20 pointer-events-none`}></div>
 
       <div
         className={`xPaddings absolute inset-0 mx-auto flex max-w-[1440px] grid-cols-12 flex-col pt-[180px] xl:grid`}

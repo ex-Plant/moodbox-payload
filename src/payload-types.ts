@@ -193,6 +193,7 @@ export interface Page {
     | DelimiterBlock
     | ShopifyProductsBlock
     | ShopifyCartBlock
+    | StepsBlock
   )[];
   meta?: {
     title?: string | null;
@@ -876,6 +877,25 @@ export interface ShopifyCartBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StepsBlock".
+ */
+export interface StepsBlock {
+  steps?:
+    | {
+        step: string;
+        /**
+         * More icons here: https://www.shadcn.io/icons
+         */
+        icon: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'stepsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1178,6 +1198,7 @@ export interface PagesSelect<T extends boolean = true> {
         delimiterBlock?: T | DelimiterBlockSelect<T>;
         shopifyProductsBlock?: T | ShopifyProductsBlockSelect<T>;
         shopifyCartBlock?: T | ShopifyCartBlockSelect<T>;
+        stepsBlock?: T | StepsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1345,6 +1366,21 @@ export interface ShopifyCartBlockSelect<T extends boolean = true> {
       };
   consentText?: T;
   consentText2?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StepsBlock_select".
+ */
+export interface StepsBlockSelect<T extends boolean = true> {
+  steps?:
+    | T
+    | {
+        step?: T;
+        icon?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

@@ -10,6 +10,7 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { Delimiter } from '@/components/Delimiter/Delimiter'
 import ShopifyProductsServer from '@/components/ShopifyProducts/ShopifyProductsServer'
 import { ShopifyCartServer } from '@/components/ShopifyCart/ShopifyCartServer'
+import { Steps } from '@/components/StepsSection/Steps'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -20,6 +21,7 @@ const blockComponents = {
   delimiterBlock: Delimiter,
   shopifyProductsBlock: ShopifyProductsServer,
   shopifyCartBlock: ShopifyCartServer,
+  stepsBlock: Steps,
 }
 
 export const RenderBlocks: React.FC<{

@@ -7,6 +7,11 @@ export default function Icons() {
 
   return (
     <div>
+      <h1>Icons</h1>
+    </div>
+  )
+  return (
+    <div>
       <div
         className={`xPaddings mx-auto grid max-w-[1440px] grid-cols-2 gap-4 py-12 md:grid-cols-4 xl:py-20`}
       >
