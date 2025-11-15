@@ -12,8 +12,6 @@ export default function Nav({ headerData }: { headerData: Header }) {
 
   const animDuration = 'duration-200'
 
-  console.log({ headerData })
-
   useEffect(() => {
     if (typeof window === 'undefined') return
 

@@ -13,8 +13,9 @@ import { draftMode } from 'next/headers'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
-import Footer from '@/components/_custom_moodbox/footer/Footer'
+import Footer from '@/Footer/Footer'
 import { ToastContainer } from 'react-toastify'
+import { FooterServer } from '@/Footer/FooterServer'
 
 const inclusive_Sans = Inclusive_Sans({
   variable: '--font-sans',
@@ -54,7 +55,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
           <Header />
           {children}
-          <Footer />
+
+          <FooterServer />
           <ToastContainer />
         </Providers>
       </body>

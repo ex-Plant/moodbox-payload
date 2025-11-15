@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { cn } from '@/utilities/ui'
 import { CMSLink } from '@/components/Link'
 import { Header } from '@/payload-types'
+import { handleCMSLink } from '@/hooks/handleCMSLink'
 
 type PropsT = {
   className?: string
@@ -12,23 +13,7 @@ type PropsT = {
 }
 
 export default function NavItem({ className, isOnTop, animationDuration, item }: PropsT) {
-  console.log(item)
-
-  const { type, newTab, reference, url } = item.link
-
-  const href =
-    type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
-      ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${
-          reference.value.slug
-        }`
-      : url
-
-  if (!href) {
-    console.log('no href ❌')
-    return null
-  }
-
-  const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
+  const { href, newTabProps, url } = handleCMSLink(item) || {}
 
   /* Ensure we don't break any styles set by richText */
   return (
