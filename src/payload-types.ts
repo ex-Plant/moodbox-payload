@@ -191,12 +191,7 @@ export interface Page {
     | ArchiveBlock
     | FormBlock
     | DelimiterBlock
-    | {
-        title: string;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'shopifyProductsBlock';
-      }
+    | ShopifyProductsBlock
     | ShopifyCartBlock
   )[];
   meta?: {
@@ -790,10 +785,18 @@ export interface DelimiterBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ShopifyProductsBlock".
+ */
+export interface ShopifyProductsBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'shopifyProductsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ShopifyCartBlock".
  */
 export interface ShopifyCartBlock {
-  sectionTitle: string;
   emptyBasketLabel: string;
   selectedItemsLabel: string;
   additionalInfoLabel: string;
@@ -802,35 +805,35 @@ export interface ShopifyCartBlock {
   formTipText: string;
   proceedToCheckoutLabel: string;
   deleteAllLabel: string;
-  companyName?: string | null;
-  email?: string | null;
-  nip?: string | null;
-  website?: string | null;
-  city?: string | null;
-  completionDatePlaceholder?: string | null;
-  projectsPerYearPlaceholder?: string | null;
-  projectTypePlaceholder?: string | null;
+  companyName: string;
+  email: string;
+  nip: string;
+  website: string;
+  city: string;
+  completionDatePlaceholder: string;
+  projectsPerYearPlaceholder: string;
+  projectTypePlaceholder: string;
   projectTypeOptions?:
     | {
         label: string;
         id?: string | null;
       }[]
     | null;
-  projectAreaPlaceholder?: string | null;
+  projectAreaPlaceholder: string;
   projectAreaOptions?:
     | {
         label: string;
         id?: string | null;
       }[]
     | null;
-  projectBudgetPlaceholder?: string | null;
+  projectBudgetPlaceholder: string;
   projectBudgetOptions?:
     | {
         label: string;
         id?: string | null;
       }[]
     | null;
-  projectStagePlaceholder?: string | null;
+  projectStagePlaceholder: string;
   projectStageOptions?:
     | {
         label: string;
@@ -1173,13 +1176,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         delimiterBlock?: T | DelimiterBlockSelect<T>;
-        shopifyProductsBlock?:
-          | T
-          | {
-              title?: T;
-              id?: T;
-              blockName?: T;
-            };
+        shopifyProductsBlock?: T | ShopifyProductsBlockSelect<T>;
         shopifyCartBlock?: T | ShopifyCartBlockSelect<T>;
       };
   meta?:
@@ -1292,10 +1289,17 @@ export interface DelimiterBlockSelect {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ShopifyProductsBlock_select".
+ */
+export interface ShopifyProductsBlockSelect<T extends boolean = true> {
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ShopifyCartBlock_select".
  */
 export interface ShopifyCartBlockSelect<T extends boolean = true> {
-  sectionTitle?: T;
   emptyBasketLabel?: T;
   selectedItemsLabel?: T;
   additionalInfoLabel?: T;

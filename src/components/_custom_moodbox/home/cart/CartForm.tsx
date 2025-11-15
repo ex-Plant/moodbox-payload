@@ -143,7 +143,7 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
           </h4>
           <div className={`grid gap-4 pt-2 md:grid-cols-2 xl:mr-4`}>
             <form.AppField name="city">
-              {(field) => <field.Input placeholder={props.city || 'Miasto'} />}
+              {(field) => <field.Input placeholder={props.city || 'Miejscowość'} />}
             </form.AppField>
 
             <form.AppField name="project_type">

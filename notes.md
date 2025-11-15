@@ -22,3 +22,48 @@ html: '<h1>Hello from Payload</h1><p>This is a test email sent from Payload CMS 
 - flex 
 - grid
 - DODAĆ DO TEMPLATE TAILWIND CLASS SORTING
+
+
+
+języki
+import { pl } from '@payloadcms/translations/languages/pl'
+import { en } from '@payloadcms/translations/languages/en'
+
+
+
+  localization: {
+    locales: ['en', 'pl'], // required
+    defaultLocale: 'pl', // required
+  },
+  i18n: {
+    fallbackLanguage: 'pl',
+    supportedLanguages: { pl, en },
+    translations: {
+      pl: {
+        label: 'Polski',
+      },
+      en: {
+        label: 'English',
+      },
+    },
+  },
+
+
+aby  dodać język do pola musimy mu dodać 
+localized: true 
+
+W taki sposób trłumaczymy nazwę pola:
+  labels: {
+    singular: {
+      en: 'Delimiter',
+      pl: 'Separator',
+    },
+    plural: {
+      en: 'Delimiters',
+      pl: 'Separatory',
+    },
+  },
+
+
+
+  dodać main tag 

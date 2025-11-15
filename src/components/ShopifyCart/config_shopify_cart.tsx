@@ -9,248 +9,448 @@ import {
 export const config_shopify_cart: Block = {
   slug: 'shopifyCartBlock',
   interfaceName: 'ShopifyCartBlock',
+  labels: {
+    singular: {
+      en: 'Shopify Cart Block',
+      pl: 'Koszyk Shopify',
+    },
+    plural: {
+      en: 'Shopify Cart Blocks',
+      pl: 'Koszyki Shopify',
+    },
+  },
   fields: [
     // ===== TEXT LABELS =====
     {
-      name: 'sectionTitle',
-      type: 'text',
-      label: 'Section Title',
-      defaultValue: 'Formularz',
-      required: true,
-    },
-    {
       name: 'emptyBasketLabel',
       type: 'text',
-      label: 'Empty Basket Label',
-      defaultValue: 'Koszyk jest pusty',
+      label: {
+        en: 'Empty Cart Tip',
+        pl: 'Wskazówka - pusty koszyk',
+      },
       required: true,
+      localized: true,
     },
     {
       name: 'selectedItemsLabel',
       type: 'text',
-      label: 'Selected Items Label',
-      defaultValue: 'Wybrane produkty',
+      label: {
+        en: 'Selected Items Label',
+        pl: 'Etykieta wybranych próbek',
+      },
       required: true,
+      localized: true,
     },
     {
       name: 'additionalInfoLabel',
       type: 'text',
-      label: 'Additional Info Label',
-      defaultValue: 'Dodatkowe informacje',
+      label: {
+        en: 'Additional Info Label',
+        pl: 'Etykieta dodatkowych informacji',
+      },
       required: true,
+      localized: true,
     },
     {
       name: 'companyDataLabel',
       type: 'text',
-      label: 'Company Data Label',
-      defaultValue: 'Dane firmowe',
+      label: {
+        en: 'Company Data Label',
+        pl: 'Etykieta danych firmowych',
+      },
       required: true,
+      localized: true,
     },
     {
       name: 'fixedPriceLabel',
       type: 'text',
-      label: 'Fixed Price Label',
-      defaultValue: '39 PLN',
+      label: {
+        en: 'Fixed Price Label',
+        pl: 'Stała cena',
+      },
       required: true,
+      localized: true,
     },
     {
       name: 'formTipText',
       type: 'textarea',
-      label: 'Form Tip Text',
-      defaultValue: `Dlaczego prosimy o wypełnienie formularza?
-      Informacje o projekcie pozwa3lają nam przekazać producentom wartościowe dane i usprawnić proces dystrybucji próbek. Dzięki temu materiały są dobierane bardziej precyzyjnie, a cały proces zamawiania staje się szybszy i wygodniejszy. Twoje dane są chronione i wykorzystywane wyłącznie w celu obsługi zamówienia oraz poprawy jakości usługi.`,
+      label: {
+        en: 'Form Tip Text',
+        pl: 'Tekst wskazówki formularza',
+      },
       required: true,
+      localized: true,
     },
     {
       name: 'proceedToCheckoutLabel',
       type: 'text',
-      label: 'Proceed to Checkout Label',
-      defaultValue: 'Przejdź do płatności',
+      label: {
+        en: 'Proceed to Checkout Label',
+        pl: 'Button - przejdź do płatności',
+      },
       required: true,
+      localized: true,
     },
     {
       name: 'deleteAllLabel',
       type: 'text',
-      label: 'Delete All Label',
-      defaultValue: 'Usuń wszystkie',
+      label: {
+        en: 'Delete All Label',
+        pl: 'Button - usuń wszystkie',
+      },
       required: true,
+      localized: true,
     },
 
     // ===== INDIVIDUAL INPUT FIELDS =====
     {
       name: 'companyName',
       type: 'text',
-      label: 'Company Name Placeholder',
-      defaultValue: 'Nazwa firmy',
+      label: {
+        en: 'Company Name Placeholder',
+        pl: 'Nazwa firmy',
+      },
+      localized: true,
+      required: true,
     },
 
     {
       name: 'email',
       type: 'text',
-      label: 'Email Placeholder',
-      defaultValue: 'Adres email',
+      label: {
+        en: 'Email ',
+        pl: 'Email',
+      },
+      localized: true,
+      required: true,
     },
     {
       name: 'nip',
       type: 'text',
-      label: 'NIP Placeholder',
-      defaultValue: 'NIP',
+      label: {
+        en: 'NIP Placeholder',
+        pl: 'NIP',
+      },
+      localized: true,
+      required: true,
     },
     {
       name: 'website',
       type: 'text',
-      label: 'Website Placeholder',
-      defaultValue: 'Strona www',
+      label: {
+        en: 'Website Placeholder',
+        pl: 'Strona www',
+      },
+      localized: true,
+      required: true,
     },
     {
       name: 'city',
       type: 'text',
-      label: 'City Placeholder',
-      defaultValue: 'Miasto',
+      label: {
+        en: 'City Placeholder',
+        pl: 'Miejscowość',
+      },
+      localized: true,
+      required: true,
     },
     {
       name: 'completionDatePlaceholder',
       type: 'text',
-      label: 'Completion Date Placeholder',
-      defaultValue: 'Termin realizacji MM / RR',
+      label: {
+        en: 'Completion Date Placeholder',
+        pl: 'Termin realizacji (MM/RR)',
+      },
+      localized: true,
+      required: true,
     },
     {
       name: 'projectsPerYearPlaceholder',
       type: 'text',
-      label: 'Projects Per Year',
-      defaultValue: 'Liczba projektów rocznie',
+      label: {
+        en: 'Projects Per Year Placeholder',
+        pl: 'Liczba projektów rocznie',
+      },
+      localized: true,
+      required: true,
     },
 
     // ===== INDIVIDUAL SELECT FIELDS =====
     {
       name: 'projectTypePlaceholder',
       type: 'text',
-      label: 'Project Type Placeholder',
-      defaultValue: 'Typ projektu',
+      label: {
+        en: 'Project Type Placeholder',
+        pl: 'Typ projektu',
+      },
+      localized: true,
+      required: true,
     },
     {
       name: 'projectTypeOptions',
       type: 'array',
-      label: 'Project Type Options',
+      label: {
+        en: 'Project Type Options',
+        pl: 'Typy projektów',
+      },
       minRows: 1,
+      localized: true,
       fields: [
         {
           name: 'label',
           type: 'text',
-          label: 'Label',
+          label: {
+            en: 'Label',
+            pl: 'Etykieta',
+          },
           required: true,
+          localized: true,
         },
       ],
       defaultValue: [
-        { label: 'Mieszkanie' },
-        { label: 'Dom' },
-        { label: 'Hotel' },
-        { label: 'Restauracja' },
-        { label: 'Biuro' },
+        {
+          label: {
+            en: 'Apartment',
+            pl: 'Mieszkanie',
+          },
+        },
+        {
+          label: {
+            en: 'House',
+            pl: 'Dom',
+          },
+        },
+        {
+          label: {
+            en: 'Hotel',
+            pl: 'Hotel',
+          },
+        },
+        {
+          label: {
+            en: 'Restaurant',
+            pl: 'Restauracja',
+          },
+        },
+        {
+          label: {
+            en: 'Office',
+            pl: 'Biuro',
+          },
+        },
       ],
     },
 
     {
       name: 'projectAreaPlaceholder',
       type: 'text',
-      label: 'Project Area Placeholder',
-      defaultValue: 'Powierzchnia projektu',
+      label: {
+        en: 'Project Area Placeholder',
+        pl: 'Powierzchnia projektu',
+      },
+      localized: true,
+      required: true,
     },
     {
       name: 'projectAreaOptions',
       type: 'array',
-      label: 'Project Area Options',
+      label: {
+        en: 'Project Area Options',
+        pl: 'Powierzchnie projektów',
+      },
       minRows: 1,
+      localized: true,
       fields: [
         {
           name: 'label',
           type: 'text',
-          label: 'Label',
+          label: {
+            en: 'Label',
+            pl: 'Etykieta',
+          },
           required: true,
+          localized: true,
         },
       ],
       defaultValue: [
-        { label: '0-100 m²' },
-        { label: '100-500 m²' },
-        { label: '500-2000 m²' },
-        { label: '2000 m² i więcej' },
+        {
+          label: {
+            en: '0-100 m²',
+            pl: '0-100 m²',
+          },
+        },
+        {
+          label: {
+            en: '100-500 m²',
+            pl: '100-500 m²',
+          },
+        },
+        {
+          label: {
+            en: '500-2000 m²',
+            pl: '500-2000 m²',
+          },
+        },
+        {
+          label: {
+            en: '2000 m² and more',
+            pl: '2000 m² i więcej',
+          },
+        },
       ],
     },
     {
       name: 'projectBudgetPlaceholder',
       type: 'text',
-      label: 'Project Budget Placeholder',
-      defaultValue: 'Budżet projektu',
+      label: {
+        en: 'Project Budget Placeholder',
+        pl: 'Budżet projektu',
+      },
+      localized: true,
+      required: true,
     },
     {
       name: 'projectBudgetOptions',
       type: 'array',
-      label: 'Project Budget Options',
+      label: {
+        en: 'Project Budget Options',
+        pl: 'Budżety projektów',
+      },
       minRows: 1,
+      localized: true,
       fields: [
         {
           name: 'label',
           type: 'text',
-          label: 'Label',
+          label: {
+            en: 'Label',
+            pl: 'Etykieta',
+          },
           required: true,
+          localized: true,
         },
       ],
       defaultValue: [
-        { label: 'do 100 tys. zł' },
-        { label: '100–300 tys. zł' },
-        { label: '300–700 tys. zł' },
-        { label: '700 tys.–1,5 mln zł' },
-        { label: 'powyżej 1,5 mln zł' },
-        { label: 'jeszcze nie wiem' },
+        {
+          label: {
+            en: 'up to 100 thousand zł',
+            pl: 'do 100 tys. zł',
+          },
+        },
+        {
+          label: {
+            en: '100–300 thousand zł',
+            pl: '100–300 tys. zł',
+          },
+        },
+        {
+          label: {
+            en: '300–700 thousand zł',
+            pl: '300–700 tys. zł',
+          },
+        },
+        {
+          label: {
+            en: '700 thousand–1.5 million zł',
+            pl: '700 tys.–1,5 mln zł',
+          },
+        },
+        {
+          label: {
+            en: 'above 1.5 million zł',
+            pl: 'powyżej 1,5 mln zł',
+          },
+        },
+        {
+          label: {
+            en: 'not sure yet',
+            pl: 'jeszcze nie wiem',
+          },
+        },
       ],
     },
     {
       name: 'projectStagePlaceholder',
       type: 'text',
-      label: 'Project Stage Placeholder',
-      defaultValue: 'Etap projektu',
+      label: {
+        en: 'Project Stage Placeholder',
+        pl: 'Etap projektu',
+      },
+      localized: true,
+      required: true,
     },
     {
       name: 'projectStageOptions',
       type: 'array',
-      label: 'Project Stage Options',
+      label: {
+        en: 'Project Stage Options',
+        pl: 'Etapy projektów',
+      },
       minRows: 1,
+      localized: true,
       fields: [
         {
           name: 'label',
           type: 'text',
-          label: 'Label',
+          label: {
+            en: 'Label',
+            pl: 'Etykieta',
+          },
           required: true,
+          localized: true,
         },
       ],
       defaultValue: [
-        { label: 'koncepcja' },
-        { label: 'projekt wykonawczy' },
-        { label: 'realizacja' },
+        {
+          label: {
+            en: 'concept',
+            pl: 'koncepcja',
+          },
+        },
+        {
+          label: {
+            en: 'executive project',
+            pl: 'projekt wykonawczy',
+          },
+        },
+        {
+          label: {
+            en: 'realization',
+            pl: 'realizacja',
+          },
+        },
       ],
     },
     // ===== CONSENT CHECKBOX =====
     {
       name: 'consentText',
       type: 'richText',
-      label: 'Consent Text',
+      label: {
+        en: 'Consent Text',
+        pl: 'Tekst zgody',
+      },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
         },
       }),
       required: true,
+      localized: true,
     },
     {
       name: 'consentText2',
       type: 'richText',
-      label: 'Consent Text 2',
+      label: {
+        en: 'Consent Text 2',
+        pl: 'Tekst zgody 2',
+      },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
         },
       }),
       required: true,
+      localized: true,
     },
   ],
 }

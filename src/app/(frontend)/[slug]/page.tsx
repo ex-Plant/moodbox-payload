@@ -81,7 +81,6 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <Hero {...hero} />
       <RenderBlocks blocks={layout} />
-      {slug === 'home' && <ShopifyProductsServer />}
     </article>
   )
 }
