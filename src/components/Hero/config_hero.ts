@@ -16,13 +16,13 @@ export const config_hero: Field = {
       type: 'upload',
       label: 'Media',
       relationTo: 'media',
-      required: true,
+      required: false,
     },
     {
       name: 'title',
       type: 'richText',
       label: 'Title',
-      required: true,
+      required: false,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [
@@ -52,13 +52,13 @@ export const config_hero: Field = {
       name: 'add_button',
       type: 'checkbox',
       label: 'Add button',
-      required: true,
+      required: false,
     },
     {
       name: 'button_link',
       type: 'group',
       label: 'Button link',
-      required: true,
+      required: false,
       admin: {
         condition: (_, { add_button } = {}) => add_button === true,
         description: 'test description',

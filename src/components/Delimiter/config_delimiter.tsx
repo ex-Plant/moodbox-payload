@@ -24,6 +24,15 @@ export const config_delimiter: Block = {
       },
     },
     {
+      name: 'bottomPageDelimiter',
+      type: 'checkbox',
+      defaultValue: false,
+      label: {
+        pl: 'Separator na dole strony',
+        en: 'Bottom page delimiter',
+      },
+    },
+    {
       name: 'title',
       type: 'text',
       required: false,

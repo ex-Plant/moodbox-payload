@@ -156,9 +156,13 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  hero: {
-    media: number | Media;
-    title: {
+  /**
+   * If checked, the page will be displayed as a text page
+   */
+  textPage?: boolean | null;
+  hero?: {
+    media?: (number | null) | Media;
+    title?: {
       root: {
         type: string;
         children: {
@@ -172,10 +176,10 @@ export interface Page {
         version: number;
       };
       [k: string]: unknown;
-    };
+    } | null;
     add_subtitle?: boolean | null;
     subtitle?: string | null;
-    add_button: boolean;
+    add_button?: boolean | null;
     /**
      * test description
      */
@@ -338,21 +342,6 @@ export interface FolderInterface {
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
   links?:
     | {
         link: {
@@ -780,6 +769,7 @@ export interface Form {
  */
 export interface DelimiterBlock {
   fullWidth?: boolean | null;
+  bottomPageDelimiter?: boolean | null;
   title?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1174,6 +1164,7 @@ export interface PayloadMigration {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
+  textPage?: T;
   hero?:
     | T
     | {
@@ -1222,7 +1213,6 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "CallToActionBlock_select".
  */
 export interface CallToActionBlockSelect<T extends boolean = true> {
-  richText?: T;
   links?:
     | T
     | {
@@ -1307,6 +1297,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface DelimiterBlockSelect {
   fullWidth?: boolean;
+  bottomPageDelimiter?: boolean;
   title?: boolean;
   id?: boolean;
   blockName?: boolean;

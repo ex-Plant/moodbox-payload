@@ -3,7 +3,6 @@ import React from 'react'
 import { ImageMedia } from '../Media/ImageMedia'
 
 export const Steps: React.FC<StepsBlock> = ({ steps }) => {
-  console.log(steps)
   return (
     <div>
       <div

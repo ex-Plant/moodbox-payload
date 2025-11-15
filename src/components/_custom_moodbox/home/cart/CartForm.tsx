@@ -61,13 +61,6 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
     (state) => !state.isValidating && Object.keys(state.errors || {}).length === 0,
   )
 
-  console.log('CartForm props:', {
-    projectTypeOptions: props.projectTypeOptions,
-    projectAreaOptions: props.projectAreaOptions,
-    projectBudgetOptions: props.projectBudgetOptions,
-    projectStageOptions: props.projectStageOptions,
-  })
-
   return (
     <>
       <form

@@ -11,14 +11,10 @@ import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import { VideoMedia } from '../Media/VideoMedia'
 
-export const Hero: React.FC<Page['hero']> = ({
-  media,
-  title,
-  add_button,
-  add_subtitle,
-  subtitle,
-  button_link,
-}) => {
+export const Hero: React.FC<Page['hero']> = (props) => {
+  if (!props || !props.media) return null
+  const { media, title, add_button, add_subtitle, subtitle, button_link } = props
+
   return (
     <section className={`relative min-h-[600px] w-full`}>
       {/* logo in the center of the screen when the video is loading */}
@@ -37,12 +33,14 @@ export const Hero: React.FC<Page['hero']> = ({
         className={`xPaddings absolute inset-0 mx-auto flex max-w-[1440px] grid-cols-12 flex-col pt-[180px] xl:grid`}
       >
         <div className={`col-span-11 flex flex-col items-end`}>
-          <RichText
-            data={title}
-            enableGutter={false}
-            enableProse={false}
-            className={`text-[2.5rem] text-[#EEEBE3] xl:text-[3.75rem]  leading-tight `}
-          />
+          {title && (
+            <RichText
+              data={title}
+              enableGutter={false}
+              enableProse={false}
+              className={`text-[2.5rem] text-[#EEEBE3] xl:text-[3.75rem]  leading-tight `}
+            />
+          )}
           {add_subtitle && (
             <h2 className={`block pt-4 text-[1.5rem] text-[#f6f4f0]`}>{subtitle}</h2>
           )}

@@ -26,6 +26,7 @@ const buttonVariants = cva(
         icon: 'size-9',
         'icon-sm': 'size-8',
         'icon-lg': 'size-10',
+        clear: '', // No styling for link appearance
       },
     },
     defaultVariants: {
@@ -56,4 +57,4 @@ function Button({
   )
 }
 
-export { Button, buttonVariants }
+export { Button, buttonVariants,  }

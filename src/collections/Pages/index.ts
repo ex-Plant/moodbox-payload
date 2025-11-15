@@ -65,6 +65,21 @@ export const Pages: CollectionConfig<'pages'> = {
       required: true,
     },
     {
+      name: 'textPage',
+      type: 'checkbox',
+      required: false,
+      label: {
+        en: 'Text page',
+        pl: 'Strona tekstowa',
+      },
+      admin: {
+        description: {
+          en: 'If checked, the page will be displayed as a text page',
+          pl: 'Strona ma być wyświetlana jako strona informacyjna',
+        },
+      },
+    },
+    {
       type: 'tabs',
       tabs: [
         {

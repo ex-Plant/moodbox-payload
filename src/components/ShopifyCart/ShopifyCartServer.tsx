@@ -7,8 +7,6 @@ export const ShopifyCartServer: React.FC<ShopifyCartBlock> = async (props) => {
   const productsByCollection = await getProductsByCollection()
   const allProducts = productsByCollection.flatMap((collection) => collection.products)
 
-  console.log(props, 'props')
-
   return (
     <Suspense fallback={null}>
       <CartSection allProducts={allProducts} {...props} />

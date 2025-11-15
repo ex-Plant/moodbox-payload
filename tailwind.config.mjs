@@ -118,6 +118,7 @@ const config = {
         DEFAULT: {
           css: [
             {
+              color: 'var(--foreground)',
               '--tw-prose-body': 'var(--text)',
               '--tw-prose-headings': 'var(--text)',
               h1: {

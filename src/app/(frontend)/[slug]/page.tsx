@@ -13,6 +13,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Hero } from '@/components/Hero/Hero'
 import ShopifyProductsServer from '@/components/ShopifyProducts/ShopifyProductsServer'
+import TextPage from '@/components/_custom_moodbox/TextPage'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -57,6 +58,7 @@ export default async function Page({ params: paramsPromise }: Args) {
     slug: decodedSlug,
   })
 
+  console.log({ slug, decodedSlug, url, page })
   // Remove this code once your website is seeded
   if (!page && slug === 'home') {
     page = homeStatic
@@ -66,10 +68,6 @@ export default async function Page({ params: paramsPromise }: Args) {
     return <PayloadRedirects url={url} />
   }
 
-  console.log({ page })
-
-  const { hero, layout } = page
-
   return (
     <article className="">
       <PageClient />
@@ -77,10 +75,17 @@ export default async function Page({ params: paramsPromise }: Args) {
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
-      {/* <HomePage /> */}
 
-      <Hero {...hero} />
-      <RenderBlocks blocks={layout} />
+      {!page.textPage ? (
+        <>
+          <Hero {...page.hero} />
+          <RenderBlocks blocks={page.layout} />
+        </>
+      ) : (
+        <TextPage>
+          <RenderBlocks blocks={page.layout} />
+        </TextPage>
+      )}
     </article>
   )
 }
