@@ -2,7 +2,6 @@ import { DelimiterBlock } from '@/payload-types'
 import React from 'react'
 
 export const Delimiter: React.FC<DelimiterBlock> = ({ title, fullWidth }) => {
-  console.log(fullWidth, title)
   if (fullWidth) {
     return (
       <div className={`bg-mood-dark-brown flex py-6 text-white`}>

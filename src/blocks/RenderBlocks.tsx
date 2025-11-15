@@ -9,7 +9,7 @@ import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { Delimiter } from '@/components/Delimiter/Delimiter'
 import ShopifyProductsServer from '@/components/ShopifyProducts/ShopifyProductsServer'
-import ShopifyCartServer from '@/components/ShopifyCart/ShopifyCartServer'
+import { ShopifyCartServer } from '@/components/ShopifyCart/ShopifyCartServer'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -34,7 +34,7 @@ export const RenderBlocks: React.FC<{
       <Fragment>
         {blocks.map((block, index) => {
           const { blockType } = block
-          console.log({ block })
+          // console.log({ block })
 
           if (blockType && blockType in blockComponents) {
             const Block = blockComponents[blockType]

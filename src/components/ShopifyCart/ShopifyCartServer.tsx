@@ -1,11 +1,17 @@
 import { getProductsByCollection } from '@/lib/shopify/api'
 import { Suspense } from 'react'
-// import CartSection from '../_custom_moodbox/home/cart/CartSection'
-import Collections from '../_custom_moodbox/home/collections/Collections'
+import CartSection from '../_custom_moodbox/home/cart/CartSection'
+import type { ShopifyCartBlock } from '@/payload-types'
 
-export default async function ShopifyProductsServer() {
+export const ShopifyCartServer: React.FC<ShopifyCartBlock> = async (props) => {
   const productsByCollection = await getProductsByCollection()
   const allProducts = productsByCollection.flatMap((collection) => collection.products)
 
-  return <Suspense fallback={null}>{/* <CartSection allProducts={allProducts} /> */}</Suspense>
+  console.log(props, 'props')
+
+  return (
+    <Suspense fallback={null}>
+      <CartSection allProducts={allProducts} {...props} />
+    </Suspense>
+  )
 }

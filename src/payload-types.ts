@@ -197,12 +197,7 @@ export interface Page {
         blockName?: string | null;
         blockType: 'shopifyProductsBlock';
       }
-    | {
-        title: string;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'shopifyCartBlock';
-      }
+    | ShopifyCartBlock
   )[];
   meta?: {
     title?: string | null;
@@ -795,6 +790,89 @@ export interface DelimiterBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ShopifyCartBlock".
+ */
+export interface ShopifyCartBlock {
+  sectionTitle: string;
+  emptyBasketLabel: string;
+  selectedItemsLabel: string;
+  additionalInfoLabel: string;
+  companyDataLabel: string;
+  fixedPriceLabel: string;
+  formTipText: string;
+  proceedToCheckoutLabel: string;
+  deleteAllLabel: string;
+  companyName?: string | null;
+  email?: string | null;
+  nip?: string | null;
+  website?: string | null;
+  city?: string | null;
+  completionDatePlaceholder?: string | null;
+  projectsPerYearPlaceholder?: string | null;
+  projectTypePlaceholder?: string | null;
+  projectTypeOptions?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  projectAreaPlaceholder?: string | null;
+  projectAreaOptions?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  projectBudgetPlaceholder?: string | null;
+  projectBudgetOptions?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  projectStagePlaceholder?: string | null;
+  projectStageOptions?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  consentText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  consentText2: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'shopifyCartBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1102,13 +1180,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        shopifyCartBlock?:
-          | T
-          | {
-              title?: T;
-              id?: T;
-              blockName?: T;
-            };
+        shopifyCartBlock?: T | ShopifyCartBlockSelect<T>;
       };
   meta?:
     | T
@@ -1217,6 +1289,60 @@ export interface DelimiterBlockSelect {
   title?: boolean;
   id?: boolean;
   blockName?: boolean;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ShopifyCartBlock_select".
+ */
+export interface ShopifyCartBlockSelect<T extends boolean = true> {
+  sectionTitle?: T;
+  emptyBasketLabel?: T;
+  selectedItemsLabel?: T;
+  additionalInfoLabel?: T;
+  companyDataLabel?: T;
+  fixedPriceLabel?: T;
+  formTipText?: T;
+  proceedToCheckoutLabel?: T;
+  deleteAllLabel?: T;
+  companyName?: T;
+  email?: T;
+  nip?: T;
+  website?: T;
+  city?: T;
+  completionDatePlaceholder?: T;
+  projectsPerYearPlaceholder?: T;
+  projectTypePlaceholder?: T;
+  projectTypeOptions?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  projectAreaPlaceholder?: T;
+  projectAreaOptions?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  projectBudgetPlaceholder?: T;
+  projectBudgetOptions?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  projectStagePlaceholder?: T;
+  projectStageOptions?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  consentText?: T;
+  consentText2?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

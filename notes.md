@@ -16,3 +16,9 @@ text: 'This is a test email sent from Payload CMS using Nodemailer.',
 html: '<h1>Hello from Payload</h1><p>This is a test email sent from Payload CMS using Nodemailer.</p>'
 });
 ```
+
+
+
+- flex 
+- grid
+- DODAĆ DO TEMPLATE TAILWIND CLASS SORTING

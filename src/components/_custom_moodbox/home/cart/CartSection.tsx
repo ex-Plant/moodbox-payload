@@ -5,12 +5,13 @@ import CartForm from './CartForm'
 import CartItems from './CartItems'
 import useCart from '@/lib/hooks/useCart'
 import { ProductT } from '@/lib/shopify/types'
+import { ShopifyCartBlock } from '@/payload-types'
 
 type PropsT = {
   allProducts: ProductT[]
-}
+} & ShopifyCartBlock
 
-export default function CartSection({ allProducts }: PropsT) {
+export default function CartSection({ allProducts, ...props }: PropsT) {
   const { cartItems } = useCart()
 
   const allVariants = allProducts.flatMap((el) => {
@@ -20,12 +21,12 @@ export default function CartSection({ allProducts }: PropsT) {
 
   return (
     <section className={`pb-12 xl:pb-20 `}>
-      <Delimiter title={'Formularz'} blockType={'delimiterBlock'} />
+      <Delimiter title={props.sectionTitle} blockType={'delimiterBlock'} />
       <div className={`xPaddings mx-auto grid max-w-[1440px] xl:grid-cols-12`}>
         <aside className={`xl:col-span-3 xl:pl-4`}>
-          <CartItems selected={selected} />
+          <CartItems selected={selected} {...props} />
         </aside>
-        <div className={`mt-4 xl:col-span-9 xl:col-start-5 xl:mt-0`}>{<CartForm />}</div>
+        <div className={`mt-4 xl:col-span-9 xl:col-start-5 xl:mt-0`}>{<CartForm {...props} />}</div>
       </div>
     </section>
   )
