@@ -177,144 +177,21 @@ export const config_shopify_cart: Block = {
 
     // ===== INDIVIDUAL SELECT FIELDS =====
     {
-      name: 'projectTypePlaceholder',
+      name: 'projectBudget',
       type: 'text',
       label: {
-        en: 'Project Type Placeholder',
-        pl: 'Typ projektu',
-      },
-      localized: true,
-      required: true,
-    },
-    {
-      name: 'projectTypeOptions',
-      type: 'array',
-      label: {
-        en: 'Project Type Options',
-        pl: 'Typy projektów',
-      },
-      minRows: 1,
-      localized: true,
-      fields: [
-        {
-          name: 'label',
-          type: 'text',
-          label: {
-            en: 'Label',
-            pl: 'Etykieta',
-          },
-          required: true,
-          localized: true,
-        },
-      ],
-      defaultValue: [
-        {
-          label: {
-            en: 'Apartment',
-            pl: 'Mieszkanie',
-          },
-        },
-        {
-          label: {
-            en: 'House',
-            pl: 'Dom',
-          },
-        },
-        {
-          label: {
-            en: 'Hotel',
-            pl: 'Hotel',
-          },
-        },
-        {
-          label: {
-            en: 'Restaurant',
-            pl: 'Restauracja',
-          },
-        },
-        {
-          label: {
-            en: 'Office',
-            pl: 'Biuro',
-          },
-        },
-      ],
-    },
-
-    {
-      name: 'projectAreaPlaceholder',
-      type: 'text',
-      label: {
-        en: 'Project Area Placeholder',
-        pl: 'Powierzchnia projektu',
-      },
-      localized: true,
-      required: true,
-    },
-    {
-      name: 'projectAreaOptions',
-      type: 'array',
-      label: {
-        en: 'Project Area Options',
-        pl: 'Powierzchnie projektów',
-      },
-      minRows: 1,
-      localized: true,
-      fields: [
-        {
-          name: 'label',
-          type: 'text',
-          label: {
-            en: 'Label',
-            pl: 'Etykieta',
-          },
-          required: true,
-          localized: true,
-        },
-      ],
-      defaultValue: [
-        {
-          label: {
-            en: '0-100 m²',
-            pl: '0-100 m²',
-          },
-        },
-        {
-          label: {
-            en: '100-500 m²',
-            pl: '100-500 m²',
-          },
-        },
-        {
-          label: {
-            en: '500-2000 m²',
-            pl: '500-2000 m²',
-          },
-        },
-        {
-          label: {
-            en: '2000 m² and more',
-            pl: '2000 m² i więcej',
-          },
-        },
-      ],
-    },
-    {
-      name: 'projectBudgetPlaceholder',
-      type: 'text',
-      label: {
-        en: 'Project Budget Placeholder',
+        en: 'Project Budget ',
         pl: 'Budżet projektu',
       },
       localized: true,
       required: true,
     },
     {
-      name: 'projectBudgetOptions',
+      name: 'projectBudgetValues',
       type: 'array',
       label: {
-        en: 'Project Budget Options',
-        pl: 'Budżety projektów',
+        en: 'Project Budget options',
+        pl: 'Opcje',
       },
       minRows: 1,
       localized: true,
@@ -328,44 +205,6 @@ export const config_shopify_cart: Block = {
           },
           required: true,
           localized: true,
-        },
-      ],
-      defaultValue: [
-        {
-          label: {
-            en: 'up to 100 thousand zł',
-            pl: 'do 100 tys. zł',
-          },
-        },
-        {
-          label: {
-            en: '100–300 thousand zł',
-            pl: '100–300 tys. zł',
-          },
-        },
-        {
-          label: {
-            en: '300–700 thousand zł',
-            pl: '300–700 tys. zł',
-          },
-        },
-        {
-          label: {
-            en: '700 thousand–1.5 million zł',
-            pl: '700 tys.–1,5 mln zł',
-          },
-        },
-        {
-          label: {
-            en: 'above 1.5 million zł',
-            pl: 'powyżej 1,5 mln zł',
-          },
-        },
-        {
-          label: {
-            en: 'not sure yet',
-            pl: 'jeszcze nie wiem',
-          },
         },
       ],
     },

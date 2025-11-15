@@ -194,6 +194,7 @@ export interface Page {
     | ShopifyProductsBlock
     | ShopifyCartBlock
     | StepsBlock
+    | PartnersBlock
   )[];
   meta?: {
     title?: string | null;
@@ -813,22 +814,8 @@ export interface ShopifyCartBlock {
   city: string;
   completionDatePlaceholder: string;
   projectsPerYearPlaceholder: string;
-  projectTypePlaceholder: string;
-  projectTypeOptions?:
-    | {
-        label: string;
-        id?: string | null;
-      }[]
-    | null;
-  projectAreaPlaceholder: string;
-  projectAreaOptions?:
-    | {
-        label: string;
-        id?: string | null;
-      }[]
-    | null;
-  projectBudgetPlaceholder: string;
-  projectBudgetOptions?:
+  projectBudget: string;
+  projectBudgetValues?:
     | {
         label: string;
         id?: string | null;
@@ -893,6 +880,21 @@ export interface StepsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'stepsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PartnersBlock".
+ */
+export interface PartnersBlock {
+  partners?:
+    | {
+        partner?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'partnersBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1199,6 +1201,7 @@ export interface PagesSelect<T extends boolean = true> {
         shopifyProductsBlock?: T | ShopifyProductsBlockSelect<T>;
         shopifyCartBlock?: T | ShopifyCartBlockSelect<T>;
         stepsBlock?: T | StepsBlockSelect<T>;
+        partnersBlock?: T | PartnersBlockSelect<T>;
       };
   meta?:
     | T
@@ -1336,22 +1339,8 @@ export interface ShopifyCartBlockSelect<T extends boolean = true> {
   city?: T;
   completionDatePlaceholder?: T;
   projectsPerYearPlaceholder?: T;
-  projectTypePlaceholder?: T;
-  projectTypeOptions?:
-    | T
-    | {
-        label?: T;
-        id?: T;
-      };
-  projectAreaPlaceholder?: T;
-  projectAreaOptions?:
-    | T
-    | {
-        label?: T;
-        id?: T;
-      };
-  projectBudgetPlaceholder?: T;
-  projectBudgetOptions?:
+  projectBudget?: T;
+  projectBudgetValues?:
     | T
     | {
         label?: T;
@@ -1379,6 +1368,20 @@ export interface StepsBlockSelect<T extends boolean = true> {
     | {
         step?: T;
         icon?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PartnersBlock_select".
+ */
+export interface PartnersBlockSelect<T extends boolean = true> {
+  partners?:
+    | T
+    | {
+        partner?: T;
         id?: T;
       };
   id?: T;

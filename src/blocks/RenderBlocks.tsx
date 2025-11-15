@@ -11,6 +11,7 @@ import { Delimiter } from '@/components/Delimiter/Delimiter'
 import ShopifyProductsServer from '@/components/ShopifyProducts/ShopifyProductsServer'
 import { ShopifyCartServer } from '@/components/ShopifyCart/ShopifyCartServer'
 import { Steps } from '@/components/StepsSection/Steps'
+import { Partners } from '@/components/Partners/Partners'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -22,6 +23,7 @@ const blockComponents = {
   shopifyProductsBlock: ShopifyProductsServer,
   shopifyCartBlock: ShopifyCartServer,
   stepsBlock: Steps,
+  partnersBlock: Partners,
 }
 
 export const RenderBlocks: React.FC<{

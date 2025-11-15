@@ -1,6 +1,6 @@
 import { Block } from 'payload'
 
-export const steps_config: Block = {
+export const config_steps: Block = {
   slug: 'stepsBlock',
   interfaceName: 'StepsBlock',
   labels: {

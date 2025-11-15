@@ -22,7 +22,8 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { config_shopify_products } from '@/components/ShopifyProducts/config_shopify_products'
 import { config_shopify_cart } from '@/components/ShopifyCart/config_shopify_cart'
-import { steps_config } from '@/components/StepsSection/steps_config'
+import { config_steps } from '@/components/StepsSection/steps_config'
+import { config_partners } from '@/components/Partners/config_partners'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -84,7 +85,8 @@ export const Pages: CollectionConfig<'pages'> = {
                 config_delimiter,
                 config_shopify_products,
                 config_shopify_cart,
-                steps_config,
+                config_steps,
+                config_partners,
               ],
               required: true,
               admin: {

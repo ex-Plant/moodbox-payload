@@ -13,7 +13,7 @@ export const Steps: React.FC<StepsBlock> = ({ steps }) => {
           return (
             <div key={step.id} className={`flex flex-col items-center w-full`}>
               <div className="w-full h-full min-h-[80px]  relative">
-                <ImageMedia{/*  */}
+                <ImageMedia
                   resource={step.icon}
                   size="(max-witdth: 767px) 40vw, 20vw"
                   fill={true}
