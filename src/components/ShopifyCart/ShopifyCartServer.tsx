@@ -9,6 +9,7 @@ export const ShopifyCartServer: React.FC<ShopifyCartBlock> = async (props) => {
 
   return (
     <Suspense fallback={null}>
+      {/* <Delimiter/ */}
       <CartSection allProducts={allProducts} {...props} />
     </Suspense>
   )

@@ -154,7 +154,7 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
             <form.AppField name="project_area">
               {(field) => (
                 <field.Select placeholder={props.projectAreaPlaceholder || 'Powierzchnia projektu'}>
-                  {props.projectAreaOptions?.map((option) => (
+                  {props.projectAreaValues?.map((option) => (
                     <SelectItem key={option.label} value={option.label}>
                       {option.label}
                     </SelectItem>
@@ -165,22 +165,16 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
 
             <form.AppField name="completion_date">
               {(field) => (
-                <field.Select
+                <field.Input
                   placeholder={props.completionDatePlaceholder || 'Termin realizacji MM / RR'}
-                >
-                  {props.projectAreaOptions?.map((option) => (
-                    <SelectItem key={option.label} value={option.label}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </field.Select>
+                />
               )}
             </form.AppField>
 
             <form.AppField name="project_budget">
               {(field) => (
-                <field.Select placeholder={props.projectBudgetPlaceholder || 'Budżet projektu'}>
-                  {props.projectBudgetOptions?.map((option) => (
+                <field.Select placeholder={props.projectBudget || 'Budżet projektu'}>
+                  {props.projectBudgetValues?.map((option) => (
                     <SelectItem key={option.label} value={option.label}>
                       {option.label}
                     </SelectItem>

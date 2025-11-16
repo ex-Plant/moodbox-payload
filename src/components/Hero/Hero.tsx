@@ -9,7 +9,6 @@ import LogoSvg from '@/components/_custom_moodbox/common/Logo'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
-import { VideoMedia } from '../Media/VideoMedia'
 
 export const Hero: React.FC<Page['hero']> = (props) => {
   if (!props || !props.media) return null

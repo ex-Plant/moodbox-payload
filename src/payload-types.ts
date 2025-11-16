@@ -811,6 +811,20 @@ export interface ShopifyCartBlock {
         id?: string | null;
       }[]
     | null;
+  projectTypePlaceholder: string;
+  projectTypeOptions?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  projectAreaPlaceholder: string;
+  projectAreaValues?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
   projectStagePlaceholder: string;
   projectStageOptions?:
     | {
@@ -1332,6 +1346,20 @@ export interface ShopifyCartBlockSelect<T extends boolean = true> {
   projectsPerYearPlaceholder?: T;
   projectBudget?: T;
   projectBudgetValues?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  projectTypePlaceholder?: T;
+  projectTypeOptions?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  projectAreaPlaceholder?: T;
+  projectAreaValues?:
     | T
     | {
         label?: T;

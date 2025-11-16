@@ -209,6 +209,70 @@ export const config_shopify_cart: Block = {
       ],
     },
     {
+      name: 'projectTypePlaceholder',
+      type: 'text',
+      label: {
+        en: 'Project Type Placeholder',
+        pl: 'Typ projektu',
+      },
+      localized: true,
+      required: true,
+    },
+    {
+      name: 'projectTypeOptions',
+      type: 'array',
+      label: {
+        en: 'Project Type Options',
+        pl: 'Opcje',
+      },
+      minRows: 1,
+      localized: true,
+      fields: [
+        {
+          name: 'label',
+          type: 'text',
+          label: {
+            en: 'Label',
+            pl: 'Etykieta',
+          },
+          required: true,
+          localized: true,
+        },
+      ],
+    },
+    {
+      name: 'projectAreaPlaceholder',
+      type: 'text',
+      label: {
+        en: 'Project Area ',
+        pl: 'Metraż projektu',
+      },
+      localized: true,
+      required: true,
+    },
+    {
+      name: 'projectAreaValues',
+      type: 'array',
+      label: {
+        en: 'Project Area options',
+        pl: 'Opcje',
+      },
+      minRows: 1,
+      localized: true,
+      fields: [
+        {
+          name: 'label',
+          type: 'text',
+          label: {
+            en: 'Label',
+            pl: 'Nazwa metrażu',
+          },
+          required: true,
+          localized: true,
+        },
+      ],
+    },
+    {
       name: 'projectStagePlaceholder',
       type: 'text',
       label: {
@@ -223,7 +287,7 @@ export const config_shopify_cart: Block = {
       type: 'array',
       label: {
         en: 'Project Stage Options',
-        pl: 'Etapy projektów',
+        pl: 'Etapy projektu',
       },
       minRows: 1,
       localized: true,

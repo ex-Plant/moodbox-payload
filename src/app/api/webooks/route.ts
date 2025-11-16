@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export default async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
+  const topic = request.headers.get('x-shopify-topic')
+  const hmacHeader = request.headers.get('x-shopify-hmac-sha256')
+  const secret = process.env.SHOPIFY_API_SECRET as string
 
-  const topic = request.headers.get('x-shopify-topic');
-  const hmacHeader = request.headers.get('x-shopify-hmac-sha256');
-  const secret = process.env.SHOPIFY_API_SECRET as string;
-
-  const rawBody = await request.text();
+  const rawBody = await request.text()
 
   // todo validate webhooks - currently something is wrong
 
@@ -36,18 +35,18 @@ export default async function POST(request: NextRequest) {
   // 	return new NextResponse('Unauthorized', { status: 401 });
   // }
 
-  const body = JSON.parse(rawBody);
-  console.log('✅ Verified webhook:', topic);
-  console.log(JSON.stringify(body, null, 2));
+  const body = JSON.parse(rawBody)
+  console.log('✅ Verified webhook:', topic)
+  console.log(JSON.stringify(body, null, 2))
 
   if (topic === 'orders/create') {
-    const order = body;
-    const customer = order.customer;
-    console.log('=== NEW ORDER CREATED ===');
-    console.log('Order ID:', order.id);
-    console.log('Customer Email:', customer?.email);
-    console.log('Total Price:', order.total_price);
-    console.log('======================');
+    const order = body
+    const customer = order.customer
+    console.log('=== NEW ORDER CREATED ===')
+    console.log('Order ID:', order.id)
+    console.log('Customer Email:', customer?.email)
+    console.log('Total Price:', order.total_price)
+    console.log('======================')
   }
-  return NextResponse.json({success: true})
+  return NextResponse.json({ success: true })
 }
