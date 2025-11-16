@@ -66,4 +66,14 @@ W taki sposób trłumaczymy nazwę pola:
 
 
 
-  dodać main tag 
+  - dodać main tag 
+  - translations of admin panel
+  - test dark mode ? 
+
+  W dalszej kolejności:
+  - users table
+  - webhooks
+  - optimazing getting data 
+  - check sitemaps 
+  - check static pages
+  - test adding new collection with a prefix  

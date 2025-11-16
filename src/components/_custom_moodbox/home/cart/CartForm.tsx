@@ -198,7 +198,7 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
         </div>
 
         <div className={`grid gap-2 pt-4`}>
-          <div className={`flex items-center gap-2  justify-start w-fit`}>
+          <div className={`flex items-center`}>
             <div className="w-fit">
               <form.AppField name="consents.consent1">
                 {(field) => <field.Checkbox />}
@@ -207,12 +207,12 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
             {props.consentText && (
               <RichText
                 enableProse={true}
-                className={`px-0 text-foreground text-sm prose_a `}
+                className={`px-2 text-foreground text-sm prose_a [&_*]:leading-tight max-w-full  💥 `}
                 data={props.consentText}
               />
             )}
           </div>
-          <div className={`flex items-center gap-2 justify-start w-fit`}>
+          <div className={`flex items-center  `}>
             <div className="w-fit">
               <form.AppField name="consents.consent2">
                 {(field) => <field.Checkbox />}
@@ -221,7 +221,7 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
             {props.consentText2 && (
               <RichText
                 enableProse={true}
-                className={`px-0 text-foreground text-sm prose_a `}
+                className={`px-2 text-foreground text-sm prose_a [&_*]:leading-tight max-w-full  💥 `}
                 data={props.consentText2}
               />
             )}

@@ -26,7 +26,7 @@ export const Hero: React.FC<Page['hero']> = (props) => {
         className={`relative h-screen min-h-[600px] w-full object-cover xl:w-screen `}
       />
       {/* mask over the video to make it more readable */}
-      <div className={`bg-mood-dark-brown absolute inset-0 opacity-20 pointer-events-none`}></div>
+      <div className={`bg-mood-dark-brown absolute inset-0 opacity-10 pointer-events-none`}></div>
 
       <div
         className={`xPaddings absolute inset-0 mx-auto flex max-w-[1440px] grid-cols-12 flex-col pt-[180px] xl:grid`}
