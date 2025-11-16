@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   const topic = request.headers.get('x-shopify-topic')
-  const hmacHeader = request.headers.get('x-shopify-hmac-sha256')
-  const secret = process.env.SHOPIFY_API_SECRET as string
+  // const hmacHeader = request.headers.get('x-shopify-hmac-sha256')
+  // const secret = process.env.SHOPIFY_API_SECRET as string
 
   const rawBody = await request.text()
 

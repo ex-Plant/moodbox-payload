@@ -1,11 +1,9 @@
 'use client'
-
-import { Delimiter } from '@/components/Delimiter/Delimiter'
-import CartForm from './CartForm'
-import CartItems from './CartItems'
 import useCart from '@/lib/hooks/useCart'
 import { ProductT } from '@/lib/shopify/types'
 import { ShopifyCartBlock } from '@/payload-types'
+import CartForm from './CartForm'
+import CartItems from './CartItems'
 
 type PropsT = {
   allProducts: ProductT[]

@@ -26,7 +26,7 @@ const PaginationItem: React.FC<
 
 type PaginationLinkProps = {
   isActive?: boolean
-} & Pick<ButtonProps, 'size'> &
+} & Partial<Pick<ButtonProps, 'size'>> &
   React.ComponentProps<'button'>
 
 const PaginationLink = ({ className, isActive, size = 'icon', ...props }: PaginationLinkProps) => (

@@ -1202,6 +1202,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        //@ts-expect-error DelimiterBlockSelect is not generic
         delimiterBlock?: T | DelimiterBlockSelect<T>;
         shopifyProductsBlock?: T | ShopifyProductsBlockSelect<T>;
         shopifyCartBlock?: T | ShopifyCartBlockSelect<T>;

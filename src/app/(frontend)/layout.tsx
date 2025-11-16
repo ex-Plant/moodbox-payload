@@ -1,21 +1,19 @@
 import type { Metadata } from 'next'
 
 import { cn } from '@/utilities/ui'
-import { Geist, Inclusive_Sans } from 'next/font/google'
+import { Inclusive_Sans } from 'next/font/google'
 import React from 'react'
 
-import { AdminBar } from '@/components/AdminBar'
 import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 
-import './globals.css'
-import { getServerSideURL } from '@/utilities/getURL'
-import Footer from '@/Footer/Footer'
-import { ToastContainer } from 'react-toastify'
 import { FooterServer } from '@/Footer/FooterServer'
+import { getServerSideURL } from '@/utilities/getURL'
+import { ToastContainer } from 'react-toastify'
+import './globals.css'
 
 const inclusive_Sans = Inclusive_Sans({
   variable: '--font-sans',
@@ -24,6 +22,8 @@ const inclusive_Sans = Inclusive_Sans({
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
+
+  console.log('layout.tsx:28 -', { isEnabled })
 
   return (
     <html

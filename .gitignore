@@ -21,5 +21,10 @@ node_modules/
 /playwright/.cache/
 
 
+tsconfig.tsbuildinfo
+
 
 .idea
+.vscode
+
+

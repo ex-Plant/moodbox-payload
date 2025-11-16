@@ -1,9 +1,7 @@
-import { UrlObject } from 'node:url'
-import Link from 'next/link'
-import { cn } from '@/utilities/ui'
-import { CMSLink } from '@/components/Link'
-import { Header } from '@/payload-types'
 import { handleCMSLink } from '@/hooks/handleCMSLink'
+import { Header } from '@/payload-types'
+import { cn } from '@/utilities/ui'
+import Link from 'next/link'
 
 type PropsT = {
   className?: string
