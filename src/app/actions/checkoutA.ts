@@ -1,4 +1,5 @@
 'use server'
+import payload from 'payload'
 import { ATTRIBUTE_KEY_PL, cartSchema, CartSchemaT } from '@/lib/CartSchema'
 import { createCart, getProductByHandle } from '@/lib/shopify/api'
 import { redirect } from 'next/navigation'
@@ -49,6 +50,11 @@ export async function checkoutA(cartItems: string[], formData: CartSchemaT) {
   const cart = await createCart(lineItems, attributes, formData.email)
 
   if (cart?.checkoutUrl) {
+
+    // await payload.create({
+    //   collection: 'contacts', // Your custom collection
+    //   data: formData
+    // })
     redirect(cart.checkoutUrl)
   } else {
     console.log(`❌ Uncaught error in checkout`)
