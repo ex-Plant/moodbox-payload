@@ -14,7 +14,7 @@ type CMSLinkType = {
   label?: string | null
   newTab?: boolean | null
   reference?: {
-    relationTo: 'pages' | 'posts'
+    relationTo: 'pages'
     value: Page | string | number /*  */
   } | null
   size?: VariantProps<typeof buttonVariants>['size'] | null
