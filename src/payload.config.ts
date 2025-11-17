@@ -1,43 +1,62 @@
 // storage-adapter-import-placeholder
 import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 
-
-import sharp from 'sharp' // sharp-import
+import nodemailer from 'nodemailer'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
+import sharp from 'sharp'; // sharp-import
 import { fileURLToPath } from 'url'
-import nodemailer from 'nodemailer';
-import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
-import { Posts } from './collections/Posts'
+import { defaultLexical } from '@/fields/defaultLexical'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { en } from '@payloadcms/translations/languages/en'
+import { pl } from '@payloadcms/translations/languages/pl'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
-import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer';
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-if (!process.env.BLOB_READ_WRITE_TOKEN ) {
-throw new Error(`❌ missing token`)
-} else {
-  console.log(`✅`)
-}
+if (!process.env.BLOB_READ_WRITE_TOKEN) throw new Error(`❌ missing token`)
+if (!process.env.POSTGRES_URL) throw new Error(`❌ missing POSTGRES_URL`) 
+if (!process.env.PAYLOAD_SECRET) throw new Error(`❌ missing PAYLOAD_SECRET`)
+if (!process.env.EMAIL_USER) throw new Error(`❌ missing EMAIL_USER`)
+if (!process.env.EMAIL_PASS) throw new Error(`❌ missing EMAIL_PASS`)
+
+if (!process.env.EMAIL_HOST) throw new Error(`❌ missing EMAIL_HOST`)
+
+if (!process.env.CRON_SECRET) throw new Error(`❌ missing CRON_SECRET`) 
 
 export default buildConfig({
+  // TODO: Uncomment this when we need more locales
+  // localization: {
+  //   locales: ['en', 'pl'], // required
+  //   defaultLocale: 'pl', // required
+  // },
+
+  // this is for the admin panel
+  i18n: {
+    fallbackLanguage: 'pl',
+    supportedLanguages: { pl, en },
+    translations: {
+      pl: {
+        label: 'Polski',
+      },
+      en: {
+        label: 'English',
+      },
+    },
+  },
   admin: {
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeLogin: ['@/components/BeforeLogin'],
-      // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below.
-      beforeDashboard: ['@/components/BeforeDashboard'],
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -72,8 +91,9 @@ export default buildConfig({
     pool: {
       connectionString: process.env.POSTGRES_URL || '',
     },
+    migrationDir: './src/migrations',
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Media, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
 
@@ -92,7 +112,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   email: nodemailerAdapter({
-    defaultFromAddress: process.env.EMAIL_USER ?? "",
+    defaultFromAddress: process.env.EMAIL_USER ?? '',
     defaultFromName: 'Moodbox admin',
     transport: nodemailer.createTransport({
       host: process.env.EMAIL_HOST,

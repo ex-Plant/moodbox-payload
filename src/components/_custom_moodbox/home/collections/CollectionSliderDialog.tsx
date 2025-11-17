@@ -6,8 +6,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '../../../ui/dialog'
-import { ProductT } from '../../../../../../../moodbox.pl/src/lib/shopify/types'
 import { Dispatch, SetStateAction } from 'react'
+import { ProductT } from '@/lib/shopify/types'
 
 type SliderDialogT = {
   fullScreenDialogOpen: boolean

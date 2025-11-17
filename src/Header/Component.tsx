@@ -1,4 +1,3 @@
-import { HeaderClient } from './Component.client'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import React from 'react'
 
@@ -8,6 +7,5 @@ import Nav from '@/components/_custom_moodbox/nav/Nav'
 export async function Header() {
   const headerData: Header = await getCachedGlobal('header', 1)()
 
-
-  return <Nav/>
+  return <Nav headerData={headerData} />
 }

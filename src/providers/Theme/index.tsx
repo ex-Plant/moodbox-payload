@@ -48,6 +48,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     document.documentElement.setAttribute('data-theme', themeToSet)
+    // eslint-disable-next-line
     setThemeState(themeToSet)
   }, [])
 

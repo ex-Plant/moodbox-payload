@@ -1,0 +1,13 @@
+import { getProductsByCollection } from '@/lib/shopify/api'
+import { Suspense } from 'react'
+import Collections from '../_custom_moodbox/home/collections/Collections'
+
+export default async function ShopifyProductsServer() {
+  const productsByCollection = await getProductsByCollection()
+
+  return (
+    <Suspense fallback={null}>
+      <Collections productsByCollection={productsByCollection} />
+    </Suspense>
+  )
+}

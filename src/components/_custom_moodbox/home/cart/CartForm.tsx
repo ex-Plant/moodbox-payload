@@ -1,4 +1,3 @@
-import { PROJECT_AREAS, PROJECT_BUDGETS, PROJECT_STAGES, PROJECT_TYPES, txt } from './temporaryData'
 import { SelectItem } from '@/components/ui/select'
 import { useAppForm } from '@/lib/hooks/tenStackFormHooks'
 import useCart from '@/lib/hooks/useCart'
@@ -13,9 +12,10 @@ import { checkoutA } from '@/app/actions/checkoutA'
 import { Tip } from '@/components/ui/Tip'
 import { CircleHelp as CircleQuestionMark } from 'lucide-react'
 import { cn } from '@/utilities/ui'
-import { useEffect, useState } from 'react'
+import { ShopifyCartBlock } from '@/payload-types'
+import RichText from '@/components/RichText'
 
-export default function CartForm() {
+export default function CartForm({ ...props }: ShopifyCartBlock) {
   const { cartItems } = useCart()
 
   const form = useAppForm({
@@ -72,14 +72,14 @@ export default function CartForm() {
       >
         <div>
           <header className={`flex items-center`}>
-            <h4 className={`text-[18px] font-bold`}>Dane firmowe</h4>
-            <Tip content={txt} side={`right`} className={`p-2`}>
+            <h4 className={`text-[18px] font-bold`}>{props.companyDataLabel || 'Dane firmowe'} </h4>
+            <Tip content={props.formTipText} side={`right`} className={`p-2`}>
               <CircleQuestionMark className={`fill-mood-dark-brown w-5 border-none stroke-white`} />
             </Tip>
           </header>
           <div className={`grid gap-4 md:grid-cols-2 xl:mr-4`}>
             <form.AppField name="company_name">
-              {(field) => <field.Input placeholder={'Nazwa firmy / pracowni'} />}
+              {(field) => <field.Input placeholder={props.companyName || 'Nazwa firmy'} />}
             </form.AppField>
 
             <form.Field name="nip">
@@ -90,7 +90,7 @@ export default function CartForm() {
                     {isInvalid && <FieldError errors={field.state.meta.errors} />}
 
                     <Input
-                      placeholder={'NIP'}
+                      placeholder={props.nip || 'NIP'}
                       inputMode="numeric" // Shows numeric keyboard on mobile
                       pattern="[0-9]*" // Ensures only numbers are entered
                       id={field.name}
@@ -114,31 +114,37 @@ export default function CartForm() {
             </form.Field>
 
             <form.AppField name="email">
-              {(field) => <field.Input type={`email`} placeholder={'E-mail'} />}
+              {(field) => <field.Input type={`email`} placeholder={props.email || 'Adres email'} />}
             </form.AppField>
 
             <form.AppField name="website">
-              {(field) => <field.Input placeholder={'Link do strony www'} />}
+              {(field) => <field.Input placeholder={props.website || 'Strona www'} />}
             </form.AppField>
 
             <form.AppField name="projects_per_year">
-              {(field) => <field.Input placeholder={'Liczba projektów rocznie'} />}
+              {(field) => (
+                <field.Input
+                  placeholder={props.projectsPerYearPlaceholder || 'Liczba projektów rocznie'}
+                />
+              )}
             </form.AppField>
           </div>
         </div>
         <div>
-          <h4 className={`text-[18px] font-bold`}>Informacje dodatkowe o Twoim projekcie </h4>
+          <h4 className={`text-[18px] font-bold`}>
+            {props.additionalInfoLabel || 'Informacje dodatkowe o Twoim projekcie'}
+          </h4>
           <div className={`grid gap-4 pt-2 md:grid-cols-2 xl:mr-4`}>
             <form.AppField name="city">
-              {(field) => <field.Input placeholder={'Miejscowość'} />}
+              {(field) => <field.Input placeholder={props.city || 'Miejscowość'} />}
             </form.AppField>
 
             <form.AppField name="project_type">
               {(field) => (
-                <field.Select placeholder={'Typ'}>
-                  {PROJECT_TYPES.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.value}
+                <field.Select placeholder={props.projectTypePlaceholder || 'Typ projektu'}>
+                  {props.projectTypeOptions?.map((option) => (
+                    <SelectItem key={option.label} value={option.label}>
+                      {option.label}
                     </SelectItem>
                   ))}
                 </field.Select>
@@ -147,10 +153,10 @@ export default function CartForm() {
 
             <form.AppField name="project_area">
               {(field) => (
-                <field.Select placeholder={'Metraż'}>
-                  {PROJECT_AREAS.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
+                <field.Select placeholder={props.projectAreaPlaceholder || 'Powierzchnia projektu'}>
+                  {props.projectAreaValues?.map((option) => (
+                    <SelectItem key={option.label} value={option.label}>
+                      {option.label}
                     </SelectItem>
                   ))}
                 </field.Select>
@@ -159,22 +165,18 @@ export default function CartForm() {
 
             <form.AppField name="completion_date">
               {(field) => (
-                <field.Select placeholder={'Termin realizacji MM / RR'}>
-                  {PROJECT_AREAS.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
-                    </SelectItem>
-                  ))}
-                </field.Select>
+                <field.Input
+                  placeholder={props.completionDatePlaceholder || 'Termin realizacji MM / RR'}
+                />
               )}
             </form.AppField>
 
             <form.AppField name="project_budget">
               {(field) => (
-                <field.Select placeholder={'Budżet'}>
-                  {PROJECT_BUDGETS.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
+                <field.Select placeholder={props.projectBudget || 'Budżet projektu'}>
+                  {props.projectBudgetValues?.map((option) => (
+                    <SelectItem key={option.label} value={option.label}>
+                      {option.label}
                     </SelectItem>
                   ))}
                 </field.Select>
@@ -183,10 +185,10 @@ export default function CartForm() {
 
             <form.AppField name="project_stage">
               {(field) => (
-                <field.Select placeholder={'Etap projektu'}>
-                  {PROJECT_STAGES.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
+                <field.Select placeholder={props.projectStagePlaceholder || 'Etap projektu'}>
+                  {props.projectStageOptions?.map((option) => (
+                    <SelectItem key={option.label} value={option.label}>
+                      {option.label}
                     </SelectItem>
                   ))}
                 </field.Select>
@@ -196,28 +198,44 @@ export default function CartForm() {
         </div>
 
         <div className={`grid gap-2 pt-4`}>
-          <form.AppField name="consents.consent1">
-            {(field) => (
-              <field.Checkbox
-                label={`Zapoznałem/am się z Regulaminem i Polityką Prywatności oraz akceptuje ich postanowienia`}
+          <div className={`flex items-center`}>
+            <div className="w-fit">
+              <form.AppField name="consents.consent1">
+                {(field) => <field.Checkbox />}
+              </form.AppField>
+            </div>
+            {props.consentText && (
+              <RichText
+                enableProse={true}
+                className={`px-2 text-foreground text-sm prose_a [&_*]:leading-tight max-w-full  💥 `}
+                data={props.consentText}
               />
             )}
-          </form.AppField>
-          <form.AppField name="consents.consent2">
-            {(field) => (
-              <field.Checkbox
-                label={`Wyrażam zgodę na kontakt w sprawie realizacji zamówienia oraz otrzymywania informacji związanych z obsługą zamówienia`}
+          </div>
+          <div className={`flex items-center  `}>
+            <div className="w-fit">
+              <form.AppField name="consents.consent2">
+                {(field) => <field.Checkbox />}
+              </form.AppField>
+            </div>
+            {props.consentText2 && (
+              <RichText
+                enableProse={true}
+                className={`px-2 text-foreground text-sm prose_a [&_*]:leading-tight max-w-full  💥 `}
+                data={props.consentText2}
               />
             )}
-          </form.AppField>
+          </div>
         </div>
 
         <div className={`flex flex-col gap-4 pt-4 xl:mr-4 xl:items-end`}>
           <div className={`grid gap-2`}>
-            <p className={`ml-auto text-[2rem] text-nowrap xl:text-[2.5rem]`}>39 PLN</p>
+            <p className={`ml-auto text-[2rem] text-nowrap xl:text-[2.5rem]`}>
+              {props.fixedPriceLabel || '39 PLN'}
+            </p>
             <Tip
               disabled={!emptyCart}
-              content={'Koszyk jest pusty'}
+              content={props.emptyBasketLabel || 'Koszyk jest pusty'}
               side={`bottom`}
               className={cn(`ml-auto`, emptyCart && 'cursor-not-allowed')}
             >
@@ -231,7 +249,7 @@ export default function CartForm() {
                   (!isFormValid || emptyCart) && 'cursor-not-allowed opacity-50',
                 )}
               >
-                Przejdź do płatności
+                {props.proceedToCheckoutLabel || 'Przejdź do płatności'}
               </Button>
             </Tip>
           </div>
