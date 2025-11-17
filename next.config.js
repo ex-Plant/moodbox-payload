@@ -37,7 +37,7 @@ const nextConfig = {
     return webpackConfig
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    // ignoreDuringBuilds: true,
   },
   typescript: {
     // ignoreBuildErrors: true,

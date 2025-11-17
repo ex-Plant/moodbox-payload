@@ -5,7 +5,7 @@ import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
 
-import type { Page, Post } from '@/payload-types'
+import type { Page } from '@/payload-types'
 
 type CMSLinkType = {
   appearance?: 'inline' | VariantProps<typeof buttonVariants>['variant']
@@ -15,7 +15,7 @@ type CMSLinkType = {
   newTab?: boolean | null
   reference?: {
     relationTo: 'pages' | 'posts'
-    value: Page | Post | string | number /*  */
+    value: Page | string | number /*  */
   } | null
   size?: VariantProps<typeof buttonVariants>['size'] | null
   type?: 'custom' | 'reference' | null

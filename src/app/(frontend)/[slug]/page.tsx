@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 
-import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
@@ -11,6 +10,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Hero } from '@/components/Hero/Hero'
 import TextPage from '@/components/_custom_moodbox/TextPage'
+import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -55,7 +55,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   console.log({ slug, decodedSlug, url, page })
 
-  if (!page) return <PayloadRedirects url={url} />
+  if (!page) return notFound()
 
   return (
     <article className="">

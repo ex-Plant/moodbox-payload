@@ -1,25 +1,23 @@
 // storage-adapter-import-placeholder
 import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 
-import sharp from 'sharp' // sharp-import
+import nodemailer from 'nodemailer'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
+import sharp from 'sharp'; // sharp-import
 import { fileURLToPath } from 'url'
-import nodemailer from 'nodemailer'
-import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
-// import { Posts } from './collections/Posts'
+import { defaultLexical } from '@/fields/defaultLexical'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { en } from '@payloadcms/translations/languages/en'
+import { pl } from '@payloadcms/translations/languages/pl'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
-import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
-import { pl } from '@payloadcms/translations/languages/pl'
-import { en } from '@payloadcms/translations/languages/en'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
