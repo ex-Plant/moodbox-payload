@@ -10,6 +10,7 @@ import { Partners } from '@/components/Partners/Partners'
 import { ShopifyCartServer } from '@/components/ShopifyCart/ShopifyCartServer'
 import ShopifyProductsServer from '@/components/ShopifyProducts/ShopifyProductsServer'
 import { Steps } from '@/components/StepsSection/Steps'
+import { cn } from '@/utilities/ui'
 
 const blockComponents = {
   content: ContentBlock,
@@ -24,24 +25,23 @@ const blockComponents = {
 
 export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][]
+  textPage?: boolean
 }> = (props) => {
   const { blocks } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
-
   if (hasBlocks) {
     return (
       <Fragment>
         {blocks.map((block, index) => {
           const { blockType } = block
-          // console.log({ block })
 
           if (blockType && blockType in blockComponents) {
             const Block = blockComponents[blockType]
 
             if (Block) {
               return (
-                <div className="" key={index}>
+                <div className={cn(props.textPage && blockType === "content" && ' max-w-[1440px] mx-auto px-4 xl:xPaddings ')} key={index}>
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} disableInnerContainer />
                 </div>

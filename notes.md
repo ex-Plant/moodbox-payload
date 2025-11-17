@@ -95,3 +95,16 @@ Sitemap: http://localhost:3000/pages-sitemap.xml
 Sitemap: http://localhost:3000/posts-sitemap.xml
 
  Disallow: /
+
+
+
+
+
+
+ BRAND NEW PAGE + CHECKLIST
+ - SITEMAP
+ - BLOCK ROBOTS
+
+
+ -- access control - who can delete users and so on
+

@@ -1,16 +1,15 @@
 import type { Metadata } from 'next'
-
-import configPromise from '@payload-config'
-import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
-import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
-import { generateMeta } from '@/utilities/generateMeta'
-import PageClient from './page.client'
-import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Hero } from '@/components/Hero/Hero'
-import TextPage from '@/components/_custom_moodbox/TextPage'
+import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { generateMeta } from '@/utilities/generateMeta'
+import { cn } from '@/utilities/ui'
+import configPromise from '@payload-config'
+import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
+import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
+import { cache } from 'react'
+import PageClient from './page.client'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -58,22 +57,15 @@ export default async function Page({ params: paramsPromise }: Args) {
   if (!page) return notFound()
 
   return (
-    <article className="">
+    <main className={cn(page.textPage && 'mt-32')}>
       <PageClient />
 
       {draft && <LivePreviewListener />}
 
-      {!page.textPage ? (
-        <>
-          <Hero {...page.hero} />
-          <RenderBlocks blocks={page.layout} />
-        </>
-      ) : (
-        <TextPage>
-          <RenderBlocks blocks={page.layout} />
-        </TextPage>
-      )}
-    </article>
+      {!page.textPage && <Hero {...page.hero} />}
+      <RenderBlocks blocks={page.layout} textPage={!!page.textPage}/>
+
+    </main>
   )
 }
 
