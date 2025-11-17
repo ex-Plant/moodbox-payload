@@ -95,8 +95,6 @@ export const Pages: CollectionConfig<'pages'> = {
                 CallToAction,
                 Content,
                 MediaBlock,
-                Archive,
-                FormBlock,
                 config_delimiter,
                 config_shopify_products,
                 config_shopify_cart,

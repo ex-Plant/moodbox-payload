@@ -2,19 +2,17 @@ import React, { Fragment } from 'react'
 
 import type { Page } from '@/payload-types'
 
-import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { Delimiter } from '@/components/Delimiter/Delimiter'
-import ShopifyProductsServer from '@/components/ShopifyProducts/ShopifyProductsServer'
-import { ShopifyCartServer } from '@/components/ShopifyCart/ShopifyCartServer'
-import { Steps } from '@/components/StepsSection/Steps'
 import { Partners } from '@/components/Partners/Partners'
+import { ShopifyCartServer } from '@/components/ShopifyCart/ShopifyCartServer'
+import ShopifyProductsServer from '@/components/ShopifyProducts/ShopifyProductsServer'
+import { Steps } from '@/components/StepsSection/Steps'
 
 const blockComponents = {
-  archive: ArchiveBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,

@@ -53,7 +53,7 @@ export default async function Page({ params: paramsPromise }: Args) {
     slug: decodedSlug,
   })
 
-  console.log({ slug, decodedSlug, url, page })
+  // console.log({ slug, decodedSlug, url, page })
 
   if (!page) return <PayloadRedirects url={url} />
 

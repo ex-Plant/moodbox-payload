@@ -9,7 +9,7 @@ import nodemailer from 'nodemailer'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
-import { Posts } from './collections/Posts'
+// import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
@@ -24,11 +24,15 @@ import { en } from '@payloadcms/translations/languages/en'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-if (!process.env.BLOB_READ_WRITE_TOKEN) {
-  throw new Error(`❌ missing token`)
-} else {
-  console.log(`✅`)
-}
+if (!process.env.BLOB_READ_WRITE_TOKEN) throw new Error(`❌ missing token`)
+if (!process.env.POSTGRES_URL) throw new Error(`❌ missing POSTGRES_URL`) 
+if (!process.env.PAYLOAD_SECRET) throw new Error(`❌ missing PAYLOAD_SECRET`)
+if (!process.env.EMAIL_USER) throw new Error(`❌ missing EMAIL_USER`)
+if (!process.env.EMAIL_PASS) throw new Error(`❌ missing EMAIL_PASS`)
+
+if (!process.env.EMAIL_HOST) throw new Error(`❌ missing EMAIL_HOST`)
+
+if (!process.env.CRON_SECRET) throw new Error(`❌ missing CRON_SECRET`) 
 
 export default buildConfig({
   // TODO: Uncomment this when we need more locales
@@ -54,10 +58,7 @@ export default buildConfig({
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
-      beforeLogin: ['@/components/BeforeLogin'],
-      // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below.
-      beforeDashboard: ['@/components/BeforeDashboard'],
+      // beforeLogin: ['@/components/BeforeLogin'],
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -94,7 +95,7 @@ export default buildConfig({
     },
     migrationDir: './src/migrations',
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
 
