@@ -63,6 +63,10 @@ export const Pages: CollectionConfig<'pages'> = {
       name: 'title',
       type: 'text',
       required: true,
+      label: {
+        en: 'Title',
+        pl: 'Tytuł',
+      },
     },
     {
       name: 'textPage',
@@ -84,7 +88,10 @@ export const Pages: CollectionConfig<'pages'> = {
       tabs: [
         {
           fields: [config_hero],
-          label: 'Hero',
+          label: {
+            en: 'Hero',
+            pl: 'Baner główny',
+          },
         },
         {
           fields: [
@@ -107,7 +114,10 @@ export const Pages: CollectionConfig<'pages'> = {
               },
             },
           ],
-          label: 'Content',
+          label: {
+            en: 'Content',
+            pl: 'Treść',
+          },
         },
         {
           name: 'meta',
@@ -120,12 +130,31 @@ export const Pages: CollectionConfig<'pages'> = {
             }),
             MetaTitleField({
               hasGenerateFn: true,
+              overrides: {
+                label: {
+                  en: 'Title',
+                  pl: 'Tytuł'
+                }
+              }
             }),
             MetaImageField({
               relationTo: 'media',
+              overrides: {
+                label: {
+                  en: 'Image',
+                  pl: 'Meta Obraz'
+                }
+              }
             }),
 
-            MetaDescriptionField({}),
+            MetaDescriptionField({
+              overrides: {
+                label: {
+                  en: 'Description',
+                  pl: 'Meta Opis'
+                }
+              }
+            }),
             PreviewField({
               // if the `generateUrl` function is configured
               hasGenerateFn: true,

@@ -53,15 +53,13 @@ export default async function Page({ params: paramsPromise }: Args) {
     slug: decodedSlug,
   })
 
-  // console.log({ slug, decodedSlug, url, page })
+  console.log({ slug, decodedSlug, url, page })
 
   if (!page) return <PayloadRedirects url={url} />
 
   return (
     <article className="">
       <PageClient />
-      {/* Allows redirects for valid pages too */}
-      <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
 

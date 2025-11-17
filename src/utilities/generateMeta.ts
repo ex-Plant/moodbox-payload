@@ -27,13 +27,17 @@ export const generateMeta = async (args: {
   const ogImage = getImageURL(doc?.meta?.image)
 
   const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | Payload Website Template'
-    : 'Payload Website Template'
+    ? doc?.meta?.title 
+    : "Moodbox - Próbki Materiałów Wnętrzarskich | Dla Projektantów"
+
+    const description = doc?.meta?.description || 
+    "Moodbox - pierwsza platforma w Polsce z próbkami materiałów wnętrzarskich. Dla projektantów: szybki dostęp do próbek w jednym boxie. Dla producentów: nowy kanał sprzedaży."
+    
+
 
   return {
     description: doc?.meta?.description,
     openGraph: mergeOpenGraph({
-      description: doc?.meta?.description || '',
       images: ogImage
         ? [
             {
@@ -42,8 +46,10 @@ export const generateMeta = async (args: {
           ]
         : undefined,
       title,
+      description,
       url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
     }),
     title,
+    robots:  'noindex, nofollow'
   }
 }

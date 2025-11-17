@@ -77,3 +77,21 @@ W taki sposób trłumaczymy nazwę pola:
   - check sitemaps 
   - check static pages
   - test adding new collection with a prefix  
+
+
+ALLLOW ROBOTS
+
+robots contents
+# *
+User-agent: *
+Disallow: /admin/*
+
+# Host
+Host: http://localhost:3000
+
+# Sitemaps
+Sitemap: http://localhost:3000/sitemap.xml
+Sitemap: http://localhost:3000/pages-sitemap.xml
+Sitemap: http://localhost:3000/posts-sitemap.xml
+
+ Disallow: /
