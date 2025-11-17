@@ -408,7 +408,7 @@ export interface MediaBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Delimiter Block".
+ * via the `definition` "DelimiterBlock".
  */
 export interface DelimiterBlock {
   fullWidth?: boolean | null;
@@ -850,14 +850,14 @@ export interface MediaBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Delimiter Block_select".
+ * via the `definition` "DelimiterBlock_select".
  */
-export interface DelimiterBlockSelect {
-  fullWidth?: boolean;
-  bottomPageDelimiter?: boolean;
-  title?: boolean;
-  id?: boolean;
-  blockName?: boolean;
+export interface DelimiterBlockSelect<T extends boolean = true> {
+  fullWidth?: T;
+  bottomPageDelimiter?: T;
+  title?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

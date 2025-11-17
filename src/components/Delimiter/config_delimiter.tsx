@@ -2,7 +2,7 @@ import type { Block } from 'payload'
 
 export const config_delimiter: Block = {
   slug: 'delimiterBlock',
-  interfaceName: 'Delimiter Block',
+  interfaceName: 'DelimiterBlock',
   labels: {
     singular: {
       en: 'Delimiter',
