@@ -1,9 +1,9 @@
-import { getProductsByCollection } from '@/lib/shopify/api'
+import { getCachedProductsByCollection } from '@/lib/shopify/api'
 import { Suspense } from 'react'
 import Collections from '../_custom_moodbox/home/collections/Collections'
 
 export default async function ShopifyProductsServer() {
-  const productsByCollection = await getProductsByCollection()
+  const productsByCollection = await getCachedProductsByCollection()
 
   return (
     <Suspense fallback={null}>

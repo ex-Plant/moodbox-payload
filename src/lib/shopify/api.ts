@@ -1,5 +1,6 @@
 'use server';
 
+import { cache } from 'react';
 import { shopifyFetch } from './client';
 import {
 	CREATE_CART_MUTATION,
@@ -51,6 +52,23 @@ export async function getAllCollections(): Promise<CollectionT[]> {
 	if (!response) return [];
 	return response.data.collections.edges.map((edge) => edge.node);
 }
+
+
+
+export const getCachedProductsByCollection = cache(async (): Promise<{ collection: string; handle: string; products: ProductT[] }[]> => {
+	const collections = await getAllCollections();
+
+	return collections.map((collection) => ({
+		collection: collection.title,
+		handle: collection.handle,
+		products: collection.products.edges.map((edge) => edge.node),
+	}));
+})
+
+
+
+
+
 
 export async function getProductsByCollection(): Promise<
 	{ collection: string; handle: string; products: ProductT[] }[]

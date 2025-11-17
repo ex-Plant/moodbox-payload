@@ -142,8 +142,8 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
             <form.AppField name="project_type">
               {(field) => (
                 <field.Select placeholder={props.projectTypePlaceholder || 'Typ projektu'}>
-                  {props.projectTypeOptions?.map((option) => (
-                    <SelectItem key={option.label} value={option.label}>
+                  {props.projectTypeOptions?.map((option,) => (
+                    <SelectItem key={option.id} value={option.label}>
                       {option.label}
                     </SelectItem>
                   ))}
@@ -155,7 +155,7 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
               {(field) => (
                 <field.Select placeholder={props.projectAreaPlaceholder || 'Powierzchnia projektu'}>
                   {props.projectAreaValues?.map((option) => (
-                    <SelectItem key={option.label} value={option.label}>
+                    <SelectItem key={option.id} value={option.label}>
                       {option.label}
                     </SelectItem>
                   ))}
@@ -175,7 +175,7 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
               {(field) => (
                 <field.Select placeholder={props.projectBudget || 'Budżet projektu'}>
                   {props.projectBudgetValues?.map((option) => (
-                    <SelectItem key={option.label} value={option.label}>
+                    <SelectItem key={option.id} value={option.label}>
                       {option.label}
                     </SelectItem>
                   ))}
@@ -187,7 +187,7 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
               {(field) => (
                 <field.Select placeholder={props.projectStagePlaceholder || 'Etap projektu'}>
                   {props.projectStageOptions?.map((option) => (
-                    <SelectItem key={option.label} value={option.label}>
+                    <SelectItem key={option.id} value={option.label}>
                       {option.label}
                     </SelectItem>
                   ))}

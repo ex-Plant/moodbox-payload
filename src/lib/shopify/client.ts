@@ -29,10 +29,10 @@ export async function shopifyFetch<T>({
 			'Content-Type': 'application/json',
 			'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_ACCESS_TOKEN,
 		},
-		body: JSON.stringify({ query, variables }),
+		body: JSON.stringify( { query, variables }),
 		// cache,
 		next: {
-			// todo ? change to greater value
+			//todo ? change to greater value
 			revalidate: 60, // 1 minute
 			tags,
 		},

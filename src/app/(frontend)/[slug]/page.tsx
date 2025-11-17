@@ -47,12 +47,12 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { slug = 'home' } = await paramsPromise
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
-  const url = '/' + decodedSlug
+  // const url = '/' + decodedSlug
   const page: RequiredDataFromCollectionSlug<'pages'> | null = await queryPageBySlug({
     slug: decodedSlug,
   })
 
-  console.log({ slug, decodedSlug, url, page })
+  // console.log({ slug, decodedSlug, url, page })
 
   if (!page) return notFound()
 
@@ -85,6 +85,7 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
 
   const payload = await getPayload({ config: configPromise })
 
+  
   const result = await payload.find({
     collection: 'pages',
     draft,
