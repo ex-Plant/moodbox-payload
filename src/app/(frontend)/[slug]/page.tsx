@@ -63,8 +63,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       {draft && <LivePreviewListener />}
 
       {!page.textPage && <Hero {...page.hero} />}
-      <RenderBlocks blocks={page.layout} textPage={!!page.textPage}/>
-
+      <RenderBlocks blocks={page.layout} textPage={!!page.textPage} />
     </main>
   )
 }
@@ -85,7 +84,6 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
 
   const payload = await getPayload({ config: configPromise })
 
-  
   const result = await payload.find({
     collection: 'pages',
     draft,

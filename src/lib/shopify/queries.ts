@@ -71,7 +71,7 @@ export const PRODUCT_FRAGMENT = `
 			value
 		}
 	}
-`;
+`
 
 export const GET_ALL_PRODUCTS_QUERY = `
 	${PRODUCT_FRAGMENT}
@@ -89,7 +89,7 @@ export const GET_ALL_PRODUCTS_QUERY = `
 			}
 		}
 	}
-`;
+`
 
 export const GET_PRODUCT_BY_HANDLE_QUERY = `
 	${PRODUCT_FRAGMENT}
@@ -98,7 +98,7 @@ export const GET_PRODUCT_BY_HANDLE_QUERY = `
 			...ProductFragment
 		}
 	}
-`;
+`
 
 export const GET_COLLECTION_BY_HANDLE_QUERY = `
 	${PRODUCT_FRAGMENT}
@@ -124,7 +124,7 @@ export const GET_COLLECTION_BY_HANDLE_QUERY = `
 			}
 		}
 	}
-`;
+`
 
 export const GET_ALL_COLLECTIONS_QUERY = `
 	${PRODUCT_FRAGMENT}
@@ -154,7 +154,7 @@ export const GET_ALL_COLLECTIONS_QUERY = `
 			}
 		}
 	}
-`;
+`
 
 export const CREATE_CART_MUTATION = `
 	mutation CreateCart($lineItems: [CartLineInput!], $attributes: [AttributeInput!], $email: String) {
@@ -243,4 +243,4 @@ export const CREATE_CART_MUTATION = `
 			}
 		}
 	}
-`;
+`

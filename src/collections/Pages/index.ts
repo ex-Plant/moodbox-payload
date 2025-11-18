@@ -131,27 +131,27 @@ export const Pages: CollectionConfig<'pages'> = {
               overrides: {
                 label: {
                   en: 'Title',
-                  pl: 'Tytuł'
-                }
-              }
+                  pl: 'Tytuł',
+                },
+              },
             }),
             MetaImageField({
               relationTo: 'media',
               overrides: {
                 label: {
                   en: 'Image',
-                  pl: 'Meta Obraz'
-                }
-              }
+                  pl: 'Meta Obraz',
+                },
+              },
             }),
 
             MetaDescriptionField({
               overrides: {
                 label: {
                   en: 'Description',
-                  pl: 'Meta Opis'
-                }
-              }
+                  pl: 'Meta Opis',
+                },
+              },
             }),
             PreviewField({
               // if the `generateUrl` function is configured

@@ -41,7 +41,14 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div className={cn(props.textPage && blockType === "content" && ' max-w-[1440px] mx-auto px-4 xl:xPaddings ')} key={index}>
+                <div
+                  className={cn(
+                    props.textPage &&
+                      blockType === 'content' &&
+                      ' max-w-[1440px] mx-auto px-4 xl:xPaddings ',
+                  )}
+                  key={index}
+                >
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} disableInnerContainer />
                 </div>

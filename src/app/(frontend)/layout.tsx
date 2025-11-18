@@ -42,7 +42,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body
         className={cn(
           ` flex min-h-screen flex-col antialiased`,
-          ` relative `,
+          ` relative  bg-background text-foreground  `,
           // `[&_*]:outline [&_*]:outline-[1px] [&_*]:outline-pink-400`
         )}
       >

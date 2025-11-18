@@ -4,7 +4,7 @@ import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 import nodemailer from 'nodemailer'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
-import sharp from 'sharp'; // sharp-import
+import sharp from 'sharp' // sharp-import
 import { fileURLToPath } from 'url'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -23,14 +23,14 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 if (!process.env.BLOB_READ_WRITE_TOKEN) throw new Error(`❌ missing token`)
-if (!process.env.POSTGRES_URL) throw new Error(`❌ missing POSTGRES_URL`) 
+if (!process.env.POSTGRES_URL) throw new Error(`❌ missing POSTGRES_URL`)
 if (!process.env.PAYLOAD_SECRET) throw new Error(`❌ missing PAYLOAD_SECRET`)
 if (!process.env.EMAIL_USER) throw new Error(`❌ missing EMAIL_USER`)
 if (!process.env.EMAIL_PASS) throw new Error(`❌ missing EMAIL_PASS`)
 
 if (!process.env.EMAIL_HOST) throw new Error(`❌ missing EMAIL_HOST`)
 
-if (!process.env.CRON_SECRET) throw new Error(`❌ missing CRON_SECRET`) 
+if (!process.env.CRON_SECRET) throw new Error(`❌ missing CRON_SECRET`)
 
 export default buildConfig({
   // TODO: Uncomment this when we need more locales

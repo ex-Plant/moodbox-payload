@@ -18,7 +18,7 @@ export async function GET() {
       to: process.env.EMAIL_USER || '',
       subject: 'Test Email from Payload',
       text: 'This is a test email from your Payload CMS.',
-      html: '<h1>Test Email</h1><p>This is a test email from your Payload CMS.</p>'
+      html: '<h1>Test Email</h1><p>This is a test email from your Payload CMS.</p>',
     })
 
     return NextResponse.json({ success: true, message: 'Test email sent successfully' })
@@ -27,9 +27,9 @@ export async function GET() {
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to send test email'
+        error: error instanceof Error ? error.message : 'Failed to send test email',
       },
-      { status: 500 }
+      { status: 500 },
     )
   }
 }

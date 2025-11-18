@@ -142,7 +142,7 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
             <form.AppField name="project_type">
               {(field) => (
                 <field.Select placeholder={props.projectTypePlaceholder || 'Typ projektu'}>
-                  {props.projectTypeOptions?.map((option,) => (
+                  {props.projectTypeOptions?.map((option) => (
                     <SelectItem key={option.id} value={option.label}>
                       {option.label}
                     </SelectItem>

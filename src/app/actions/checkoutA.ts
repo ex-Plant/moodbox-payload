@@ -49,7 +49,6 @@ export async function checkoutA(cartItems: string[], formData: CartSchemaT) {
   const cart = await createCart(lineItems, attributes, formData.email)
 
   if (cart?.checkoutUrl) {
-
     // await payload.create({
     //   collection: 'contacts', // Your custom collection
     //   data: formData

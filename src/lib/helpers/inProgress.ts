@@ -1,3 +1,3 @@
 export default function inProgress() {
-	return alert(`🚧 in progress`);
+  return alert(`🚧 in progress`)
 }
