@@ -14,10 +14,12 @@ export const Partners: React.FC<PartnersBlock> = ({ partners }) => {
   const [swiperIsReady, setSwiperIsReady] = useState(false)
   const [swiper, setSwiper] = useState<SwiperType | null>(null)
 
+  if (!partners || partners.length === 0) return <></>
+
   const config = {
     modules: [Pagination, Mousewheel, Keyboard, Autoplay],
-    spaceBetween: 20,
-    slidesPerView: 5,
+    spaceBetween: 10,
+    slidesPerView: partners.length >= 6 ? 6 : partners.length,
     loop: true,
     speed: 3000,
     autoplay: {
@@ -25,14 +27,11 @@ export const Partners: React.FC<PartnersBlock> = ({ partners }) => {
       disableOnInteraction: false,
       pauseOnMouseEnter: false,
     },
-    disableOnInteraction: false,
     onSwiper: (swiperInstance: SwiperType) => {
       setSwiper(swiperInstance)
       setSwiperIsReady(true)
     },
   }
-
-  if (!partners || partners.length === 0) return <></>
 
   return (
     <>
@@ -53,7 +52,7 @@ export const Partners: React.FC<PartnersBlock> = ({ partners }) => {
                 >
                   <ImageMedia
                     resource={partner.partner}
-                    size="(max-witdth: 767px) 40vw, 20vw"
+                    size="(max-width: 1468px) 20vw, 250px"
                     fill={true}
                     imgClassName="object-contain"
                   />
