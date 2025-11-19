@@ -21,10 +21,6 @@ const inclusive_Sans = Inclusive_Sans({
 })
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { isEnabled } = await draftMode()
-
-  console.log('layout.tsx:28 -', { isEnabled })
-
   return (
     <html
       className={cn(
@@ -47,12 +43,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         )}
       >
         <Providers>
-          {/*<AdminBar*/}
-          {/*  adminBarProps={{*/}
-          {/*    preview: isEnabled,*/}
-          {/*  }}*/}
-          {/*/>*/}
-
           <Header />
           {children}
 

@@ -12,7 +12,7 @@ import type { Swiper as SwiperType } from 'swiper'
 import { cn } from '@/utilities/ui'
 export const Partners: React.FC<PartnersBlock> = ({ partners }) => {
   const [swiperIsReady, setSwiperIsReady] = useState(false)
-  const [swiper, setSwiper] = useState<SwiperType | null>(null)
+  const [_, setSwiper] = useState<SwiperType | null>(null)
 
   if (!partners || partners.length === 0) return <></>
 

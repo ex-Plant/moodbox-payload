@@ -1,6 +1,7 @@
 'use client'
 
 import LogoSvg from '@/components/_custom_moodbox/common/Logo'
+
 import FooterCat from './FooterCat'
 import FooterLink from './FooterLink'
 import { Footer } from '@/payload-types'
