@@ -2,79 +2,36 @@ name: Backup Neon DB to Seohost
 
 on:
   schedule:
-    # Runs every Sunday at 02:00 UTC
     - cron: "0 2 * * 0"
-  # Allow manual trigger for testing
   workflow_dispatch:
 
 jobs:
   backup-and-upload:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1 – Checkout repo (helps with relative paths and logs)
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Step 2 – Detect Neon DB server version
-      - name: Detect Neon PostgreSQL version
+      # 1. Dump using Docker
+      - name: Create Backup with Docker
         env:
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
         run: |
-          set -euo pipefail
-          echo "🔍 Checking Neon database version..."
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq postgresql-client lsb-release > /dev/null
-          VERSION_STR=$(psql "$POSTGRES_URL" -tAc "SHOW server_version;")
-          PG_MAJOR_VERSION=$(echo "$VERSION_STR" | cut -d. -f1)
-          echo "🧪 Neon server version: $VERSION_STR"
-          echo "PG_MAJOR_VERSION=$PG_MAJOR_VERSION" >> $GITHUB_ENV
-
-      # Step 3 – Install matching PostgreSQL client + lftp
-      - name: Install PostgreSQL client & lftp
-        run: |
-          set -euo pipefail
-          echo "📦 Installing PostgreSQL client v${PG_MAJOR_VERSION}..."
-          sudo apt-get update
-          sudo apt-get install -y curl gnupg lsb-release
-          curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc |
-            sudo gpg --dearmor -o /usr/share/keyrings/postgresql-keyring.gpg
-          echo "deb [signed-by=/usr/share/keyrings/postgresql-keyring.gpg] \
-            http://apt.postgresql.org/pub/repos/apt \
-            $(lsb_release -cs)-pgdg main" |
-            sudo tee /etc/apt/sources.list.d/pgdg.list
-
-          sudo apt-get update
-          sudo apt-get install -y "postgresql-client-${PG_MAJOR_VERSION}" lftp
-
-          # Make sure we always use that specific client binary
-          echo "/usr/lib/postgresql/${PG_MAJOR_VERSION}/bin" >> $GITHUB_PATH
-
-          echo "✅ PostgreSQL client ready:"
-          pg_dump --version
-          psql --version
-
-      # Step 4 – Create and compress DB backup
-      - name: Create and compress backup
-        env:
-          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
-        run: |
-          set -euo pipefail
           TIMESTAMP=$(date +%Y%m%d-%H%M%S)
           FILENAME="moodbox-backup-${TIMESTAMP}.sql.gz"
-
-          echo "🗃 Dumping database with pg_dump..."
-          pg_dump "$POSTGRES_URL" \
-            --no-owner \
-            --no-privileges \
-            --clean \
-            --if-exists \
-            | gzip > "$FILENAME"
-
-          echo "✅ Backup created: $FILENAME"
+          
+          echo "🗃 Dumping DB using Postgres 17 Container..."
+          
+          # We run a temporary docker container just to execute pg_dump
+          # We mount the current directory ($(pwd)) to /backup so we can write the file out
+          docker run --rm \
+            -v $(pwd):/backup \
+            postgres:17-alpine \
+            /bin/sh -c "pg_dump '$POSTGRES_URL' --no-owner --no-privileges --clean --if-exists | gzip > /backup/$FILENAME"
+            
           echo "BACKUP_FILE=$FILENAME" >> $GITHUB_ENV
 
-      # Step 5 – Upload backup to Seohost via FTPS
+      # 2. Upload (Your existing lftp logic is fine, though I still prefer SFTP)
       - name: Upload via FTPS
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
@@ -82,9 +39,6 @@ jobs:
           FTP_PASS: ${{ secrets.FTP_PASS }}
           REMOTE_DIR: /domains/moodbox.pl/db_backups/
         run: |
-          set -euo pipefail
-          echo "🚀 Uploading $BACKUP_FILE to $REMOTE_DIR on $FTP_HOST"
-
           lftp -c "
             set ftp:ssl-auth TLS
             set ftp:ssl-force true
@@ -95,5 +49,3 @@ jobs:
             put -O '$REMOTE_DIR' '${{ env.BACKUP_FILE }}';
             bye
           "
-
-          echo "✅ Upload complete!"
