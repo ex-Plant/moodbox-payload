@@ -1,0 +1,63 @@
+name: Backup Neon DB to Seohost
+
+on:
+  schedule:
+    # Runs at 02:00 UTC every Sunday
+    - cron: '0 2 * * 0'
+  # Allows you to run this manually from the Actions tab for testing
+  workflow_dispatch:
+
+jobs:
+  backup-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Install tools (Postgres client + lftp for file transfer)
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client lftp
+
+      # Step 2: Dump the database and compress it
+      - name: Create and Compress Backup
+        env:
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+        run: |
+          # Create local timestamp
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          FILENAME="moodbox-backup-${TIMESTAMP}.sql.gz"
+
+          # Run dump and pipe directly to gzip
+          pg_dump "$POSTGRES_URL" \
+            --no-owner \
+            --no-privileges \
+            --clean \
+            --if-exists \
+            | gzip > "$FILENAME"
+
+          # Save filename to env for next step
+          echo "BACKUP_FILE=$FILENAME" >> $GITHUB_ENV
+
+          echo "✅ Backup created: $FILENAME"
+
+      # Step 3: Upload using lftp (handles the 'unknown cert' issue)
+      - name: Upload via FTPS
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASS: ${{ secrets.FTP_PASS }}
+          REMOTE_DIR: /domains/moodbox.pl/db_backups/
+        run: |
+          echo "🚀🚀 Uploading to $REMOTE_DIR..."
+
+          lftp -c "
+          set ftp:ssl-auth TLS
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate no
+          open -u '$FTP_USER','$FTP_PASS' '$FTP_HOST';
+          mkdir -p -f '$REMOTE_DIR';
+          put -O '$REMOTE_DIR' '${{ env.BACKUP_FILE }}';
+          bye
+          "
+
+          echo "✅ Upload complete"
