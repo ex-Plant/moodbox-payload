@@ -11,11 +11,19 @@ jobs:
   backup-and-upload:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Install tools (Postgres client + lftp for file transfer)
+
+      # Step 1: Install PostgreSQL 17 client & lftp
       - name: Install dependencies
         run: |
+          # 1. Add the official PostgreSQL repository to get version 17
           sudo apt-get update
-          sudo apt-get install -y postgresql-client lftp
+          sudo apt-get install -y curl gnupg lsb-release
+          curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /usr/share/keyrings/postgresql-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/postgresql-keyring.gpg] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+          
+          # 2. Update package list and install specific version
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-17 lftp
 
       # Step 2: Dump the database and compress it
       - name: Create and Compress Backup
