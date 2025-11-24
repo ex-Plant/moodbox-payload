@@ -576,15 +576,15 @@ export interface User {
  */
 export interface Client {
   id: number;
-  company_name: string;
-  email: string;
+  company_name?: string | null;
+  email?: string | null;
   projects_per_year?: string | null;
   nip?: string | null;
   website?: string | null;
   city?: string | null;
-  project_type?: ('Dom' | 'Mieszkanie' | 'Biuro' | 'Inny') | null;
+  project_type?: string | null;
   completion_date?: string | null;
-  project_stage?: ('koncepcja' | 'projekt budowlany' | 'projekt wykonawczy' | 'inny') | null;
+  project_stage?: string | null;
   project_area?: string | null;
   project_budget?: string | null;
   consents?: {

@@ -64,7 +64,6 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       {!page.textPage && <Hero {...page.hero} />}
 
-      <div className="flex items-center justify-"></div>
       <RenderBlocks blocks={page.layout} textPage={!!page.textPage} />
     </main>
   )
