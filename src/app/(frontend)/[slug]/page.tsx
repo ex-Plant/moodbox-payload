@@ -10,8 +10,6 @@ import { notFound } from 'next/navigation'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { cache } from 'react'
 import PageClient from './page.client'
-import { motion } from 'framer-motion'
-import FramerAnimationTests from '@/components/framerAnimationTests'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -57,8 +55,6 @@ export default async function Page({ params: paramsPromise }: Args) {
   // console.log({ slug, decodedSlug, url, page })
 
   if (!page) return notFound()
-
-  return <FramerAnimationTests />
 
   return (
     <main className={cn(page.textPage && 'mt-32')}>
