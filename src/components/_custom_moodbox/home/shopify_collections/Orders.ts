@@ -4,6 +4,7 @@ import { CollectionConfig } from 'payload'
 export const Clients: CollectionConfig = {
   slug: 'clients',
   admin: {
+    components: {},
     useAsTitle: 'company_name',
     defaultColumns: ['company_name', 'email', 'city', 'project_type', 'createdAt'],
   },
