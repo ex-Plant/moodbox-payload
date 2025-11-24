@@ -33,7 +33,7 @@ export async function shopifyFetch<T>({
     // cache,
     next: {
       //todo ? change to greater value
-      revalidate: 60, // 1 minute
+      revalidate: 0, // 1 minute
       tags,
     },
   })

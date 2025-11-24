@@ -14,6 +14,7 @@ import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { en } from '@payloadcms/translations/languages/en'
 import { pl } from '@payloadcms/translations/languages/pl'
 import { Users } from './collections/Users'
+import { Clients } from './components/_custom_moodbox/home/collections/Clients'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -93,7 +94,7 @@ export default buildConfig({
     },
     migrationDir: './src/migrations',
   }),
-  collections: [Pages, Media, Users],
+  collections: [Pages, Media, Users, Clients],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
 
