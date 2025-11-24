@@ -17,7 +17,7 @@ export default function DownloadClients() {
   return (
     <>
       <button onClick={exportClients}>Eksportuj listę klientów</button>
-      {!error && <p style={{ color: '#dc2626' }}>Coś poszło nie tak - spróbuj ponownie </p>}
+      {error && <p style={{ color: '#dc2626' }}>Coś poszło nie tak - spróbuj ponownie </p>}
     </>
   )
 }
