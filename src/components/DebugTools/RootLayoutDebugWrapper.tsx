@@ -14,9 +14,11 @@ type RootLayoutDebugWrapperPropsT = {
 export const RootLayoutDebugWrapper = ({ children }: RootLayoutDebugWrapperPropsT) => {
   const { layersVisible, outlinesVisible, gridVisible } = useDebugTools()
 
+  const isDev = process.env.NODE_ENV == 'development'
+
   return (
     <>
-      {gridVisible && <GridVisualHelper />}
+      {isDev && gridVisible && <GridVisualHelper />}
       <div
         className={cn(
           outlinesVisible && `[&_*]:outline [&_*]:outline-lime-300`,
@@ -24,7 +26,7 @@ export const RootLayoutDebugWrapper = ({ children }: RootLayoutDebugWrapperProps
         )}
       >
         {children}
-        <DebugToolsTriggers />
+        {isDev && <DebugToolsTriggers />}
       </div>
     </>
   )

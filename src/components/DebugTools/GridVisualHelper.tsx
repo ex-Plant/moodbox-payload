@@ -10,21 +10,21 @@ export const GridVisualHelperRow = ({ className }: { className?: string }) => {
 
 export const GridVisualHelper = () => {
   return (
-    <div className={`pointer-events-none`}>
-      <div className={`grid grid-cols-6 lg:grid-cols-12 xPaddings fixed inset-0 z-[10000] `}>
-        <GridVisualHelperRow />
-        <GridVisualHelperRow />
-        <GridVisualHelperRow />
-        <GridVisualHelperRow />
-        <GridVisualHelperRow />
-        <GridVisualHelperRow />
-        <GridVisualHelperRow className={`hidden md:block`} />
-        <GridVisualHelperRow className={`hidden md:block`} />
-        <GridVisualHelperRow className={`hidden lg:block`} />
-        <GridVisualHelperRow className={`hidden lg:block`} />
-        <GridVisualHelperRow className={`hidden lg:block`} />
-        <GridVisualHelperRow className={`hidden lg:block`} />
-      </div>
+    <div
+      className={`grid grid-cols-6 lg:grid-cols-12 xPaddings fixed inset-0 z-[10000] max-w-[1440px] mx-auto pointer-events-none `}
+    >
+      <GridVisualHelperRow />
+      <GridVisualHelperRow />
+      <GridVisualHelperRow />
+      <GridVisualHelperRow />
+      <GridVisualHelperRow />
+      <GridVisualHelperRow />
+      <GridVisualHelperRow className={`hidden md:block`} />
+      <GridVisualHelperRow className={`hidden md:block`} />
+      <GridVisualHelperRow className={`hidden lg:block`} />
+      <GridVisualHelperRow className={`hidden lg:block`} />
+      <GridVisualHelperRow className={`hidden lg:block`} />
+      <GridVisualHelperRow className={`hidden lg:block`} />
     </div>
   )
 }
