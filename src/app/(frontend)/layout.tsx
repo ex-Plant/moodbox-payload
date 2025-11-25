@@ -37,9 +37,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body
         className={cn(
-          ` flex min-h-screen flex-col antialiased`,
-          ` relative  bg-background text-foreground  `,
-          // `[&_*]:outline [&_*]:outline-[1px] [&_*]:outline-pink-400`
+          ` flex min-h-screen flex-col antialiased relative  bg-background text-foreground  `,
+          // `[&_*]:outline [&_*]:outline-[1px] [&_*]:outline-pink-400`,
         )}
       >
         <Providers>
