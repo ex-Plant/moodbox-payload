@@ -8,6 +8,7 @@ import {
   FieldLabel,
 } from '@/components/ui/field'
 import { useFieldContext } from '@/lib/hooks/tenStackFormHooks'
+import { cn } from '@/utilities/ui'
 
 export type FormControlProps = {
   label?: string
@@ -15,6 +16,7 @@ export type FormControlProps = {
   placeholder?: string
   showError?: boolean
   type?: React.ComponentProps<'input'>['type']
+  className?: string
 }
 
 type FormBaseProps = FormControlProps & {
@@ -30,6 +32,7 @@ export function TenStackFormBase({
   controlFirst,
   horizontal,
   showError,
+  className,
 }: FormBaseProps) {
   const field = useFieldContext()
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
@@ -43,7 +46,7 @@ export function TenStackFormBase({
 
   return (
     <Field
-      className={`gap-0`}
+      className={cn(`gap-0`, className)}
       data-invalid={isInvalid}
       orientation={horizontal ? 'horizontal' : undefined}
     >
