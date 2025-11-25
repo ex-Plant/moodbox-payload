@@ -2,6 +2,16 @@ import { CollectionConfig } from 'payload'
 
 export const Clients: CollectionConfig = {
   slug: 'clients',
+  labels: {
+    plural: {
+      pl: 'Klienci',
+      en: 'Clients',
+    },
+    singular: {
+      pl: 'Klient',
+      en: 'Client',
+    },
+  },
   admin: {
     components: {
       // beforeList: ['@/components/CustomAdminHeader'],

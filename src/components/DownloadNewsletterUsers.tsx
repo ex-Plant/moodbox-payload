@@ -16,7 +16,7 @@ export default function DownloadNewsletterUsers() {
 
   return (
     <>
-      <button onClick={exportClients}>Eksportuj listę klientów</button>
+      <button onClick={exportClients}>Eksportuj</button>
       {error && <p style={{ color: '#dc2626' }}>Coś poszło nie tak - spróbuj ponownie </p>}
     </>
   )
