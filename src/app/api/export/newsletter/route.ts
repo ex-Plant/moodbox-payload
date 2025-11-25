@@ -2,7 +2,6 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { Newsletter } from '../../../../payload-types'
 
-// Add this mapping object for Polish field labels
 const NEWSLETTER_FIELD_LABELS: Record<string, string> = {
   createdAt: 'utworzono',
   email: 'email',
