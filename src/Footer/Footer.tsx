@@ -7,7 +7,6 @@ import FooterLink from './FooterLink'
 import { Footer } from '@/payload-types'
 import Link from 'next/link'
 import { cn } from '@/utilities/ui'
-import { Input } from '@/components/ui/input'
 import NewsletterForm from './NewsletterForm'
 
 export default function FooterClient({ footerItems }: { footerItems: Footer['navItems'] }) {

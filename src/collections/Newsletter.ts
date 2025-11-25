@@ -1,0 +1,41 @@
+// src/collections/Clients.ts
+import { CollectionConfig } from 'payload'
+
+export const Newsletter: CollectionConfig = {
+  slug: 'newsletter',
+  labels: {
+    plural: {
+      pl: 'Lista newsletter',
+      en: 'Newsletter List',
+    },
+    singular: {
+      pl: 'Adres email',
+      en: 'E-mail addresss',
+    },
+  },
+  admin: {
+    components: {
+      afterListTable: ['@/components/DownloadNewsletterUsers'],
+    },
+    useAsTitle: 'email',
+    defaultColumns: ['email', 'createdAt'],
+  },
+  access: {
+    read: () => true,
+    create: () => true,
+  },
+  fields: [
+    {
+      name: 'email',
+      type: 'email',
+      label: 'Email',
+    },
+    {
+      name: 'createdAt',
+      type: 'date',
+      admin: {
+        readOnly: true,
+      },
+    },
+  ],
+}
