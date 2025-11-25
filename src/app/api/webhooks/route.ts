@@ -86,12 +86,30 @@ export async function POST(request: NextRequest) {
       console.log('=== SAVING CLIENT DATA ===')
       console.log(JSON.stringify(clientData, null, 2))
 
-      await payload.create({
+      const existingClient = await payload.find({
         collection: 'clients',
-        data: clientData,
+        where: {
+          email: {
+            equals: clientData.email,
+          },
+        },
+        limit: 1,
       })
 
-      console.log('✅ Client data saved successfully')
+      if (existingClient.docs.length > 0) {
+        await payload.update({
+          collection: 'clients',
+          id: existingClient.docs[0].id,
+          data: clientData,
+        })
+        console.log('✅ Existing client updated successfully')
+      } else {
+        await payload.create({
+          collection: 'clients',
+          data: clientData,
+        })
+        console.log('✅ Client data saved successfully')
+      }
     } catch (error) {
       console.error('❌ Error saving client data:', error)
       return NextResponse.json({ error: 'Failed to save client data' }, { status: 500 })

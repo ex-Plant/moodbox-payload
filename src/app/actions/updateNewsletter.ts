@@ -5,13 +5,17 @@ import { inputSchemaT } from '../../Footer/NewsletterForm'
 export default async function updateNewsLetter(data: inputSchemaT) {
   const payload = await getPayload({ config: configPromise })
 
-  const emails = await payload.find({
+  const emailExists = await payload.find({
     collection: 'newsletter',
-    limit: 1000,
+    limit: 1,
+    where: {
+      email: {
+        equals: data.email,
+      },
+    },
   })
 
-  const isInvalid = emails.docs.find((email) => data.email === email.email)
-  if (isInvalid) throw new Error('Ten adres już znajduje się na liście !')
+  if (emailExists.docs.length > 0) throw new Error('Ten adres już znajduje się na liście !')
 
   await payload.create({
     collection: 'newsletter',

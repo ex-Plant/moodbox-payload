@@ -1,5 +1,4 @@
 // src/collections/Clients.ts
-import { truncate } from 'fs'
 import { CollectionConfig } from 'payload'
 
 export const Newsletter: CollectionConfig = {

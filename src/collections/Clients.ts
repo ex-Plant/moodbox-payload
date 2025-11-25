@@ -36,6 +36,7 @@ export const Clients: CollectionConfig = {
       name: 'email',
       type: 'email',
       label: 'Email',
+      unique: true,
     },
     {
       name: 'company_name',
