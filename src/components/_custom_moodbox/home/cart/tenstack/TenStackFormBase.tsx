@@ -32,7 +32,6 @@ export function TenStackFormBase({
   controlFirst,
   horizontal,
   showError,
-  className,
 }: FormBaseProps) {
   const field = useFieldContext()
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
@@ -46,7 +45,7 @@ export function TenStackFormBase({
 
   return (
     <Field
-      className={cn(`gap-0`, className)}
+      className={cn(`gap-0`)}
       data-invalid={isInvalid}
       orientation={horizontal ? 'horizontal' : undefined}
     >

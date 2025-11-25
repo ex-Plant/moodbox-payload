@@ -7,7 +7,7 @@ export default function DownloadNewsletterUsers() {
   async function exportClients() {
     setError(false)
     try {
-      handleFileDownload('/api/export/newsletter', 'Lista klientów')
+      handleFileDownload('/api/export/newsletter', 'Lista newsletter')
     } catch (e) {
       console.error(e)
       setError(true)

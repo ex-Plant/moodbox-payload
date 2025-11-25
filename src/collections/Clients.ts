@@ -14,12 +14,18 @@ export const Clients: CollectionConfig = {
   },
   admin: {
     components: {
-      // beforeList: ['@/components/CustomAdminHeader'],
-      // beforeListTable: ['@/components/CustomAdminHeader'],
       afterListTable: ['@/components/DownloadClients'],
     },
-    useAsTitle: 'company_name',
-    defaultColumns: ['company_name', 'email', 'city', 'project_type', 'createdAt'],
+
+    useAsTitle: 'email',
+    defaultColumns: [
+      'email',
+      'company_name',
+      'project_type',
+      'projects_per_year',
+      'city',
+      'project_budget',
+    ],
   },
   access: {
     read: () => true,
@@ -27,31 +33,20 @@ export const Clients: CollectionConfig = {
   },
   fields: [
     {
-      name: 'company_name',
-      type: 'text',
-      label: 'Nazwa firmy',
-      // Removed 'required: true' to allow empty strings
-    },
-    {
       name: 'email',
       type: 'email',
       label: 'Email',
-      // Removed 'required: true' to allow empty strings
     },
+    {
+      name: 'company_name',
+      type: 'text',
+      label: 'Nazwa firmy',
+    },
+
     {
       name: 'projects_per_year',
       type: 'text',
       label: 'Projekty rocznie',
-    },
-    {
-      name: 'nip',
-      type: 'text',
-      label: 'NIP',
-    },
-    {
-      name: 'website',
-      type: 'text',
-      label: 'Strona www',
     },
     {
       name: 'city',
@@ -60,7 +55,7 @@ export const Clients: CollectionConfig = {
     },
     {
       name: 'project_type',
-      type: 'text', // Changed from 'select' to 'text' to accept any string including empty
+      type: 'text',
       label: 'Typ projektu',
     },
     {
@@ -70,7 +65,7 @@ export const Clients: CollectionConfig = {
     },
     {
       name: 'project_stage',
-      type: 'text', // Changed from 'select' to 'text' to accept any string including empty
+      type: 'text',
       label: 'Etap projektu',
     },
     {
@@ -84,24 +79,38 @@ export const Clients: CollectionConfig = {
       label: 'Budżet projektu',
     },
     {
-      name: 'consents',
-      type: 'group',
-      label: 'Zgody',
-      fields: [
-        {
-          name: 'consent1',
-          type: 'checkbox',
-          label: 'Zgoda na przetwarzanie danych',
-        },
-        {
-          name: 'consent2',
-          type: 'checkbox',
-          label: 'Zgoda na kontakt marketingowy',
-        },
-      ],
+      name: 'nip',
+      type: 'text',
+      label: 'NIP',
     },
     {
+      name: 'website',
+      type: 'text',
+      label: 'Strona www',
+    },
+    // {
+    //   name: 'consents',
+    //   type: 'group',
+    //   label: 'Zgody',
+    //   fields: [
+    //     {
+    //       name: 'consent1',
+    //       type: 'checkbox',
+    //       label: 'Zgoda na przetwarzanie danych',
+    //     },
+    //     {
+    //       name: 'consent2',
+    //       type: 'checkbox',
+    //       label: 'Zgoda na kontakt marketingowy',
+    //     },
+    //   ],
+    // },
+    {
       name: 'createdAt',
+      label: {
+        pl: 'Utworzono',
+        en: 'Created At',
+      },
       type: 'date',
       admin: {
         readOnly: true,

@@ -38,8 +38,8 @@ export default function FooterClient({ footerItems }: { footerItems: Footer['nav
             </div>
           </Link>
         </FooterCat>
-        <div className={` xl:col-start-9 xl:col-span-4`}>
-          <FooterCat title={'Newsletter'} className={'pl-4 '} />
+        <div className={` xl:col-start-9 xl:col-span-4 pr-4`}>
+          <FooterCat title={'Newsletter'} className={'xl:px-4 '} />
           <NewsletterForm />
         </div>
       </div>

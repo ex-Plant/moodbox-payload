@@ -578,21 +578,17 @@ export interface User {
  */
 export interface Client {
   id: number;
-  company_name?: string | null;
   email?: string | null;
+  company_name?: string | null;
   projects_per_year?: string | null;
-  nip?: string | null;
-  website?: string | null;
   city?: string | null;
   project_type?: string | null;
   completion_date?: string | null;
   project_stage?: string | null;
   project_area?: string | null;
   project_budget?: string | null;
-  consents?: {
-    consent1?: boolean | null;
-    consent2?: boolean | null;
-  };
+  nip?: string | null;
+  website?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -1117,23 +1113,17 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "clients_select".
  */
 export interface ClientsSelect<T extends boolean = true> {
-  company_name?: T;
   email?: T;
+  company_name?: T;
   projects_per_year?: T;
-  nip?: T;
-  website?: T;
   city?: T;
   project_type?: T;
   completion_date?: T;
   project_stage?: T;
   project_area?: T;
   project_budget?: T;
-  consents?:
-    | T
-    | {
-        consent1?: T;
-        consent2?: T;
-      };
+  nip?: T;
+  website?: T;
   createdAt?: T;
   updatedAt?: T;
 }

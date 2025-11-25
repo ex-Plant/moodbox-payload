@@ -32,6 +32,10 @@ export const Newsletter: CollectionConfig = {
     },
     {
       name: 'createdAt',
+      label: {
+        pl: 'Utworzono',
+        en: 'Created At',
+      },
       type: 'date',
       admin: {
         readOnly: true,
