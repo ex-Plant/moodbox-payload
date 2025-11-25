@@ -1,6 +1,6 @@
 import { useAppForm } from '@/lib/hooks/tenStackFormHooks'
 import z from 'zod'
-import { toastMessage, ToastType } from '../lib/toasts/toasts'
+import { toastMessage, ToastPosition, ToastType } from '../lib/toasts/toasts'
 import updateNewsLetter from '../app/actions/updateNewsletter'
 
 const inputSchema = z.object({
@@ -20,14 +20,18 @@ export default function NewsletterForm() {
     onSubmit: async (data) => {
       try {
         await updateNewsLetter(data.value)
-        toastMessage(``, ToastType.Success)
+        toastMessage(
+          `✌️ Dzięki - email zapisany`,
+          ToastType.Success,
+          ToastPosition.BottomCenter,
+          5000,
+        )
       } catch (e) {
-        toastMessage(`Coś poszlo nie tak `, ToastType.Error)
-        console.log('NewsletterForm.tsx:20 - e:', e)
+        const message = e instanceof Error ? e.message : `Coś poszlo nie tak: ${e}`
+        toastMessage(message, ToastType.Error, ToastPosition.BottomCenter, 10000)
       }
     },
   })
-
   return (
     <form
       onSubmit={(e) => {

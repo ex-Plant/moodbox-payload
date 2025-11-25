@@ -1,4 +1,5 @@
 // src/collections/Clients.ts
+import { truncate } from 'fs'
 import { CollectionConfig } from 'payload'
 
 export const Newsletter: CollectionConfig = {
@@ -29,6 +30,7 @@ export const Newsletter: CollectionConfig = {
       name: 'email',
       type: 'email',
       label: 'Email',
+      unique: true,
     },
     {
       name: 'createdAt',
