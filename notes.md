@@ -96,3 +96,33 @@ BRAND NEW PAGE + CHECKLIST
 - BLOCK ROBOTS
 
 -- access control - who can delete users and so on
+
+INCLUDE IN STARTER
+
+- CLASS SORTING TAILWIND
+- NEXT IMG SETTINGS
+- NEXT IMG PLACEHOLDER
+
+Dodawanie webhooka shopify:
+
+Replace ngrok address with real address
+
+curl -X POST "https://moodboxpl.myshopify.com/admin/api/2024-10/webhooks.json" \
+ -H "X-Shopify-Access-Token: <YOUR_ADMIN_API_ACCESS_TOKEN>" \
+ -H "Content-Type: application/json" \
+ -d '{
+"webhook": {
+"topic": "orders/create",
+"address": "https://feldspathic-trichotomic-ty.ngrok-free.dev/api/webhooks",
+"format": "json"
+}
+}'
+
+Weryfikacja:
+curl -X GET "https://moodboxpl.myshopify.com/admin/api/2024-10/webhooks.json" \
+ -H "X-Shopify-Access-Token: <YOUR_ADMIN_API_ACCESS_TOKEN>"
+
+Test:
+curl -X POST \
+ "https://moodboxpl.myshopify.com/admin/api/2025-01/webhooks/2093890077019/test.json" \
+ -H "X-Shopify-Access-Token: <YOUR_ADMIN_API_ACCESS_TOKEN>"

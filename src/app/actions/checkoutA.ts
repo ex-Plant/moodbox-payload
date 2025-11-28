@@ -4,7 +4,7 @@ import { createCart, getProductByHandle } from '@/lib/shopify/api'
 import { redirect } from 'next/navigation'
 
 export async function checkoutA(cartItems: string[], formData: CartSchemaT) {
-  console.log(formData, 'formData')
+  // console.log(formData, 'formData')
 
   try {
     cartSchema.parse(formData)
@@ -36,12 +36,12 @@ export async function checkoutA(cartItems: string[], formData: CartSchemaT) {
     quantity: 1,
   }))
 
-  // todo add again after testing
+  // TODO add again after testing
   // Add the flat fee product variant
-  lineItems.push({
-    merchandiseId: flatFeeProduct.variants.edges[0].node.id,
-    quantity: 1,
-  })
+  // lineItems.push({
+  //   merchandiseId: flatFeeProduct.variants.edges[0].node.id,
+  //   quantity: 1,
+  // })
 
   // add custom attributes
   // console.log('📦 lineItems before createCart:', lineItems);

@@ -25,6 +25,16 @@ import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
+  labels: {
+    plural: {
+      pl: 'Strony',
+      en: 'Pages',
+    },
+    singular: {
+      pl: 'Strona',
+      en: 'Użytkownik',
+    },
+  },
   access: {
     create: authenticated,
     delete: authenticated,

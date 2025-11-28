@@ -7,6 +7,7 @@ import FooterLink from './FooterLink'
 import { Footer } from '@/payload-types'
 import Link from 'next/link'
 import { cn } from '@/utilities/ui'
+import NewsletterForm from './NewsletterForm'
 
 export default function FooterClient({ footerItems }: { footerItems: Footer['navItems'] }) {
   return (
@@ -28,16 +29,19 @@ export default function FooterClient({ footerItems }: { footerItems: Footer['nav
         </FooterCat>
         <FooterCat title={'Kontakt'} className={``}>
           <Link href={'mailto:hello@moodbox.pl'} className={`font-normal`}>
-            <span
+            <div
               className={cn(
                 `hover:border-mood-dark-brown border-b border-transparent delay-200 duration-200 pb-0.5 lowercase`,
               )}
             >
               hello@moodbox.pl
-            </span>
+            </div>
           </Link>
         </FooterCat>
-        <FooterCat title={'Newsletter'} className={'xl:col-start-9'} />
+        <div className={` xl:col-start-9 xl:col-span-4 pr-4`}>
+          <FooterCat title={'Newsletter'} className={'xl:px-4 '} />
+          <NewsletterForm />
+        </div>
       </div>
       <div className={`pointer-events-none flex items-center justify-center py-4 xl:hidden`}>
         <LogoSvg asButon={true} />

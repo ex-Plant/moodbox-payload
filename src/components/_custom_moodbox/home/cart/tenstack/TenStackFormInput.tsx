@@ -17,6 +17,7 @@ export function TenStackFormInput(props: FormControlProps) {
         onChange={(e) => field.handleChange(e.target.value)}
         aria-invalid={isInvalid}
         type={props.type}
+        className={props.className}
       />
     </TenStackFormBase>
   )

@@ -14,10 +14,13 @@ import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { en } from '@payloadcms/translations/languages/en'
 import { pl } from '@payloadcms/translations/languages/pl'
 import { Users } from './collections/Users'
+import { Clients } from './collections/Clients'
+import { Newsletter } from './collections/Newsletter'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
+// import { CustomAdminHeader } from './components/CustomAdminHeader'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -57,6 +60,7 @@ export default buildConfig({
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       // beforeLogin: ['@/components/BeforeLogin'],
+      // header: ['@/components/CustomAdminHeader'],
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -93,7 +97,7 @@ export default buildConfig({
     },
     migrationDir: './src/migrations',
   }),
-  collections: [Pages, Media, Users],
+  collections: [Pages, Media, Users, Clients, Newsletter],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
 

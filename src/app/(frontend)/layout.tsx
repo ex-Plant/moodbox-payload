@@ -14,6 +14,7 @@ import { FooterServer } from '@/Footer/FooterServer'
 import { getServerSideURL } from '@/utilities/getURL'
 import { ToastContainer } from 'react-toastify'
 import './globals.css'
+import { RootLayoutDebugWrapper } from '../../components/DebugTools/RootLayoutDebugWrapper'
 
 const inclusive_Sans = Inclusive_Sans({
   variable: '--font-sans',
@@ -36,17 +37,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body
-        className={cn(
-          ` flex min-h-screen flex-col antialiased`,
-          ` relative  bg-background text-foreground  `,
-          // `[&_*]:outline [&_*]:outline-[1px] [&_*]:outline-pink-400`
-        )}
+        className={`flex min-h-screen flex-col antialiased relative bg-background text-foreground`}
       >
         <Providers>
-          <Header />
-          {children}
-
-          <FooterServer />
+          <RootLayoutDebugWrapper>
+            <Header />
+            {children}
+            <FooterServer />
+          </RootLayoutDebugWrapper>
           <ToastContainer />
         </Providers>
       </body>

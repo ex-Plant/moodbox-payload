@@ -10,8 +10,6 @@ import { notFound } from 'next/navigation'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { cache } from 'react'
 import PageClient from './page.client'
-import { motion } from 'framer-motion'
-import FramerAnimationTests from '@/components/framerAnimationTests'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -58,8 +56,6 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   if (!page) return notFound()
 
-  return <FramerAnimationTests />
-
   return (
     <main className={cn(page.textPage && 'mt-32')}>
       <PageClient />
@@ -68,7 +64,6 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       {!page.textPage && <Hero {...page.hero} />}
 
-      <div className="flex items-center justify-"></div>
       <RenderBlocks blocks={page.layout} textPage={!!page.textPage} />
     </main>
   )
