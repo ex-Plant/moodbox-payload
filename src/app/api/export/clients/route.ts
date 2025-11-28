@@ -21,9 +21,7 @@ export async function GET() {
     if (!data.length) return ''
 
     // Get headers from the first object
-    const originalColNames = Object.keys(data[0]).filter(
-      (name) => name !== 'consents' && name !== 'updatedAt',
-    )
+    const originalColNames = Object.keys(data[0]).filter((name) => name !== 'updatedAt')
 
     const colNames: string[] = originalColNames.map(
       (field) => CLIENT_FIELD_LABELS[field] || field, // fallback to field name if no mapping

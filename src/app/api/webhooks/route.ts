@@ -2,137 +2,145 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { createHmac, timingSafeEqual } from 'crypto'
+import { ATTRIBUTE_KEY_PL } from '../../../lib/CartSchema'
 
+/* 
+      NextResponse.json() builds a JSON response body with:
+      { "message": "Unauthorized: Missing Signature" }
+      new NextResponse('Unauthorized: Missing Signature', { status: 401 }) sends a plain text payload:
+      Unauthorized: Missing Signature
+      In webhook endpoints, it’s common and preferable to return plain text (or even an empty body) for error responses: 
+      - faster, more performant
+      - shopify expects status code only, body is irrelevant
+      */
 export const dynamic = 'force-dynamic'
 
+type ShopifyOrder = {
+  id?: number
+  email?: string
+  note_attributes?: Array<{ name: string; value: string }>
+}
+
 export async function POST(request: NextRequest) {
-  const payload = await getPayload({ config: configPromise })
-
-  const topic = request.headers.get('x-shopify-topic')
-  const hmacHeader = request.headers.get('x-shopify-hmac-sha256')
   const secret = process.env.SHOPIFY_API_SECRET
-
   if (!secret) {
     console.error('❌ SHOPIFY_API_SECRET is not defined')
     return new NextResponse('Server Configuration Error', { status: 500 })
   }
 
-  // Validate webhooks - CRITICAL for security
+  const topic = request.headers.get('x-shopify-topic')
+  const hmacHeader = request.headers.get('x-shopify-hmac-sha256')
+
   if (!hmacHeader) {
-    console.warn('⚠️ Missing HMAC header')
-    return new NextResponse('Unauthorized', { status: 401 })
+    return new NextResponse('Unauthorized Missing HMAC header', { status: 401 })
   }
 
-  // Get raw body for HMAC calculation
-  const rawBody = await request.text()
+  // Security verification
+  try {
+    const rawBody = await request.text()
 
-  // DEBUG: Log what we're working with
-  console.log('🔍 DEBUG INFO:')
-  console.log('Secret length:', secret?.length)
-  console.log('Secret starts with:', secret?.substring(0, 10) + '...')
-  console.log('HMAC header:', hmacHeader)
-  console.log('Raw body length:', rawBody.length)
-  console.log('Raw body preview:', rawBody.substring(0, 100) + '...')
+    const generatedHash = createHmac('sha256', secret).update(rawBody, 'utf8').digest('base64')
 
-  // Create digests
-  const digest = createHmac('sha256', secret).update(rawBody, 'utf8').digest('base64')
+    const digest = Buffer.from(generatedHash, 'utf8')
+    const checksum = Buffer.from(hmacHeader, 'utf8')
 
-  console.log('Our calculated digest:', digest)
+    // Combined check: length match first (fast), then content match (safe)
+    if (
+      digest.length !== checksum.length ||
+      !timingSafeEqual(new Uint8Array(digest), new Uint8Array(checksum))
+    ) {
+      console.warn('🚨 Shopify HMAC mismatch')
+      return new NextResponse('Unauthorized', { status: 401 })
+    }
 
-  const digestBuf = Buffer.from(digest, 'base64')
-  const hmacBuf = Buffer.from(hmacHeader, 'base64')
+    const body = JSON.parse(rawBody)
 
-  // Check lengths first (timingSafeEqual throws if lengths differ)
-  if (digestBuf.length !== hmacBuf.length) {
-    console.warn('🚨 Shopify HMAC length mismatch')
-    return new NextResponse('Unauthorized', { status: 401 })
+    console.log('✅ Webhook verified:', topic)
+    console.log('Order data:', JSON.stringify(body, null, 2))
+
+    if (topic === 'orders/create') {
+      await handleOrderCreate(body)
+    }
+
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error(`❌ Webhook security verfification failed:`, error)
+
+    return new NextResponse('Internal Server Error', { status: 500 })
+  }
+}
+
+async function handleOrderCreate(order: ShopifyOrder) {
+  const payload = await getPayload({ config: configPromise })
+
+  /*  1. Extract and Normalize Attributes from 
+    { "name": "Nazwa firmy / pracowni", "value": "ABC Studio" },
+    To an object
+    {
+      "Nazwa firmy / pracowni": "ABC Studio",
+      "E-mail": "test@example.com",
+      "NIP": "1234567890"
+    }
+  */
+
+  const rawAttributes = (order?.note_attributes || []).reduce(
+    (acc, attr) => {
+      acc[attr.name] = attr.value
+      return acc
+    },
+    {} as Record<string, string>,
+  )
+
+  // Prioritize "E-mail" attribute, fallback to order email
+  const email = rawAttributes['E-mail'] || order.email
+
+  if (!email) {
+    console.warn('⚠️ Webhook skipped: No email found in order.')
+    return
   }
 
-  // Use timing-safe comparison to prevent timing attacks
-  // wrapping in Uint8Array fixes the 'Buffer not assignable to Uint8Array' TS error
-  const verified = timingSafeEqual(new Uint8Array(digestBuf), new Uint8Array(hmacBuf))
+  const clientData: Record<string, unknown> = { email }
 
-  if (!verified) {
-    console.warn('🚨 Webhook verification failed!')
-    return new NextResponse('Unauthorized', { status: 401 })
-  }
+  for (const [payloadKey, shopifyKey] of Object.entries(ATTRIBUTE_KEY_PL)) {
+    if (payloadKey === 'email') continue
 
-  // Parse body only after verification
-  const body = JSON.parse(rawBody)
-
-  console.log('✅ Webhook received:', topic)
-  console.log('Order data:', JSON.stringify(body, null, 2))
-
-  if (topic === 'orders/create') {
-    try {
-      const order = body
-
-      // Extract custom attributes from the order
-      const customAttributes = order.note_attributes || []
-      const attributeMap: Record<string, any> = {}
-
-      // Convert array of attributes to key-value pairs3
-      customAttributes.forEach((attr: { name: string; value: string }) => {
-        attributeMap[attr.name] = attr.value
-      })
-
-      // Parse consents if it's a JSON string
-      let consents = attributeMap.consents
-      if (typeof consents === 'string') {
-        try {
-          consents = JSON.parse(consents)
-        } catch {
-          consents = {}
-        }
-      }
-
-      // Create client record
-      const clientData = {
-        company_name: attributeMap['Nazwa firmy / pracowni'] || 'test_name',
-        email: attributeMap['E-mail'] || order.email || '',
-        projects_per_year: attributeMap['Liczba projektów rocznie'] || '',
-        nip: attributeMap['NIP'] || '',
-        website: attributeMap['Strona WWW'] || '',
-        city: attributeMap['Miejscowość'] || '',
-        project_type: attributeMap['Typ projektu'] || '',
-        completion_date: attributeMap['Termin realizacji (MM/RR)'] || '',
-        project_stage: attributeMap['Etap projektu'] || '',
-        project_area: attributeMap['Metraż'] || '',
-        project_budget: attributeMap['Budżet'] || '',
-      }
-
-      console.log('=== SAVING CLIENT DATA ===')
-      console.log(JSON.stringify(clientData, null, 2))
-
-      const existingClient = await payload.find({
-        collection: 'clients',
-        where: {
-          email: {
-            equals: clientData.email,
-          },
-        },
-        limit: 1,
-      })
-
-      if (existingClient.docs.length > 0) {
-        await payload.update({
-          collection: 'clients',
-          id: existingClient.docs[0].id,
-          data: clientData,
-        })
-        console.log('✅ Existing client updated successfully')
-      } else {
-        await payload.create({
-          collection: 'clients',
-          data: clientData,
-        })
-        console.log('✅ Client data saved successfully')
-      }
-    } catch (error) {
-      console.error('❌ Error saving client data:', error)
-      return NextResponse.json({ error: 'Failed to save client data' }, { status: 500 })
+    if (rawAttributes[shopifyKey]) {
+      clientData[payloadKey] = rawAttributes[shopifyKey]
     }
   }
 
-  return NextResponse.json({ success: true })
+  console.log(`Processing Client: ${clientData.email}`)
+
+  try {
+    // Try to Update First
+    // Since 'email' is unique and indexed, this is very fast.
+    const updateResult = await payload.update({
+      collection: 'clients',
+      where: {
+        email: { equals: clientData.email },
+      },
+      data: clientData,
+    })
+
+    if (updateResult.docs.length > 0) {
+      console.log(`✅ Client updated: ${updateResult.docs[0].id}`)
+      return
+    }
+
+    // If updateResult.docs is empty, the user doesn't exist. Create them.
+    await payload.create({
+      collection: 'clients',
+      data: clientData,
+    })
+    console.log(`✅ New client created`)
+  } catch (error: unknown) {
+    // 3. Race Condition Handling
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    if (errorMessage.includes('unique')) {
+      console.log('ℹ️ Race condition hit: Client was created by another process. Skipping.')
+    } else {
+      console.error(`❌ Error saving client ${clientData.email}:`, error)
+      throw error // Re-throw real errors so Shopify knows to retry
+    }
+  }
 }
