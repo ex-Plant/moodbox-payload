@@ -14,7 +14,7 @@ type RootLayoutDebugWrapperPropsT = {
 export const RootLayoutDebugWrapper = ({ children }: RootLayoutDebugWrapperPropsT) => {
   const { layersVisible, outlinesVisible, gridVisible } = useDebugTools()
 
-  const isDev = process.env.NODE_ENV == 'development'
+  const isDev = process.env.NODE_ENV === 'development'
 
   return (
     <>

@@ -8,7 +8,6 @@ import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { draftMode } from 'next/headers'
 
 import { FooterServer } from '@/Footer/FooterServer'
 import { getServerSideURL } from '@/utilities/getURL'

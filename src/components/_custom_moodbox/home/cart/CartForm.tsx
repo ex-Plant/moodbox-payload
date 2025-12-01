@@ -1,7 +1,10 @@
+'use client'
+
 import { SelectItem } from '@/components/ui/select'
+
 import { useAppForm } from '@/lib/hooks/tenStackFormHooks'
 import useCart from '@/lib/hooks/useCart'
-import { cartSchema, CartSchemaT } from '@/lib/CartSchema'
+import { cartSchema } from '@/lib/CartSchema'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import { Button } from '@/components/ui/button'
 import LogoSvg from '@/components/_custom_moodbox/common/Logo'
@@ -14,34 +17,41 @@ import { CircleHelp as CircleQuestionMark } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 import { ShopifyCartBlock } from '@/payload-types'
 import RichText from '@/components/RichText'
+import useCartForm from '../../../../lib/hooks/useCartForm'
+import { useEffect, useRef } from 'react'
+
+// const defaultFormData: CartSchemaT = {
+//   company_name: '',
+//   email: '',
+//   projects_per_year: '',
+//   nip: '',
+//   website: '',
+//   city: '',
+//   project_type: '',
+//   completion_date: '',
+//   project_stage: '',
+//   project_area: '',
+//   project_budget: '',
+//   consents: {
+//     consent1: false,
+//     consent2: false,
+//   },
+// }
 
 export default function CartForm({ ...props }: ShopifyCartBlock) {
   const { cartItems } = useCart()
+  const { formData, updateFormData } = useCartForm()
 
   const form = useAppForm({
-    defaultValues: {
-      company_name: '',
-      email: '',
-      projects_per_year: '',
-      nip: '',
-      website: '',
-      city: '',
-      project_type: '',
-      completion_date: '',
-      project_stage: '',
-      project_area: '',
-      project_budget: '',
-      consents: {
-        consent1: false,
-        consent2: false,
-      },
-    } satisfies CartSchemaT as CartSchemaT,
+    defaultValues: formData,
+    // defaultValues: defaultFormData,
     validators: {
       onSubmit: cartSchema,
     },
     onSubmit: async (data) => {
       // console.log('🚀 formData: ', data.value);
 
+      updateFormData(data.value)
       const res = await checkoutA(cartItems, data.value)
       console.log('res', res)
 
@@ -53,6 +63,24 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
       return false
     },
   })
+
+  // Subscribe to form changes and update Zustand store in real-time
+  const formValues = useStore(form.store, (state) => state.values)
+
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    if (!formValues) return
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    //
+    timeoutRef.current = setTimeout(() => {
+      updateFormData(formValues)
+    }, 1000)
+    //
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
+  }, [formValues, updateFormData])
 
   const emptyCart = cartItems.length < 1
   const isSubmitting = useStore(form.store, (s) => s.isSubmitting)
@@ -251,7 +279,7 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
       </div>
       {isSubmitting && (
         <div className={`pointer-events-none absolute inset-0 flex items-center justify-center`}>
-          <LogoSvg asButon={false} className={`animate-bounce duration-500`} />
+          <LogoSvg asButon={false} className={`animate-bounce `} />
         </div>
       )}
     </form>

@@ -126,3 +126,5 @@ Test:
 curl -X POST \
  "https://moodboxpl.myshopify.com/admin/api/2025-01/webhooks/2093890077019/test.json" \
  -H "X-Shopify-Access-Token: <YOUR_ADMIN_API_ACCESS_TOKEN>"
+
+test locally - ngrok http 3000
