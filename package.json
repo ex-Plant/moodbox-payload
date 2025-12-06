@@ -47,6 +47,7 @@
     "@tanstack/react-form": "^1.23.8",
     "@types/nodemailer": "^7.0.3",
     "@vercel/blob": "^2.0.0",
+    "babel-plugin-react-compiler": "^1.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
