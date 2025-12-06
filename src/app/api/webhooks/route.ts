@@ -39,15 +39,14 @@ export async function POST(request: NextRequest) {
   try {
     const rawBody = await request.text()
 
-    const generatedHash = createHmac('sha256', secret).update(rawBody, 'utf8').digest('base64')
+    const generatedHash = createHmac('sha256', secret).update(rawBody, 'utf8').digest()
 
-    const digest = Buffer.from(generatedHash, 'utf8')
-    const checksum = Buffer.from(hmacHeader, 'utf8')
+    const checksum = Buffer.from(hmacHeader, 'base64')
 
-    // Combined check: length match first (fast), then content match (safe)
+    // length match first (fast, cheap check it it breks no point doing timingSafeEqual), then content match (safe)
     if (
-      digest.length !== checksum.length ||
-      !timingSafeEqual(new Uint8Array(digest), new Uint8Array(checksum))
+      generatedHash.length !== checksum.length ||
+      !timingSafeEqual(new Uint8Array(generatedHash), new Uint8Array(checksum))
     ) {
       console.warn('🚨 Shopify HMAC mismatch')
       return new NextResponse('Unauthorized', { status: 401 })

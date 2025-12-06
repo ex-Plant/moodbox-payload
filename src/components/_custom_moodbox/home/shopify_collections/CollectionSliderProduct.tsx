@@ -11,6 +11,7 @@ type PropsT = {
   fullScreen: boolean
   toggleFullScreen: () => void
   setImgHeight: (height: number) => void
+  setShowItemsLimitInfo: (show: boolean) => void
 }
 
 export default function CollectionSliderProduct({
@@ -19,6 +20,7 @@ export default function CollectionSliderProduct({
   fullScreen,
   toggleFullScreen,
   setImgHeight,
+  setShowItemsLimitInfo,
 }: PropsT) {
   const [selected, setSelected] = useState<ProductVariantT>(slide.variants.edges[0].node)
 
@@ -38,6 +40,7 @@ export default function CollectionSliderProduct({
           selectable={selectable}
           fullScreen={fullScreen}
           setImgHeight={setImgHeight}
+          setShowItemsLimitInfo={setShowItemsLimitInfo}
         />
       </div>
 

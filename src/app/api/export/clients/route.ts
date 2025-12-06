@@ -51,6 +51,8 @@ export async function GET() {
 
   const csv = convertToCSV(clients.docs)
 
+  return Response.json({})
+
   return new Response(csv, {
     headers: {
       'Content-Type': 'text/csv',

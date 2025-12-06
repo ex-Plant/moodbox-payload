@@ -30,6 +30,7 @@ export default function CollectionSlider({ slides, title, isFullScreen, initSlid
   const [fullScreenDialogOpen, setFullScreenDialogOpen] = useState(false)
   const [activeSlide, setActiveSlide] = useState(0)
   const [imgHeight, setImgHeight] = useState(0)
+  const [showItemsLimitInfo, setShowItemsLimitInfo] = useState(false)
 
   const { cartItems } = useCart()
 
@@ -92,7 +93,11 @@ export default function CollectionSlider({ slides, title, isFullScreen, initSlid
         )}
       >
         {!isFullScreen && (
-          <CollectionTitle selectedWithinCatLen={selectedWithinCatLen} title={title} />
+          <CollectionTitle
+            selectedWithinCatLen={selectedWithinCatLen}
+            title={title}
+            showItemsLimitInfo={showItemsLimitInfo}
+          />
         )}
         <div className={cn(`flex`, isFullScreen ? `mx-auto w-full items-center` : 'items-start')}>
           <CollectionSliderBtn
@@ -111,6 +116,7 @@ export default function CollectionSlider({ slides, title, isFullScreen, initSlid
                   selectable={selectedWithinCatLen < 2}
                   fullScreen={isFullScreen}
                   toggleFullScreen={() => toggle(i)}
+                  setShowItemsLimitInfo={setShowItemsLimitInfo}
                 />
               </SwiperSlide>
             ))}

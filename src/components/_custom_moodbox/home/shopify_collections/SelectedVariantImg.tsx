@@ -12,6 +12,7 @@ type PropsT = {
   variant: ProductVariantT
   selectable: boolean
   setImgHeight: (height: number) => void
+  setShowItemsLimitInfo: (show: boolean) => void
 }
 
 export default function SelectedVariantImg({
@@ -19,15 +20,20 @@ export default function SelectedVariantImg({
   fullScreen,
   selectable,
   setImgHeight,
+  setShowItemsLimitInfo,
 }: PropsT) {
   const { addCartItem, deleteCartItem, cartItems } = useCart()
   const checked = cartItems.includes(variant.id)
   const src = variant.image?.url
 
   function toggle(e: React.MouseEvent) {
-    // console.log(`toggle`);
     e.stopPropagation()
-    if (!selectable && !checked) return
+    if (!selectable && !checked) {
+      setShowItemsLimitInfo(true)
+      return
+    }
+
+    setShowItemsLimitInfo(false)
     if (checked) return deleteCartItem(variant.id)
     addCartItem(variant.id)
   }
@@ -70,25 +76,24 @@ export default function SelectedVariantImg({
         />
       )}
       {variant.availableForSale ? (
-        <Tip
-          disabled={selectable || checked}
-          content={`Możesz wybrać po dwie próbki z każdej kategorii`}
+        <div
+          role={`button`}
+          onClick={(e) => toggle(e)}
+          className={cn(
+            `absolute top-0 right-0 z-10 p-2`,
+            fullScreen && `p-4`,
+            !selectable && !checked ? `cursor-not-allowed` : 'cursor-pointer',
+          )}
         >
-          <div
-            role={`button`}
-            onClick={(e) => toggle(e)}
-            className={cn(`absolute top-0 right-0 z-10 p-2`, fullScreen && `p-4`)}
-          >
-            <Checkbox
-              className={cn(
-                `h-full w-full`,
-                fullScreen ? 'size-8 xl:size-10' : 'size-6',
-                !selectable && !checked ? `cursor-not-allowed` : 'cursor-pointer',
-              )}
-              checked={checked}
-            />
-          </div>
-        </Tip>
+          <Checkbox
+            className={cn(
+              `h-full w-full`,
+              fullScreen ? 'size-8 xl:size-10' : 'size-6',
+              !selectable && !checked ? `cursor-not-allowed` : 'cursor-pointer',
+            )}
+            checked={checked}
+          />
+        </div>
       ) : (
         <div className={cn(`absolute top-0 right-0 z-10`, fullScreen ? `p-4` : `p-2`)}>
           <Tag

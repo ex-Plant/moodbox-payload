@@ -41,11 +41,14 @@ export const Tip = ({
 
     if (event === 'mouseenter') {
       timeoutId.current = setTimeout(() => {
+        // console.log('Tip.tsx:44 - mouseenter:')
+        // console.log('Tip.tsx:45 - content:', content)
         setOpen(true)
       }, delay)
     }
 
     if (event === 'mouseleave') {
+      console.log('Tip.tsx:49 - mouseLeave:')
       setOpen(false)
       if (timeoutId.current) clearTimeout(timeoutId.current)
     }
@@ -59,7 +62,7 @@ export const Tip = ({
             tabIndex={0}
             role={`button`}
             // type="button"
-            className={cn('cursor-pointer', className)}
+            className={cn('cursor-pointer ', className)}
             onMouseEnter={(e) => handleMouseEvent(`mouseenter`, e)}
             onMouseLeave={(e) => handleMouseEvent(`mouseleave`, e)}
             onTouchStart={(e) => toggle(e)}
@@ -70,7 +73,7 @@ export const Tip = ({
         <TooltipContent
           side={side}
           className={cn(
-            `center text-xsm w-fit max-w-[300px] border bg-white`,
+            ` text-xsm w-fit max-w-[300px] border bg-white pointer-events-none`,
             contentClassName,
             !content ? 'hidden' : '',
           )}
