@@ -1,4 +1,4 @@
-import { Tip } from '../../../ui/Tip'
+import { useShopifyCollectionCtx } from '@/providers/ShopifyCollectionCtx/ShopifyCollectionsProvider'
 
 type PropsT = {
   title: string
@@ -11,6 +11,7 @@ export default function CollectionTitle({
   selectedWithinCatLen,
   showItemsLimitInfo,
 }: PropsT) {
+  const { limitTxt } = useShopifyCollectionCtx()
   return (
     <header
       className={`text-mood-dark-gray text-md pb-6 lg:text-[1.5rem] xl:pl-4 relative min-h-10 `}
@@ -20,9 +21,7 @@ export default function CollectionTitle({
         {selectedWithinCatLen > 1 && <span className={`mx-2`}>{selectedWithinCatLen} / 2</span>}
       </h3>
       {showItemsLimitInfo && (
-        <span className={`text-base absolute bottom-[6px] xl:pl-4 left-0 `}>
-          Możesz wybrać maksymalnie dwie próbki z każdej kategorii
-        </span>
+        <span className={`text-base absolute bottom-[6px] xl:pl-4 left-0 `}>{limitTxt}</span>
       )}
     </header>
   )

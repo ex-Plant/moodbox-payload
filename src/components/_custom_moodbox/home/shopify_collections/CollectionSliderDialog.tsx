@@ -6,23 +6,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from '../../../ui/dialog'
-import { Dispatch, SetStateAction } from 'react'
 import { ProductT } from '@/lib/shopify/types'
+import { useShopifyCollectionCtx } from '../../../../providers/ShopifyCollectionCtx/ShopifyCollectionsProvider'
 
 type SliderDialogT = {
-  fullScreenDialogOpen: boolean
-  setFullScreenDialogOpen: Dispatch<SetStateAction<boolean>>
   title: string
   slides: ProductT[]
   initSlide: number
 }
-export default function CollectionSliderDialog({
-  setFullScreenDialogOpen,
-  fullScreenDialogOpen,
-  title,
-  slides,
-  initSlide,
-}: SliderDialogT) {
+export default function CollectionSliderDialog({ title, slides, initSlide }: SliderDialogT) {
+  const { fullScreenDialogOpen, setFullScreenDialogOpen } = useShopifyCollectionCtx()
   return (
     <Dialog open={fullScreenDialogOpen} onOpenChange={setFullScreenDialogOpen}>
       <DialogContent className={`hidden md:block `}>

@@ -427,6 +427,7 @@ export interface DelimiterBlock {
  * via the `definition` "ShopifyProductsBlock".
  */
 export interface ShopifyProductsBlock {
+  'Limit info'?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'shopifyProductsBlock';
@@ -906,6 +907,7 @@ export interface DelimiterBlockSelect<T extends boolean = true> {
  * via the `definition` "ShopifyProductsBlock_select".
  */
 export interface ShopifyProductsBlockSelect<T extends boolean = true> {
+  'Limit info'?: T;
   id?: T;
   blockName?: T;
 }

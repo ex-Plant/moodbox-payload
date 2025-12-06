@@ -6,13 +6,12 @@ import useCart from '@/lib/hooks/useCart'
 import { Checkbox } from '@/components/ui/checkbox'
 import Tag from '@/components/_custom_moodbox/common/Tag'
 import SelectedVariantImgFullScreen from './SelectedImgFullScreenCheckbox'
-import { C } from 'vitest/dist/chunks/reporters.d.DL9pg5DB.js'
+import { useShopifyCollectionCtx } from '../../../../providers/ShopifyCollectionCtx/ShopifyCollectionsProvider'
 
 type PropsT = {
   fullScreen: boolean
   variant: ProductVariantT
   selectable: boolean
-  setImgHeight: (height: number) => void
   setShowItemsLimitInfo: (show: boolean) => void
 }
 
@@ -20,10 +19,10 @@ export default function SelectedVariantImg({
   variant,
   fullScreen,
   selectable,
-  setImgHeight,
   setShowItemsLimitInfo,
 }: PropsT) {
   const { addCartItem, deleteCartItem, cartItems } = useCart()
+  const { setImgHeight } = useShopifyCollectionCtx()
   const checked = cartItems.includes(variant.id)
   const src = variant.image?.url
 

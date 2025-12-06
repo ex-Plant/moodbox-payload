@@ -1,11 +1,7 @@
-import Image from 'next/image'
-import React, { useEffect, useRef } from 'react'
-import { cn } from '@/utilities/ui'
-import { ProductVariantT } from '@/lib/shopify/types'
-import useCart from '@/lib/hooks/useCart'
 import { Tip } from '@/components/ui/Tip'
 import { Checkbox } from '@/components/ui/checkbox'
-import Tag from '@/components/_custom_moodbox/common/Tag'
+import { cn } from '@/utilities/ui'
+import { useShopifyCollectionCtx } from '@/providers/ShopifyCollectionCtx/ShopifyCollectionsProvider'
 
 type PropsT = {
   selectable: boolean
@@ -13,14 +9,11 @@ type PropsT = {
 }
 
 export default function SelectedVariantImgFullScreen({ selectable, checked }: PropsT) {
+  const { limitTxt } = useShopifyCollectionCtx()
   const fullScreen = true
 
   return (
-    <Tip
-      disabled={selectable || checked}
-      content={`Możesz wybrać po dwie próbki z każdej kategorii`}
-      side="right"
-    >
+    <Tip disabled={selectable || checked} content={limitTxt} side="right">
       <Checkbox
         className={cn(
           `h-full w-full`,

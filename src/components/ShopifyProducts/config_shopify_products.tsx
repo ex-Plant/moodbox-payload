@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { pl } from 'zod/v4/locales'
 
 export const config_shopify_products: Block = {
   slug: 'shopifyProductsBlock',
@@ -13,5 +14,14 @@ export const config_shopify_products: Block = {
       pl: 'Bloki produktów Shopify',
     },
   },
-  fields: [],
+  fields: [
+    {
+      name: 'Limit info',
+      type: 'text',
+      label: {
+        pl: 'Wskazówka - przekroczony limit ',
+        en: 'Tip - limit exceeded',
+      },
+    },
+  ],
 }

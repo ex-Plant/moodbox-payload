@@ -10,7 +10,6 @@ type PropsT = {
   selectable: boolean
   fullScreen: boolean
   toggleFullScreen: () => void
-  setImgHeight: (height: number) => void
   setShowItemsLimitInfo: (show: boolean) => void
 }
 
@@ -19,11 +18,9 @@ export default function CollectionSliderProduct({
   selectable,
   fullScreen,
   toggleFullScreen,
-  setImgHeight,
   setShowItemsLimitInfo,
 }: PropsT) {
   const [selected, setSelected] = useState<ProductVariantT>(slide.variants.edges[0].node)
-
   let title = selected.title
   if (selected.title === 'Default Title') {
     title = slide.title
@@ -39,7 +36,6 @@ export default function CollectionSliderProduct({
           variant={selected}
           selectable={selectable}
           fullScreen={fullScreen}
-          setImgHeight={setImgHeight}
           setShowItemsLimitInfo={setShowItemsLimitInfo}
         />
       </div>

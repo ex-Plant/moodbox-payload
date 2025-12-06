@@ -15,6 +15,7 @@ import { cn } from '@/utilities/ui'
 import { ProductT } from '@/lib/shopify/types'
 import useCart from '@/lib/hooks/useCart'
 import { useMaxMD, useMaxSM } from '../../../../lib/hooks/useMediaQuery'
+import { useShopifyCollectionCtx } from '../../../../providers/ShopifyCollectionCtx/ShopifyCollectionsProvider'
 
 type PropsT = {
   slides: ProductT[]
@@ -27,11 +28,9 @@ type PropsT = {
 export default function CollectionSlider({ slides, title, isFullScreen, initSlide = 0 }: PropsT) {
   const [swiperIsReady, setSwiperIsReady] = useState(false)
   const [swiper, setSwiper] = useState<SwiperType | null>(null)
-  const [fullScreenDialogOpen, setFullScreenDialogOpen] = useState(false)
   const [activeSlide, setActiveSlide] = useState(0)
-  const [imgHeight, setImgHeight] = useState(0)
   const [showItemsLimitInfo, setShowItemsLimitInfo] = useState(false)
-
+  const { setFullScreenDialogOpen } = useShopifyCollectionCtx()
   const { cartItems } = useCart()
 
   const allVariants = slides.flatMap((el) => el.variants.edges)
@@ -102,13 +101,11 @@ export default function CollectionSlider({ slides, title, isFullScreen, initSlid
             onClick={() => swiper?.slidePrev()}
             isFullScreen={isFullScreen}
             direction={'left'}
-            sliderImgH={imgHeight}
           />
           <Swiper {...swiperConfig} className={`mx-9 w-full`}>
             {slides.map((slide, i) => (
               <SwiperSlide key={slide.id}>
                 <CollectionSliderProduct
-                  setImgHeight={setImgHeight}
                   slide={slide}
                   selectable={selectedWithinCatLen < 2}
                   fullScreen={isFullScreen}
@@ -124,18 +121,11 @@ export default function CollectionSlider({ slides, title, isFullScreen, initSlid
             onClick={() => swiper?.slideNext()}
             isFullScreen={isFullScreen}
             direction={'right'}
-            sliderImgH={imgHeight}
           />
         </div>
       </div>
 
-      <CollectionSliderDialog
-        title={title}
-        slides={slides}
-        fullScreenDialogOpen={fullScreenDialogOpen}
-        setFullScreenDialogOpen={setFullScreenDialogOpen}
-        initSlide={activeSlide}
-      />
+      <CollectionSliderDialog title={title} slides={slides} initSlide={activeSlide} />
     </>
   )
 }
