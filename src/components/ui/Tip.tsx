@@ -48,7 +48,6 @@ export const Tip = ({
     }
 
     if (event === 'mouseleave') {
-      console.log('Tip.tsx:49 - mouseLeave:')
       setOpen(false)
       if (timeoutId.current) clearTimeout(timeoutId.current)
     }

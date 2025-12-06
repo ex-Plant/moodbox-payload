@@ -25,7 +25,7 @@ export default function CollectionSliderDialog({
 }: SliderDialogT) {
   return (
     <Dialog open={fullScreenDialogOpen} onOpenChange={setFullScreenDialogOpen}>
-      <DialogContent className={``}>
+      <DialogContent className={`hidden md:block `}>
         <DialogHeader className={`hidden`}>
           <DialogTitle></DialogTitle>
           <DialogDescription></DialogDescription>

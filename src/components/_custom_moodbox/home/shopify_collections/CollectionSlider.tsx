@@ -14,7 +14,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { cn } from '@/utilities/ui'
 import { ProductT } from '@/lib/shopify/types'
 import useCart from '@/lib/hooks/useCart'
-import { useIsMaxMd, useIsSm } from '@/lib/hooks/useMediaQuery'
+import { useMaxMD, useMaxSM } from '../../../../lib/hooks/useMediaQuery'
 
 type PropsT = {
   slides: ProductT[]
@@ -38,8 +38,8 @@ export default function CollectionSlider({ slides, title, isFullScreen, initSlid
   const selectedWithinCatLen =
     allVariants.filter((variant) => cartItems.includes(variant.node.id)).length ?? 0
 
-  const isMaxMd = useIsMaxMd()
-  const isSm = useIsSm()
+  const isMaxMd = useMaxMD()
+  const isSm = useMaxSM()
   let numberOfVisibleSlides = 6
   let spaces = 48
   if (isSm) {
@@ -73,11 +73,9 @@ export default function CollectionSlider({ slides, title, isFullScreen, initSlid
   }
 
   function toggle(index: number) {
-    // do not open dialog on mobile
     if (isSm) return
     if (isFullScreen) return
     setFullScreenDialogOpen((curr) => !curr)
-    // swiper?.slideTo(index);
     setActiveSlide(index)
   }
 
