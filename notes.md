@@ -1,5 +1,6 @@
-revalidate by webhook ?
-two places where I am getting products
+TODO
+
+- contact from top nav makes no sense
 
 ```js
 import { getPayload } from 'payload'
@@ -15,10 +16,6 @@ await payload.sendEmail({
   html: '<h1>Hello from Payload</h1><p>This is a test email sent from Payload CMS using Nodemailer.</p>',
 })
 ```
-
-- flex
-- grid
-- DODAĆ DO TEMPLATE TAILWIND CLASS SORTING
 
 języki
 import { pl } from '@payloadcms/translations/languages/pl'
@@ -57,20 +54,14 @@ pl: 'Separatory',
 },
 
 - dodać main tag
-- translations of admin panel
 - test dark mode ?
 
 W dalszej kolejności:
 
-- users table
-- webhooks
-- optimazing getting data
 - check sitemaps
 - check static pages
-- test adding new collection with a prefix
 
 ALLLOW ROBOTS
-
 robots contents
 
 # \*
@@ -94,12 +85,10 @@ BRAND NEW PAGE + CHECKLIST
 
 - SITEMAP
 - BLOCK ROBOTS
-
--- access control - who can delete users and so on
+  -- access control - who can delete users and so on
 
 INCLUDE IN STARTER
 
-- CLASS SORTING TAILWIND
 - NEXT IMG SETTINGS
 - NEXT IMG PLACEHOLDER
 

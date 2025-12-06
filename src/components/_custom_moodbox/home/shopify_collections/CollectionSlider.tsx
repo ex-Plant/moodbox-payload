@@ -60,7 +60,6 @@ export default function CollectionSlider({ slides, title, isFullScreen, initSlid
     draggable: true,
     centeredSlides: false,
     initialSlide: initSlide,
-
     loop: slides.length > actualSlidesPerView,
     speed: 250,
     mousewheel: { forceToAxis: true, releaseOnEdges: true, sensitivity: 3.5 },
@@ -79,7 +78,7 @@ export default function CollectionSlider({ slides, title, isFullScreen, initSlid
     setActiveSlide(index)
   }
 
-  if (slides.length === 0) return <></>
+  if (slides.length < 1) return <></>
 
   return (
     <>
@@ -107,7 +106,7 @@ export default function CollectionSlider({ slides, title, isFullScreen, initSlid
           />
           <Swiper {...swiperConfig} className={`mx-9 w-full`}>
             {slides.map((slide, i) => (
-              <SwiperSlide key={i} className={``}>
+              <SwiperSlide key={slide.id}>
                 <CollectionSliderProduct
                   setImgHeight={setImgHeight}
                   slide={slide}

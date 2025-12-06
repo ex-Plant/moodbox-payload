@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from 'react'
 import { cn } from '@/utilities/ui'
 import { ProductVariantT } from '@/lib/shopify/types'
 import useCart from '@/lib/hooks/useCart'
-import { Tip } from '@/components/ui/Tip'
 import { Checkbox } from '@/components/ui/checkbox'
 import Tag from '@/components/_custom_moodbox/common/Tag'
 import SelectedVariantImgFullScreen from './SelectedImgFullScreenCheckbox'
@@ -64,10 +63,7 @@ export default function SelectedVariantImg({
           quality={100}
           ref={ref}
           fill={true}
-          className={cn(
-            `h-full w-full rounded`,
-            // variant.availableForSale ? `` : `opacity-50`
-          )}
+          className={cn(`h-full w-full rounded`)}
           src={src}
           alt={''}
           sizes={
