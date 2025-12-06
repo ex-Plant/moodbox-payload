@@ -1,112 +1,105 @@
-import { useEffect, useState } from 'react'
+'use client'
 
-// matchMedia api - The Window interface's matchMedia() method returns a new MediaQueryList object that can then be used to determine if the document matches the media query  string, as well as to monitor the document to detect when it matches (or stops matching) that media query.
+import { useMediaQuery } from 'usehooks-ts'
 
-// this is more optimal than checking for window width, as it would trigger on every pixel
-// change and here it is only triggered if the condition (match) changes
+// this is based on default tailwind screen sizes - adjust if customized
 
-/*
-* screens: {
- sm: '640px',
- md: '768px',
- lg: '1024px',
- xxl: '1440px',`
- '3xl': '1920px',
- },*/
+/** > 640px */
+export const useMinSM = () => useMediaQuery('(min-width: 640px)')
 
-type IsXxlQueryT = '(min-width:1440px)'
-type isXlQueryT = '(min-width: 1280px) and (max-width:1439px)'
-type isLgQueryT = '(min-width: 1024px) and (max-width:1279px)'
-type isMdQueryT = '(min-width: 768px) and (max-width:1023px)'
-type isSmQueryT = '(max-width: 767px)'
-type isMinLgQueryT = '(min-width: 1024px)'
-type isMaxMdQueryT = '(max-width: 1023px)'
-type isMaxLgQueryT = '(max-width: 1279px)'
+/** > 768px */
+export const useMinMD = () => useMediaQuery('(min-width: 768px)')
 
-const smQ: isSmQueryT = '(max-width: 767px)'
-const mdQ: isMdQueryT = '(min-width: 768px) and (max-width:1023px)'
-const lgQ: isLgQueryT = '(min-width: 1024px) and (max-width:1279px)'
-const xlQ: isXlQueryT = '(min-width: 1280px) and (max-width:1439px)'
-const xxlQ: IsXxlQueryT = '(min-width:1440px)'
+/** > 1024px */
+export const useMinLG = () => useMediaQuery('(min-width: 1024px)')
 
-const isMaxMdQuery: isMaxMdQueryT = '(max-width: 1023px)'
-const isMaxLgQuery: isMaxLgQueryT = '(max-width: 1279px)'
+/** > 1280px */
+export const useMinXL = () => useMediaQuery('(min-width: 1280px)')
 
-const isMinLgQuery: isMinLgQueryT = '(min-width: 1024px)'
+/** > 1536px */
+export const useMin2XL = () => useMediaQuery('(min-width: 1536px)')
 
-type QueryT =
-  | IsXxlQueryT
-  | isXlQueryT
-  | isLgQueryT
-  | isMdQueryT
-  | isSmQueryT
-  | isMinLgQueryT
-  | isMaxMdQueryT
-  | isMaxLgQueryT
+/** < 640px */
+export const useMaxSM = () => useMediaQuery('(max-width: 639px)')
 
-export default function useMediaQuery(query: QueryT) {
-  const getMatches = (q: string): boolean => {
-    if (typeof window === 'undefined') return false
-    return window.matchMedia(q).matches
-  }
-  const [matches, setMatches] = useState(getMatches(query))
+/** < 768px */
+export const useMaxMD = () => useMediaQuery('(max-width: 767px)')
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    const media = window.matchMedia(query)
+/** < 1024px */
+export const useMaxLG = () => useMediaQuery('(max-width: 1023px)')
 
-    // Set initial value
-    if (media.matches !== matches) {
-      // eslint-disable-next-line
-      setMatches(media.matches)
-    }
+/** < 1280px */
+export const useMaxXL = () => useMediaQuery('(max-width: 1279px)')
 
-    // Listener callback to update state on media change
-    const listener = () => setMatches(media.matches)
-    media.addEventListener('change', listener)
+/** < 1536px */
+export const useMax2XL = () => useMediaQuery('(max-width: 1535px)')
 
-    return () => media.removeEventListener('change', listener)
-  }, [matches, query])
+// Breakpoint range hooks - true when within that specific breakpoint range
 
-  return matches
-}
+/** 640px - 767px */
+export const useSM = () => useMediaQuery('(min-width: 640px) and (max-width: 767px)')
 
-export function useIsSm() {
-  /* max-width =  767px*/
-  return useMediaQuery(smQ)
-}
+/** 768px - 1023px */
+export const useMD = () => useMediaQuery('(min-width: 768px) and (max-width: 1023px)')
 
-export function useIsMd() {
-  /* 768 - 1023*/
-  return useMediaQuery(mdQ)
-}
+/** 1024px - 1279px */
+export const useLG = () => useMediaQuery('(min-width: 1024px) and (max-width: 1279px)')
 
-export function useIsLg() {
-  /* 1023 - 1279*/
-  return useMediaQuery(lgQ)
-}
+/** 1280px - 1535px */
+export const useXL = () => useMediaQuery('(min-width: 1280px) and (max-width: 1535px)')
 
-export function useIsXl() {
-  /* 1280 - 1439*/
-  return useMediaQuery(xlQ)
-}
+/** > 1536px */
+export const use2XL = () => useMediaQuery('(min-width: 1536px)')
 
-export function useIsXxl() {
-  /* min-width > 1440px*/
-  return useMediaQuery(xxlQ)
-}
+// Orientation
 
-export function useIsMinLg() {
-  /* min-width > 1024px*/
-  return useMediaQuery(isMinLgQuery)
-}
+/** Portrait orientation */
+export const usePortrait = () => useMediaQuery('(orientation: portrait)')
 
-export function useIsMaxMd() {
-  /* max-width =  1023px*/
-  return useMediaQuery(isMaxMdQuery)
-}
+/** Landscape orientation */
+export const useLandscape = () => useMediaQuery('(orientation: landscape)')
 
-export function useIsMaxLg() {
-  /* max-width =  1279px*/
-  return useMediaQuery(isMaxLgQuery)
-}
+// High DPI screens (retina displays)
+
+/** Retina/high-DPI display (≥2dppx) */
+export const useRetina = () => useMediaQuery('(min-resolution: 2dppx)')
+
+/** High DPI display (≥1.5x pixel ratio) */
+export const useHighDPI = () => useMediaQuery('(min-device-pixel-ratio: 1.5)')
+
+// Touch capabilities
+
+/** Touch device (coarse pointer) */
+export const useTouchDevice = () => useMediaQuery('(pointer: coarse)')
+
+/** Mouse device (fine pointer) */
+export const useMouseDevice = () => useMediaQuery('(pointer: fine)')
+
+// Dark mode preference
+
+/** User prefers dark mode */
+export const usePrefersDark = () => useMediaQuery('(prefers-color-scheme: dark)')
+
+/** User prefers light mode */
+export const usePrefersLight = () => useMediaQuery('(prefers-color-scheme: light)')
+
+// Reduced motion (for animations)
+
+/** User prefers reduced motion */
+export const usePrefersReducedMotion = () => useMediaQuery('(prefers-reduced-motion: reduce)')
+
+// Mobile devices (small screen + touch)
+
+/** Mobile device (< 768px + touch) */
+export const useMobile = () => useMediaQuery('(max-width: 767px) and (pointer: coarse)')
+
+// Tablet range (medium screen + touch)
+
+/** Tablet device (768px-1023px + touch) */
+export const useTablet = () =>
+  useMediaQuery('(min-width: 768px) and (max-width: 1023px) and (pointer: coarse)')
+
+// Desktop (large screen + mouse)
+
+/** Desktop device (≥1024px + mouse) */
+export const useDesktop = () => useMediaQuery('(min-width: 1024px) and (pointer: fine)')
