@@ -15,6 +15,7 @@ import { cn } from '@/utilities/ui'
 import { ProductT } from '@/lib/shopify/types'
 import useCart from '@/lib/hooks/useCart'
 import { useMaxLG, useMaxSM } from '../../../../lib/hooks/useMediaQuery'
+import { useShopifyCollectionCtx } from '../../../../providers/ShopifyCollectionCtx/ShopifyCollectionsProvider'
 
 type PropsT = {
   slides: ProductT[]
@@ -23,8 +24,6 @@ type PropsT = {
   initSlide?: number
   className?: string
   collectionIndex: number
-  imgHeight: number
-  setImgHeight: (height: number) => void
 }
 
 export default function CollectionSlider({
@@ -33,14 +32,14 @@ export default function CollectionSlider({
   isFullScreen,
   initSlide = 0,
   collectionIndex,
-  imgHeight,
-  setImgHeight,
 }: PropsT) {
   const [swiperIsReady, setSwiperIsReady] = useState(false)
   const [swiper, setSwiper] = useState<SwiperType | null>(null)
   const [activeSlide, setActiveSlide] = useState(0)
   const [showItemsLimitInfo, setShowItemsLimitInfo] = useState(false)
   const [fullScreenDialogOpen, setFullScreenDialogOpen] = useState(false)
+
+  const { setImgHeight } = useShopifyCollectionCtx()
 
   const { cartItems } = useCart()
 
@@ -112,7 +111,6 @@ export default function CollectionSlider({
             onClick={() => swiper?.slidePrev()}
             isFullScreen={isFullScreen}
             direction={'left'}
-            imgHeight={imgHeight}
           />
           <Swiper {...swiperConfig} className={`mx-9 w-full`}>
             {slides.map((slide, i) => {
@@ -124,6 +122,7 @@ export default function CollectionSlider({
                     selectable={selectedWithinCatLen < 2}
                     fullScreen={isFullScreen}
                     toggleFullScreen={() => toggle(i)}
+                    // this is to position arrow buttons and we need to calculate only one img hence undefined
                     setImgHeight={isHeightReference ? setImgHeight : undefined}
                     setShowItemsLimitInfo={setShowItemsLimitInfo}
                   />
@@ -137,7 +136,6 @@ export default function CollectionSlider({
             onClick={() => swiper?.slideNext()}
             isFullScreen={isFullScreen}
             direction={'right'}
-            imgHeight={imgHeight}
           />
         </div>
       </div>

@@ -1,17 +1,13 @@
-'use client'
-
-import { ProductT } from '@/lib/shopify/types'
 import ShopifyCollectionsProvider from '@/providers/ShopifyCollectionCtx/ShopifyCollectionsProvider'
-import { useState } from 'react'
 import CollectionSlider from './CollectionSlider'
+import { getCachedProductsByCollection } from '@/lib/shopify/api'
 
 type PropsT = {
-  productsByCollection: { collection: string; handle: string; products: ProductT[] }[]
   limitTxt: string
 }
 
-export default function Collections({ productsByCollection, limitTxt }: PropsT) {
-  const [imgHeight, setImgHeight] = useState(0)
+export default async function Collections({ limitTxt }: PropsT) {
+  const productsByCollection = await getCachedProductsByCollection()
 
   return (
     <section id={'collections'} className={`space-y-4 pb-20`}>
@@ -23,8 +19,6 @@ export default function Collections({ productsByCollection, limitTxt }: PropsT) 
             title={collection.collection}
             isFullScreen={false}
             collectionIndex={i}
-            setImgHeight={setImgHeight}
-            imgHeight={imgHeight}
           />
         ))}
       </ShopifyCollectionsProvider>

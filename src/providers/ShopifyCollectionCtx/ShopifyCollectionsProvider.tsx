@@ -1,13 +1,17 @@
 'use client'
 
-import React, { createContext, useContext } from 'react'
+import React, { createContext, Dispatch, SetStateAction, useContext, useState } from 'react'
 
 type ShopifyCollectionCtxType = {
   limitTxt: string
+  imgHeight: number
+  setImgHeight: Dispatch<SetStateAction<number>>
 }
 
 const ShopifyCollectionCtx = createContext<ShopifyCollectionCtxType>({
   limitTxt: '',
+  imgHeight: 0,
+  setImgHeight: () => {},
 })
 
 type PropsT = {
@@ -16,9 +20,12 @@ type PropsT = {
 }
 
 export default function ShopifyCollectionsProvider({ children, limitTxt }: PropsT) {
+  const [imgHeight, setImgHeight] = useState(0)
   return (
     <ShopifyCollectionCtx
       value={{
+        imgHeight,
+        setImgHeight,
         limitTxt: limitTxt,
       }}
     >

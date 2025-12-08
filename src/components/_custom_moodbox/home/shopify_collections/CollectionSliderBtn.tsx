@@ -1,12 +1,12 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/utilities/ui'
+import { useShopifyCollectionCtx } from '../../../../providers/ShopifyCollectionCtx/ShopifyCollectionsProvider'
 type PropsT = {
   disabled: boolean
   onClick?: () => void
   isFullScreen: boolean
   direction: 'left' | 'right'
   className?: string
-  imgHeight: number
 }
 
 export default function CollectionSliderBtn({
@@ -15,12 +15,13 @@ export default function CollectionSliderBtn({
   isFullScreen,
   direction,
   className,
-  imgHeight,
 }: PropsT) {
   const iconClass = cn(
     `stroke-mood-brown w-auto stroke-[1.5px]`,
     isFullScreen ? `h-12 xl:h-20 ` : `h-10 xl:h-14 xl:translate-y-[-28px] translate-y-[-20px]`,
   )
+
+  const { imgHeight } = useShopifyCollectionCtx()
 
   return (
     <button
