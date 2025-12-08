@@ -21,6 +21,7 @@ export const Hero: React.FC<Page['hero']> = (props) => {
         <LogoSvg asButon={false} className={`animate-bounce `} />
       </div>
       <Media
+        priority={true}
         videoClassName={`relative h-screen min-h-[600px] w-full object-cover xl:w-screen `}
         resource={media}
         className={`relative h-screen min-h-[600px] w-full object-cover xl:w-screen `}

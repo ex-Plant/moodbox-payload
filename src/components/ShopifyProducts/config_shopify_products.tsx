@@ -1,5 +1,4 @@
 import type { Block } from 'payload'
-import { pl } from 'zod/v4/locales'
 
 export const config_shopify_products: Block = {
   slug: 'shopifyProductsBlock',

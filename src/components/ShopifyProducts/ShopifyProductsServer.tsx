@@ -5,11 +5,14 @@ import { ShopifyProductsBlock } from '@/payload-types'
 export default async function ShopifyProductsServer(props: ShopifyProductsBlock) {
   const limitTxt = props['Limit info'] ?? ''
 
-  const productsByCollection = await getCachedProductsByCollection()
-
   return (
     <Suspense fallback={null}>
-      <Collections productsByCollection={productsByCollection} limitTxt={limitTxt} />
+      <FetchedCollection limitTxt={limitTxt} />
     </Suspense>
   )
+}
+
+async function FetchedCollection({ limitTxt }: { limitTxt: string }) {
+  const productsByCollection = await getCachedProductsByCollection()
+  return <Collections productsByCollection={productsByCollection} limitTxt={limitTxt} />
 }

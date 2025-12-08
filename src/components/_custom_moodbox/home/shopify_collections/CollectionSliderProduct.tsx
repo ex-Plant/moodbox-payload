@@ -11,6 +11,7 @@ type PropsT = {
   fullScreen: boolean
   toggleFullScreen: () => void
   setShowItemsLimitInfo: (show: boolean) => void
+  setImgHeight?: (scrollHeight: number) => void
 }
 
 export default function CollectionSliderProduct({
@@ -19,6 +20,7 @@ export default function CollectionSliderProduct({
   fullScreen,
   toggleFullScreen,
   setShowItemsLimitInfo,
+  setImgHeight,
 }: PropsT) {
   const [selected, setSelected] = useState<ProductVariantT>(slide.variants.edges[0].node)
   let title = selected.title
@@ -33,6 +35,7 @@ export default function CollectionSliderProduct({
         className={cn(``, !fullScreen ? `aspect-square md:cursor-zoom-in` : `w-full`)}
       >
         <SelectedVariantImg
+          setImgHeight={setImgHeight}
           variant={selected}
           selectable={selectable}
           fullScreen={fullScreen}

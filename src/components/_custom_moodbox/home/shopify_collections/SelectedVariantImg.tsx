@@ -7,12 +7,15 @@ import { Checkbox } from '@/components/ui/checkbox'
 import Tag from '@/components/_custom_moodbox/common/Tag'
 import SelectedVariantImgFullScreen from './SelectedImgFullScreenCheckbox'
 import { useShopifyCollectionCtx } from '../../../../providers/ShopifyCollectionCtx/ShopifyCollectionsProvider'
+import { g } from 'vitest/dist/chunks/suite.d.FvehnV49.js'
+import { en } from 'zod/v4/locales'
 
 type PropsT = {
   fullScreen: boolean
   variant: ProductVariantT
   selectable: boolean
   setShowItemsLimitInfo: (show: boolean) => void
+  setImgHeight?: (scrollHeight: number) => void
 }
 
 export default function SelectedVariantImg({
@@ -20,11 +23,12 @@ export default function SelectedVariantImg({
   fullScreen,
   selectable,
   setShowItemsLimitInfo,
+  setImgHeight,
 }: PropsT) {
   const { addCartItem, deleteCartItem, cartItems } = useCart()
-  const { setImgHeight } = useShopifyCollectionCtx()
   const checked = cartItems.includes(variant.id)
   const src = variant.image?.url
+  const ref = useRef<HTMLImageElement>(null)
 
   function toggle(e: React.MouseEvent) {
     e.stopPropagation()
@@ -38,28 +42,30 @@ export default function SelectedVariantImg({
     addCartItem(variant.id)
   }
 
-  const ref = useRef<HTMLImageElement>(null)
-
   useEffect(() => {
-    function getImgHeight() {
-      if (!ref.current) return
-      // console.log(ref.current.scrollHeight, '✅');
-      setImgHeight(ref.current.scrollHeight)
-    }
+    // setImgHeight is available only for first img in first slider we don't need to calculate each img
+    if (!setImgHeight || !ref.current) return
+    const element = ref.current
 
-    getImgHeight()
+    const observer = new ResizeObserver((entries) => {
+      window.requestAnimationFrame(() => {
+        const entry = entries[0]
+        if (!entry) return
 
-    window.addEventListener('resize', getImgHeight)
-    return () => {
-      window.removeEventListener('resize', getImgHeight)
-    }
+        setImgHeight(entry.target.scrollHeight)
+      })
+    })
+
+    observer.observe(element)
+
+    return () => observer.disconnect()
   }, [setImgHeight])
 
   return (
     <div className={cn(`relative mx-auto aspect-square rounded`)}>
       {src && (
         <Image
-          quality={100}
+          quality={fullScreen ? 100 : 75}
           ref={ref}
           fill={true}
           className={cn(`h-full w-full rounded`)}
@@ -67,8 +73,8 @@ export default function SelectedVariantImg({
           alt={''}
           sizes={
             fullScreen
-              ? '(max-width: 768px) 100vw, (max-width: 1280px) 40vw, 480px'
-              : '(max-width: 768px) 100vw, (max-width: 1024px) 25vw, 16vw'
+              ? '(max-width: 1280px) 40vw, 480px'
+              : '(max-width: 767px) 90vw, (max-width: 1023px) 24vw, 15vw'
           }
         />
       )}
