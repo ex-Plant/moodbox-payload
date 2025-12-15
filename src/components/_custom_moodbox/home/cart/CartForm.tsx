@@ -7,7 +7,6 @@ import useCart from '@/lib/hooks/useCart'
 import { cartSchema } from '@/lib/CartSchema'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import { Button } from '@/components/ui/button'
-import LogoSvg from '@/components/_custom_moodbox/common/Logo'
 import { Input } from '@/components/ui/input'
 import { Field, FieldError } from '@/components/ui/field'
 import { useStore } from '@tanstack/react-form'
@@ -19,6 +18,7 @@ import { ShopifyCartBlock } from '@/payload-types'
 import RichText from '@/components/RichText'
 import useCartForm from '../../../../lib/hooks/useCartForm'
 import { useEffect, useRef } from 'react'
+import LogoMoodboxSvg from '../../common/LogoMoodboxSvg'
 
 // const defaultFormData: CartSchemaT = {
 //   company_name: '',
@@ -279,7 +279,7 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
       </div>
       {isSubmitting && (
         <div className={`pointer-events-none absolute inset-0 flex items-center justify-center`}>
-          <LogoSvg asButon={false} className={`animate-bounce `} />
+          <LogoMoodboxSvg className={`animate-bounce `} />
         </div>
       )}
     </form>

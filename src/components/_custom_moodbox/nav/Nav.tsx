@@ -1,12 +1,13 @@
 'use client'
 
-import LogoSvg from '../common/Logo'
 import LogoText from '../common/LogoText'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import NavItem from './NavItem'
 import { cn } from '@/utilities/ui'
 import { Header } from '@/payload-types'
+import LogoMoodboxSvg from '../common/LogoMoodboxSvg'
+import ScrollToTopContainer from '../common/ScrollToTopContainer'
 export default function Nav({ headerData }: { headerData: Header }) {
   const [isOnTop, setIsOnTop] = useState(true)
 
@@ -51,14 +52,15 @@ export default function Nav({ headerData }: { headerData: Header }) {
               animDuration,
             )}
           >
-            <LogoSvg
+            <ScrollToTopContainer
               className={cn(
                 `h-10`,
-                isOnTop ? `translate-y-[-200px] rotate-360` : `translate-y-0 rotate-0`,
+                isOnTop ? `translate-y-[-200px] rotate-180` : `translate-y-0 rotate-0`,
                 animDuration,
               )}
-              asButon={true}
-            />
+            >
+              <LogoMoodboxSvg />
+            </ScrollToTopContainer>
           </div>
         </Link>
         <div className="flex items-center gap-8">

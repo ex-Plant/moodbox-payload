@@ -5,10 +5,10 @@ import type { Page } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
-import LogoSvg from '@/components/_custom_moodbox/common/Logo'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
+import LogoMoodboxSvg from '../_custom_moodbox/common/LogoMoodboxSvg'
 
 export const Hero: React.FC<Page['hero']> = (props) => {
   if (!props || !props.media) return null
@@ -18,7 +18,7 @@ export const Hero: React.FC<Page['hero']> = (props) => {
     <section className={`relative min-h-[600px] w-full`}>
       {/* logo in the center of the screen when the video is loading */}
       <div className={`pointer-events-none absolute inset-0 flex items-center justify-center`}>
-        <LogoSvg asButon={false} className={`animate-bounce `} />
+        <LogoMoodboxSvg className={`animate-bounce `} />
       </div>
       <Media
         priority={true}
