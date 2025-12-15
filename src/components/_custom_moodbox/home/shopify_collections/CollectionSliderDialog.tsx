@@ -29,7 +29,13 @@ export default function CollectionSliderDialog({
           <DialogTitle></DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <CollectionSlider slides={slides} title={title} isFullScreen initSlide={initSlide} />
+        <CollectionSlider
+          slides={slides}
+          title={title}
+          isFullScreen
+          initSlide={initSlide}
+          collectionIndex={-1}
+        />
       </DialogContent>
     </Dialog>
   )

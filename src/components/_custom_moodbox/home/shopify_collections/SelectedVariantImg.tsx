@@ -6,9 +6,6 @@ import useCart from '@/lib/hooks/useCart'
 import { Checkbox } from '@/components/ui/checkbox'
 import Tag from '@/components/_custom_moodbox/common/Tag'
 import SelectedVariantImgFullScreen from './SelectedImgFullScreenCheckbox'
-import { useShopifyCollectionCtx } from '../../../../providers/ShopifyCollectionCtx/ShopifyCollectionsProvider'
-import { g } from 'vitest/dist/chunks/suite.d.FvehnV49.js'
-import { en } from 'zod/v4/locales'
 
 type PropsT = {
   fullScreen: boolean
