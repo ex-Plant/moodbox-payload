@@ -14,7 +14,7 @@ import { getServerSideURL } from '@/utilities/getURL'
 import { ToastContainer } from 'react-toastify'
 import './globals.css'
 import { RootLayoutDebugWrapper } from '../../components/DebugTools/RootLayoutDebugWrapper'
-import Script from 'next/script'
+// import Script from 'next/script'
 
 const inclusive_Sans = Inclusive_Sans({
   variable: '--font-sans',

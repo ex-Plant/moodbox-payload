@@ -11,8 +11,16 @@ const nextConfig = {
   // experimental: {
   // reactCompiler: true,
   // },
+
+  serverExternalPackages: ['payload', 'pino', 'pino-pretty', 'thread-stream'],
+
   images: {
     qualities: [50, 75, 100],
+    localPatterns: [
+      {
+        pathname: '/api/media/file/**',
+      },
+    ],
     remotePatterns: [
       {
         protocol: 'https',
@@ -39,9 +47,6 @@ const nextConfig = {
     }
 
     return webpackConfig
-  },
-  eslint: {
-    // ignoreDuringBuilds: true,
   },
   typescript: {
     // ignoreBuildErrors: true,
