@@ -89,23 +89,6 @@ export const Clients: CollectionConfig = {
       type: 'text',
       label: 'Strona www',
     },
-    // {
-    //   name: 'consents',
-    //   type: 'group',
-    //   label: 'Zgody',
-    //   fields: [
-    //     {
-    //       name: 'consent1',
-    //       type: 'checkbox',
-    //       label: 'Zgoda na przetwarzanie danych',
-    //     },
-    //     {
-    //       name: 'consent2',
-    //       type: 'checkbox',
-    //       label: 'Zgoda na kontakt marketingowy',
-    //     },
-    //   ],
-    // },
     {
       name: 'createdAt',
       label: {

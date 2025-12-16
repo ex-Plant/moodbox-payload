@@ -1,6 +1,6 @@
 'use server'
 
-type ShopifyAdminResponseT<T> = {
+export type ShopifyAdminResponseT<T> = {
   data: T
   errors?: Array<{ message: string }>
 }

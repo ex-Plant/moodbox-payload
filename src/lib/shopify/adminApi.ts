@@ -4,7 +4,6 @@ import { shopifyAdminFetch } from './adminClient'
 import { GET_CUSTOMERS_WITH_ORDERS_QUERY } from './adminQueries'
 
 type ShopifyOrderLineItemT = {
-  id: string
   name: string
   quantity: number
   sku: string | null
@@ -16,21 +15,35 @@ type ShopifyOrderLineItemT = {
   }
 }
 
+type ShopifyMetafieldT = {
+  id: string
+  namespace: string
+  key: string
+  value: string
+  type: string
+}
+
 type ShopifyOrderT = {
   id: string
   name: string
   createdAt: string
   displayFinancialStatus: string
   displayFulfillmentStatus: string
-  currencyCode: string
   currentTotalPriceSet: {
     shopMoney: {
       amount: string
       currencyCode: string
     }
   }
+  customAttributes: {
+    key: string
+    value: string
+  }[]
   lineItems: {
     edges: { node: ShopifyOrderLineItemT }[]
+  }
+  metafields: {
+    edges: { node: ShopifyMetafieldT }[]
   }
 }
 
@@ -39,9 +52,17 @@ type ShopifyCustomerT = {
   email: string | null
   firstName: string | null
   lastName: string | null
-  createdAt: string
+  phone?: string | null
   state: string
   tags: string[]
+  createdAt: string
+  defaultAddress?: {
+    address1?: string | null
+    city?: string | null
+    province?: string | null
+    country?: string | null
+    zip?: string | null
+  } | null
   orders: {
     edges: { node: ShopifyOrderT }[]
   }
@@ -78,7 +99,7 @@ export async function getAllShopifyCustomersWithOrders(
 
     if (!response) break
 
-    const { edges, pageInfo } = response.data.customers
+    const { edges, pageInfo } = response.data.customers as CustomersWithOrdersResponseT['customers']
     const customersPage: ShopifyCustomerT[] = edges.map((edge) => edge.node)
     allCustomers.push(...customersPage)
 

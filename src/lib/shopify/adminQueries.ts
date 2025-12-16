@@ -8,10 +8,18 @@ export const GET_CUSTOMERS_WITH_ORDERS_QUERY = `
           email
           firstName
           lastName
-          createdAt
+          phone
           state
           tags
-          orders(first: 50) {
+          createdAt
+          defaultAddress {
+            address1
+            city
+            province
+            country
+            zip
+          }
+          orders(first: 1) {
             edges {
               node {
                 id
@@ -19,17 +27,19 @@ export const GET_CUSTOMERS_WITH_ORDERS_QUERY = `
                 createdAt
                 displayFinancialStatus
                 displayFulfillmentStatus
-                currencyCode
+                customAttributes {
+                  key
+                  value
+                }
                 currentTotalPriceSet {
                   shopMoney {
                     amount
                     currencyCode
                   }
                 }
-                lineItems(first: 50) {
+                lineItems(first: 5) {
                   edges {
                     node {
-                      id
                       name
                       quantity
                       sku
@@ -39,6 +49,17 @@ export const GET_CUSTOMERS_WITH_ORDERS_QUERY = `
                           currencyCode
                         }
                       }
+                    }
+                  }
+                }
+                metafields(first: 20) {
+                  edges {
+                    node {
+                      id
+                      namespace
+                      key
+                      value
+                      type
                     }
                   }
                 }

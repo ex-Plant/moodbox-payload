@@ -12,15 +12,24 @@ export default async function Collections({ limitTxt }: PropsT) {
   return (
     <section id={'collections'} className={`space-y-4 pb-20`}>
       <ShopifyCollectionsProvider limitTxt={limitTxt}>
-        {productsByCollection.map((collection, i) => (
-          <CollectionSlider
-            key={collection.collection}
-            slides={collection.products}
-            title={collection.collection}
-            isFullScreen={false}
-            collectionIndex={i}
-          />
-        ))}
+        {productsByCollection.map((collection, i) => {
+          if (
+            process.env.NODE_ENV !== 'development' &&
+            collection.collection.toLowerCase() === 'test'
+          ) {
+            return <></>
+          }
+
+          return (
+            <CollectionSlider
+              key={collection.collection}
+              slides={collection.products}
+              title={collection.collection}
+              isFullScreen={false}
+              collectionIndex={i}
+            />
+          )
+        })}
       </ShopifyCollectionsProvider>
     </section>
   )
