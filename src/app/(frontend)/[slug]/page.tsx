@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { cache } from 'react'
 import PageClient from './page.client'
+// import { getAllShopifyCustomersWithOrders } from '../../../lib/shopify/adminApi'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -55,6 +56,10 @@ export default async function Page({ params: paramsPromise }: Args) {
   // console.log({ slug, decodedSlug, url, page })
 
   if (!page) return notFound()
+
+  // const res = await getAllShopifyCustomersWithOrders()
+
+  // console.log(res)
 
   return (
     <main className={cn(page.textPage && 'mt-32')}>

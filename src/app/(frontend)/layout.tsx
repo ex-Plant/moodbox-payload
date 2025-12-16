@@ -14,6 +14,7 @@ import { getServerSideURL } from '@/utilities/getURL'
 import { ToastContainer } from 'react-toastify'
 import './globals.css'
 import { RootLayoutDebugWrapper } from '../../components/DebugTools/RootLayoutDebugWrapper'
+// import Script from 'next/script'
 
 const inclusive_Sans = Inclusive_Sans({
   variable: '--font-sans',
@@ -32,6 +33,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     >
       <head>
         <InitTheme />
+        {/* <Script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid="2b038946-2a09-4077-b9eb-386fbab1255b"
+          data-blockingmode="auto"
+          type="text/javascript"
+          strategy="beforeInteractive"
+        /> */}
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>

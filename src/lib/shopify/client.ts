@@ -32,8 +32,7 @@ export async function shopifyFetch<T>({
     body: JSON.stringify({ query, variables }),
     // cache,
     next: {
-      //todo ? change to greater value
-      revalidate: 60, // 1 minute
+      revalidate: process.env.NODE_ENV === 'development' ? 0 : 60,
       tags,
     },
   })

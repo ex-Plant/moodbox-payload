@@ -39,6 +39,7 @@ export const useCartFormStore = create<CartFormStoreT>()(
     {
       name: 'cart-form-storage',
       storage: createJSONStorage(() => sessionStorage),
+      skipHydration: true,
     },
   ),
 )
