@@ -10,7 +10,7 @@ import { notFound } from 'next/navigation'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { cache } from 'react'
 import PageClient from './page.client'
-import { getAllShopifyCustomersWithOrders } from '../../../lib/shopify/adminApi'
+// import { getAllShopifyCustomersWithOrders } from '../../../lib/shopify/adminApi'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
