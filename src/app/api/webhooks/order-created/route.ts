@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { ATTRIBUTE_KEY_PL } from '../../../../lib/CartSchema'
-import { verifyShopifyHmacHeader } from '../order-shipped/route'
+import { ATTRIBUTE_KEY_PL } from '@/lib/CartSchema'
+import { verifyShopifyHmacHeader } from '@/lib/shopify/webhooks/verifyShopifyHmacHeader'
 
 export const dynamic = 'force-dynamic'
 

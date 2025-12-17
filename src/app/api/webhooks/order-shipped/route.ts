@@ -1,7 +1,9 @@
-import { createHmac, timingSafeEqual } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
+import { verifyShopifyHmacHeader } from '@/lib/shopify/webhooks/verifyShopifyHmacHeader'
 
-export default async function POST(req: NextRequest) {
+export const dynamic = 'force-dynamic'
+
+export async function POST(req: NextRequest) {
   const verified = await verifyShopifyHmacHeader(req)
   if (verified.status !== 200) {
     //   shopify expects status code only, body is irrelevant
@@ -20,52 +22,3 @@ export default async function POST(req: NextRequest) {
       - faster, more performant
       - shopify expects status code only, body is irrelevant
       */
-
-export async function verifyShopifyHmacHeader(req: NextRequest) {
-  const secret = process.env.SHOPIFY_API_SECRET
-  if (!secret) {
-    console.error('❌ SHOPIFY_API_SECRET is not defined ')
-
-    return {
-      message: 'Server configuration error',
-      status: 500,
-    }
-  }
-
-  const hmacHeader = req.headers.get('x-shopify-hmac-sha256')
-
-  if (!hmacHeader) {
-    return {
-      message: 'Unauthroized - missing shopify hmac header',
-      status: 401,
-    }
-  }
-
-  try {
-    const rawBody = await req.text()
-    const generatedHash = createHmac('sha256', secret).update(rawBody).digest()
-    const checksum = Buffer.from(hmacHeader, 'base64')
-
-    if (
-      generatedHash.length !== checksum.length ||
-      !timingSafeEqual(new Uint8Array(generatedHash), new Uint8Array(checksum))
-    ) {
-      console.warn('🚨 Shopify HMAC mismatch')
-      return {
-        message: 'Unauthorized',
-        status: 401,
-      }
-    }
-
-    return {
-      status: 200,
-      body: JSON.parse(rawBody),
-    }
-  } catch (e) {
-    console.error('❌ Webhook verification failed', e)
-    return {
-      message: 'Internal Server Error',
-      status: 500,
-    }
-  }
-}

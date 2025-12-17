@@ -10,7 +10,6 @@ type CartFormStoreT = {
 
 const defaultFormData: CartSchemaT = {
   company_name: '',
-  email: '',
   projects_per_year: '',
   nip: '',
   website: '',
