@@ -1,32 +1,15 @@
 export const PRODUCT_FRAGMENT = `
 	fragment ProductFragment on Product {
 		id
-		handle
 		title
 		description
-		descriptionHtml
 		availableForSale
-		tags
-		vendor
-		productType
-		priceRange {
-			minVariantPrice {
-				amount
-				currencyCode
-			}
-			maxVariantPrice {
-				amount
-				currencyCode
-			}
-		}
 		images(first: 10) {
 			edges {
 				node {
 					id
 					url
 					altText
-					width
-					height
 				}
 			}
 		}
@@ -44,16 +27,10 @@ export const PRODUCT_FRAGMENT = `
 						amount
 						currencyCode
 					}
-					compareAtPrice {
-						amount
-						currencyCode
-					}
 					image {
 						id
 						url
 						altText
-						width
-						height
 					}
 					product {
 					productType
@@ -62,12 +39,7 @@ export const PRODUCT_FRAGMENT = `
 				}
 			}
 		}
-		secondName: metafield(namespace: "custom", key: "second_name") {
-			key
-			value
-		}
-		material: metafield(namespace: "custom", key: "material") {
-			key
+		brand: metafield(namespace: "custom", key: "brand") {
 			value
 		}
 	}

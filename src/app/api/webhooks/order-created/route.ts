@@ -1,18 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { createHmac, timingSafeEqual } from 'crypto'
-import { ATTRIBUTE_KEY_PL } from '../../../lib/CartSchema'
+import { ATTRIBUTE_KEY_PL } from '../../../../lib/CartSchema'
+import { verifyShopifyHmacHeader } from '../order-shipped/route'
 
-/* 
-      NextResponse.json() builds a JSON response body with:
-      { "message": "Unauthorized: Missing Signature" }
-      new NextResponse('Unauthorized: Missing Signature', { status: 401 }) sends a plain text payload:
-      Unauthorized: Missing Signature
-      In webhook endpoints, it’s common and preferable to return plain text (or even an empty body) for error responses: 
-      - faster, more performant
-      - shopify expects status code only, body is irrelevant
-      */
 export const dynamic = 'force-dynamic'
 
 type ShopifyOrder = {
@@ -22,50 +13,15 @@ type ShopifyOrder = {
 }
 
 export async function POST(request: NextRequest) {
-  const secret = process.env.SHOPIFY_API_SECRET
-  if (!secret) {
-    console.error('❌ SHOPIFY_API_SECRET is not defined')
-    return new NextResponse('Server Configuration Error', { status: 500 })
-  }
+  const verified = await verifyShopifyHmacHeader(request)
+
+  if (verified.status !== 200)
+    return new NextResponse(verified.message, { status: verified.status })
 
   const topic = request.headers.get('x-shopify-topic')
-  const hmacHeader = request.headers.get('x-shopify-hmac-sha256')
-
-  if (!hmacHeader) {
-    return new NextResponse('Unauthorized Missing HMAC header', { status: 401 })
-  }
-
-  // Security verification
-  try {
-    const rawBody = await request.text()
-
-    const generatedHash = createHmac('sha256', secret).update(rawBody, 'utf8').digest()
-
-    const checksum = Buffer.from(hmacHeader, 'base64')
-
-    // length match first (fast, cheap check it it breks no point doing timingSafeEqual), then content match (safe)
-    if (
-      generatedHash.length !== checksum.length ||
-      !timingSafeEqual(new Uint8Array(generatedHash), new Uint8Array(checksum))
-    ) {
-      console.warn('🚨 Shopify HMAC mismatch')
-      return new NextResponse('Unauthorized', { status: 401 })
-    }
-
-    const body = JSON.parse(rawBody)
-
-    console.log('✅ Webhook verified:', topic)
-    console.log('Order data:', JSON.stringify(body, null, 2))
-
-    if (topic === 'orders/create') {
-      await handleOrderCreate(body)
-    }
-
+  if (topic === 'orders/create' && verified.body) {
+    await handleOrderCreate(verified.body)
     return NextResponse.json({ success: true })
-  } catch (error) {
-    console.error(`❌ Webhook security verfification failed:`, error)
-
-    return new NextResponse('Internal Server Error', { status: 500 })
   }
 }
 
@@ -89,9 +45,8 @@ async function handleOrderCreate(order: ShopifyOrder) {
     },
     {} as Record<string, string>,
   )
-
-  // Prioritize "E-mail" attribute, fallback to order email
-  const email = rawAttributes['E-mail'] || order.email
+  console.log('order:', order)
+  const email = order.email
 
   if (!email) {
     console.warn('⚠️ Webhook skipped: No email found in order.')
@@ -143,3 +98,54 @@ async function handleOrderCreate(order: ShopifyOrder) {
     }
   }
 }
+
+// ✅ WORKING VERSION TO VERIFY
+
+// export async function POST(request: NextRequest) {
+
+//   const secret = process.env.SHOPIFY_API_SECRET
+//   if (!secret) {
+//     console.error('❌ SHOPIFY_API_SECRET is not defined')
+//     return new NextResponse('Server Configuration Error', { status: 500 })
+//   }
+
+//   const topic = request.headers.get('x-shopify-topic')
+//   const hmacHeader = request.headers.get('x-shopify-hmac-sha256')
+
+//   if (!hmacHeader) {
+//     return new NextResponse('Unauthorized Missing HMAC header', { status: 401 })
+//   }
+
+//   // Security verification
+//   try {
+//     const rawBody = await request.text()
+
+//     const generatedHash = createHmac('sha256', secret).update(rawBody, 'utf8').digest()
+
+//     const checksum = Buffer.from(hmacHeader, 'base64')
+
+//     // length match first (fast, cheap check it it breks no point doing timingSafeEqual), then content match (safe)
+//     if (
+//       generatedHash.length !== checksum.length ||
+//       !timingSafeEqual(new Uint8Array(generatedHash), new Uint8Array(checksum))
+//     ) {
+//       console.warn('🚨 Shopify HMAC mismatch')
+//       return new NextResponse('Unauthorized', { status: 401 })
+//     }
+
+//     const body = JSON.parse(rawBody)
+
+//     console.log('✅ Webhook verified:', topic)
+//     console.log('Order data:', JSON.stringify(body, null, 2))
+
+//     if (topic === 'orders/create') {
+//       await handleOrderCreate(body)
+//     }
+
+//     return NextResponse.json({ success: true })
+//   } catch (error) {
+//     console.error(`❌ Webhook security verfification failed:`, error)
+
+//     return new NextResponse('Internal Server Error', { status: 500 })
+//   }
+// }

@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const cartSchema = z.object({
   company_name: z.string().min(1),
-  email: z.string().min(3, { message: 'Podaj prawidłowy adres email' }),
+  // email: z.string().min(3, { message: 'Podaj prawidłowy adres email' }),
   projects_per_year: z.union([z.string().min(1), z.number().min(0)]),
   nip: z.string().length(10, { message: 'Nieprawidłowy numer NIP' }),
   // .regex(/^[0-9]+$/, { message: 'Tylko cyfry są dozwolone' }),
@@ -30,7 +30,7 @@ export type CartSchemaT = z.infer<typeof cartSchema>
 export const ATTRIBUTE_KEY_PL: Record<keyof CartSchemaT, string> = {
   company_name: 'Nazwa firmy / pracowni',
   nip: 'NIP',
-  email: 'E-mail',
+  // email: 'E-mail',
   website: 'Strona WWW',
   projects_per_year: 'Liczba projektów rocznie',
   city: 'Miejscowość',

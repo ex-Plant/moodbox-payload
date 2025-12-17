@@ -20,37 +20,17 @@ import useCartForm from '../../../../lib/hooks/useCartForm'
 import { useEffect, useRef } from 'react'
 import LogoMoodboxSvg from '../../common/LogoMoodboxSvg'
 
-// const defaultFormData: CartSchemaT = {
-//   company_name: '',
-//   email: '',
-//   projects_per_year: '',
-//   nip: '',
-//   website: '',
-//   city: '',
-//   project_type: '',
-//   completion_date: '',
-//   project_stage: '',
-//   project_area: '',
-//   project_budget: '',
-//   consents: {
-//     consent1: false,
-//     consent2: false,
-//   },
-// }
-
 export default function CartForm({ ...props }: ShopifyCartBlock) {
   const { cartItems } = useCart()
   const { formData, updateFormData } = useCartForm()
 
   const form = useAppForm({
     defaultValues: formData,
-    // defaultValues: defaultFormData,
     validators: {
       onSubmit: cartSchema,
     },
     onSubmit: async (data) => {
       // console.log('🚀 formData: ', data.value);
-
       updateFormData(data.value)
       const res = await checkoutA(cartItems, data.value)
       console.log('res', res)
@@ -140,9 +120,9 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
             }}
           </form.Field>
 
-          <form.AppField name="email">
+          {/* <form.AppField name="email">
             {(field) => <field.Input type={`email`} placeholder={props.email || 'Adres email'} />}
-          </form.AppField>
+          </form.AppField> */}
 
           <form.AppField name="website">
             {(field) => <field.Input placeholder={props.website || 'Strona www'} />}

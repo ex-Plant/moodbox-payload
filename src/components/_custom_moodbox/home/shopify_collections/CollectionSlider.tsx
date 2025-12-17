@@ -115,6 +115,7 @@ export default function CollectionSlider({
           <Swiper {...swiperConfig} className={`mx-9 w-full`}>
             {slides.map((slide, i) => {
               const isHeightReference = collectionIndex === 0 && i === 0
+              if (process.env.NODE_ENV !== 'development' && !slide.availableForSale) return
               return (
                 <SwiperSlide key={slide.id}>
                   <CollectionSliderProduct

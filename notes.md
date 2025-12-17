@@ -94,6 +94,12 @@ INCLUDE IN STARTER
 
 Dodawanie webhooka shopify:
 
+Start ngrok
+
+```text
+  ngrok http 3000
+```
+
 Replace ngrok address with real address
 
 curl -X POST "https://moodboxpl.myshopify.com/admin/api/2024-10/webhooks.json" \
@@ -114,6 +120,10 @@ curl -X GET "https://moodboxpl.myshopify.com/admin/api/2024-10/webhooks.json" \
 Test:
 curl -X POST \
  "https://moodboxpl.myshopify.com/admin/api/2025-01/webhooks/2093890077019/test.json" \
+ -H "X-Shopify-Access-Token: <YOUR_ADMIN_API_ACCESS_TOKEN>"
+
+curl -X DELETE \
+ "https://moodboxpl.myshopify.com/admin/api/2024-10/webhooks/2093890077019.json" \
  -H "X-Shopify-Access-Token: <YOUR_ADMIN_API_ACCESS_TOKEN>"
 
 test locally - ngrok http 3000

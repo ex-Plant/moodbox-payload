@@ -92,7 +92,6 @@ export async function getCollectionByHandle(handle: string): Promise<CollectionT
 export async function createCart(
   lineItems: { merchandiseId: string; quantity: number }[],
   attributes?: { key: string; value: string }[],
-  email?: string,
 ): Promise<CartT | null> {
   const response = await shopifyFetch<{
     cartCreate: {
@@ -104,7 +103,6 @@ export async function createCart(
     variables: {
       lineItems,
       attributes: attributes || [],
-      email: email || null,
     },
     cache: 'no-store',
   })

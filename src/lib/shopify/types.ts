@@ -39,6 +39,7 @@ export type ProductT = {
   description: string
   descriptionHtml: string
   availableForSale: boolean
+  status: string
   tags: string[]
   vendor: string
   productType: string

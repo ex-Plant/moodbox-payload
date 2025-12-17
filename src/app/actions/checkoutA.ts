@@ -46,7 +46,7 @@ export async function checkoutA(cartItems: string[], formData: CartSchemaT) {
   // add custom attributes
   // console.log('📦 lineItems before createCart:', lineItems);
   // console.log('🏷️ attributes:', attributes);
-  const cart = await createCart(lineItems, attributes, formData.email)
+  const cart = await createCart(lineItems, attributes)
 
   if (cart?.checkoutUrl) {
     // await payload.create({
