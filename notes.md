@@ -127,3 +127,16 @@ curl -X DELETE \
  -H "X-Shopify-Access-Token: <YOUR_ADMIN_API_ACCESS_TOKEN>"
 
 test locally - ngrok http 3000
+
+### Order fullfiled
+
+curl -X POST "https://moodboxpl.myshopify.com/admin/api/2024-10/webhooks.json" \
+ -H "X-Shopify-Access-Token: <YOUR_ADMIN_API_ACCESS_TOKEN>" \
+ -H "Content-Type: application/json" \
+ -d '{
+"webhook": {
+"topic": "orders/fulfilled",
+"address": "https://feldspathic-trichotomic-ty.ngrok-free.dev/api/webhooks/order-fulfilled",
+"format": "json"
+}
+}'

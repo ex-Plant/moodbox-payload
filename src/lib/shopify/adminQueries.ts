@@ -75,3 +75,42 @@ export const GET_CUSTOMERS_WITH_ORDERS_QUERY = `
     }
   }
 `
+
+export const GET_ORDER_BY_ID_QUERY = `
+  query GetOrderById($id: ID!) {
+    order(id: $id) {
+      id
+      name
+      email
+      createdAt
+      updatedAt
+      customer {
+        id
+        email
+        firstName
+        lastName
+      }
+      lineItems(first: 50) {
+        edges {
+          node {
+            name
+            product {
+              title
+              handle
+              metafield(namespace: "custom", key: "brand") {
+                key
+                value
+              }
+            }
+            variant {
+              title
+            }
+          }
+        }
+      }
+      fulfillments {
+        createdAt
+      }
+    }
+  }
+`

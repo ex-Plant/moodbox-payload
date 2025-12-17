@@ -37,7 +37,7 @@ function ShopifyCollection({ slides, title, i }: T) {
   const isDev = process.env.NODE_ENV === 'development'
 
   if (!isDev && isTest) return <></>
-  if (isDev && isTest) console.log('slides:', slides[1])
+  // if (isDev && isTest) console.log('slides:', slides[1])
 
   return <CollectionSlider slides={slides} title={title} isFullScreen={false} collectionIndex={i} />
 }

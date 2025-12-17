@@ -127,3 +127,76 @@ export type ShopifyResponseT<T> = {
     path?: string[]
   }[]
 }
+
+export type OrderT = {
+  id: string
+  name: string
+  email: string
+  createdAt: string
+  updatedAt: string
+  displayFinancialStatus: string
+  displayFulfillmentStatus: string
+  totalPrice: string
+  subtotalPrice: string
+  totalTax: string
+  totalShippingPrice: string
+  customer: {
+    id: string
+    email: string
+    firstName: string
+    lastName: string
+    phone: string
+  } | null
+  shippingAddress: {
+    address1: string
+    city: string
+    province: string
+    country: string
+    zip: string
+  } | null
+  billingAddress: {
+    address1: string
+    city: string
+    province: string
+    country: string
+    zip: string
+  } | null
+  lineItems: {
+    edges: {
+      node: {
+        id: string
+        name: string
+        quantity: number
+        sku: string
+        product: {
+          id: string
+          title: string
+          handle: string
+          metafield: {
+            key: string
+            value: string
+          } | null
+        } | null
+        variant: {
+          id: string
+          title: string
+          sku: string
+        } | null
+      }
+    }[]
+  }
+  fulfillments: {
+    id: string
+    createdAt: string
+    status: string
+    trackingInfo: {
+      number: string | null
+      url: string | null
+      company: string | null
+    }[]
+  }[]
+  customAttributes: {
+    key: string
+    value: string
+  }[]
+}

@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { cache } from 'react'
 import PageClient from './page.client'
+// import { getOrderById } from '../../../lib/shopify/adminApi'
 // import { getAllShopifyCustomersWithOrders } from '../../../lib/shopify/adminApi'
 
 export async function generateStaticParams() {
@@ -55,11 +56,14 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   // console.log({ slug, decodedSlug, url, page })
 
+  // try {
+  //   const order = await getOrderById('gid://shopify/Order/7377856430427')
+  //   console.log('page.tsx:62 - order:', order)
+  // } catch (e) {
+  //   console.log(e)
+  // }
+
   if (!page) return notFound()
-
-  // const res = await getAllShopifyCustomersWithOrders()
-
-  // console.log(res)
 
   return (
     <main className={cn(page.textPage && 'mt-32')}>

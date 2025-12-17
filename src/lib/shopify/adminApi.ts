@@ -1,7 +1,8 @@
 'use server'
 
 import { shopifyAdminFetch } from './adminClient'
-import { GET_CUSTOMERS_WITH_ORDERS_QUERY } from './adminQueries'
+import { GET_CUSTOMERS_WITH_ORDERS_QUERY, GET_ORDER_BY_ID_QUERY } from './adminQueries'
+import { OrderT } from './types'
 
 type ShopifyOrderLineItemT = {
   name: string
@@ -108,4 +109,16 @@ export async function getAllShopifyCustomersWithOrders(
   }
 
   return allCustomers
+}
+
+export async function getOrderById(orderId: string): Promise<OrderT | null> {
+  const response = await shopifyAdminFetch<{
+    order: OrderT | null
+  }>({
+    query: GET_ORDER_BY_ID_QUERY,
+    variables: { id: orderId },
+  })
+
+  if (!response) return null
+  return response.data.order
 }
