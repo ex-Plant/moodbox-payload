@@ -16,6 +16,7 @@ type ScheduledEmailDocT = {
 }
 
 export async function POST(req: NextRequest) {
+  // todo security check of cron
   const authHeader: string | null = req.headers.get('authorization')
   const expected: string = `Bearer ${process.env.CRON_SECRET ?? ''}`
 
