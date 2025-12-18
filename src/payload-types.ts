@@ -72,6 +72,7 @@ export interface Config {
     users: User;
     clients: Client;
     newsletter: Newsletter;
+    'scheduled-emails': ScheduledEmail;
     'payload-kv': PayloadKv;
     'payload-jobs': PayloadJob;
     'payload-folders': FolderInterface;
@@ -90,6 +91,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     clients: ClientsSelect<false> | ClientsSelect<true>;
     newsletter: NewsletterSelect<false> | NewsletterSelect<true>;
+    'scheduled-emails': ScheduledEmailsSelect<false> | ScheduledEmailsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-folders': PayloadFoldersSelect<false> | PayloadFoldersSelect<true>;
@@ -605,6 +607,22 @@ export interface Newsletter {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scheduled-emails".
+ */
+export interface ScheduledEmail {
+  id: number;
+  shopifyOrderId?: string | null;
+  adminGraphqlId: string;
+  customerEmail: string;
+  scheduledAt: string;
+  status: 'pending' | 'sent' | 'failed' | 'cancelled';
+  emailType: 'post_purchase_questions';
+  token: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -738,6 +756,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'newsletter';
         value: number | Newsletter;
+      } | null)
+    | ({
+        relationTo: 'scheduled-emails';
+        value: number | ScheduledEmail;
       } | null)
     | ({
         relationTo: 'payload-folders';
@@ -1137,6 +1159,21 @@ export interface NewsletterSelect<T extends boolean = true> {
   email?: T;
   createdAt?: T;
   updatedAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scheduled-emails_select".
+ */
+export interface ScheduledEmailsSelect<T extends boolean = true> {
+  shopifyOrderId?: T;
+  adminGraphqlId?: T;
+  customerEmail?: T;
+  scheduledAt?: T;
+  status?: T;
+  emailType?: T;
+  token?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
