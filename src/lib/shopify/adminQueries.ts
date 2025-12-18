@@ -114,3 +114,65 @@ export const GET_ORDER_BY_ID_QUERY = `
     }
   }
 `
+
+export const CREATE_DISCOUNT_CODE_MUTATION = `
+  mutation discountCodeBasicCreate($basicCodeDiscount: DiscountCodeBasicInput!) {
+    discountCodeBasicCreate(basicCodeDiscount: $basicCodeDiscount) {
+      codeDiscountNode {
+        id
+        codeDiscount {
+          ... on DiscountCodeBasic {
+            title
+            status
+            usageLimit
+            appliesOncePerCustomer
+            minimumRequirement {
+              ... on DiscountMinimumSubtotal {
+                greaterThanOrEqualToSubtotal {
+                  amount
+                  currencyCode
+                }
+              }
+            }
+            customerSelection {
+              ... on DiscountCustomerAll {
+                allCustomers
+              }
+            }
+            customerGets {
+              value {
+                ... on DiscountPercentage {
+                  percentage
+                }
+                ... on DiscountAmount {
+                  amount {
+                    amount
+                    currencyCode
+                  }
+                }
+              }
+              items {
+                ... on DiscountProducts {
+                  products(first: 1) {
+                    edges {
+                      node {
+                        title
+                      }
+                    }
+                  }
+                }
+                ... on AllDiscountItems {
+                  allItems
+                }
+              }
+            }
+          }
+        }
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`
