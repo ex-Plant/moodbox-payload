@@ -14,14 +14,10 @@ type ScheduledEmailDocT = {
   emailType: string
 }
 
+// curl -X POST http://localhost:3000/api/cron/test-cron \
+// -H "Content-Type: application/json" \
+
 export async function POST(req: NextRequest) {
-  const authHeader: string | null = req.headers.get('authorization')
-  const expected: string = `Bearer ${process.env.CRON_SECRET ?? ''}`
-
-  if (!process.env.CRON_SECRET || authHeader !== expected) {
-    return new NextResponse('Unauthorized', { status: 401 })
-  }
-
   const payload = await getPayload({ config: configPromise })
 
   const now: Date = new Date()
@@ -95,19 +91,3 @@ export async function POST(req: NextRequest) {
     details: results,
   })
 }
-
-// type PostPurchaseEmailParamsT = {
-//     linkUrl: string
-//   }
-
-//   export function buildPostPurchaseEmailContent({
-//     linkUrl,
-//   }: PostPurchaseEmailParamsT): { subject: string; html: string; text: string } {
-//     const subject: string = 'How did your order go?'
-//     const text: string = `We'd love your feedback on your purchase. Visit: ${linkUrl}`
-//     const html: string = `<h1>We'd love your feedback</h1>
-//   <p>Click the link below to answer a few quick questions about your recent order.</p>
-//   <p><a href="${linkUrl}">Give feedback</a></p>`
-
-//     return { subject, html, text }
-//   }
