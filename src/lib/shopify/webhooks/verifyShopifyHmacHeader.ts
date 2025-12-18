@@ -1,4 +1,5 @@
-'use server'
+import 'server-only'
+
 import { createHmac, timingSafeEqual } from 'crypto'
 import { NextRequest } from 'next/server'
 

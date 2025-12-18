@@ -611,8 +611,7 @@ export interface Newsletter {
  */
 export interface ScheduledEmail {
   id: number;
-  shopifyOrderId?: string | null;
-  adminGraphqlId: string;
+  orderId: string;
   customerEmail: string;
   scheduledAt: string;
   status: 'pending' | 'sent' | 'failed' | 'cancelled';
@@ -1165,8 +1164,7 @@ export interface NewsletterSelect<T extends boolean = true> {
  * via the `definition` "scheduled-emails_select".
  */
 export interface ScheduledEmailsSelect<T extends boolean = true> {
-  shopifyOrderId?: T;
-  adminGraphqlId?: T;
+  orderId?: T;
   customerEmail?: T;
   scheduledAt?: T;
   status?: T;

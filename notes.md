@@ -1,4 +1,9 @@
 TODO
+CRON
+
+- email acocunt for sending emails - something different than srv
+- email template
+- form §
 
 - contact from top nav makes no sense
 

@@ -3,16 +3,11 @@ import type { CollectionConfig } from 'payload'
 export const ScheduledEmails: CollectionConfig = {
   slug: 'scheduled-emails',
   admin: {
-    useAsTitle: 'shopifyOrderId',
+    useAsTitle: 'orderId',
   },
   fields: [
     {
-      name: 'shopifyOrderId',
-      type: 'text',
-      required: false,
-    },
-    {
-      name: 'adminGraphqlId',
+      name: 'orderId',
       type: 'text',
       required: true,
     },

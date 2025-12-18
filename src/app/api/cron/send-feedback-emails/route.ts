@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { buildPostOrderEmail } from '../../../../utilities/buildPostOrderEmail'
 
 export const maxDuration = 300
 export const dynamic = 'force-dynamic'
@@ -60,14 +61,14 @@ export async function POST(req: NextRequest) {
 
     const linkUrl: string = `${baseUrl}/post-purchase/${doc.token}`
 
+    const { subject, html, text } = buildPostOrderEmail(linkUrl)
     try {
       // For now reuse payload.sendEmail; you can swap to Nodemailer transport later if desired
       await payload.sendEmail({
         to: doc.customerEmail,
-        subject: 'How did your order go?',
-        html: `<p>We'd love your feedback on your purchase.</p>
-<p><a href="${linkUrl}">Click here to answer a few quick questions</a></p>`,
-        text: `We'd love your feedback on your purchase. Visit: ${linkUrl}`,
+        subject,
+        html,
+        text,
       })
 
       await payload.update({
@@ -95,19 +96,3 @@ export async function POST(req: NextRequest) {
     details: results,
   })
 }
-
-// type PostPurchaseEmailParamsT = {
-//     linkUrl: string
-//   }
-
-//   export function buildPostPurchaseEmailContent({
-//     linkUrl,
-//   }: PostPurchaseEmailParamsT): { subject: string; html: string; text: string } {
-//     const subject: string = 'How did your order go?'
-//     const text: string = `We'd love your feedback on your purchase. Visit: ${linkUrl}`
-//     const html: string = `<h1>We'd love your feedback</h1>
-//   <p>Click the link below to answer a few quick questions about your recent order.</p>
-//   <p><a href="${linkUrl}">Give feedback</a></p>`
-
-//     return { subject, html, text }
-//   }

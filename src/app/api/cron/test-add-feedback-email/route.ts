@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
+import { handleOrderFulfilled } from '@/lib/shopify/webhooks/handleOrderFulfilled'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,41 +14,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'email required' }, { status: 400 })
   }
 
-  const payload = await getPayload({ config: configPromise })
+  const id = `test-${Math.random()}`
 
-  // Create a due record (scheduledAt = now)
-  const token: string = crypto.randomUUID()
-
-  let scheduled = null
   try {
-    scheduled = await payload.create({
-      collection: 'scheduled-emails',
-      data: {
-        shopifyOrderId: '123123',
-        adminGraphqlId: 'sialala',
-        customerEmail: email,
-        scheduledAt: new Date().toISOString(), // Due now
-        status: 'pending',
-        emailType: 'post_purchase_questions',
-        token,
-      },
-    })
-
-    console.log('Successfully created scheduled email:', scheduled.id)
-    return NextResponse.json({ success: true, message: 'Created', id: scheduled.id })
+    await handleOrderFulfilled(null, email, id)
+    return NextResponse.json({ message: 'test scheduled email created', success: true })
   } catch (e) {
-    console.log('Error while creating test email - aborting ')
-    console.error(e)
-    return NextResponse.json(
-      { error: 'Failed to create', details: e.message || 'Unknown error' },
-      { status: 500 },
-    )
+    const message = e instanceof Error ? e.message : 'Unexpected error '
+    console.error('Error in order-fulfilled webhook:', e)
+    return NextResponse.json({ success: false, error: message }, { status: 500 })
   }
-  if (!scheduled) {
-    console.log('No scheduled email - aborting ')
-  }
-
-  // Simulate cron processing: query due records and send
-
-  return NextResponse.json({ success: true, message: 'Created' })
 }
