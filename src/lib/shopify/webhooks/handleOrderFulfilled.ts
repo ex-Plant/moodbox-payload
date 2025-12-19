@@ -3,6 +3,7 @@ import 'server-only'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { createFutureDate } from '../../../utilities/createFutureDate'
+import { encodeOrderToken } from '../../token/encodeOrderToken'
 type ShopifyOrderWebhookBodyT = {
   email?: string
   admin_graphql_api_id?: string
@@ -51,7 +52,7 @@ export async function handleOrderFulfilled(
       expiresAt: createFutureDate({ daysFromNow: 7 }).toISOString(),
       status: 'pending',
       emailType: 'post_purchase_questions',
-      token: crypto.randomUUID(),
+      token: encodeOrderToken({ orderId: id }),
     },
   })
 }

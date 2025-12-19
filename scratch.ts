@@ -1,6 +1,9 @@
-const date = new Date().getTime()
-const sevenDays = 7 * 24 * 60 * 60 * 1000
-console.log(sevenDays)
-const sevenDaysFromNow = date + sevenDays
+import { createHmac } from 'crypto'
 
-console.log(new Date(sevenDaysFromNow))
+const orderId = 'orderidsialalal'
+const secret = '123123123'
+
+const hmac = createHmac('sha256', secret).update(orderId).digest('hex')
+
+
+const decoded = 
