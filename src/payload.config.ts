@@ -20,6 +20,7 @@ import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
+import { ScheduledEmails } from './collections/ScheduledEmails'
 // import { CustomAdminHeader } from './components/CustomAdminHeader'
 
 const filename = fileURLToPath(import.meta.url)
@@ -97,7 +98,7 @@ export default buildConfig({
     },
     migrationDir: './src/migrations',
   }),
-  collections: [Pages, Media, Users, Clients, Newsletter],
+  collections: [Pages, Media, Users, Clients, Newsletter, ScheduledEmails],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
 

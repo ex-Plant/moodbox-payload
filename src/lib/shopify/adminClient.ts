@@ -31,15 +31,19 @@ export async function shopifyAdminFetch<T>({
 
   if (!response.ok) {
     console.error(`Shopify Admin API error: ${response.status} ${response.statusText}`)
+    const errorText = await response.text()
+    console.error('Error response body:', errorText)
     return null
   }
 
   const json: ShopifyAdminResponseT<T> = await response.json()
+  // console.log('Full JSON response:', JSON.stringify(json, null, 2))
 
   if (json.errors) {
     console.error('Shopify Admin GraphQL errors:', json.errors)
     return null
   }
 
+  console.log('No errors found, returning response')
   return json
 }

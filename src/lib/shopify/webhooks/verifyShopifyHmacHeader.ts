@@ -1,4 +1,5 @@
-'use server'
+import 'server-only'
+
 import { createHmac, timingSafeEqual } from 'crypto'
 import { NextRequest } from 'next/server'
 
@@ -15,12 +16,11 @@ export async function verifyShopifyHmacHeader(req: NextRequest) {
 
   const hmacHeader = req.headers.get('x-shopify-hmac-sha256')
 
-  if (!hmacHeader) {
+  if (!hmacHeader)
     return {
       message: 'Unauthroized - missing shopify hmac header',
       status: 401,
     }
-  }
 
   try {
     const rawBody = await req.text()

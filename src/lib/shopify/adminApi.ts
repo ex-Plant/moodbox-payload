@@ -1,7 +1,9 @@
 'use server'
 
 import { shopifyAdminFetch } from './adminClient'
-import { GET_CUSTOMERS_WITH_ORDERS_QUERY } from './adminQueries'
+import { GET_CUSTOMERS_WITH_ORDERS_QUERY, GET_ORDER_BY_ID_QUERY } from './adminQueries'
+import { OrderT } from './types'
+import { CREATE_DISCOUNT_CODE_MUTATION } from './adminQueries'
 
 type ShopifyOrderLineItemT = {
   name: string
@@ -81,6 +83,52 @@ type CustomersWithOrdersResponseT = {
   }
 }
 
+type CreateDiscountInputT = {
+  title: string
+  code: string
+  startsAt?: string
+  endsAt?: string
+  usageLimit?: number
+  appliesOncePerCustomer?: boolean
+  minimumRequirement?: {
+    subtotal: {
+      greaterThanOrEqualToSubtotal: string
+    }
+  }
+  customerGets: {
+    value: {
+      percentage?: number
+      amount?: {
+        amount: string
+        currencyCode: string
+      }
+    }
+    items: {
+      all?: boolean
+      products?: {
+        productVariantsToAdd?: string[]
+      }
+    }
+  }
+}
+
+type CreateDiscountResponseT = {
+  discountCodeBasicCreate: {
+    codeDiscountNode: {
+      id: string
+      codeDiscount: {
+        title: string
+        code: string
+        status: string
+      }
+    } | null
+    userErrors: Array<{
+      field: string[]
+      message: string
+    }>
+  }
+}
+
 export async function getAllShopifyCustomersWithOrders(
   pageSize: number = 50,
 ): Promise<ShopifyCustomerT[]> {
@@ -108,4 +156,67 @@ export async function getAllShopifyCustomersWithOrders(
   }
 
   return allCustomers
+}
+
+export async function getOrderById(orderId: string): Promise<OrderT | null> {
+  const response = await shopifyAdminFetch<{
+    order: OrderT | null
+  }>({
+    query: GET_ORDER_BY_ID_QUERY,
+    variables: { id: orderId },
+  })
+
+  // console.log('adminApi.ts:122 - response:', response)
+
+  if (!response) return null
+  return response.data.order
+}
+
+export async function createDiscountCode(
+  input: CreateDiscountInputT,
+): Promise<{ success: boolean; discountId?: string; errors?: string[] }> {
+  // Transform input to match Shopify's expected format
+  const basicCodeDiscount = {
+    title: input.title,
+    code: input.code,
+    startsAt: input.startsAt || new Date().toISOString(),
+    endsAt: input.endsAt,
+    usageLimit: input.usageLimit,
+    appliesOncePerCustomer: input.appliesOncePerCustomer || false,
+    minimumRequirement: input.minimumRequirement,
+    customerGets: {
+      value: input.customerGets.value.percentage
+        ? { percentage: input.customerGets.value.percentage }
+        : { amount: input.customerGets.value.amount },
+      items: input.customerGets.items.all
+        ? { all: true }
+        : { productVariants: input.customerGets.items.products },
+    },
+    customerSelection: {
+      all: true,
+    },
+  }
+
+  const response = await shopifyAdminFetch<CreateDiscountResponseT>({
+    query: CREATE_DISCOUNT_CODE_MUTATION,
+    variables: { basicCodeDiscount },
+  })
+
+  if (!response) {
+    return { success: false, errors: ['API call failed'] }
+  }
+
+  const { codeDiscountNode, userErrors } = response.data.discountCodeBasicCreate
+
+  if (userErrors.length > 0) {
+    return {
+      success: false,
+      errors: userErrors.map((error) => error.message),
+    }
+  }
+
+  return {
+    success: true,
+    discountId: codeDiscountNode?.id,
+  }
 }
