@@ -1,16 +1,9 @@
 // import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
-
-type PostPurchasePagePropsT = {
-  params: { token: string }
-}
 
 export const dynamic = 'force-dynamic'
 
-export default async function PostPurchasePage({ params }: PostPurchasePagePropsT) {
+export default async function PostPurchasePage() {
   //   const token: string = params.token
-  console.log(params.token)
 
   //   const payload = await getPayload({ config: configPromise })
 
