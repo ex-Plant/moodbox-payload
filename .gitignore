@@ -26,6 +26,7 @@ tsconfig.tsbuildinfo
 
 .idea
 .vscode
+.notes.md
 
 
 tempData.ts
