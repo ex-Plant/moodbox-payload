@@ -35,6 +35,7 @@ type ResultsT = Array<{ email: string; status: string; errorMessage?: string }>
 // In your code, check process.env.CRON_SECRET (which you also set in Env Vars to match <YOUR_SECRET_VALUE>).
 
 export async function POST(req: NextRequest) {
+  console.log(`Initializing send-feedback-emails cron`)
   const authHeader: string | null = req.headers.get('authorization')
   const expected: string = `Bearer ${process.env.CRON_SECRET ?? ''}`
 
