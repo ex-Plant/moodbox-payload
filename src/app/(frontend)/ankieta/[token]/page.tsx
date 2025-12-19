@@ -12,22 +12,27 @@ export default async function PostPurchasePage({ params }: PostPurchasePageProps
   const { token } = await params
 
   let orderId: string
-  try {
-    const payload = decodeOrderToken(token)
-    orderId = payload.orderId
-  } catch (error) {
-    console.error('Failed to decode token:', error)
+  // try {
+  //   const payload = decodeOrderToken(token)
+  //   orderId = payload.orderId
+  // } catch (error) {
+  //   console.error('Failed to decode token:', error)
+  //   notFound()
+  // }
+
+  const id = 'gid://shopify/Order/7224051728731'
+
+  // const order = await getOrderById(orderId)
+  const order = await getOrderById(id)
+  if (!order) {
+    // console.error('Order not found:', orderId)
     notFound()
   }
 
-  const order = await getOrderById(orderId)
-  if (!order) {
-    console.error('Order not found:', orderId)
-    notFound()
-  }
+  console.log(order)
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-10">
+    <main className="mx-auto max-w-[1440px] mt-32 py-16">
       <h1 className="mb-4 text-2xl font-semibold">We&apos;d love your feedback</h1>
       <p className="mb-6 text-sm text-gray-500">
         Thank you for your order {order.name}. We&apos;d appreciate your feedback on your recent
