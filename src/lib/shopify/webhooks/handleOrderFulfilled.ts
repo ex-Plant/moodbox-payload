@@ -4,15 +4,15 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { createFutureDate } from '../../../utilities/createFutureDate'
 type ShopifyOrderWebhookBodyT = {
-  id?: string
   email?: string
+  admin_graphql_api_id?: string
 }
 export async function handleOrderFulfilled(
   data: ShopifyOrderWebhookBodyT | null,
   email?: string,
   orderId?: string,
 ): Promise<void> {
-  const id = data?.id ?? orderId
+  const id = data?.admin_graphql_api_id ?? orderId
   const customerEmail = data?.email ?? email
   console.log('Webhook data:', data)
 
