@@ -10,6 +10,7 @@ export default function Template({ children }: PropsT) {
   return (
     <AnimatePresence mode="wait">
       <motion.div
+        className="grow ✨ h-full flex flex-col"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}

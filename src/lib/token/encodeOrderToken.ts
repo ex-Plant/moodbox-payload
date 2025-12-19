@@ -15,10 +15,7 @@ export function encodeOrderToken(payload: OrderTokenPayloadT): string {
 
   const signature = createHmac('sha256', secret).update(data).digest('hex')
 
+  // Base64 turns any data into a string of "safe" characters that every browser understands.
   const token = Buffer.from(data).toString('base64url') + '.' + signature
   return token
 }
-
-// If your orderId is a MongoDB ID (like 65821...) or a Shopify ID, it’s fine. But if your "data" part ever contains characters like spaces, slashes /, or question marks ?, it will break the URL.
-
-// - Base64 turns any data into a string of "safe" characters that every browser understands. This is why we use it.

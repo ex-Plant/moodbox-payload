@@ -14,10 +14,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'email required' }, { status: 400 })
   }
 
-  const id = `test-${Math.random()}`
+  const admin_graphql_api_id = `test-${Math.random()}`
 
   try {
-    await handleOrderFulfilled(null, email, id)
+    await handleOrderFulfilled({ email, admin_graphql_api_id })
     return NextResponse.json({ message: 'test scheduled email created', success: true })
   } catch (e) {
     const message = e instanceof Error ? e.message : 'Unexpected error '

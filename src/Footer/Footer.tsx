@@ -10,7 +10,7 @@ import LogoMoodboxSvg from '../components/_custom_moodbox/common/LogoMoodboxSvg'
 
 export default function FooterClient({ footerItems }: { footerItems: Footer['navItems'] }) {
   return (
-    <footer className={`xPaddings relative mx-auto mt-auto w-full max-w-[1440px] pb-12`}>
+    <footer className={`xPaddings relative mx-auto mt-auto w-full max-w-[1440px] pb-12 `}>
       <div
         className={`pointer-events-none absolute top-12 right-0 left-0 hidden items-center justify-center xl:flex`}
       >

@@ -21,8 +21,9 @@ export const RootLayoutDebugWrapper = ({ children }: RootLayoutDebugWrapperProps
       {isDev && gridVisible && <GridVisualHelper />}
       <div
         className={cn(
-          outlinesVisible && `[&_*]:outline [&_*]:outline-lime-300`,
-          layersVisible && `[&_*]:bg-[hsl(0_100%_50%_/_0.1)]`,
+          ` h-full grow flex flex-col  `,
+          outlinesVisible && `[&_*]:outline [&_*]:outline-lime-300  `,
+          layersVisible && `[&_*]:bg-[hsla(0,11%,2%,0)]`,
         )}
       >
         {children}

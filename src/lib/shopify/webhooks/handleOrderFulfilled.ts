@@ -8,13 +8,9 @@ type ShopifyOrderWebhookBodyT = {
   email?: string
   admin_graphql_api_id?: string
 }
-export async function handleOrderFulfilled(
-  data: ShopifyOrderWebhookBodyT | null,
-  email?: string,
-  orderId?: string,
-): Promise<void> {
-  const id = data?.admin_graphql_api_id ?? orderId
-  const customerEmail = data?.email ?? email
+export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null): Promise<void> {
+  const id = data?.admin_graphql_api_id
+  const email = data?.email
   console.log('Webhook data:', data)
 
   if (!id) {
@@ -22,7 +18,7 @@ export async function handleOrderFulfilled(
     throw new Error('No order ID found in webhook data')
   }
 
-  if (!customerEmail) {
+  if (!email) {
     console.error('No customer email provided')
     throw new Error('No customer email for fulfilled order')
   }
@@ -47,7 +43,7 @@ export async function handleOrderFulfilled(
     collection: 'scheduled-emails',
     data: {
       orderId: id,
-      customerEmail: customerEmail,
+      customerEmail: email,
       scheduledAt: createFutureDate({ daysFromNow: 0 }).toISOString(),
       expiresAt: createFutureDate({ daysFromNow: 7 }).toISOString(),
       status: 'pending',
