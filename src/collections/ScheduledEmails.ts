@@ -4,6 +4,9 @@ export const ScheduledEmails: CollectionConfig = {
   slug: 'scheduled-emails',
   admin: {
     useAsTitle: 'orderId',
+    components: {
+      afterListTable: ['@/components/TriggerSendingScheduledEmails'],
+    },
   },
   fields: [
     {
