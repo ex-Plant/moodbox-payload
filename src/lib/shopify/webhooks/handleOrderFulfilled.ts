@@ -2,6 +2,7 @@ import 'server-only'
 
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { createFutureDate } from '../../../utilities/createFutureDate'
 type ShopifyOrderWebhookBodyT = {
   id?: string
   email?: string
@@ -46,7 +47,8 @@ export async function handleOrderFulfilled(
     data: {
       orderId: id,
       customerEmail: customerEmail,
-      scheduledAt: new Date().toISOString(),
+      scheduledAt: createFutureDate({ daysFromNow: 0 }).toISOString(),
+      expiresAt: createFutureDate({ daysFromNow: 7 }).toISOString(),
       status: 'pending',
       emailType: 'post_purchase_questions',
       token: crypto.randomUUID(),

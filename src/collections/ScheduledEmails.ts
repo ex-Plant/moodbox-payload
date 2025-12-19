@@ -22,6 +22,11 @@ export const ScheduledEmails: CollectionConfig = {
       required: true,
     },
     {
+      name: 'expiresAt',
+      type: 'date',
+      required: true,
+    },
+    {
       name: 'status',
       type: 'select',
       required: true,
