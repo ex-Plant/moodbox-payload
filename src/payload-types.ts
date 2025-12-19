@@ -614,6 +614,7 @@ export interface ScheduledEmail {
   orderId: string;
   customerEmail: string;
   scheduledAt: string;
+  expiresAt: string;
   status: 'pending' | 'sent' | 'failed' | 'cancelled';
   emailType: 'post_purchase_questions';
   token: string;
@@ -1167,6 +1168,7 @@ export interface ScheduledEmailsSelect<T extends boolean = true> {
   orderId?: T;
   customerEmail?: T;
   scheduledAt?: T;
+  expiresAt?: T;
   status?: T;
   emailType?: T;
   token?: T;
