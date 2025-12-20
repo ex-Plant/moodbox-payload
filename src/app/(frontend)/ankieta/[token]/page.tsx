@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { decodeOrderToken } from '@/lib/token/decodeOrderToken'
 import { getOrderById } from '@/lib/shopify/adminApi'
+import SurveyForm from '@/components/_custom_moodbox/survey/SurveyForm'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,7 +21,7 @@ export default async function PostPurchasePage({ params }: PostPurchasePageProps
   //   notFound()
   // }
 
-  const id = 'gid://shopify/Order/7224051728731'
+  const id = 'gid://shopify/Order/7377246191963'
 
   // const order = await getOrderById(orderId)
   const order = await getOrderById(id)
@@ -29,24 +30,18 @@ export default async function PostPurchasePage({ params }: PostPurchasePageProps
     notFound()
   }
 
-  console.log(order)
+  // Extract unique brands from line items
+  const brands = Array.from(
+    new Set(
+      order.lineItems.edges
+        .map((edge) => edge.node.product?.metafield?.value)
+        .filter((brand): brand is string => !!brand),
+    ),
+  )
 
   return (
-    <main className="mx-auto max-w-[1440px] mt-32 py-16">
-      <h1 className="mb-4 text-2xl font-semibold">We&apos;d love your feedback</h1>
-      <p className="mb-6 text-sm text-gray-500">
-        Thank you for your order {order.name}. We&apos;d appreciate your feedback on your recent
-        purchase.
-      </p>
-      <div className="mb-6">
-        <h2 className="mb-2 text-lg font-semibold">Order Details</h2>
-        <p className="text-sm">Order: {order.name}</p>
-        <p className="text-sm">Total: {order.totalPrice}</p>
-        <p className="text-sm">Items: {order.lineItems.edges.length}</p>
-      </div>
-      {/* TODO: build dynamic questions based on order line items */}
-      {/* TODO: render a form with questions */}
-      <p>Feedback form coming soon.</p>
+    <main className="mx-auto max-w-[800px] mt-32 py-16 px-4">
+      <SurveyForm order={order} availableBrands={brands} />
     </main>
   )
 }
