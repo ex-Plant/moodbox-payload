@@ -29,10 +29,10 @@ export default function SelectedVariantImg({
 
   function toggle(e: React.MouseEvent) {
     e.stopPropagation()
-    if (!selectable && !checked) {
-      setShowItemsLimitInfo(true)
-      return
-    }
+    // if (!selectable && !checked) {
+    //   setShowItemsLimitInfo(true)
+    //   return
+    // }
 
     setShowItemsLimitInfo(false)
     if (checked) return deleteCartItem(variant.id)

@@ -66,13 +66,12 @@ export async function sendScheduledEmail(limit = 20): Promise<ResultsT> {
 
     const linkUrl: string = `${baseUrl}/ankieta/${doc.token}`
     console.log('linkUrl: ', linkUrl, 'baseUrl: ', baseUrl)
-    const { subject, html, text } = buildPostOrderEmail(linkUrl)
+    const { subject, html } = buildPostOrderEmail(linkUrl)
 
     await payload.sendEmail({
       to: doc.customerEmail,
       subject,
       html,
-      text,
     })
 
     await payload.update({

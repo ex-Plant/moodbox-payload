@@ -1,12 +1,7 @@
 import { getPayload as getPayloadClient } from 'payload'
 import { NextResponse } from 'next/server'
 import configPromise from '@payload-config'
-
-// export const config = {
-//   api: {
-//     externalResolver: true,
-//   },
-// }
+import { buildPostOrderEmail } from '../../../utilities/buildPostOrderEmail'
 
 export async function GET() {
   try {
@@ -14,11 +9,15 @@ export async function GET() {
       config: configPromise,
     })
 
+    const { subject, html } = buildPostOrderEmail(
+      'http://localhost:3000/ankieta/ba0b6a7a-c9ab-4cb8-a237-417926cddef0',
+    )
+
     await payload.sendEmail({
       to: process.env.EMAIL_USER || '',
-      subject: 'Test Email from Payload',
-      text: 'This is a test email from your Payload CMS.',
-      html: '<h1>Test Email</h1><p>This is a test email from your Payload CMS.</p>',
+      subject,
+      text: '',
+      html,
     })
 
     return NextResponse.json({ success: true, message: 'Test email sent successfully' })

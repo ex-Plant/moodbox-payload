@@ -39,13 +39,7 @@ export default function SurveyQ3() {
                         type="button"
                         size="icon-lg"
                         variant={field.state.value === rating ? 'mood' : 'ghost'}
-                        onClick={() => {
-                          if (field.state.value === rating) {
-                            return field.handleChange(null)
-                          }
-
-                          return field.handleChange(rating as never)
-                        }}
+                        onClick={() => field.handleChange(rating as never)}
                         className=" text-sm font-bold size-6 p-2"
                       >
                         {rating}
