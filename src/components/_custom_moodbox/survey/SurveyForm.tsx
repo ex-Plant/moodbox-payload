@@ -14,6 +14,14 @@ import SurveyStepOne from './SurveyStepOne'
 import SurveyStepTwo from './SurveyStepTwo'
 import SurveyStepThree from './SurveyStepThree'
 import SurveyHeader from './SurveyHeader'
+import SurveyQ1 from './SurveyQ1'
+import SurveyQ2 from './SurveyQ2'
+import SurveyQ3 from './SurveyQ3'
+import SurveyQ4 from './SurveyQ4'
+import SurveyQ5 from './SurveyQ5'
+import SurveyQ6 from './SurveyQ6'
+import SurveyQ7 from './SurveyQ7'
+import SurveyQ8 from './SurveyQ8'
 
 type SurveyFormProps = {
   order: OrderT
@@ -53,11 +61,11 @@ export default function SurveyForm({ order, availableBrands }: SurveyFormProps) 
     }
   }, [formValues, updateFormData])
 
-  const nextStep = () => {
+  function nextStep() {
     if (currentStep < 3) setStep(currentStep + 1)
   }
 
-  const prevStep = () => {
+  function prevStep() {
     if (currentStep > 1) setStep(currentStep - 1)
   }
 
@@ -72,9 +80,28 @@ export default function SurveyForm({ order, availableBrands }: SurveyFormProps) 
       >
         <SurveyHeader currentStep={currentStep} />
 
-        {currentStep === 1 && <SurveyStepOne availableBrands={availableBrands} />}
-        {currentStep === 2 && <SurveyStepTwo availableBrands={availableBrands} />}
-        {currentStep === 3 && <SurveyStepThree />}
+        {currentStep === 1 && (
+          <section className="space-y-8 animate-in fade-in duration-500">
+            <SurveyQ1 availableBrands={availableBrands} />
+            <SurveyQ2 availableBrands={availableBrands} />
+          </section>
+        )}
+
+        {currentStep === 2 && (
+          <section className="space-y-12 animate-in fade-in duration-500">
+            <SurveyQ3 />
+            <SurveyQ4 />
+            <SurveyQ5 />
+            <SurveyQ6 availableBrands={availableBrands} />
+          </section>
+        )}
+
+        {currentStep === 3 && (
+          <section className="space-y-8 animate-in fade-in duration-500">
+            <SurveyQ7 />
+            <SurveyQ8 />
+          </section>
+        )}
 
         <div className="flex justify-between pt-8 border-t">
           <Button
