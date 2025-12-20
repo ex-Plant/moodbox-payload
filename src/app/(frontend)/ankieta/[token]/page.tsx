@@ -13,20 +13,20 @@ export default async function PostPurchasePage({ params }: PostPurchasePageProps
   const { token } = await params
 
   let orderId: string
-  // try {
-  //   const payload = decodeOrderToken(token)
-  //   orderId = payload.orderId
-  // } catch (error) {
-  //   console.error('Failed to decode token:', error)
-  //   notFound()
-  // }
+  try {
+    const payload = decodeOrderToken(token)
+    orderId = payload.orderId
+  } catch (error) {
+    console.error('Failed to decode token:', error)
+    notFound()
+  }
 
-  const id = 'gid://shopify/Order/7377246191963'
+  // const id = 'gid://shopify/Order/7377246191963'
 
-  // const order = await getOrderById(orderId)
-  const order = await getOrderById(id)
+  const order = await getOrderById(orderId)
+  // const order = await getOrderById(id)
   if (!order) {
-    // console.error('Order not found:', orderId)
+    console.error('Order not found:', orderId)
     notFound()
   }
 

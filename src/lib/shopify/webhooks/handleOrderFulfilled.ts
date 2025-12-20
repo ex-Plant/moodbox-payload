@@ -11,7 +11,7 @@ type ShopifyOrderWebhookBodyT = {
 export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null): Promise<void> {
   const id = data?.admin_graphql_api_id
   const email = data?.email
-  console.log('Webhook data:', data)
+  // console.log('Webhook data:', data)
 
   if (!id) {
     console.error('No order ID provided')
@@ -39,6 +39,9 @@ export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null
     return
   }
 
+  const token = encodeOrderToken({ orderId: id })
+  console.log('ecoded token: ', token)
+
   await payload.create({
     collection: 'scheduled-emails',
     data: {
@@ -48,7 +51,7 @@ export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null
       expiresAt: createFutureDate({ daysFromNow: 7 }).toISOString(),
       status: 'pending',
       emailType: 'post_purchase_questions',
-      token: encodeOrderToken({ orderId: id }),
+      token,
     },
   })
 }

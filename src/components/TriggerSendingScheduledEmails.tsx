@@ -6,7 +6,7 @@ export default function TriggerSendingScheduledEmails() {
   const [error, setError] = useState(false)
   async function triggerSend() {
     try {
-      const results = await sendScheduledEmail(100)
+      const results = await sendScheduledEmail(1)
 
       console.log(`✅ ok`, {
         processed: results.length,

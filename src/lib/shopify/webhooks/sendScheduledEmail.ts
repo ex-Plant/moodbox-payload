@@ -18,7 +18,7 @@ export async function sendScheduledEmail(limit = 20): Promise<ResultsT> {
   const now = new Date().toISOString()
   const results: ResultsT = []
 
-  const processedExpiredEmails = await processExpiredEmails(payload, now)
+  const processedExpiredEmails = await processExpiredEmails(payload, now, limit)
   results.push(...processedExpiredEmails)
 
   const scheduled = await payload.find({
@@ -56,7 +56,13 @@ export async function sendScheduledEmail(limit = 20): Promise<ResultsT> {
     }
 
     const baseUrl: string = process.env.NEXT_PUBLIC_SERVER_URL ?? ''
-    const linkUrl: string = `${baseUrl}/post-purchase/${doc.token}`
+
+    if (!baseUrl) {
+      throw new Error('❌ NEXT_PUBLIC_SERVER_URL is not defined in environment variables')
+    }
+
+    const linkUrl: string = `${baseUrl}/ankieta/${doc.token}`
+    console.log('linkUrl: ', linkUrl, 'baseUrl: ', baseUrl)
     const { subject, html, text } = buildPostOrderEmail(linkUrl)
 
     await payload.sendEmail({
@@ -78,14 +84,18 @@ export async function sendScheduledEmail(limit = 20): Promise<ResultsT> {
   return results
 }
 
-async function processExpiredEmails(payload: BasePayload, now: string): Promise<ResultsT> {
+async function processExpiredEmails(
+  payload: BasePayload,
+  now: string,
+  limit: number,
+): Promise<ResultsT> {
   // We will try retrying sending emails for a certain amount of time, after that we will permanently set the status to failed
 
   const results: ResultsT = []
 
   const expired = await payload.find({
     collection: 'scheduled-emails',
-    limit: 20,
+    limit: limit,
     where: {
       and: [{ status: { equals: 'pending' } }, { expiresAt: { less_than_equal: now } }],
     },
