@@ -15,7 +15,7 @@ export default function SurveyQ5() {
     <section className="p-6 border rounded-lg bg-mood-beige/20 space-y-6">
       <header>
         <h2 className="text-xl font-bold">
-          P5. Dlaczego marka {rejectedBrand} nie sprawdzi się w tym projekcie?
+          Dlaczego marka {rejectedBrand} nie sprawdzi się w tym projekcie?
         </h2>
         <p className="text-sm text-muted-foreground">(wybierz maksymalnie 2)</p>
       </header>

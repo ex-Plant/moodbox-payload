@@ -7,11 +7,11 @@ import { getPayload } from 'payload'
 
 export const dynamic = 'force-dynamic'
 
-type PostPurchasePagePropsT = {
+type PropsT = {
   params: Promise<{ token: string }>
 }
 
-export default async function PostPurchasePage({ params }: PostPurchasePagePropsT) {
+export default async function Ankieta({ params }: PropsT) {
   const { token } = await params
   const payload = await getPayload({ config: configPromise })
 
@@ -52,8 +52,8 @@ export default async function PostPurchasePage({ params }: PostPurchasePageProps
   )
 
   return (
-    <main className="mx-auto max-w-[800px] pt-32  pb-16 px-4">
-      <SurveyForm order={order} availableBrands={brands} />
+    <main className="mx-auto max-w-[1440px] py-32 px-4 xPaddings ">
+      <SurveyForm availableBrands={brands} />
     </main>
   )
 }

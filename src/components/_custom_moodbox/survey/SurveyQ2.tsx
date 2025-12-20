@@ -14,14 +14,14 @@ export default function SurveyQ2({ availableBrands }: PropsT) {
     <section className="space-y-4">
       <header>
         <h2 className="text-xl font-bold">
-          P2. Jeśli miał(a)byś wskazać jednego producenta, którego raczej nie rozważasz w tym
-          projekcie — który by to był?
+          Jeśli miał(a)byś wskazać jednego producenta, którego raczej nie rozważasz w tym projekcie
+          — który by to był?
         </h2>
       </header>
       <form.AppField name="rejected_brand">
         {(field) => (
           <field.Select placeholder="Wybierz producenta (opcjonalnie)">
-            <SelectItem value="none">Nie mam takiej / wszystkie są OK</SelectItem>
+            <SelectItem value="none">Nie mam takiego / wszyscy są OK</SelectItem>
             {availableBrands.map((brand) => (
               <SelectItem
                 key={`rejected-${brand}`}

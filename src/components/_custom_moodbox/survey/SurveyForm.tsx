@@ -3,7 +3,6 @@
 import { formContext, useAppForm } from '@/lib/hooks/tenStackFormHooks'
 import { surveySchema } from '@/lib/SurveySchema'
 import useSurveyForm from '@/lib/hooks/useSurveyForm'
-import { OrderT } from '@/lib/shopify/types'
 import { useStore } from '@tanstack/react-form'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
@@ -19,13 +18,13 @@ import SurveyQ5 from './SurveyQ5'
 import SurveyQ6 from './SurveyQ6'
 import SurveyQ7 from './SurveyQ7'
 import SurveyQ8 from './SurveyQ8'
+import { toast } from 'react-toastify'
 
 type SurveyFormProps = {
-  order: OrderT
   availableBrands: string[]
 }
 
-export default function SurveyForm({ order, availableBrands }: SurveyFormProps) {
+export default function SurveyForm({ availableBrands }: SurveyFormProps) {
   const { formData, currentStep, setStep, updateFormData, resetFormData } = useSurveyForm()
 
   const form = useAppForm({
@@ -45,6 +44,7 @@ export default function SurveyForm({ order, availableBrands }: SurveyFormProps) 
   })
 
   const formValues = useStore(form.store, (state) => state.values)
+  const consideredBrands = formValues.considered_brands
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
@@ -59,6 +59,13 @@ export default function SurveyForm({ order, availableBrands }: SurveyFormProps) 
   }, [formValues, updateFormData])
 
   function nextStep() {
+    if (consideredBrands.length < 1) {
+      toastMessage(
+        `Wybierz przynajmniej jednego producenta z którym rozważasz współpracę `,
+        ToastType.Info,
+      )
+      return
+    }
     if (currentStep < 3) setStep(currentStep + 1)
   }
 
@@ -77,14 +84,14 @@ export default function SurveyForm({ order, availableBrands }: SurveyFormProps) 
       >
         <SurveyHeader currentStep={currentStep} />
 
-        {currentStep === 1 && (
-          <section className="space-y-8 animate-in fade-in duration-500">
-            <SurveyQ1 availableBrands={availableBrands} />
-            <SurveyQ2 availableBrands={availableBrands} />
-          </section>
-        )}
+        {/* {currentStep === 1 && ( */}
+        <section className="space-y-12 animate-in fade-in duration-500 pt-8">
+          <SurveyQ1 availableBrands={availableBrands} />
+          <SurveyQ2 availableBrands={availableBrands} />
+        </section>
+        {/* )} */}
 
-        {currentStep === 2 && (
+        {currentStep >= 2 && (
           <section className="space-y-12 animate-in fade-in duration-500">
             <SurveyQ3 />
             <SurveyQ4 />
@@ -100,25 +107,27 @@ export default function SurveyForm({ order, availableBrands }: SurveyFormProps) 
           </section>
         )}
 
-        <div className="flex justify-between pt-8 border-t">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={prevStep}
-            className={cn(currentStep === 1 && 'invisible')}
-          >
-            Wstecz
-          </Button>
+        <div className={`flex flex-col w-full`}>
+          <div className="flex justify-between pt-8 ">
+            {/* <Button
+              type="button"
+              variant="secondary"
+              onClick={prevStep}
+              className={cn(currentStep === 1 && 'invisible')}
+            >
+              Wstecz
+            </Button> */}
 
-          {currentStep < 3 ? (
-            <Button type="button" variant="mood" onClick={nextStep}>
-              Dalej
-            </Button>
-          ) : (
-            <Button type="submit" variant="mood">
-              Wyślij ankietę
-            </Button>
-          )}
+            {currentStep < 3 ? (
+              <Button className={`ml-auto`} type="button" variant="mood" onClick={nextStep}>
+                Następny krok
+              </Button>
+            ) : (
+              <Button className={`ml-auto mt-8`} type="submit" variant="mood">
+                Wyślij ankietę
+              </Button>
+            )}
+          </div>
         </div>
       </form>
     </formContext.Provider>

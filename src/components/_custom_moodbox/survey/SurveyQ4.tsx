@@ -11,10 +11,12 @@ export default function SurveyQ4() {
   const consideredBrands = useStore(form.store, (state) => state.values.considered_brands)
   const brandEvaluations = useStore(form.store, (state) => state.values.brand_evaluations)
 
+  if (!consideredBrands || consideredBrands.length < 1) return null
+
   return (
     <section className="space-y-6">
       <header>
-        <h2 className="text-xl font-bold">P4. Szczegółowa ocena wybranych marek:</h2>
+        <h2 className="text-xl font-bold">Szczegółowa ocena wybranych marek:</h2>
       </header>
 
       {consideredBrands.map((brand) => {

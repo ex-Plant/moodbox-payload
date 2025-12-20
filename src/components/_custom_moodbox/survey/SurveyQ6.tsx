@@ -16,7 +16,7 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
     <section className="space-y-6">
       <header>
         <h2 className="text-xl font-bold">
-          P6. Czy chcesz, aby któryś z producentów skontaktował się z Tobą?
+          Czy chcesz, aby któryś z producentów skontaktował się z Tobą?
         </h2>
       </header>
       <form.AppField name="contact_request">
@@ -24,14 +24,14 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
           <div className="flex gap-4">
             <Button
               type="button"
-              variant={field.state.value ? 'mood' : 'outline'}
+              variant={field.state.value ? 'mood' : 'secondary'}
               onClick={() => field.handleChange(true)}
             >
               Tak
             </Button>
             <Button
               type="button"
-              variant={!field.state.value ? 'mood' : 'outline'}
+              variant={!field.state.value ? 'mood' : 'secondary'}
               onClick={() => field.handleChange(false)}
             >
               Nie

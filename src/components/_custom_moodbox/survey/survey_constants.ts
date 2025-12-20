@@ -22,3 +22,11 @@ export const REASONS_P5 = [
   'mam lepszą alternatywę',
   'inne',
 ] as const
+
+export const ratings = [
+  { rating: 1, text: 'użyję tylko warunkowo' },
+  { rating: 2, text: 'raczej użyję' },
+  { rating: 3, text: 'użyję w określonych sytuacjach' },
+  { rating: 4, text: 'chętnie użyję' },
+  { rating: 5, text: 'zdecydowanie użyję' },
+] as const

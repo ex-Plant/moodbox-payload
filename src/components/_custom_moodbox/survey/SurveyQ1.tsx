@@ -14,7 +14,7 @@ export default function SurveyQ1({ availableBrands }: PropsT) {
     <section className="space-y-4">
       <header>
         <h2 className="text-xl font-bold">
-          P1. Których producentów z Twojego boxa realnie rozważył(a)byś w deklarowanym projekcie?
+          Których producentów z Twojego boxa realnie rozważył(a)byś w deklarowanym projekcie?
         </h2>
         <p className="text-sm text-muted-foreground">(wybierz maks. 3)</p>
       </header>
