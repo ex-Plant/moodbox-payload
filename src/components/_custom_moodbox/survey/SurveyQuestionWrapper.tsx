@@ -7,7 +7,7 @@ type PropsT = {
 
 export default function QuestionWrapper({ children, className }: PropsT) {
   return (
-    <section className={cn(`border border-black p-8 rounded-md shadow-sm`, className)}>
+    <section className={cn(`border border-mood-brown p-8 rounded-md shadow-sm`, className)}>
       {children}
     </section>
   )

@@ -130,12 +130,12 @@ export default function SurveyForm({
             e.preventDefault()
             form.handleSubmit()
           }}
-          className="space-y-8"
+          className="space-y-12"
         >
           <SurveyHeader currentStep={currentStep} customerName={customerName} />
 
           {/* {currentStep === 1 && ( */}
-          <div className="space-y-12 animate-in fade-in duration-500 pt-8">
+          <div className="space-y-12 animate-in fade-in duration-500 ">
             <SurveyQ1 availableBrands={availableBrands} />
             <SurveyQ2 availableBrands={availableBrands} />
           </div>

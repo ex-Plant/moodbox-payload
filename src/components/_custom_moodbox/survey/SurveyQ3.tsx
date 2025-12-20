@@ -27,18 +27,18 @@ export default function SurveyQ3() {
           key={`eval-p3-${brand}`}
           className="p-6 border rounded-lg bg-white shadow-sm space-y-4"
         >
-          <h3 className="text-lg font-bold border-b pb-2">{brand}</h3>
+          <h3 className="text-lg font-bold border-b border-mood-brown pb-2">{brand}</h3>
 
           <form.Field name={`brand_evaluations.${brand}.rating` as DeepKeys<SurveySchemaT>}>
             {(field) => (
               <div className="space-y-2">
-                <p className="text-sm font-medium">Ocena (1-5):</p>
                 <div className="flex flex-col gap-2">
                   {ratings.map(({ rating, text }) => (
                     <div key={rating} className="flex items-center gap-4">
                       <Button
                         type="button"
-                        variant={field.state.value === rating ? 'mood' : 'outline'}
+                        size="icon-lg"
+                        variant={field.state.value === rating ? 'mood' : 'ghost'}
                         onClick={() => {
                           if (field.state.value === rating) {
                             return field.handleChange(null)
@@ -46,7 +46,7 @@ export default function SurveyQ3() {
 
                           return field.handleChange(rating as never)
                         }}
-                        className="w-12 h-12 text-lg font-bold"
+                        className=" text-sm font-bold size-6 p-2"
                       >
                         {rating}
                       </Button>
