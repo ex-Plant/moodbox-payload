@@ -12,6 +12,8 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
   const form = useSurveyContext()
   const contactRequest = useStore(form.store, (state) => state.values.contact_request)
 
+  console.log(form)
+
   return (
     <section className="space-y-6">
       <header>

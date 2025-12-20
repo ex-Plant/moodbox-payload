@@ -107,9 +107,8 @@ export default function SurveyForm({ availableBrands }: SurveyFormProps) {
           </section>
         )}
 
-        <div className={`flex flex-col w-full`}>
-          <div className="flex justify-between pt-8 ">
-            {/* <Button
+        <div className={`flex flex-col items-end w-full `}>
+          {/* <Button
               type="button"
               variant="secondary"
               onClick={prevStep}
@@ -118,16 +117,16 @@ export default function SurveyForm({ availableBrands }: SurveyFormProps) {
               Wstecz
             </Button> */}
 
-            {currentStep < 3 ? (
-              <Button className={`ml-auto`} type="button" variant="mood" onClick={nextStep}>
-                Następny krok
-              </Button>
-            ) : (
-              <Button className={`ml-auto mt-8`} type="submit" variant="mood">
-                Wyślij ankietę
-              </Button>
-            )}
-          </div>
+          {currentStep < 3 && (
+            <Button className={``} type="button" variant="mood" onClick={nextStep}>
+              Następny krok
+            </Button>
+          )}
+          {currentStep === 3 && (
+            <Button className={`mt-8`} type="submit" variant="mood">
+              Wyślij ankietę
+            </Button>
+          )}
         </div>
       </form>
     </formContext.Provider>
