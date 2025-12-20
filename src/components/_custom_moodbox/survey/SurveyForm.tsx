@@ -6,7 +6,7 @@ import useSurveyForm from '@/lib/hooks/useSurveyForm'
 import { useStore } from '@tanstack/react-form'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toastMessage, ToastPosition, ToastType } from '@/lib/toasts/toasts'
 import { submitSurveyA } from '@/app/actions/submitSurveyA'
 import SurveyHeader from './SurveyHeader'
@@ -20,6 +20,7 @@ import SurveyQ7 from './SurveyQ7'
 import SurveyQ8 from './SurveyQ8'
 import { toast } from 'react-toastify'
 import { createDiscountCode } from '../../../lib/shopify/adminApi'
+import SurveyDialog from './SurveyDialog'
 
 type SurveyFormProps = {
   availableBrands: string[]
@@ -64,6 +65,9 @@ async function discount() {
 export default function SurveyForm({ availableBrands }: SurveyFormProps) {
   const { formData, currentStep, setStep, updateFormData, resetFormData } = useSurveyForm()
 
+  const [surveyDialoOpen, setSurveyDialogOpen] = useState(false)
+  const [discountCode, setDiscountCode] = useState('')
+
   const form = useAppForm({
     defaultValues: formData,
     validators: {
@@ -76,12 +80,8 @@ export default function SurveyForm({ availableBrands }: SurveyFormProps) {
       } else {
         const code = await discount()
         if (code) {
-          toastMessage(
-            `Dziękujemy za wypełnienie ankiety. Twój kod to ${code} `,
-            ToastType.Success,
-            ToastPosition.BottomCenter,
-            15000,
-          )
+          setDiscountCode(code)
+          setSurveyDialogOpen(true)
         }
         resetFormData()
       }
@@ -119,41 +119,42 @@ export default function SurveyForm({ availableBrands }: SurveyFormProps) {
   }
 
   return (
-    <formContext.Provider value={form}>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          form.handleSubmit()
-        }}
-        className="space-y-8"
-      >
-        <SurveyHeader currentStep={currentStep} />
+    <>
+      <formContext.Provider value={form}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            form.handleSubmit()
+          }}
+          className="space-y-8"
+        >
+          <SurveyHeader currentStep={currentStep} />
 
-        {/* {currentStep === 1 && ( */}
-        <section className="space-y-12 animate-in fade-in duration-500 pt-8">
-          <SurveyQ1 availableBrands={availableBrands} />
-          <SurveyQ2 availableBrands={availableBrands} />
-        </section>
-        {/* )} */}
-
-        {currentStep >= 2 && (
-          <section className="space-y-12 animate-in fade-in duration-500">
-            <SurveyQ3 />
-            <SurveyQ4 />
-            <SurveyQ5 />
-            <SurveyQ6 availableBrands={availableBrands} />
+          {/* {currentStep === 1 && ( */}
+          <section className="space-y-12 animate-in fade-in duration-500 pt-8">
+            <SurveyQ1 availableBrands={availableBrands} />
+            <SurveyQ2 availableBrands={availableBrands} />
           </section>
-        )}
+          {/* )} */}
 
-        {currentStep === 3 && (
-          <section className="space-y-8 animate-in fade-in duration-500">
-            <SurveyQ7 />
-            <SurveyQ8 />
-          </section>
-        )}
+          {currentStep >= 2 && (
+            <section className="space-y-12 animate-in fade-in duration-500">
+              <SurveyQ3 />
+              <SurveyQ4 />
+              <SurveyQ5 />
+              <SurveyQ6 availableBrands={availableBrands} />
+            </section>
+          )}
 
-        <div className={`flex flex-col items-end w-full `}>
-          {/* <Button
+          {currentStep === 3 && (
+            <section className="space-y-8 animate-in fade-in duration-500">
+              <SurveyQ7 />
+              <SurveyQ8 />
+            </section>
+          )}
+
+          <div className={`flex flex-col items-end w-full `}>
+            {/* <Button
               type="button"
               variant="secondary"
               onClick={prevStep}
@@ -162,18 +163,24 @@ export default function SurveyForm({ availableBrands }: SurveyFormProps) {
               Wstecz
             </Button> */}
 
-          {currentStep < 3 && (
-            <Button className={``} type="button" variant="mood" onClick={nextStep}>
-              Następny krok
-            </Button>
-          )}
-          {currentStep === 3 && (
-            <Button className={`mt-8`} type="submit" variant="mood">
-              Wyślij ankietę
-            </Button>
-          )}
-        </div>
-      </form>
-    </formContext.Provider>
+            {currentStep < 3 && (
+              <Button className={``} type="button" variant="mood" onClick={nextStep}>
+                Następny krok
+              </Button>
+            )}
+            {currentStep === 3 && (
+              <Button className={`mt-8`} type="submit" variant="mood">
+                Wyślij ankietę
+              </Button>
+            )}
+          </div>
+        </form>
+      </formContext.Provider>
+      <SurveyDialog
+        setSurveyDialogOpen={setSurveyDialogOpen}
+        surveyDialoOpen={surveyDialoOpen}
+        discountCode={discountCode}
+      />
+    </>
   )
 }
