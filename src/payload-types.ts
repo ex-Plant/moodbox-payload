@@ -618,6 +618,7 @@ export interface ScheduledEmail {
   status: 'pending' | 'sent' | 'failed' | 'cancelled';
   emailType: 'post_purchase_questions';
   token: string;
+  isSurveyCompleted?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1172,6 +1173,7 @@ export interface ScheduledEmailsSelect<T extends boolean = true> {
   status?: T;
   emailType?: T;
   token?: T;
+  isSurveyCompleted?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -3,6 +3,7 @@ import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
+import QuestionWrapper from './SurveyQuestionWrapper'
 
 type PropsT = {
   availableBrands: string[]
@@ -15,7 +16,7 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
   console.log(form)
 
   return (
-    <section className="space-y-6">
+    <QuestionWrapper className="space-y-6">
       <header>
         <h2 className="text-xl font-bold">
           Czy chcesz, aby któryś z producentów skontaktował się z Tobą?
@@ -77,6 +78,6 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
           </form.Field>
         </div>
       )}
-    </section>
+    </QuestionWrapper>
   )
 }

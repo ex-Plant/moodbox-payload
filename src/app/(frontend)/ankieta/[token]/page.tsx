@@ -16,7 +16,8 @@ export default async function Ankieta({ params }: PropsT) {
   const payload = await getPayload({ config: configPromise })
 
   let orderId: string
-  let order
+  let order = null
+
   try {
     const res = await payload.find({
       collection: 'scheduled-emails',
@@ -30,7 +31,18 @@ export default async function Ankieta({ params }: PropsT) {
       notFound()
     }
 
-    orderId = res.docs[0].orderId
+    const doc = res.docs[0]
+
+    if (doc.isSurveyCompleted) {
+      return (
+        <main className="mx-auto max-w-[800px] py-32 px-4 xPaddings text-center">
+          <h1 className="text-2xl font-bold mb-4">Ankieta została już wypełniona</h1>
+          <p>Dziękujemy za Twój czas!</p>
+        </main>
+      )
+    }
+
+    orderId = doc.orderId
 
     order = await getOrderById(orderId)
     if (!order) {
@@ -52,8 +64,12 @@ export default async function Ankieta({ params }: PropsT) {
   )
 
   return (
-    <main className="mx-auto max-w-[1440px] py-32 px-4 xPaddings ">
-      <SurveyForm availableBrands={brands} />
+    <main className="mx-auto max-w-[800px] py-32 px-4 xPaddings ">
+      <SurveyForm
+        availableBrands={brands}
+        customerName={order?.customer?.firstName}
+        token={token}
+      />
     </main>
   )
 }

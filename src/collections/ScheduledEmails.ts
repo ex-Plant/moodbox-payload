@@ -54,5 +54,10 @@ export const ScheduledEmails: CollectionConfig = {
       required: true,
       unique: true,
     },
+    {
+      name: 'isSurveyCompleted',
+      type: 'checkbox',
+      defaultValue: false,
+    },
   ],
 }

@@ -1,10 +1,12 @@
 type SurveyHeaderProps = {
   currentStep: number
+  customerName: string | undefined
 }
 
-export default function SurveyHeader({ currentStep }: SurveyHeaderProps) {
+export default function SurveyHeader({ currentStep, customerName }: SurveyHeaderProps) {
   return (
-    <div className="mb-8">
+    <div>
+      {customerName && <p className={`text-3xl font-bold pb-8`}>Witaj {customerName}!</p>}
       <h1 className="text-3xl font-bold mb-2">Podsumowanie pracy z Moodboxem</h1>
       <p className="text-foreground">
         Krótki przegląd materiałów z Twojego boxa. Wypełnij formularz i odbierz kod rabatowy na

@@ -21,9 +21,11 @@ import SurveyQ8 from './SurveyQ8'
 import { toast } from 'react-toastify'
 import { createDiscountCode } from '../../../lib/shopify/adminApi'
 import SurveyDialog from './SurveyDialog'
+import QuestionWrapper from './SurveyQuestionWrapper'
 
 type SurveyFormProps = {
   availableBrands: string[]
+  customerName: string | undefined
 }
 
 async function discount() {
@@ -60,9 +62,11 @@ async function discount() {
   }
 }
 
-// Example usage
-
-export default function SurveyForm({ availableBrands }: SurveyFormProps) {
+export default function SurveyForm({
+  availableBrands,
+  customerName,
+  token,
+}: SurveyFormProps & { token: string }) {
   const { formData, currentStep, setStep, updateFormData, resetFormData } = useSurveyForm()
 
   const [surveyDialoOpen, setSurveyDialogOpen] = useState(false)
@@ -74,7 +78,7 @@ export default function SurveyForm({ availableBrands }: SurveyFormProps) {
       onSubmit: surveySchema,
     },
     onSubmit: async (data) => {
-      const res = await submitSurveyA(data.value)
+      const res = await submitSurveyA(data.value, token)
       if (res.error) {
         toastMessage(res.message, ToastType.Error)
       } else {
@@ -128,29 +132,29 @@ export default function SurveyForm({ availableBrands }: SurveyFormProps) {
           }}
           className="space-y-8"
         >
-          <SurveyHeader currentStep={currentStep} />
+          <SurveyHeader currentStep={currentStep} customerName={customerName} />
 
           {/* {currentStep === 1 && ( */}
-          <section className="space-y-12 animate-in fade-in duration-500 pt-8">
+          <div className="space-y-12 animate-in fade-in duration-500 pt-8">
             <SurveyQ1 availableBrands={availableBrands} />
             <SurveyQ2 availableBrands={availableBrands} />
-          </section>
+          </div>
           {/* )} */}
 
           {currentStep >= 2 && (
-            <section className="space-y-12 animate-in fade-in duration-500">
+            <div className="space-y-12 animate-in fade-in duration-500">
               <SurveyQ3 />
               <SurveyQ4 />
               <SurveyQ5 />
               <SurveyQ6 availableBrands={availableBrands} />
-            </section>
+            </div>
           )}
 
           {currentStep === 3 && (
-            <section className="space-y-8 animate-in fade-in duration-500">
+            <div className="space-y-12 animate-in fade-in duration-500">
               <SurveyQ7 />
               <SurveyQ8 />
-            </section>
+            </div>
           )}
 
           <div className={`flex flex-col items-end w-full `}>

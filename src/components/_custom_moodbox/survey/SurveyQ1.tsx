@@ -2,6 +2,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
+import QuestionWrapper from './SurveyQuestionWrapper'
 
 type PropsT = {
   availableBrands: string[]
@@ -11,7 +12,7 @@ export default function SurveyQ1({ availableBrands }: PropsT) {
   const form = useSurveyContext()
 
   return (
-    <section className="space-y-4">
+    <QuestionWrapper className="space-y-4">
       <header>
         <h2 className="text-xl font-bold">
           Których producentów z Twojego boxa realnie rozważył(a)byś w deklarowanym projekcie?
@@ -50,6 +51,6 @@ export default function SurveyQ1({ availableBrands }: PropsT) {
           </div>
         )}
       </form.Field>
-    </section>
+    </QuestionWrapper>
   )
 }

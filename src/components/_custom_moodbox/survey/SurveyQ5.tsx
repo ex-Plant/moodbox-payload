@@ -4,6 +4,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import { REASONS_P5 } from './survey_constants'
+import QuestionWrapper from './SurveyQuestionWrapper'
 
 export default function SurveyQ5() {
   const form = useSurveyContext()
@@ -12,7 +13,7 @@ export default function SurveyQ5() {
   if (!rejectedBrand || rejectedBrand === 'none') return null
 
   return (
-    <section className="p-6 border rounded-lg bg-mood-beige/20 space-y-6">
+    <QuestionWrapper className="p-6 border rounded-lg bg-mood-beige/20 space-y-6">
       <header>
         <h2 className="text-xl font-bold">
           Dlaczego marka {rejectedBrand} nie sprawdzi się w tym projekcie?
@@ -58,6 +59,6 @@ export default function SurveyQ5() {
           )
         }}
       </form.Field>
-    </section>
+    </QuestionWrapper>
   )
 }
