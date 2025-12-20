@@ -14,6 +14,7 @@ type ScheduledEmailDocT = {
 type ResultsT = Array<{ email: string; status: string; errorMessage?: string }>
 
 export async function sendScheduledEmail(limit = 20): Promise<ResultsT> {
+  console.log('sendScheduledEmail.ts:17 - :')
   const payload = await getPayload({ config: configPromise })
   const now = new Date().toISOString()
   const results: ResultsT = []
@@ -33,9 +34,11 @@ export async function sendScheduledEmail(limit = 20): Promise<ResultsT> {
     },
   })
 
-  if (scheduled.totalDocs === 0) return []
-
-  console.log(`Processing batch of ${scheduled.docs.length} scheduled emails...`)
+  if (scheduled.totalDocs === 0) {
+    console.log(`No scheduled emails found`)
+    return []
+  }
+  console.log(`💥 Processing batch of ${scheduled.docs.length} scheduled emails...`)
 
   // this is defensive - it shouldnt't be possible
   for (const doc of scheduled.docs as unknown as ScheduledEmailDocT[]) {

@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation'
-import { decodeOrderToken } from '@/lib/token/decodeOrderToken'
+import configPromise from '@payload-config'
+
 import { getOrderById } from '@/lib/shopify/adminApi'
 import SurveyForm from '@/components/_custom_moodbox/survey/SurveyForm'
+import { getPayload } from 'payload'
 
 export const dynamic = 'force-dynamic'
 
@@ -11,22 +13,32 @@ type PostPurchasePagePropsT = {
 
 export default async function PostPurchasePage({ params }: PostPurchasePagePropsT) {
   const { token } = await params
+  const payload = await getPayload({ config: configPromise })
 
   let orderId: string
+  let order
   try {
-    const payload = decodeOrderToken(token)
-    orderId = payload.orderId
+    const res = await payload.find({
+      collection: 'scheduled-emails',
+      limit: 1,
+      where: { token: { equals: token } },
+    })
+
+    if (res.docs.length < 1) {
+      console.log('page.tsx:28 - res:', res)
+      console.error('Email not found')
+      notFound()
+    }
+
+    orderId = res.docs[0].orderId
+
+    order = await getOrderById(orderId)
+    if (!order) {
+      console.error('Order not found:', orderId)
+      notFound()
+    }
   } catch (error) {
     console.error('Failed to decode token:', error)
-    notFound()
-  }
-
-  // const id = 'gid://shopify/Order/7377246191963'
-
-  const order = await getOrderById(orderId)
-  // const order = await getOrderById(id)
-  if (!order) {
-    console.error('Order not found:', orderId)
     notFound()
   }
 
@@ -40,7 +52,7 @@ export default async function PostPurchasePage({ params }: PostPurchasePageProps
   )
 
   return (
-    <main className="mx-auto max-w-[800px] mt-32 py-16 px-4">
+    <main className="mx-auto max-w-[800px] pt-32  pb-16 px-4">
       <SurveyForm order={order} availableBrands={brands} />
     </main>
   )
