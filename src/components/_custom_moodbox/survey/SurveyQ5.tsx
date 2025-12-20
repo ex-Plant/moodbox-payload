@@ -5,17 +5,17 @@ import { Label } from '@/components/ui/label'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import { REASONS_P5 } from './survey_constants'
 
-export default function RejectedBrandReason() {
+export default function SurveyQ5() {
   const form = useSurveyContext()
-  const formValues = useStore(form.store, (state) => state.values)
+  const rejectedBrand = useStore(form.store, (state) => state.values.rejected_brand)
 
-  if (!formValues.rejected_brand || formValues.rejected_brand === 'none') return null
+  if (!rejectedBrand || rejectedBrand === 'none') return null
 
   return (
     <section className="p-6 border rounded-lg bg-mood-beige/20 space-y-6">
       <header>
         <h2 className="text-xl font-bold">
-          P5. Dlaczego marka {formValues.rejected_brand} nie sprawdzi się w tym projekcie?
+          P5. Dlaczego marka {rejectedBrand} nie sprawdzi się w tym projekcie?
         </h2>
         <p className="text-sm text-muted-foreground">(wybierz maksymalnie 2)</p>
       </header>

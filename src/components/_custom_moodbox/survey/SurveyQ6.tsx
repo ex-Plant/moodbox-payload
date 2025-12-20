@@ -4,13 +4,13 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 
-type ContactRequestProps = {
+type PropsT = {
   availableBrands: string[]
 }
 
-export default function ContactRequest({ availableBrands }: ContactRequestProps) {
+export default function SurveyQ6({ availableBrands }: PropsT) {
   const form = useSurveyContext()
-  const formValues = useStore(form.store, (state) => state.values)
+  const contactRequest = useStore(form.store, (state) => state.values.contact_request)
 
   return (
     <section className="space-y-6">
@@ -40,7 +40,7 @@ export default function ContactRequest({ availableBrands }: ContactRequestProps)
         )}
       </form.AppField>
 
-      {formValues.contact_request && (
+      {contactRequest && (
         <div className="p-4 border rounded bg-white space-y-4 animate-in slide-in-from-top-2 duration-300">
           <p className="font-medium">Które marki?</p>
           <form.Field name="contact_brands">
