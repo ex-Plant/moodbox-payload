@@ -57,35 +57,6 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   // console.log({ slug, decodedSlug, url, page })
 
-  // Example usage
-  // const result = await createDiscountCode({
-  //   title: 'Welcome Discount',
-  //   code: 'WELCOME10',
-  //   usageLimit: 1,
-  //   appliesOncePerCustomer: true,
-  //   // minimumRequirement: {
-  //   //   subtotal: {
-  //   //     greaterThanOrEqualToSubtotal: '50.00',
-  //   //   },
-  //   // },
-  //   customerGets: {
-  //     value: {
-  //       percentage: 0.1,
-  //     },
-  //     items: {
-  //       all: true,
-  //     },
-  //   },
-  // })
-
-  // console.log(result)
-
-  // if (result.success) {
-  //   console.log('Discount created successfully:', result.discountId)
-  // } else {
-  //   console.log('Failed to create discount:', result.errors)
-  // }
-
   // try {
   //   const order = await getOrderById('gid://shopify/Order/7377856430427')
   //   console.dir(order, { colors: true, depth: null })

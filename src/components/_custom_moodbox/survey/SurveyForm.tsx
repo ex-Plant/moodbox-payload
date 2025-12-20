@@ -7,7 +7,7 @@ import { useStore } from '@tanstack/react-form'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
 import { useEffect, useRef } from 'react'
-import { toastMessage, ToastType } from '@/lib/toasts/toasts'
+import { toastMessage, ToastPosition, ToastType } from '@/lib/toasts/toasts'
 import { submitSurveyA } from '@/app/actions/submitSurveyA'
 import SurveyHeader from './SurveyHeader'
 import SurveyQ1 from './SurveyQ1'
@@ -19,10 +19,47 @@ import SurveyQ6 from './SurveyQ6'
 import SurveyQ7 from './SurveyQ7'
 import SurveyQ8 from './SurveyQ8'
 import { toast } from 'react-toastify'
+import { createDiscountCode } from '../../../lib/shopify/adminApi'
 
 type SurveyFormProps = {
   availableBrands: string[]
 }
+
+async function discount() {
+  const code = 'WELCOME10-' + crypto.randomUUID()
+
+  const result = await createDiscountCode({
+    title: 'Welcome Discount',
+    code: code,
+    usageLimit: 1,
+    appliesOncePerCustomer: true,
+    // minimumRequirement: {
+    //   subtotal: {
+    //     greaterThanOrEqualToSubtotal: '50.00',
+    //   },
+    // },
+    customerGets: {
+      value: {
+        percentage: 0.1,
+      },
+      items: {
+        all: true,
+      },
+    },
+  })
+
+  console.log(result)
+
+  if (result.success) {
+    console.log('Discount created successfully:', result.discountId)
+    return code
+  } else {
+    console.log('Failed to create discount:', result.errors)
+    return null
+  }
+}
+
+// Example usage
 
 export default function SurveyForm({ availableBrands }: SurveyFormProps) {
   const { formData, currentStep, setStep, updateFormData, resetFormData } = useSurveyForm()
@@ -37,7 +74,15 @@ export default function SurveyForm({ availableBrands }: SurveyFormProps) {
       if (res.error) {
         toastMessage(res.message, ToastType.Error)
       } else {
-        toastMessage('Dziękujemy za wypełnienie ankiety!', ToastType.Success)
+        const code = await discount()
+        if (code) {
+          toastMessage(
+            `Dziękujemy za wypełnienie ankiety. Twój kod to ${code} `,
+            ToastType.Success,
+            ToastPosition.BottomCenter,
+            15000,
+          )
+        }
         resetFormData()
       }
     },
