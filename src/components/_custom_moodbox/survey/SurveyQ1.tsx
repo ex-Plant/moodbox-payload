@@ -5,13 +5,23 @@ import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
 import { surveyQuestions } from './survey_constants'
-
 type PropsT = {
   availableBrands: string[]
 }
 
+type FieldApi = {
+  state: { value: string[] }
+  handleChange: (value: string[]) => void
+}
+
 export default function SurveyQ1({ availableBrands }: PropsT) {
   const form = useSurveyContext()
+
+  function toggle(checked: boolean, field: FieldApi, brand: string) {
+    if (!checked) return field.handleChange(field.state.value.filter((b: string) => b !== brand))
+    if (field.state.value.length < 3) return field.handleChange([...field.state.value, brand])
+    toastMessage('Możesz wybrać maksymalnie 3 producentów', ToastType.Warning)
+  }
 
   return (
     <QuestionWrapper>
@@ -30,17 +40,7 @@ export default function SurveyQ1({ availableBrands }: PropsT) {
                   <Checkbox
                     id={id}
                     checked={isChecked}
-                    onCheckedChange={(checked) => {
-                      if (checked) {
-                        if (field.state.value.length < 3) {
-                          field.handleChange([...field.state.value, brand])
-                        } else {
-                          toastMessage('Możesz wybrać maksymalnie 3 producentów', ToastType.Warning)
-                        }
-                      } else {
-                        field.handleChange(field.state.value.filter((b) => b !== brand))
-                      }
-                    }}
+                    onCheckedChange={(checked) => toggle(!!checked, field, brand)}
                   />
                   <Label htmlFor={id} className="cursor-pointer">
                     {brand}

@@ -14,8 +14,15 @@ export default function SurveyQ4() {
   const brandEvaluations = useStore(form.store, (state) => state.values.brand_evaluations)
 
   const hasRating = consideredBrands.some((brand) => brandEvaluations[brand]?.rating)
-
   if (!consideredBrands || consideredBrands.length < 1 || !hasRating) return null
+
+  function toggle(checked: boolean, currentReasons: string[], field: any, reason: string) {
+    if (!checked) return field.handleChange(currentReasons.filter((r) => r !== reason) as never)
+    if (currentReasons.length < 2) {
+      return field.handleChange([...currentReasons, reason] as never)
+    }
+    toastMessage('Możesz wybrać maksymalnie 2 powody', ToastType.Warning)
+  }
 
   return (
     <QuestionWrapper className="space-y-6">
@@ -54,22 +61,9 @@ export default function SurveyQ4() {
                             <Checkbox
                               id={id}
                               checked={currentReasons.includes(reason)}
-                              onCheckedChange={(checked) => {
-                                if (checked) {
-                                  if (currentReasons.length < 2) {
-                                    field.handleChange([...currentReasons, reason] as never)
-                                  } else {
-                                    toastMessage(
-                                      'Możesz wybrać maksymalnie 2 powody',
-                                      ToastType.Warning,
-                                    )
-                                  }
-                                } else {
-                                  field.handleChange(
-                                    currentReasons.filter((r) => r !== reason) as never,
-                                  )
-                                }
-                              }}
+                              onCheckedChange={(checked) =>
+                                toggle(!!checked, currentReasons, field, reason)
+                              }
                             />
                             <Label htmlFor={id} className="cursor-pointer">
                               {reason}
