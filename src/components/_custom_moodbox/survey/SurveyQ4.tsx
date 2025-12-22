@@ -7,6 +7,7 @@ import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import { REASONS_P4A, REASONS_P4B, surveyQuestions, UI_MESSAGES } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
+import { toggleReasons } from './helpers/toggleReasons'
 
 export default function SurveyQ4() {
   const form = useSurveyContext()
@@ -15,13 +16,6 @@ export default function SurveyQ4() {
 
   const hasRating = consideredBrands.some((brand) => brandEvaluations[brand]?.rating)
   if (!consideredBrands || consideredBrands.length < 1 || !hasRating) return null
-
-  function toggle(checked: boolean, current: string[], field: any, reason: string) {
-    if (!checked) return field.handleChange(current.filter((r) => r !== reason) as never)
-    if (current.length < 2) return field.handleChange([...current, reason] as never)
-
-    toastMessage(UI_MESSAGES.MAX_REASONS_SELECTED, ToastType.Warning)
-  }
 
   return (
     <QuestionWrapper className="space-y-6">
@@ -62,8 +56,8 @@ export default function SurveyQ4() {
                             <Checkbox
                               id={id}
                               checked={currentReasons.includes(reason)}
-                              onCheckedChange={(checked) =>
-                                toggle(!!checked, currentReasons, field, reason)
+                              onCheckedChange={(v) =>
+                                toggleReasons(!!v, currentReasons, field, reason)
                               }
                             />
                             <Label htmlFor={id} className="cursor-pointer">
