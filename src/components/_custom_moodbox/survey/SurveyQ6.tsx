@@ -5,6 +5,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
+import { surveyQuestions } from './survey_constants'
 
 type PropsT = {
   availableBrands: string[]
@@ -16,7 +17,7 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
 
   return (
     <QuestionWrapper className="space-y-6">
-      <SurveyQuestionHeader title="Czy chcesz, aby któryś z producentów skontaktował się z Tobą?" />
+      <SurveyQuestionHeader title={surveyQuestions[5].title} />
       <form.AppField name="contact_request">
         {(field) => (
           <div className="flex gap-4">

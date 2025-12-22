@@ -3,7 +3,7 @@ import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
-import { REASONS_P5 } from './survey_constants'
+import { REASONS_P5, surveyQuestions } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
 
@@ -16,8 +16,8 @@ export default function SurveyQ5() {
   return (
     <QuestionWrapper className="p-6 border rounded-lg bg-mood-beige/20 space-y-6">
       <SurveyQuestionHeader
-        title={`Dlaczego marka ${rejectedBrand} nie sprawdzi się w tym projekcie?`}
-        subtitle="(wybierz maksymalnie 2)"
+        title={surveyQuestions[4].title.replace('{rejectedBrand}', rejectedBrand)}
+        subtitle={surveyQuestions[4].subtitle}
       />
       <form.Field name="rejection_reasons">
         {(field) => {

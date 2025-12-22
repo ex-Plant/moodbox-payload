@@ -1,6 +1,7 @@
 import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
+import { surveyQuestions } from './survey_constants'
 
 export default function SurveyQ7() {
   const form = useSurveyContext()
@@ -8,8 +9,8 @@ export default function SurveyQ7() {
   return (
     <QuestionWrapper>
       <SurveyQuestionHeader
-        title="Czy jest producent, którego realnie brakuje Ci w Moodboxie?"
-        subtitle="(jeśli tak — wpisz maksymalnie 1–2 marki)"
+        title={surveyQuestions[6].title}
+        subtitle={surveyQuestions[6].subtitle}
       />
       <form.AppField name="missing_brands">
         {(field) => <field.Textarea placeholder="Twoja odpowiedź..." />}

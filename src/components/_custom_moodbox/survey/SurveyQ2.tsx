@@ -3,6 +3,7 @@ import { useStore } from '@tanstack/react-form'
 import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
+import { surveyQuestions } from './survey_constants'
 
 type PropsT = {
   availableBrands: string[]
@@ -14,7 +15,7 @@ export default function SurveyQ2({ availableBrands }: PropsT) {
 
   return (
     <QuestionWrapper>
-      <SurveyQuestionHeader title="Jeśli miał(a)byś wskazać jednego producenta, którego raczej nie rozważasz w tym projekcie — który by to był?" />
+      <SurveyQuestionHeader title={surveyQuestions[1].title} />
       <form.AppField name="rejected_brand">
         {(field) => (
           <field.Select placeholder="Wybierz producenta (opcjonalnie)">

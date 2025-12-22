@@ -4,6 +4,7 @@ import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
+import { surveyQuestions } from './survey_constants'
 
 type PropsT = {
   availableBrands: string[]
@@ -15,8 +16,8 @@ export default function SurveyQ1({ availableBrands }: PropsT) {
   return (
     <QuestionWrapper>
       <SurveyQuestionHeader
-        title="Których producentów z Twojego boxa realnie rozważył(a)byś w deklarowanym projekcie?"
-        subtitle="(wybierz maks. 3)"
+        title={surveyQuestions[0].title}
+        subtitle={surveyQuestions[0].subtitle}
       />
       <form.Field name="considered_brands">
         {(field) => (

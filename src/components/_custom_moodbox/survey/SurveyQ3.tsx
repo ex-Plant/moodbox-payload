@@ -2,7 +2,7 @@ import { useStore, type DeepKeys } from '@tanstack/react-form'
 import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { SurveySchemaT } from '@/lib/SurveySchema'
 import { Button } from '@/components/ui/button'
-import { ratings } from './survey_constants'
+import { ratings, surveyQuestions } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
 
@@ -15,8 +15,8 @@ export default function SurveyQ3() {
   return (
     <QuestionWrapper className="">
       <SurveyQuestionHeader
-        title="Na ile prawdopodobne jest, że użyjesz tego producenta w projekcie wnętrza?"
-        subtitle="(biorąc pod uwagę jakość materiału, wygląd i przydatność projektową)"
+        title={surveyQuestions[2].title}
+        subtitle={surveyQuestions[2].subtitle}
       />
 
       {consideredBrands.map((brand) => (

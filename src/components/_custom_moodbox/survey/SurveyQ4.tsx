@@ -4,7 +4,7 @@ import { SurveySchemaT } from '@/lib/SurveySchema'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
-import { REASONS_P4A, REASONS_P4B } from './survey_constants'
+import { REASONS_P4A, REASONS_P4B, surveyQuestions } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
 
@@ -19,7 +19,7 @@ export default function SurveyQ4() {
 
   return (
     <QuestionWrapper className="space-y-6">
-      <SurveyQuestionHeader title="Szczegółowa ocena wybranych marek:" />
+      <SurveyQuestionHeader title={surveyQuestions[3].title} />
 
       {consideredBrands.map((brand) => {
         if (!brandEvaluations[brand]?.rating) return null
