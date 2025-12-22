@@ -3,10 +3,10 @@ import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { SurveySchemaT } from '@/lib/SurveySchema'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
-import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import { REASONS_P4A, REASONS_P4B, surveyQuestions, UI_MESSAGES } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
+import BrandEvaluationCard from './BrandEvaluationCard'
 import { toggleReasons } from './helpers/toggleReasons'
 
 export default function SurveyQ4() {
@@ -14,6 +14,7 @@ export default function SurveyQ4() {
   const consideredBrands = useStore(form.store, (state) => state.values.considered_brands)
   const brandEvaluations = useStore(form.store, (state) => state.values.brand_evaluations)
 
+  // show this section after at least one producer is rated
   const hasRating = consideredBrands.some((brand) => brandEvaluations[brand]?.rating)
   if (!consideredBrands || consideredBrands.length < 1 || !hasRating) return null
 
@@ -25,12 +26,7 @@ export default function SurveyQ4() {
         if (!brandEvaluations[brand]?.rating) return null
 
         return (
-          <div
-            key={`eval-p4-${brand}`}
-            className="p-6 border rounded-lg bg-white shadow-sm space-y-6"
-          >
-            <h3 className="text-lg font-bold border-b pb-2">{brand}</h3>
-
+          <BrandEvaluationCard key={brand} brand={brand} questionId="p4">
             <form.Field name={`brand_evaluations.${brand}.reasons` as DeepKeys<SurveySchemaT>}>
               {(field) => {
                 const rating = brandEvaluations[brand].rating
@@ -84,7 +80,7 @@ export default function SurveyQ4() {
                 )
               }}
             </form.Field>
-          </div>
+          </BrandEvaluationCard>
         )
       })}
     </QuestionWrapper>
