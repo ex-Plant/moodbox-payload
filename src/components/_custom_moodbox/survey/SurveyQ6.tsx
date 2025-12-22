@@ -5,6 +5,7 @@ import SurveyCheckbox from './SurveyCheckbox'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
 import { surveyQuestions, UI_MESSAGES } from './survey_constants'
+import SurveyEvalCard from './SurveyEvalCard'
 
 type PropsT = {
   availableBrands: string[]
@@ -22,14 +23,14 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
           <div className="flex gap-4">
             <Button
               type="button"
-              variant={field.state.value ? 'mood' : 'secondary'}
+              variant={field.state.value ? 'mood' : 'outline'}
               onClick={() => field.handleChange(true)}
             >
               {UI_MESSAGES.YES}
             </Button>
             <Button
               type="button"
-              variant={!field.state.value ? 'mood' : 'secondary'}
+              variant={!field.state.value ? 'mood' : 'outline'}
               onClick={() => field.handleChange(false)}
             >
               {UI_MESSAGES.NO}
@@ -39,7 +40,7 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
       </form.AppField>
 
       {contactRequest && (
-        <div className="p-4 border rounded bg-white space-y-4 animate-in slide-in-from-top-2 duration-300">
+        <SurveyEvalCard>
           <p className="font-medium">{UI_MESSAGES.WHICH_BRANDS}</p>
           <form.Field name="contact_brands">
             {(field) => {
@@ -68,7 +69,7 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
               )
             }}
           </form.Field>
-        </div>
+        </SurveyEvalCard>
       )}
     </QuestionWrapper>
   )
