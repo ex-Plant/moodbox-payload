@@ -4,8 +4,8 @@ import { SurveySchemaT } from '@/lib/SurveySchema'
 import { Button } from '@/components/ui/button'
 import { ratings, surveyQuestions } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
-import QuestionWrapper from './SurveyQuestionWrapper'
 import SurveyEvalCard from './SurveyEvalCard'
+import SurveyQWrapper from './SurveyQWrapper'
 
 export default function SurveyQ3() {
   const form = useSurveyContext()
@@ -14,7 +14,7 @@ export default function SurveyQ3() {
   if (!consideredBrands || consideredBrands.length < 1) return null
 
   return (
-    <QuestionWrapper className="space-y-6">
+    <SurveyQWrapper className="space-y-6">
       <SurveyQuestionHeader
         title={surveyQuestions[2].title}
         subtitle={surveyQuestions[2].subtitle}
@@ -48,6 +48,6 @@ export default function SurveyQ3() {
           </form.Field>
         </SurveyEvalCard>
       ))}
-    </QuestionWrapper>
+    </SurveyQWrapper>
   )
 }

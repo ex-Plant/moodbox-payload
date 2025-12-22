@@ -4,8 +4,8 @@ import { useStore } from '@tanstack/react-form'
 import { toggleReasons } from './helpers/toggleReasons'
 import { REASONS_P5, surveyQuestions, UI_MESSAGES } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
-import QuestionWrapper from './SurveyQuestionWrapper'
 import SurveyEvalCard from './SurveyEvalCard'
+import SurveyQWrapper from './SurveyQWrapper'
 
 export default function SurveyQ5() {
   const form = useSurveyContext()
@@ -14,7 +14,7 @@ export default function SurveyQ5() {
   if (!rejectedBrand || rejectedBrand === 'none') return null
 
   return (
-    <QuestionWrapper className="space-y-6">
+    <SurveyQWrapper className="space-y-6">
       <SurveyQuestionHeader
         title={surveyQuestions[4].title.replace('{rejectedBrand}', rejectedBrand)}
         subtitle={surveyQuestions[4].subtitle}
@@ -47,6 +47,6 @@ export default function SurveyQ5() {
           }}
         </form.Field>
       </SurveyEvalCard>
-    </QuestionWrapper>
+    </SurveyQWrapper>
   )
 }

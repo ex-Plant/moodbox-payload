@@ -1,13 +1,12 @@
-import { cn } from '@/utilities/ui'
-import { ReactNode } from 'react'
+import { cn } from '../../../utilities/ui'
 
 type PropsT = {
-  children: ReactNode
+  children: React.ReactNode
   className?: string
 }
 
 export default function SurveyQWrapper({ children, className }: PropsT) {
   return (
-    <div className={cn('space-y-12 animate-in fade-in duration-500', className)}>{children}</div>
+    <section className={cn(` space-y-4 bg-white p-8 rounded-md `, className)}>{children}</section>
   )
 }

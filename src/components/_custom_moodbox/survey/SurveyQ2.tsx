@@ -2,8 +2,8 @@ import { SelectItem } from '@/components/ui/select'
 import { useStore } from '@tanstack/react-form'
 import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
-import QuestionWrapper from './SurveyQuestionWrapper'
 import { surveyQuestions, UI_MESSAGES } from './survey_constants'
+import SurveyQWrapper from './SurveyQWrapper'
 
 type PropsT = {
   availableBrands: string[]
@@ -14,7 +14,7 @@ export default function SurveyQ2({ availableBrands }: PropsT) {
   const consideredBrands = useStore(form.store, (state) => state.values.considered_brands)
 
   return (
-    <QuestionWrapper>
+    <SurveyQWrapper>
       <SurveyQuestionHeader title={surveyQuestions[1].title} />
       <form.AppField name="rejected_brand">
         {(field) => (
@@ -32,6 +32,6 @@ export default function SurveyQ2({ availableBrands }: PropsT) {
           </field.Select>
         )}
       </form.AppField>
-    </QuestionWrapper>
+    </SurveyQWrapper>
   )
 }

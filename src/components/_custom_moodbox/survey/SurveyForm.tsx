@@ -5,9 +5,8 @@ import { surveySchema } from '@/lib/SurveySchema'
 import useSurveyForm from '@/lib/hooks/useSurveyForm'
 import { useStore } from '@tanstack/react-form'
 import { Button } from '@/components/ui/button'
-import { cn } from '@/utilities/ui'
 import { useEffect, useRef, useState } from 'react'
-import { toastMessage, ToastPosition, ToastType } from '@/lib/toasts/toasts'
+import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import { submitSurveyA } from '@/app/actions/submitSurveyA'
 import SurveyHeader from './SurveyHeader'
 import SurveyQ1 from './SurveyQ1'
@@ -20,7 +19,7 @@ import SurveyQ7 from './SurveyQ7'
 import SurveyQ8 from './SurveyQ8'
 import { createDiscountCode } from '../../../lib/shopify/adminApi'
 import SurveyDialog from './SurveyDialog'
-import SurveyQWrapper from './SurveyQWrapper'
+import SurveyStepWrapper from './SurveyStepWrapper'
 import { UI_MESSAGES } from './survey_constants'
 
 type SurveyFormProps = {
@@ -127,25 +126,25 @@ export default function SurveyForm({
         >
           <SurveyHeader currentStep={currentStep} customerName={customerName} />
 
-          <SurveyQWrapper>
+          <SurveyStepWrapper>
             <SurveyQ1 availableBrands={availableBrands} />
             <SurveyQ2 availableBrands={availableBrands} />
-          </SurveyQWrapper>
+          </SurveyStepWrapper>
 
           {currentStep >= 2 && (
-            <SurveyQWrapper>
+            <SurveyStepWrapper>
               <SurveyQ3 />
               <SurveyQ4 />
               <SurveyQ5 />
               <SurveyQ6 availableBrands={availableBrands} />
-            </SurveyQWrapper>
+            </SurveyStepWrapper>
           )}
 
           {currentStep === 3 && (
-            <SurveyQWrapper>
+            <SurveyStepWrapper>
               <SurveyQ7 />
               <SurveyQ8 />
-            </SurveyQWrapper>
+            </SurveyStepWrapper>
           )}
 
           <div className={`flex flex-col items-end w-full `}>

@@ -3,9 +3,9 @@ import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { Button } from '@/components/ui/button'
 import SurveyCheckbox from './SurveyCheckbox'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
-import QuestionWrapper from './SurveyQuestionWrapper'
 import { surveyQuestions, UI_MESSAGES } from './survey_constants'
 import SurveyEvalCard from './SurveyEvalCard'
+import SurveyQWrapper from './SurveyQWrapper'
 
 type PropsT = {
   availableBrands: string[]
@@ -16,7 +16,7 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
   const contactRequest = useStore(form.store, (state) => state.values.contact_request)
 
   return (
-    <QuestionWrapper className="space-y-6">
+    <SurveyQWrapper className="space-y-6">
       <SurveyQuestionHeader title={surveyQuestions[5].title} />
       <form.AppField name="contact_request">
         {(field) => (
@@ -71,6 +71,6 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
           </form.Field>
         </SurveyEvalCard>
       )}
-    </QuestionWrapper>
+    </SurveyQWrapper>
   )
 }

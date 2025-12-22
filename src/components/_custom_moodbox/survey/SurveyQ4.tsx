@@ -4,9 +4,9 @@ import { SurveySchemaT } from '@/lib/SurveySchema'
 import SurveyCheckbox from './SurveyCheckbox'
 import { REASONS_P4A, REASONS_P4B, surveyQuestions, UI_MESSAGES } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
-import QuestionWrapper from './SurveyQuestionWrapper'
 import SurveyEvalCard from './SurveyEvalCard'
 import { toggleReasons } from './helpers/toggleReasons'
+import SurveyQWrapper from './SurveyQWrapper'
 
 export default function SurveyQ4() {
   const form = useSurveyContext()
@@ -18,7 +18,7 @@ export default function SurveyQ4() {
   if (!consideredBrands || consideredBrands.length < 1 || !hasRating) return null
 
   return (
-    <QuestionWrapper className="space-y-6">
+    <SurveyQWrapper className="space-y-6">
       <SurveyQuestionHeader title={surveyQuestions[3].title} />
 
       {consideredBrands.map((brand) => {
@@ -81,6 +81,6 @@ export default function SurveyQ4() {
           </SurveyEvalCard>
         )
       })}
-    </QuestionWrapper>
+    </SurveyQWrapper>
   )
 }

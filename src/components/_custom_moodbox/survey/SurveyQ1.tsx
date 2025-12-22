@@ -2,8 +2,8 @@ import SurveyCheckbox from './SurveyCheckbox'
 import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
-import QuestionWrapper from './SurveyQuestionWrapper'
 import { surveyQuestions, UI_MESSAGES } from './survey_constants'
+import SurveyQWrapper from './SurveyQWrapper'
 type PropsT = {
   availableBrands: string[]
 }
@@ -23,7 +23,7 @@ export default function SurveyQ1({ availableBrands }: PropsT) {
   }
 
   return (
-    <QuestionWrapper>
+    <SurveyQWrapper>
       <SurveyQuestionHeader
         title={surveyQuestions[0].title}
         subtitle={surveyQuestions[0].subtitle}
@@ -46,6 +46,6 @@ export default function SurveyQ1({ availableBrands }: PropsT) {
           </div>
         )}
       </form.Field>
-    </QuestionWrapper>
+    </SurveyQWrapper>
   )
 }
