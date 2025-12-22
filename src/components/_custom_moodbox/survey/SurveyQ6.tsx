@@ -23,24 +23,24 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
           <div className="flex gap-4">
             <Button
               type="button"
-              variant={field.state.value ? 'mood' : 'outline'}
-              onClick={() => field.handleChange(true)}
-            >
-              {UI_MESSAGES.YES}
-            </Button>
-            <Button
-              type="button"
               variant={!field.state.value ? 'mood' : 'outline'}
               onClick={() => field.handleChange(false)}
             >
               {UI_MESSAGES.NO}
+            </Button>
+            <Button
+              type="button"
+              variant={field.state.value ? 'mood' : 'outline'}
+              onClick={() => field.handleChange(true)}
+            >
+              {UI_MESSAGES.YES}
             </Button>
           </div>
         )}
       </form.AppField>
 
       {contactRequest && (
-        <SurveyEvalCard>
+        <SurveyEvalCard className={`fade-in  animate-in  duration-500`}>
           <p className="font-medium">{UI_MESSAGES.WHICH_BRANDS}</p>
           <form.Field name="contact_brands">
             {(field) => {
