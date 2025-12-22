@@ -4,7 +4,7 @@ import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
-import { surveyQuestions } from './survey_constants'
+import { surveyQuestions, UI_MESSAGES } from './survey_constants'
 type PropsT = {
   availableBrands: string[]
 }
@@ -20,7 +20,7 @@ export default function SurveyQ1({ availableBrands }: PropsT) {
   function toggle(checked: boolean, field: FieldApi, brand: string) {
     if (!checked) return field.handleChange(field.state.value.filter((b: string) => b !== brand))
     if (field.state.value.length < 3) return field.handleChange([...field.state.value, brand])
-    toastMessage('Możesz wybrać maksymalnie 3 producentów', ToastType.Warning)
+    toastMessage(UI_MESSAGES.MAX_BRANDS_SELECTED, ToastType.Warning)
   }
 
   return (

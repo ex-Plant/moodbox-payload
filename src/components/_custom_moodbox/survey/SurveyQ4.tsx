@@ -4,7 +4,7 @@ import { SurveySchemaT } from '@/lib/SurveySchema'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
-import { REASONS_P4A, REASONS_P4B, surveyQuestions } from './survey_constants'
+import { REASONS_P4A, REASONS_P4B, surveyQuestions, UI_MESSAGES } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
 
@@ -16,12 +16,11 @@ export default function SurveyQ4() {
   const hasRating = consideredBrands.some((brand) => brandEvaluations[brand]?.rating)
   if (!consideredBrands || consideredBrands.length < 1 || !hasRating) return null
 
-  function toggle(checked: boolean, currentReasons: string[], field: any, reason: string) {
-    if (!checked) return field.handleChange(currentReasons.filter((r) => r !== reason) as never)
-    if (currentReasons.length < 2) {
-      return field.handleChange([...currentReasons, reason] as never)
-    }
-    toastMessage('Możesz wybrać maksymalnie 2 powody', ToastType.Warning)
+  function toggle(checked: boolean, current: string[], field: any, reason: string) {
+    if (!checked) return field.handleChange(current.filter((r) => r !== reason) as never)
+    if (current.length < 2) return field.handleChange([...current, reason] as never)
+
+    toastMessage(UI_MESSAGES.MAX_REASONS_SELECTED, ToastType.Warning)
   }
 
   return (
@@ -49,9 +48,11 @@ export default function SurveyQ4() {
                   <div className="space-y-4">
                     <p className="font-medium">
                       {isPositive
-                        ? 'Co najbardziej przemawia za użyciem tej marki w projekcie?'
-                        : 'Co ogranicza użycie tej marki in tym projekcie?'}
-                      <span className="text-xs text-muted-foreground block">(wybierz maks. 2)</span>
+                        ? UI_MESSAGES.POSITIVE_BRAND_QUESTION
+                        : UI_MESSAGES.NEGATIVE_BRAND_QUESTION}
+                      <span className="text-xs text-muted-foreground block">
+                        {UI_MESSAGES.SELECT_MAX_2}
+                      </span>
                     </p>
                     <div className="grid gap-2">
                       {reasons.map((reason) => {
@@ -78,7 +79,10 @@ export default function SurveyQ4() {
                         name={`brand_evaluations.${brand}.other_reason` as DeepKeys<SurveySchemaT>}
                       >
                         {(otherField) => (
-                          <otherField.Input placeholder="Co dokładnie?" className="mt-2" />
+                          <otherField.Input
+                            placeholder={UI_MESSAGES.SPECIFY_EXACTLY}
+                            className="mt-2"
+                          />
                         )}
                       </form.AppField>
                     )}

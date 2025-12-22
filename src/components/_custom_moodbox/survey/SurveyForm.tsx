@@ -21,6 +21,7 @@ import SurveyQ8 from './SurveyQ8'
 import { createDiscountCode } from '../../../lib/shopify/adminApi'
 import SurveyDialog from './SurveyDialog'
 import StepWrapper from './StepWrapper'
+import { UI_MESSAGES } from './survey_constants'
 
 type SurveyFormProps = {
   availableBrands: string[]
@@ -28,10 +29,10 @@ type SurveyFormProps = {
 }
 
 async function discount() {
-  const code = 'WELCOME10-' + crypto.randomUUID()
+  const code = UI_MESSAGES.WELCOME_DISCOUNT_PREFIX + crypto.randomUUID()
 
   const result = await createDiscountCode({
-    title: 'Welcome Discount',
+    title: UI_MESSAGES.WELCOME_DISCOUNT_TITLE,
     code: code,
     usageLimit: 1,
     appliesOncePerCustomer: true,
@@ -53,10 +54,10 @@ async function discount() {
   console.log(result)
 
   if (result.success) {
-    console.log('Discount created successfully:', result.discountId)
+    console.log(UI_MESSAGES.DISCOUNT_SUCCESS_MESSAGE, result.discountId)
     return code
   } else {
-    console.log('Failed to create discount:', result.errors)
+    console.log(UI_MESSAGES.DISCOUNT_FAILURE_MESSAGE, result.errors)
     return null
   }
 }
@@ -108,10 +109,7 @@ export default function SurveyForm({
 
   function nextStep() {
     if (consideredBrands.length < 1) {
-      toastMessage(
-        `Wybierz przynajmniej jednego producenta z którym rozważasz współpracę `,
-        ToastType.Info,
-      )
+      toastMessage(UI_MESSAGES.SELECT_AT_LEAST_ONE_BRAND, ToastType.Info)
       return
     }
     if (currentStep < 3) setStep(currentStep + 1)
@@ -153,12 +151,12 @@ export default function SurveyForm({
           <div className={`flex flex-col items-end w-full `}>
             {currentStep < 3 && (
               <Button className={``} type="button" variant="mood" onClick={nextStep}>
-                Następny krok
+                {UI_MESSAGES.NEXT_STEP}
               </Button>
             )}
             {currentStep === 3 && (
               <Button className={`mt-8`} type="submit" variant="mood">
-                Wyślij ankietę
+                {UI_MESSAGES.SEND_SURVEY}
               </Button>
             )}
           </div>

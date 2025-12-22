@@ -3,7 +3,7 @@ import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
-import { REASONS_P5, surveyQuestions } from './survey_constants'
+import { REASONS_P5, surveyQuestions, UI_MESSAGES } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
 
@@ -12,6 +12,13 @@ export default function SurveyQ5() {
   const rejectedBrand = useStore(form.store, (state) => state.values.rejected_brand)
 
   if (!rejectedBrand || rejectedBrand === 'none') return null
+
+  function toggle(checked: boolean, current: string[], field: any, reason: string) {
+    if (!checked) return field.handleChange(current.filter((r) => r !== reason) as never)
+    if (current.length < 2) return field.handleChange([...current, reason] as never)
+
+    toastMessage(UI_MESSAGES.MAX_REASONS_SELECTED, ToastType.Warning)
+  }
 
   return (
     <QuestionWrapper className="p-6 border rounded-lg bg-mood-beige/20 space-y-6">
@@ -31,17 +38,7 @@ export default function SurveyQ5() {
                     <Checkbox
                       id={id}
                       checked={current.includes(reason)}
-                      onCheckedChange={(checked) => {
-                        if (checked) {
-                          if (current.length < 2) {
-                            field.handleChange([...current, reason])
-                          } else {
-                            toastMessage('Możesz wybrać maksymalnie 2 powody', ToastType.Warning)
-                          }
-                        } else {
-                          field.handleChange(current.filter((r) => r !== reason))
-                        }
-                      }}
+                      onCheckedChange={(checked) => toggle(!!checked, current, field, reason)}
                     />
                     <Label htmlFor={id} className="cursor-pointer">
                       {reason}
@@ -51,7 +48,7 @@ export default function SurveyQ5() {
               })}
               {current.includes('inne') && (
                 <form.AppField name="rejection_other">
-                  {(otherField) => <otherField.Input placeholder="Co dokładnie?" />}
+                  {(otherField) => <otherField.Input placeholder={UI_MESSAGES.SPECIFY_EXACTLY} />}
                 </form.AppField>
               )}
             </div>

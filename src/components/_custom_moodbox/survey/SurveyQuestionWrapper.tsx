@@ -10,7 +10,7 @@ export default function QuestionWrapper({ children, className }: PropsT) {
     <section
       className={cn(`border border-mood-brown p-8 rounded-md shadow-sm space-y-4`, className)}
     >
-      {children}
+      <div>{children}</div>
     </section>
   )
 }

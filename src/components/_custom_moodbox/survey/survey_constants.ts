@@ -39,7 +39,8 @@ export const surveyQuestions = [
   },
   {
     id: 'q2',
-    title: 'Jeśli miał(a)byś wskazać jednego producenta, którego raczej nie rozważasz w tym projekcie — który by to był?',
+    title:
+      'Jeśli miał(a)byś wskazać jednego producenta, którego raczej nie rozważasz w tym projekcie — który by to był?',
   },
   {
     id: 'q3',
@@ -69,3 +70,50 @@ export const surveyQuestions = [
     title: 'Jedna rzecz, którą możemy poprawić w MoodBox:',
   },
 ] as const
+
+// UI Messages and Labels
+export const UI_MESSAGES = {
+  // Toast messages
+  MAX_BRANDS_SELECTED: 'Możesz wybrać maksymalnie 3 producentów',
+  MAX_REASONS_SELECTED: 'Możesz wybrać maksymalnie 2 powody',
+  SELECT_AT_LEAST_ONE_BRAND:
+    'Wybierz przynajmniej jednego producenta z którym rozważasz współpracę',
+
+  // Form labels and placeholders
+  SELECT_BRAND_OPTIONAL: 'Wybierz producenta (opcjonalnie)',
+  NO_SUCH_BRAND_OPTION: 'Nie mam takiego / wszyscy są OK',
+  YOUR_ANSWER_PLACEHOLDER: 'Twoja odpowiedź...',
+  WHICH_BRANDS: 'Które marki?',
+  SPECIFY_EXACTLY: 'Co dokładnie?',
+
+  // Question texts
+  POSITIVE_BRAND_QUESTION: 'Co najbardziej przemawia za użyciem tej marki w projekcie?',
+  NEGATIVE_BRAND_QUESTION: 'Co ogranicza użycie tej marki w tym projekcie?',
+  SELECT_MAX_2: '(wybierz maks. 2)',
+
+  // Buttons
+  YES: 'Tak',
+  NO: 'Nie',
+  NEXT_STEP: 'Następny krok',
+  SEND_SURVEY: 'Wyślij ankietę',
+
+  // Discount related
+  WELCOME_DISCOUNT_TITLE: 'Welcome Discount',
+  WELCOME_DISCOUNT_PREFIX: 'WELCOME10-',
+  DISCOUNT_SUCCESS_MESSAGE: 'Discount created successfully:',
+  DISCOUNT_FAILURE_MESSAGE: 'Failed to create discount:',
+
+  // Dialog messages
+  THANK_YOU_SURVEY: 'Dziękujemy za wypełnienie ankiety!',
+  YOUR_CODE_IS: 'Twój kod to: ',
+  GO_TO_MOODBOX: 'Przejdź do moodbox',
+
+  // Header messages
+  WELCOME_MESSAGE: 'Witaj',
+  SURVEY_TITLE: 'Podsumowanie pracy z Moodboxem',
+  SURVEY_DESCRIPTION:
+    'Krótki przegląd materiałów z Twojego boxa. Wypełnij formularz i odbierz kod rabatowy na kolejne zamówienie.',
+  STEP_LABEL: 'KROK',
+  STEP_SEPARATOR: '/',
+  TOTAL_STEPS: '3',
+} as const

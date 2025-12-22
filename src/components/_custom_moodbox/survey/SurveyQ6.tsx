@@ -5,7 +5,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
-import { surveyQuestions } from './survey_constants'
+import { surveyQuestions, UI_MESSAGES } from './survey_constants'
 
 type PropsT = {
   availableBrands: string[]
@@ -26,14 +26,14 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
               variant={field.state.value ? 'mood' : 'secondary'}
               onClick={() => field.handleChange(true)}
             >
-              Tak
+              {UI_MESSAGES.YES}
             </Button>
             <Button
               type="button"
               variant={!field.state.value ? 'mood' : 'secondary'}
               onClick={() => field.handleChange(false)}
             >
-              Nie
+              {UI_MESSAGES.NO}
             </Button>
           </div>
         )}
@@ -41,7 +41,7 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
 
       {contactRequest && (
         <div className="p-4 border rounded bg-white space-y-4 animate-in slide-in-from-top-2 duration-300">
-          <p className="font-medium">Które marki?</p>
+          <p className="font-medium">{UI_MESSAGES.WHICH_BRANDS}</p>
           <form.Field name="contact_brands">
             {(field) => {
               const current = (field.state.value as string[]) || []
