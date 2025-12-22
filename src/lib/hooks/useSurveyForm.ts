@@ -12,7 +12,7 @@ type SurveyStoreT = {
 
 const defaultFormData: SurveySchemaT = {
   considered_brands: [],
-  rejected_brand: undefined,
+  rejected_brand: '',
   brand_evaluations: {},
   rejection_reasons: [],
   rejection_other: '',

@@ -18,10 +18,8 @@ import SurveyQ5 from './SurveyQ5'
 import SurveyQ6 from './SurveyQ6'
 import SurveyQ7 from './SurveyQ7'
 import SurveyQ8 from './SurveyQ8'
-import { toast } from 'react-toastify'
 import { createDiscountCode } from '../../../lib/shopify/adminApi'
 import SurveyDialog from './SurveyDialog'
-import QuestionWrapper from './SurveyQuestionWrapper'
 
 type SurveyFormProps = {
   availableBrands: string[]
