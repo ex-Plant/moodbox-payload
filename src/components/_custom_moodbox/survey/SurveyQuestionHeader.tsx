@@ -9,7 +9,7 @@ type PropsT = {
 
 export default function SurveyQuestionHeader({ title, subtitle, className }: PropsT) {
   return (
-    <header className={cn(className)}>
+    <header className={cn(className, 'space-y-2')}>
       <h2 className="text-xl font-bold">{title}</h2>
       {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
     </header>

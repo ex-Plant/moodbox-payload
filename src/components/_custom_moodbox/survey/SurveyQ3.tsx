@@ -13,7 +13,7 @@ export default function SurveyQ3() {
   if (!consideredBrands || consideredBrands.length < 1) return null
 
   return (
-    <QuestionWrapper className="space-y-6">
+    <QuestionWrapper className="">
       <SurveyQuestionHeader
         title="Na ile prawdopodobne jest, że użyjesz tego producenta w projekcie wnętrza?"
         subtitle="(biorąc pod uwagę jakość materiału, wygląd i przydatność projektową)"

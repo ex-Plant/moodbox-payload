@@ -13,7 +13,7 @@ export default function SurveyQ2({ availableBrands }: PropsT) {
   const consideredBrands = useStore(form.store, (state) => state.values.considered_brands)
 
   return (
-    <QuestionWrapper className="space-y-4">
+    <QuestionWrapper>
       <SurveyQuestionHeader title="Jeśli miał(a)byś wskazać jednego producenta, którego raczej nie rozważasz w tym projekcie — który by to był?" />
       <form.AppField name="rejected_brand">
         {(field) => (

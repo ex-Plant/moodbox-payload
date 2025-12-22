@@ -6,7 +6,7 @@ export default function SurveyQ7() {
   const form = useSurveyContext()
 
   return (
-    <QuestionWrapper className="space-y-4">
+    <QuestionWrapper>
       <SurveyQuestionHeader
         title="Czy jest producent, którego realnie brakuje Ci w Moodboxie?"
         subtitle="(jeśli tak — wpisz maksymalnie 1–2 marki)"

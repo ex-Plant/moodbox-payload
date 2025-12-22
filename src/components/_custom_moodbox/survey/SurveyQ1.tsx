@@ -13,7 +13,7 @@ export default function SurveyQ1({ availableBrands }: PropsT) {
   const form = useSurveyContext()
 
   return (
-    <QuestionWrapper className="space-y-4">
+    <QuestionWrapper>
       <SurveyQuestionHeader
         title="Których producentów z Twojego boxa realnie rozważył(a)byś w deklarowanym projekcie?"
         subtitle="(wybierz maks. 3)"

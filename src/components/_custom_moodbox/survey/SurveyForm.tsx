@@ -20,6 +20,7 @@ import SurveyQ7 from './SurveyQ7'
 import SurveyQ8 from './SurveyQ8'
 import { createDiscountCode } from '../../../lib/shopify/adminApi'
 import SurveyDialog from './SurveyDialog'
+import StepWrapper from './StepWrapper'
 
 type SurveyFormProps = {
   availableBrands: string[]
@@ -116,10 +117,6 @@ export default function SurveyForm({
     if (currentStep < 3) setStep(currentStep + 1)
   }
 
-  function prevStep() {
-    if (currentStep > 1) setStep(currentStep - 1)
-  }
-
   return (
     <>
       <formContext.Provider value={form}>
@@ -132,39 +129,28 @@ export default function SurveyForm({
         >
           <SurveyHeader currentStep={currentStep} customerName={customerName} />
 
-          {/* {currentStep === 1 && ( */}
-          <div className="space-y-12 animate-in fade-in duration-500 ">
+          <StepWrapper>
             <SurveyQ1 availableBrands={availableBrands} />
             <SurveyQ2 availableBrands={availableBrands} />
-          </div>
-          {/* )} */}
+          </StepWrapper>
 
           {currentStep >= 2 && (
-            <div className="space-y-12 animate-in fade-in duration-500">
+            <StepWrapper>
               <SurveyQ3 />
               <SurveyQ4 />
               <SurveyQ5 />
               <SurveyQ6 availableBrands={availableBrands} />
-            </div>
+            </StepWrapper>
           )}
 
           {currentStep === 3 && (
-            <div className="space-y-12 animate-in fade-in duration-500">
+            <StepWrapper>
               <SurveyQ7 />
               <SurveyQ8 />
-            </div>
+            </StepWrapper>
           )}
 
           <div className={`flex flex-col items-end w-full `}>
-            {/* <Button
-              type="button"
-              variant="secondary"
-              onClick={prevStep}
-              className={cn(currentStep === 1 && 'invisible')}
-            >
-              Wstecz
-            </Button> */}
-
             {currentStep < 3 && (
               <Button className={``} type="button" variant="mood" onClick={nextStep}>
                 Następny krok

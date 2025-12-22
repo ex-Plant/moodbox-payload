@@ -6,7 +6,7 @@ export default function SurveyQ8() {
   const form = useSurveyContext()
 
   return (
-    <QuestionWrapper className="space-y-4">
+    <QuestionWrapper>
       <SurveyQuestionHeader title="Jedna rzecz, którą możemy poprawić w MoodBox:" />
       <form.AppField name="improvement_suggestion">
         {(field) => <field.Textarea placeholder="Twoja odpowiedź..." />}
