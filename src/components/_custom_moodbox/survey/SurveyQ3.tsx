@@ -3,6 +3,7 @@ import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { SurveySchemaT } from '@/lib/SurveySchema'
 import { Button } from '@/components/ui/button'
 import { ratings } from './survey_constants'
+import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
 
 export default function SurveyQ3() {
@@ -13,14 +14,10 @@ export default function SurveyQ3() {
 
   return (
     <QuestionWrapper className="space-y-6">
-      <header>
-        <h2 className="text-xl font-bold">
-          Na ile prawdopodobne jest, że użyjesz tego producenta w projekcie wnętrza?
-        </h2>
-        <p className="text-sm text-muted-foreground">
-          (biorąc pod uwagę jakość materiału, wygląd i przydatność projektową)
-        </p>
-      </header>
+      <SurveyQuestionHeader
+        title="Na ile prawdopodobne jest, że użyjesz tego producenta w projekcie wnętrza?"
+        subtitle="(biorąc pod uwagę jakość materiału, wygląd i przydatność projektową)"
+      />
 
       {consideredBrands.map((brand) => (
         <div

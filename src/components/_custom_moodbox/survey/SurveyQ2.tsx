@@ -1,6 +1,7 @@
 import { SelectItem } from '@/components/ui/select'
 import { useStore } from '@tanstack/react-form'
 import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
+import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
 
 type PropsT = {
@@ -13,13 +14,7 @@ export default function SurveyQ2({ availableBrands }: PropsT) {
 
   return (
     <QuestionWrapper className="space-y-4">
-      <header>
-        <h2 className="text-xl font-bold">
-          Jeśli miał(a)byś wskazać jednego producenta, którego raczej nie rozważasz w tym projekcie
-          — który by to był?
-        </h2>
-      </header>
-      {/* <div className={`max-w-[500px]`}> */}
+      <SurveyQuestionHeader title="Jeśli miał(a)byś wskazać jednego producenta, którego raczej nie rozważasz w tym projekcie — który by to był?" />
       <form.AppField name="rejected_brand">
         {(field) => (
           <field.Select placeholder="Wybierz producenta (opcjonalnie)">

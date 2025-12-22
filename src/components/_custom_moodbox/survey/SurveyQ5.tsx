@@ -4,6 +4,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import { REASONS_P5 } from './survey_constants'
+import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
 
 export default function SurveyQ5() {
@@ -14,12 +15,10 @@ export default function SurveyQ5() {
 
   return (
     <QuestionWrapper className="p-6 border rounded-lg bg-mood-beige/20 space-y-6">
-      <header>
-        <h2 className="text-xl font-bold">
-          Dlaczego marka {rejectedBrand} nie sprawdzi się w tym projekcie?
-        </h2>
-        <p className="text-sm text-muted-foreground">(wybierz maksymalnie 2)</p>
-      </header>
+      <SurveyQuestionHeader
+        title={`Dlaczego marka ${rejectedBrand} nie sprawdzi się w tym projekcie?`}
+        subtitle="(wybierz maksymalnie 2)"
+      />
       <form.Field name="rejection_reasons">
         {(field) => {
           const current = (field.state.value as string[]) || []

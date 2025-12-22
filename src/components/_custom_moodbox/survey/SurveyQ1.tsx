@@ -2,6 +2,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
+import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
 
 type PropsT = {
@@ -13,12 +14,10 @@ export default function SurveyQ1({ availableBrands }: PropsT) {
 
   return (
     <QuestionWrapper className="space-y-4">
-      <header>
-        <h2 className="text-xl font-bold">
-          Których producentów z Twojego boxa realnie rozważył(a)byś w deklarowanym projekcie?
-        </h2>
-        <p className="text-sm text-muted-foreground">(wybierz maks. 3)</p>
-      </header>
+      <SurveyQuestionHeader
+        title="Których producentów z Twojego boxa realnie rozważył(a)byś w deklarowanym projekcie?"
+        subtitle="(wybierz maks. 3)"
+      />
       <form.Field name="considered_brands">
         {(field) => (
           <div className="grid gap-4 md:grid-cols-2">
