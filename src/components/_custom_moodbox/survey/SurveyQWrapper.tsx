@@ -6,7 +6,7 @@ type PropsT = {
   className?: string
 }
 
-export default function StepWrapper({ children, className }: PropsT) {
+export default function SurveyQWrapper({ children, className }: PropsT) {
   return (
     <div className={cn('space-y-12 animate-in fade-in duration-500', className)}>{children}</div>
   )

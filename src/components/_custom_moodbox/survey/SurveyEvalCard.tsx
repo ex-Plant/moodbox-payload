@@ -1,14 +1,12 @@
-type BrandEvaluationCardProps = {
+import { ReactNode } from 'react'
+
+type SurveyEvalCardProps = {
   brand: string
   questionId: string
-  children: React.ReactNode
+  children: ReactNode
 }
 
-export default function BrandEvaluationCard({
-  brand,
-  questionId,
-  children,
-}: BrandEvaluationCardProps) {
+export default function SurveyEvalCard({ brand, questionId, children }: SurveyEvalCardProps) {
   return (
     <div
       key={`eval-${questionId}-${brand}`}

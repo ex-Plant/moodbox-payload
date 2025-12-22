@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 import { REASONS_P4A, REASONS_P4B, surveyQuestions, UI_MESSAGES } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
-import BrandEvaluationCard from './BrandEvaluationCard'
+import SurveyEvalCard from './SurveyEvalCard'
 import { toggleReasons } from './helpers/toggleReasons'
 
 export default function SurveyQ4() {
@@ -26,7 +26,7 @@ export default function SurveyQ4() {
         if (!brandEvaluations[brand]?.rating) return null
 
         return (
-          <BrandEvaluationCard key={brand} brand={brand} questionId="p4">
+          <SurveyEvalCard key={brand} brand={brand} questionId="p4">
             <form.Field name={`brand_evaluations.${brand}.reasons` as DeepKeys<SurveySchemaT>}>
               {(field) => {
                 const rating = brandEvaluations[brand].rating
@@ -80,7 +80,7 @@ export default function SurveyQ4() {
                 )
               }}
             </form.Field>
-          </BrandEvaluationCard>
+          </SurveyEvalCard>
         )
       })}
     </QuestionWrapper>

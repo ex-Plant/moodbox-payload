@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { ratings, surveyQuestions } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
-import BrandEvaluationCard from './BrandEvaluationCard'
+import SurveyEvalCard from './SurveyEvalCard'
 
 export default function SurveyQ3() {
   const form = useSurveyContext()
@@ -21,7 +21,7 @@ export default function SurveyQ3() {
       />
 
       {consideredBrands.map((brand) => (
-        <BrandEvaluationCard key={brand} brand={brand} questionId="p3">
+        <SurveyEvalCard key={brand} brand={brand} questionId="p3">
           <form.Field name={`brand_evaluations.${brand}.rating` as DeepKeys<SurveySchemaT>}>
             {(field) => (
               <div className="flex flex-col gap-2">
@@ -46,7 +46,7 @@ export default function SurveyQ3() {
               </div>
             )}
           </form.Field>
-        </BrandEvaluationCard>
+        </SurveyEvalCard>
       ))}
     </QuestionWrapper>
   )
