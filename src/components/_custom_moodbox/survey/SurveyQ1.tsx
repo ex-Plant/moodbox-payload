@@ -1,5 +1,4 @@
-import { Checkbox } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/label'
+import SurveyCheckbox from './SurveyCheckbox'
 import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
@@ -34,18 +33,14 @@ export default function SurveyQ1({ availableBrands }: PropsT) {
           <div className="grid gap-4 md:grid-cols-2">
             {availableBrands.map((brand) => {
               const id = `considered-${brand}`
-              const isChecked = field.state.value.includes(brand)
               return (
-                <div key={id} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={id}
-                    checked={isChecked}
-                    onCheckedChange={(checked) => toggle(!!checked, field, brand)}
-                  />
-                  <Label htmlFor={id} className="cursor-pointer">
-                    {brand}
-                  </Label>
-                </div>
+                <SurveyCheckbox
+                  key={id}
+                  id={id}
+                  checked={field.state.value.includes(brand)}
+                  onCheckedChange={(checked) => toggle(!!checked, field, brand)}
+                  label={brand}
+                />
               )
             })}
           </div>

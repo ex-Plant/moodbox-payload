@@ -1,8 +1,7 @@
 import { useStore } from '@tanstack/react-form'
 import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/label'
+import SurveyCheckbox from './SurveyCheckbox'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
 import { surveyQuestions, UI_MESSAGES } from './survey_constants'
@@ -50,22 +49,19 @@ export default function SurveyQ6({ availableBrands }: PropsT) {
                   {availableBrands.map((brand) => {
                     const id = `contact-${brand}`
                     return (
-                      <div key={id} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={id}
-                          checked={current.includes(brand)}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              field.handleChange([...current, brand])
-                            } else {
-                              field.handleChange(current.filter((b) => b !== brand))
-                            }
-                          }}
-                        />
-                        <Label htmlFor={id} className="cursor-pointer">
-                          {brand}
-                        </Label>
-                      </div>
+                      <SurveyCheckbox
+                        key={id}
+                        id={id}
+                        checked={current.includes(brand)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            field.handleChange([...current, brand])
+                          } else {
+                            field.handleChange(current.filter((b) => b !== brand))
+                          }
+                        }}
+                        label={brand}
+                      />
                     )
                   })}
                 </div>

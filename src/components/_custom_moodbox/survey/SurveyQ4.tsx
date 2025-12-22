@@ -1,8 +1,7 @@
 import { useStore, type DeepKeys } from '@tanstack/react-form'
 import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { SurveySchemaT } from '@/lib/SurveySchema'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/label'
+import SurveyCheckbox from './SurveyCheckbox'
 import { REASONS_P4A, REASONS_P4B, surveyQuestions, UI_MESSAGES } from './survey_constants'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import QuestionWrapper from './SurveyQuestionWrapper'
@@ -47,19 +46,18 @@ export default function SurveyQ4() {
                     <div className="grid gap-2">
                       {reasons.map((reason) => {
                         const id = `reason-${brand}-${reason}`
+                        const checked = currentReasons.includes(reason)
+
                         return (
-                          <div key={reason} className="flex items-center space-x-2">
-                            <Checkbox
-                              id={id}
-                              checked={currentReasons.includes(reason)}
-                              onCheckedChange={(v) =>
-                                toggleReasons(!!v, currentReasons, field, reason)
-                              }
-                            />
-                            <Label htmlFor={id} className="cursor-pointer">
-                              {reason}
-                            </Label>
-                          </div>
+                          <SurveyCheckbox
+                            key={reason}
+                            id={id}
+                            checked={checked}
+                            onCheckedChange={(v) =>
+                              toggleReasons(!!v, currentReasons, field, reason)
+                            }
+                            label={reason}
+                          />
                         )
                       })}
                     </div>

@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 type SurveyEvalCardProps = {
   brand: string
-  questionId: string
+  questionId?: string
   children: ReactNode
 }
 
