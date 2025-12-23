@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic'
 // curl -X POST http://localhost:3000/api/cron/send-feedback-emails \
 // -H "Authorization: Bearer YOUR_CRON_SECRET_HERE"
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
   console.log(`Initializing send-feedback-emails cron`)
   const authHeader: string | null = req.headers.get('authorization')
   const expected: string = `Bearer ${process.env.CRON_SECRET ?? ''}`
