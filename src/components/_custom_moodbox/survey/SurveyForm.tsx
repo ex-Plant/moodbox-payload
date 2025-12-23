@@ -17,48 +17,14 @@ import SurveyQ5 from './SurveyQ5'
 import SurveyQ6 from './SurveyQ6'
 import SurveyQ7 from './SurveyQ7'
 import SurveyQ8 from './SurveyQ8'
-import { createDiscountCode } from '../../../lib/shopify/adminApi'
 import SurveyDialog from './SurveyDialog'
 import SurveyStepWrapper from './SurveyStepWrapper'
 import { UI_MESSAGES } from './survey_constants'
+import { createDiscountA } from '../../../app/actions/createDiscountA'
 
 type SurveyFormProps = {
   availableBrands: string[]
   customerName: string | undefined
-}
-
-async function discount() {
-  const code = UI_MESSAGES.WELCOME_DISCOUNT_PREFIX + crypto.randomUUID()
-
-  const result = await createDiscountCode({
-    title: UI_MESSAGES.WELCOME_DISCOUNT_TITLE,
-    code: code,
-    usageLimit: 1,
-    appliesOncePerCustomer: true,
-    // minimumRequirement: {
-    //   subtotal: {
-    //     greaterThanOrEqualToSubtotal: '50.00',
-    //   },
-    // },
-    customerGets: {
-      value: {
-        percentage: 0.1,
-      },
-      items: {
-        all: true,
-      },
-    },
-  })
-
-  console.log(result)
-
-  if (result.success) {
-    console.log(UI_MESSAGES.DISCOUNT_SUCCESS_MESSAGE, result.discountId)
-    return code
-  } else {
-    console.log(UI_MESSAGES.DISCOUNT_FAILURE_MESSAGE, result.errors)
-    return null
-  }
 }
 
 export default function SurveyForm({
@@ -76,17 +42,21 @@ export default function SurveyForm({
     validators: {
       onSubmit: surveySchema,
     },
+
     onSubmit: async (data) => {
       const res = await submitSurveyA(data.value, token)
       if (res.error) {
         toastMessage(res.message, ToastType.Error)
       } else {
-        const code = await discount()
-        if (code) {
+        // todo move to one place ?
+        // todo moile styling
+        const code = UI_MESSAGES.WELCOME_DISCOUNT_PREFIX + crypto.randomUUID()
+        const res = await createDiscountA(code)
+        if (res) {
           setDiscountCode(code)
           setSurveyDialogOpen(true)
+          resetFormData()
         }
-        resetFormData()
       }
     },
   })
