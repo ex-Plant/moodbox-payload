@@ -9,6 +9,8 @@ export async function GET() {
       config: configPromise,
     })
 
+    console.log('Sending test email 🍆')
+
     const { subject, html } = buildPostOrderEmail(
       'http://localhost:3000/ankieta/ba0b6a7a-c9ab-4cb8-a237-417926cddef0',
     )
@@ -16,7 +18,7 @@ export async function GET() {
     await payload.sendEmail({
       to: process.env.EMAIL_USER || '',
       subject,
-      text: '',
+      // text: '',
       html,
     })
 
