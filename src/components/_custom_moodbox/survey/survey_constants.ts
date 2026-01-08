@@ -99,7 +99,6 @@ export const UI_MESSAGES = {
 
   // Discount related
   WELCOME_DISCOUNT_TITLE: 'Welcome Discount',
-  WELCOME_DISCOUNT_PREFIX: 'WELCOME10-',
   DISCOUNT_SUCCESS_MESSAGE: 'Discount created successfully:',
   DISCOUNT_FAILURE_MESSAGE: 'Failed to create discount:',
 

@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation'
 
 import SurveyForm from '@/components/_custom_moodbox/survey/SurveyForm'
 import { getOrderById } from '@/lib/shopify/adminApi'
-import { checkSurveyStatus } from '../../../actions/checkSurveyStatus'
 import SurveyCompletedPage from '../../../../components/_custom_moodbox/nav/SurveyCompletedPage'
+import { checkSurveyStatus } from '../../../actions/checkSurveyStatus'
 
 export const dynamic = 'force-dynamic'
 
@@ -42,7 +42,7 @@ export default async function Ankieta({ params }: PropsT) {
   )
 
   return (
-    <main className="mx-auto max-w-[800px] py-32 px-4 xPaddings ">
+    <main className="mx-auto max-w-[800px] py-32 px-4 xPaddings relative ">
       <SurveyForm
         availableBrands={brands}
         customerName={order?.customer?.firstName}

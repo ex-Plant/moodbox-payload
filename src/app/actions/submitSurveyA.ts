@@ -3,6 +3,8 @@
 import { surveySchema, SurveySchemaT } from '@/lib/SurveySchema'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { buildDiscountCodeEmail } from '../../utilities/email_templates/buildDiscountCodeEmail'
+import { createDiscountA } from './createDiscountA'
 import { checkSurveyStatus } from './checkSurveyStatus'
 
 export async function submitSurveyA(data: SurveySchemaT, token: string) {
@@ -11,20 +13,31 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
     const validatedData = surveySchema.safeParse(data)
 
     if (!validatedData.success) {
+      console.error('Survey validation failed for token:', token, {
+        errors: validatedData.error.issues,
+      })
       return {
         error: true,
         message: 'Nieprawidłowe dane formularza.',
-        details: validatedData.error.flatten(),
       }
     }
 
-    const { docId } = await checkSurveyStatus(token)
+    const { docId, customerEmail } = await checkSurveyStatus(token)
     const payload = await getPayload({ config: configPromise })
 
     console.log('Survey submitted successfully for token:', token, validatedData.data)
 
-    // 2. Update the document to mark it as completed
+    // Gerenate code first if the rest of logic fails after 30 days it will expire anyway
+    const generatedDiscount = await createDiscountA()
 
+    if (!generatedDiscount) {
+      return {
+        error: true,
+        message: 'Wystąpił błąd podczas generowania kodu.',
+      }
+    }
+
+    // 2. Update the document to mark it as completed
     const updateResult = await payload.update({
       collection: 'scheduled-emails',
       where: {
@@ -45,15 +58,26 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       }
     }
 
+    const { subject, html } = buildDiscountCodeEmail(generatedDiscount)
+
+    // Send email code to the user
+    await payload.sendEmail({
+      to: customerEmail,
+      subject,
+      // text: '',
+      html,
+    })
+
     return {
       error: false,
       message: 'Ankieta została wysłana pomyślnie.',
+      generatedDiscount,
     }
   } catch (error) {
     console.error('Error submitting survey:', error)
     return {
       error: true,
-      message: 'Wystąpił błąd podczas wysyłania ankiety.',
+      message: 'Wystąpił błąd podczas wysyłania ankiety - spróbuj ponownie.',
     }
   }
 }

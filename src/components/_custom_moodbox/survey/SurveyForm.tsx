@@ -23,6 +23,7 @@ import { UI_MESSAGES } from './survey_constants'
 import { createDiscountA } from '../../../app/actions/createDiscountA'
 import SurveyCheckbox from './SurveyCheckbox'
 import LogoMoodboxSvg from '../common/LogoMoodboxSvg'
+import { createPortal } from 'react-dom'
 
 type SurveyFormProps = {
   availableBrands: string[]
@@ -49,19 +50,11 @@ export default function SurveyForm({
 
     onSubmit: async (data) => {
       const res = await submitSurveyA(data.value, token)
-      if (res.error) {
-        toastMessage(res.message, ToastType.Error)
-      } else {
-        // todo move to one place ?
-        // todo moile styling
-        const code = UI_MESSAGES.WELCOME_DISCOUNT_PREFIX + crypto.randomUUID()
-        const res = await createDiscountA(code)
-        if (res) {
-          setDiscountCode(code)
-          setSurveyDialogOpen(true)
-          resetFormData()
-        }
-      }
+      if (res.error) return toastMessage(res.message, ToastType.Error)
+
+      setDiscountCode(res.generatedDiscount ?? '')
+      setSurveyDialogOpen(true)
+      resetFormData()
     },
   })
 
@@ -150,11 +143,15 @@ export default function SurveyForm({
         surveyDialoOpen={surveyDialoOpen}
         discountCode={discountCode}
       />
-      {isSubmitting && (
-        <div className={`pointer-events-none absolute inset-0 flex items-center justify-center`}>
-          <LogoMoodboxSvg className={`animate-bounce `} />
-        </div>
-      )}
+
+      {!isSubmitting &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div className={`pointer-events-none fixed inset-0 flex items-center justify-center`}>
+            <LogoMoodboxSvg className={`animate-bounce `} />
+          </div>,
+          document.body,
+        )}
     </>
   )
 }

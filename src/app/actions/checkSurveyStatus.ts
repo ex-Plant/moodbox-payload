@@ -14,10 +14,12 @@ export async function checkSurveyStatus(token: string) {
   if (emailResult.docs.length < 1) throw new Error('Nieprawidłowy lub wygasły token.')
 
   const doc = emailResult.docs[0]
+  // console.log('checkIfSurvetyCompleted.ts:17 - doc:', doc)
 
   return {
     orderId: doc.orderId,
     docId: doc.id,
     isSurveyCompleted: doc.isSurveyCompleted,
+    customerEmail: doc.customerEmail,
   }
 }
