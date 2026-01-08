@@ -1,4 +1,4 @@
-import { generatePostOrderEmailHTML } from './email/templates/postOrder'
+import { generatePostOrderEmailHTML } from './templates/postOrder'
 
 export function buildPostOrderEmail(linkUrl: string): {
   subject: string

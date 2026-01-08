@@ -2,7 +2,7 @@
 
 import { BasePayload, getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { buildPostOrderEmail } from '../../../utilities/buildPostOrderEmail'
+import { buildPostOrderEmail } from '../../../utilities/email/buildPostOrderEmail'
 
 type ScheduledEmailDocT = {
   id: string

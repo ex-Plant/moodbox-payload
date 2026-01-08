@@ -1,7 +1,8 @@
 import { getPayload as getPayloadClient } from 'payload'
 import { NextResponse } from 'next/server'
 import configPromise from '@payload-config'
-import { buildPostOrderEmail } from '../../../utilities/buildPostOrderEmail'
+import { buildPostOrderEmail } from '../../../utilities/email/buildPostOrderEmail'
+import { buildDiscountCodeEmail } from '../../../utilities/email/buildDiscountCodeEmail'
 
 export async function GET() {
   try {
@@ -11,9 +12,11 @@ export async function GET() {
 
     console.log('Sending test email 🍆')
 
-    const { subject, html } = buildPostOrderEmail(
-      'http://localhost:3000/ankieta/ba0b6a7a-c9ab-4cb8-a237-417926cddef0',
-    )
+    // const { subject, html } = buildPostOrderEmail(
+    //   'http://localhost:3000/ankieta/ba0b6a7a-c9ab-4cb8-a237-417926cddef0',
+    // )
+
+    const { subject, html } = buildDiscountCodeEmail('To jest testowy kod rabatowy 🍆 : 123345')
 
     await payload.sendEmail({
       to: process.env.EMAIL_USER || '',
