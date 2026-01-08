@@ -119,4 +119,10 @@ export const UI_MESSAGES = {
   STEP_LABEL: 'KROK',
   STEP_SEPARATOR: '/',
   TOTAL_STEPS: '3',
+
+  // Survey completed page
+  SURVEY_ALREADY_COMPLETED_TITLE: 'Wygląda na to, że Twoja ankieta została już wypełniona!',
+  SURVEY_ALREADY_COMPLETED_THANK_YOU: 'Dziękujemy za Twój czas!',
+  SURVEY_ALREADY_COMPLETED_INSTRUCTIONS: 'Jeśli nie wypełniałeś/aś jeszcze ankiety lub nie masz kodu rabatowego, napisz do nas.',
+  CONTACT_EMAIL: 'hello@moodbox.pl',
 } as const
