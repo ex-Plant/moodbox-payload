@@ -3,6 +3,7 @@ import 'server-only'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { createFutureDate } from '../../../utilities/createFutureDate'
+import { generateHexToken } from '../../../utilities/generateTokenString'
 type ShopifyOrderWebhookBodyT = {
   email?: string
   admin_graphql_api_id?: string
@@ -38,8 +39,7 @@ export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null
     return
   }
 
-  // const token = encodeOrderToken({ orderId: id })
-  const token = crypto.randomUUID()
+  const token = generateHexToken(16)
   // console.log('ecoded token: ', token)
 
   await payload.create({
