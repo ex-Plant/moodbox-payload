@@ -20,10 +20,7 @@ import SurveyQ8 from './SurveyQ8'
 import SurveyDialog from './SurveyDialog'
 import SurveyStepWrapper from './SurveyStepWrapper'
 import { UI_MESSAGES } from './survey_constants'
-import { createDiscountA } from '../../../app/actions/createDiscountA'
 import SurveyCheckbox from './SurveyCheckbox'
-import LogoMoodboxSvg from '../common/LogoMoodboxSvg'
-import { createPortal } from 'react-dom'
 import FixedLoader from '../FixedLoader'
 
 type SurveyFormProps = {

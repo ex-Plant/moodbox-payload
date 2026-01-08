@@ -37,7 +37,7 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       }
     }
 
-    // 2. Update the document to mark it as completed
+    // Update the document to mark it as completed
     const updateResult = await payload.update({
       collection: 'scheduled-emails',
       where: {
