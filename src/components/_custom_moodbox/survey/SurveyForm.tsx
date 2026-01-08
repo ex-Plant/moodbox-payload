@@ -24,6 +24,7 @@ import { createDiscountA } from '../../../app/actions/createDiscountA'
 import SurveyCheckbox from './SurveyCheckbox'
 import LogoMoodboxSvg from '../common/LogoMoodboxSvg'
 import { createPortal } from 'react-dom'
+import FixedLoader from '../FixedLoader'
 
 type SurveyFormProps = {
   availableBrands: string[]
@@ -144,14 +145,7 @@ export default function SurveyForm({
         discountCode={discountCode}
       />
 
-      {!isSubmitting &&
-        typeof document !== 'undefined' &&
-        createPortal(
-          <div className={`pointer-events-none fixed inset-0 flex items-center justify-center`}>
-            <LogoMoodboxSvg className={`animate-bounce `} />
-          </div>,
-          document.body,
-        )}
+      <FixedLoader active={isSubmitting} />
     </>
   )
 }
