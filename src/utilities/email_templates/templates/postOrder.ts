@@ -1,4 +1,5 @@
-import { renderBaseLayout, EmailItemT } from '../BaseLayout'
+import { EmailItemT } from '../email_templates_constants'
+import { renderEmailTemplate } from '../render_email_template'
 
 export function generatePostOrderEmailHTML(linkUrl: string): string {
   const title = 'Dziękujemy za skorzystanie z Moodbox Polska.'
@@ -30,5 +31,5 @@ export function generatePostOrderEmailHTML(linkUrl: string): string {
     },
   ]
 
-  return renderBaseLayout({ title, items, footer })
+  return renderEmailTemplate({ title, items, footer })
 }

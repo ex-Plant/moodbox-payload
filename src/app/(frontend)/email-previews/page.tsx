@@ -1,8 +1,9 @@
 'use client'
 
 import React, { useState } from 'react'
-import { generatePostOrderEmailHTML } from '@/utilities/email/templates/postOrder'
-import { generateDiscountCodeEmailHTML } from '@/utilities/email/templates/discountCode'
+import { generatePostOrderEmailHTML } from '@/utilities/email_templates/templates/postOrder'
+import { generateDiscountCodeEmailHTML } from '@/utilities/email_templates/templates/discountCode'
+import { notFound } from 'next/navigation'
 
 const templates = [
   {
@@ -18,6 +19,8 @@ const templates = [
 ]
 
 export default function EmailPreviewsPage() {
+  if (process.env.NODE_ENV !== 'development') notFound()
+
   const [selectedTemplateId, setSelectedTemplateId] = useState(templates[0].id)
 
   const selectedTemplate = templates.find((t) => t.id === selectedTemplateId) || templates[0]

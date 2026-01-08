@@ -1,8 +1,7 @@
 import { getPayload as getPayloadClient } from 'payload'
 import { NextResponse } from 'next/server'
 import configPromise from '@payload-config'
-import { buildPostOrderEmail } from '../../../utilities/email/buildPostOrderEmail'
-import { buildDiscountCodeEmail } from '../../../utilities/email/buildDiscountCodeEmail'
+import { buildDiscountCodeEmail } from '../../../utilities/email_templates/buildDiscountCodeEmail'
 
 export async function GET() {
   try {

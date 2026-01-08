@@ -1,4 +1,5 @@
-import { renderBaseLayout, EmailItemT } from '../BaseLayout'
+import { EmailItemT } from '../email_templates_constants'
+import { renderEmailTemplate } from '../render_email_template'
 
 export function generateDiscountCodeEmailHTML(discountCode: string): string {
   const title = ''
@@ -54,5 +55,5 @@ export function generateDiscountCodeEmailHTML(discountCode: string): string {
     },
   ]
 
-  return renderBaseLayout({ title, items, footer })
+  return renderEmailTemplate({ title, items, footer })
 }
