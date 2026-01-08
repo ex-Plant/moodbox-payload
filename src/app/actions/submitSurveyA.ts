@@ -3,6 +3,7 @@
 import { surveySchema, SurveySchemaT } from '@/lib/SurveySchema'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { checkSurveyStatus } from './checkSurveyStatus'
 
 export async function submitSurveyA(data: SurveySchemaT, token: string) {
   try {
@@ -17,44 +18,32 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       }
     }
 
+    const { docId } = await checkSurveyStatus(token)
     const payload = await getPayload({ config: configPromise })
 
-    // 1. Find the scheduled email by token
-    const emailResult = await payload.find({
-      collection: 'scheduled-emails',
-      limit: 1,
-      where: {
-        token: { equals: token },
-      },
-    })
-
-    if (emailResult.docs.length < 1) {
-      return {
-        error: true,
-        message: 'Nieprawidłowy lub wygasły token.',
-      }
-    }
-
-    const doc = emailResult.docs[0]
-
-    if (doc.isSurveyCompleted) {
-      return {
-        error: true,
-        message: 'Ta ankieta została już wypełniona.',
-      }
-    }
+    console.log('Survey submitted successfully for token:', token, validatedData.data)
 
     // 2. Update the document to mark it as completed
-    await payload.update({
+
+    const updateResult = await payload.update({
       collection: 'scheduled-emails',
-      id: doc.id,
+      where: {
+        id: { equals: docId },
+        isSurveyCompleted: { not_equals: true },
+      },
       data: {
         isSurveyCompleted: true,
       },
     })
 
-    // TODO: Save survey results to a separate collection if needed
-    console.log('Survey submitted successfully for token:', token, validatedData.data)
+    // When using 'where', update returns an object with a 'docs' array.
+    // If the array is empty, the document was either not found or already completed.
+    if (updateResult.docs.length === 0) {
+      return {
+        error: true,
+        message: 'Ta ankieta została już wypełniona.',
+      }
+    }
 
     return {
       error: false,

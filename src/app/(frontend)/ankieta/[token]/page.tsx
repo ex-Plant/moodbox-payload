@@ -1,11 +1,8 @@
 import { notFound } from 'next/navigation'
-import configPromise from '@payload-config'
 
-import { getOrderById } from '@/lib/shopify/adminApi'
 import SurveyForm from '@/components/_custom_moodbox/survey/SurveyForm'
-import { getPayload } from 'payload'
-import { wait } from 'payload/shared'
-import Link from 'next/link'
+import { getOrderById } from '@/lib/shopify/adminApi'
+import { checkSurveyStatus } from '../../../actions/checkSurveyStatus'
 import SurveyCompletedPage from '../../../../components/_custom_moodbox/nav/SurveyCompletedPage'
 
 export const dynamic = 'force-dynamic'
@@ -16,30 +13,14 @@ type PropsT = {
 
 export default async function Ankieta({ params }: PropsT) {
   const { token } = await params
-  const payload = await getPayload({ config: configPromise })
 
-  let orderId: string
   let order = null
 
   try {
-    const res = await payload.find({
-      collection: 'scheduled-emails',
-      limit: 1,
-      where: { token: { equals: token } },
-    })
-
-    if (res.docs.length < 1) {
-      console.log('page.tsx:28 - res:', res)
-      console.error('Email not found')
-      notFound()
-    }
-
-    const doc = res.docs[0]
+    const { orderId, isSurveyCompleted } = await checkSurveyStatus(token)
 
     //todo
-    // if (doc.isSurveyCompleted) return <SurveyCompletedPage />
-
-    orderId = doc.orderId
+    // if (isSurveyCompleted) return <SurveyCompletedPage />
 
     order = await getOrderById(orderId)
     if (!order) {

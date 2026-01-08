@@ -105,11 +105,13 @@ export const UI_MESSAGES = {
 
   // Dialog messages
   THANK_YOU_SURVEY: 'Dziękujemy za wypełnienie ankiety!',
-  YOUR_CODE_IS: 'Twój kod to: ',
+  YOUR_CODE_IS: 'Twój kod rabatowy na kolejne zamówienie w Moodbox Polska: ',
+  SAME_CODE_IN_EMAIL: 'Ten sam kod znajdziesz również w wiadomości e-mail.',
   GO_TO_MOODBOX: 'Przejdź do moodbox',
 
   // Terms and conditions
-  TERMS_ACCEPTANCE_TEXT: 'Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji pilotażu MoodBox Polska oraz przygotowania raportów dla producentów.',
+  TERMS_ACCEPTANCE_TEXT:
+    'Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji pilotażu MoodBox Polska oraz przygotowania raportów dla producentów.',
 
   // Header messages
   WELCOME_MESSAGE: 'Witaj',
@@ -123,6 +125,7 @@ export const UI_MESSAGES = {
   // Survey completed page
   SURVEY_ALREADY_COMPLETED_TITLE: 'Wygląda na to, że Twoja ankieta została już wypełniona!',
   SURVEY_ALREADY_COMPLETED_THANK_YOU: 'Dziękujemy za Twój czas!',
-  SURVEY_ALREADY_COMPLETED_INSTRUCTIONS: 'Jeśli nie wypełniałeś/aś jeszcze ankiety lub nie masz kodu rabatowego, napisz do nas.',
+  SURVEY_ALREADY_COMPLETED_INSTRUCTIONS:
+    'Jeśli nie wypełniałeś/aś jeszcze ankiety lub nie masz kodu rabatowego, napisz do nas.',
   CONTACT_EMAIL: 'hello@moodbox.pl',
 } as const

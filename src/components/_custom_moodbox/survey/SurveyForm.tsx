@@ -22,6 +22,7 @@ import SurveyStepWrapper from './SurveyStepWrapper'
 import { UI_MESSAGES } from './survey_constants'
 import { createDiscountA } from '../../../app/actions/createDiscountA'
 import SurveyCheckbox from './SurveyCheckbox'
+import LogoMoodboxSvg from '../common/LogoMoodboxSvg'
 
 type SurveyFormProps = {
   availableBrands: string[]
@@ -65,6 +66,8 @@ export default function SurveyForm({
   })
 
   const formValues = useStore(form.store, (state) => state.values)
+  const isSubmitting = useStore(form.store, (s) => s.isSubmitting)
+
   const consideredBrands = formValues.considered_brands
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -147,6 +150,11 @@ export default function SurveyForm({
         surveyDialoOpen={surveyDialoOpen}
         discountCode={discountCode}
       />
+      {isSubmitting && (
+        <div className={`pointer-events-none absolute inset-0 flex items-center justify-center`}>
+          <LogoMoodboxSvg className={`animate-bounce `} />
+        </div>
+      )}
     </>
   )
 }
