@@ -35,13 +35,13 @@ export async function GET(req: NextRequest) {
     return new NextResponse('Unauthorized', { status: 401 })
   }
 
-  // TODO REMOVE AFTER TESTING
-  await payload.sendEmail({
-    to: process.env.EMAIL_USER || '',
-    subject: `CRON TEST EMAIL `,
-    text: `SENDING FEEDBACK EMAILS`,
-    html: `<p>Cron execution time: ${cronExecutionTime}</p>`,
-  })
+  // // TODO REMOVE AFTER TESTING
+  // await payload.sendEmail({
+  //   to: process.env.EMAIL_USER || '',
+  //   subject: `CRON TEST EMAIL `,
+  //   text: `SENDING FEEDBACK EMAILS`,
+  //   html: `<p>Cron execution time: ${cronExecutionTime}</p>`,
+  // })
 
   try {
     const results = await sendScheduledEmail()
