@@ -21,6 +21,7 @@ import SurveyDialog from './SurveyDialog'
 import SurveyStepWrapper from './SurveyStepWrapper'
 import { UI_MESSAGES } from './survey_constants'
 import { createDiscountA } from '../../../app/actions/createDiscountA'
+import SurveyCheckbox from './SurveyCheckbox'
 
 type SurveyFormProps = {
   availableBrands: string[]
@@ -36,6 +37,8 @@ export default function SurveyForm({
 
   const [surveyDialoOpen, setSurveyDialogOpen] = useState(false)
   const [discountCode, setDiscountCode] = useState('')
+
+  const [termsAccepted, setTermsAccepted] = useState(false)
 
   const form = useAppForm({
     defaultValues: formData,
@@ -124,9 +127,17 @@ export default function SurveyForm({
               </Button>
             )}
             {currentStep === 3 && (
-              <Button className={`mt-8`} type="submit" variant="mood">
-                {UI_MESSAGES.SEND_SURVEY}
-              </Button>
+              <div>
+                <SurveyCheckbox
+                  id="terms-acceptance"
+                  checked={termsAccepted}
+                  onCheckedChange={setTermsAccepted}
+                  label={UI_MESSAGES.TERMS_ACCEPTANCE_TEXT}
+                />
+                <Button disabled={!termsAccepted} className={`mt-8`} type="submit" variant="mood">
+                  {UI_MESSAGES.SEND_SURVEY}
+                </Button>
+              </div>
             )}
           </div>
         </form>

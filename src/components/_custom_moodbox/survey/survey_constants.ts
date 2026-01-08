@@ -108,6 +108,9 @@ export const UI_MESSAGES = {
   YOUR_CODE_IS: 'Twój kod to: ',
   GO_TO_MOODBOX: 'Przejdź do moodbox',
 
+  // Terms and conditions
+  TERMS_ACCEPTANCE_TEXT: 'Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji pilotażu MoodBox Polska oraz przygotowania raportów dla producentów.',
+
   // Header messages
   WELCOME_MESSAGE: 'Witaj',
   SURVEY_TITLE: 'Podsumowanie pracy z Moodboxem',

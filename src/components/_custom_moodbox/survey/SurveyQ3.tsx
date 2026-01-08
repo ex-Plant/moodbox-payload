@@ -37,7 +37,7 @@ export default function SurveyQ3() {
                       {rating}
                     </Button>
                     <span
-                      className={`text-sm ${field.state.value === rating ? 'font-bold' : 'text-muted-foreground'}`}
+                      className={`text-sm ${field.state.value === rating ? 'text-black' : 'text-muted-foreground'}`}
                     >
                       {text}
                     </span>

@@ -33,8 +33,8 @@ export default function SurveyCheckbox({
       <Label
         htmlFor={id}
         className={cn(
-          ' duration-200 cursor-pointer text-sm',
-          checked ? 'font-bold' : 'text-muted-foreground',
+          ' duration-200 cursor-pointer text-sm text-muted-foreground',
+          checked && 'text-black',
         )}
       >
         {label}
