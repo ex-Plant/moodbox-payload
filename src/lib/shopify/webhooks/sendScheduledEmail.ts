@@ -1,24 +1,38 @@
 'use server'
 
-import { BasePayload, getPayload } from 'payload'
+import { BasePayload, getPayload, PaginatedDocs, type Where } from 'payload'
 import configPromise from '@payload-config'
 import { buildPostOrderEmail } from '../../../utilities/email_templates/buildPostOrderEmail'
+import { ScheduledEmail } from '../../../payload-types'
 
-type ScheduledEmailDocT = {
-  id: string
-  token: string
-  customerEmail: string
-  status: 'pending' | 'sent' | 'failed' | 'cancelled'
-  emailType: string
-}
 type ResultsT = Array<{ email: string; status: string; errorMessage?: string }>
 
-export async function sendScheduledEmail(limit = 20): Promise<ResultsT> {
-  console.log('sendScheduledEmail.ts:17 - :')
+export async function sendEmailsManually({ ids }: { ids: string[] }): Promise<ResultsT> {
+  if (!ids || ids.length === 0) throw new Error('No email IDs provided for manual sending')
+
+  const payload = await getPayload({ config: configPromise })
+  const results: ResultsT = []
+
+  const scheduled = await payload.find({
+    collection: 'scheduled-emails',
+    where: { id: { in: ids } },
+  })
+
+  if (scheduled.totalDocs === 0) throw new Error('No scheduled emails found with the provided IDs')
+
+  return await sendAndUpdateCollection(payload, scheduled, results)
+}
+
+export async function sendScheduledEmail({
+  limit = 100,
+}: {
+  limit?: number
+} = {}): Promise<ResultsT> {
   const payload = await getPayload({ config: configPromise })
   const now = new Date().toISOString()
   const results: ResultsT = []
 
+  // Skip bulk expiration processing if targeting specific IDs
   const processedExpiredEmails = await processExpiredEmails(payload, now, limit)
   results.push(...processedExpiredEmails)
 
@@ -34,14 +48,24 @@ export async function sendScheduledEmail(limit = 20): Promise<ResultsT> {
     },
   })
 
+  console.log(scheduled)
+
   if (scheduled.totalDocs === 0) {
     console.log(`No scheduled emails found`)
     return []
   }
   console.log(`💥 Processing batch of ${scheduled.docs.length} scheduled emails...`)
 
+  return await sendAndUpdateCollection(payload, scheduled, results)
+}
+
+async function sendAndUpdateCollection(
+  payload: BasePayload,
+  scheduled: PaginatedDocs<ScheduledEmail>,
+  results: ResultsT,
+) {
   // this is defensive - it shouldnt't be possible
-  for (const doc of scheduled.docs as unknown as ScheduledEmailDocT[]) {
+  for (const doc of scheduled.docs as unknown as ScheduledEmail[]) {
     if (!doc.token || !doc.customerEmail) {
       console.error(` ❌ ${doc.id} is missing required data - aborting`)
       await payload.update({
@@ -60,9 +84,7 @@ export async function sendScheduledEmail(limit = 20): Promise<ResultsT> {
 
     const baseUrl: string = process.env.NEXT_PUBLIC_SERVER_URL ?? ''
 
-    if (!baseUrl) {
-      throw new Error('❌ NEXT_PUBLIC_SERVER_URL is not defined in environment variables')
-    }
+    if (!baseUrl) throw new Error('❌ NEXT_PUBLIC_SERVER_URL missing ')
 
     const linkUrl: string = `${baseUrl}/ankieta/${doc.token}`
     console.log('linkUrl: ', linkUrl, 'baseUrl: ', baseUrl)
@@ -82,7 +104,6 @@ export async function sendScheduledEmail(limit = 20): Promise<ResultsT> {
 
     results.push({ email: doc.customerEmail, status: 'sent' })
   }
-
   return results
 }
 
