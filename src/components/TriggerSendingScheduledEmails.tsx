@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { sendScheduledEmail } from '@/lib/shopify/webhooks/sendScheduledEmail'
 import { Button } from './ui/button'
+import { ErrorMessage } from './ErrorMessage'
 export default function TriggerSendingScheduledEmails() {
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -42,7 +43,7 @@ export default function TriggerSendingScheduledEmails() {
         <p>Automatyczna wysylka zaplanowana jest na 16:00 każdego dnia.</p>
       </div>
 
-      {error && <p style={{ color: '#dc2626' }}>Coś poszło nie tak - spróbuj ponownie </p>}
+      {error && <ErrorMessage />}
     </>
   )
 }

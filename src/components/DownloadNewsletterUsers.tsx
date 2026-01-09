@@ -2,22 +2,32 @@
 
 import handleFileDownload from '@/utilities/handleFileDownload'
 import { useState } from 'react'
+import { Button } from './ui/button'
+import { ErrorMessage } from './ErrorMessage'
+
 export default function DownloadNewsletterUsers() {
   const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
+
   async function exportClients() {
     setError(false)
+    setLoading(true)
     try {
-      handleFileDownload('/api/export/newsletter', 'Lista newsletter')
+      await handleFileDownload('/api/export/newsletter', 'Lista newsletter')
     } catch (e) {
       console.error(e)
       setError(true)
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <>
-      <button onClick={exportClients}>Eksportuj</button>
-      {error && <p style={{ color: '#dc2626' }}>Coś poszło nie tak - spróbuj ponownie </p>}
+      <Button isLoading={loading} onClick={exportClients}>
+        Eksportuj
+      </Button>
+      {error && <ErrorMessage />}
     </>
   )
 }
