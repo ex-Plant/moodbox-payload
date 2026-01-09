@@ -96,6 +96,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.POSTGRES_URL || '',
     },
+    push: false,
     migrationDir: './src/migrations',
   }),
   collections: [Pages, Media, Users, Clients, Newsletter, ScheduledEmails],
