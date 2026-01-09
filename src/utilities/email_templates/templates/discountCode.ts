@@ -51,7 +51,7 @@ export function generateDiscountCodeEmailHTML(discountCode: string): string {
     {
       type: 'button',
       label: 'ZAMÓW MOODBOX',
-      url: 'https://moodbox.pl',
+      url: process.env.NEXT_PUBLIC_SERVER_URL,
     },
   ]
 

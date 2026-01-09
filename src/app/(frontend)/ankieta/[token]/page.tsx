@@ -20,7 +20,7 @@ export default async function Ankieta({ params }: PropsT) {
     const { orderId, isSurveyCompleted } = await checkSurveyStatus(token)
 
     //todo
-    // if (isSurveyCompleted) return <SurveyCompletedPage />
+    if (isSurveyCompleted) return <SurveyCompletedPage />
 
     order = await getOrderById(orderId)
     if (!order) {
