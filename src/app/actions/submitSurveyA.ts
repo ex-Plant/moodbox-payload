@@ -22,8 +22,16 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       }
     }
 
-    const { docId, customerEmail } = await checkSurveyStatus(token)
+    const { docId, customerEmail, linkedOrderDocId } = await checkSurveyStatus(token)
     const payload = await getPayload({ config: configPromise })
+
+    if (!linkedOrderDocId) {
+      console.error('Scheduled email has no linked Order for token:', token)
+      return {
+        error: true,
+        message: 'Błąd powiązania zamówienia.',
+      }
+    }
 
     console.log('Survey submitted successfully for token:', token, validatedData.data)
 
@@ -57,6 +65,25 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
         message: 'Ta ankieta została już wypełniona.',
       }
     }
+
+    // Create Survey Response
+    await payload.create({
+      collection: 'survey-responses',
+      data: {
+        order: linkedOrderDocId,
+        responses: validatedData.data,
+        completedAt: new Date().toISOString(),
+      },
+    })
+
+    // Update Order to have survey flag
+    await payload.update({
+      collection: 'orders',
+      id: linkedOrderDocId as string | number,
+      data: {
+        hasSurvey: true,
+      },
+    })
 
     const { subject, html } = buildDiscountCodeEmail(generatedDiscount)
 

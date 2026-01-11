@@ -6,6 +6,7 @@ export async function checkSurveyStatus(token: string) {
   const emailResult = await payload.find({
     collection: 'scheduled-emails',
     limit: 1,
+    depth: 0, // return only docId not full order
     where: {
       token: { equals: token },
     },
@@ -18,6 +19,7 @@ export async function checkSurveyStatus(token: string) {
 
   return {
     orderId: doc.orderId,
+    linkedOrderDocId: doc.linkedOrder,
     docId: doc.id,
     isSurveyCompleted: doc.isSurveyCompleted,
     customerEmail: doc.customerEmail,
