@@ -1,49 +1,64 @@
 import { CollectionConfig } from 'payload'
 
-export const Clients: CollectionConfig = {
-  slug: 'clients',
+export const Orders: CollectionConfig = {
+  slug: 'orders',
   labels: {
     plural: {
-      pl: 'Klienci',
-      en: 'Clients',
+      pl: 'Zamówienia',
+      en: 'Orders',
     },
     singular: {
-      pl: 'Klient',
-      en: 'Client',
+      pl: 'Zamówienie',
+      en: 'Order',
     },
   },
   admin: {
-    components: {
-      afterListTable: ['@/components/DownloadClients'],
-    },
-
-    useAsTitle: 'email',
-    defaultColumns: [
-      'email',
-      'company_name',
-      'project_type',
-      'projects_per_year',
-      'city',
-      'project_budget',
-    ],
+    useAsTitle: 'orderId',
+    defaultColumns: ['orderId', 'email', 'company_name', 'hasSurvey', 'createdAt'],
   },
   access: {
     read: () => true,
     create: () => true,
+    update: () => true,
+    delete: () => true,
   },
   fields: [
+    {
+      name: 'orderId',
+      type: 'text',
+      label: {
+        pl: 'Id zamówienia shopify',
+        en: 'Shopify Order ID',
+      },
+      required: true,
+      unique: true,
+      index: true,
+    },
+    {
+      name: 'hasSurvey',
+      type: 'checkbox',
+      label: 'Has Survey',
+      defaultValue: false,
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
+      name: 'survey',
+      type: 'join',
+      collection: 'survey-responses',
+      on: 'order',
+    },
     {
       name: 'email',
       type: 'email',
       label: 'Email',
-      unique: true,
     },
     {
       name: 'company_name',
       type: 'text',
       label: 'Nazwa firmy',
     },
-
     {
       name: 'projects_per_year',
       type: 'text',
@@ -88,17 +103,6 @@ export const Clients: CollectionConfig = {
       name: 'website',
       type: 'text',
       label: 'Strona www',
-    },
-    {
-      name: 'createdAt',
-      label: {
-        pl: 'Utworzono',
-        en: 'Created At',
-      },
-      type: 'date',
-      admin: {
-        readOnly: true,
-      },
     },
   ],
 }
