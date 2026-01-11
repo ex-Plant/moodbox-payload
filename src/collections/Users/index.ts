@@ -31,6 +31,11 @@ export const Users: CollectionConfig = {
       name: 'name',
       type: 'text',
     },
+    {
+      name: 'test_required',
+      type: 'text',
+      required: true,
+    },
   ],
   timestamps: true,
 }
