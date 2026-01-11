@@ -1,19 +1,26 @@
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { FlatCompat } from '@eslint/eslintrc'
+import js from '@eslint/js'
+import ts from 'typescript-eslint'
+import nextPlugin from '@next/eslint-plugin-next'
+import reactHooksPlugin from 'eslint-plugin-react-hooks'
+import { fixupPluginRules } from '@eslint/compat'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-})
-
-const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
-  ...compat.plugins('react-hooks'),
+export default ts.config(
   {
+    extends: [
+      js.configs.recommended,
+      ...ts.configs.recommended,
+    ],
+  },
+  {
+    plugins: {
+      '@next/next': fixupPluginRules(nextPlugin),
+      'react-hooks': fixupPluginRules(reactHooksPlugin),
+    },
     rules: {
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
+      ...reactHooksPlugin.configs.recommended.rules,
+      'react-hooks/exhaustive-deps': 'warn',
       '@typescript-eslint/ban-ts-comment': 'warn',
       '@typescript-eslint/no-empty-object-type': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -34,6 +41,4 @@ const eslintConfig = [
   {
     ignores: ['.next/'],
   },
-]
-
-export default eslintConfig
+)
