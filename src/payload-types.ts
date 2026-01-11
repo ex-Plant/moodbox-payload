@@ -70,9 +70,10 @@ export interface Config {
     pages: Page;
     media: Media;
     users: User;
-    clients: Client;
     newsletter: Newsletter;
     'scheduled-emails': ScheduledEmail;
+    orders: Order;
+    'survey-responses': SurveyResponse;
     'payload-kv': PayloadKv;
     'payload-jobs': PayloadJob;
     'payload-folders': FolderInterface;
@@ -81,6 +82,9 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
+    orders: {
+      survey: 'survey-responses';
+    };
     'payload-folders': {
       documentsAndFolders: 'payload-folders' | 'media';
     };
@@ -89,9 +93,10 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    clients: ClientsSelect<false> | ClientsSelect<true>;
     newsletter: NewsletterSelect<false> | NewsletterSelect<true>;
     'scheduled-emails': ScheduledEmailsSelect<false> | ScheduledEmailsSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
+    'survey-responses': SurveyResponsesSelect<false> | SurveyResponsesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-folders': PayloadFoldersSelect<false> | PayloadFoldersSelect<true>;
@@ -578,26 +583,6 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "clients".
- */
-export interface Client {
-  id: number;
-  email?: string | null;
-  company_name?: string | null;
-  projects_per_year?: string | null;
-  city?: string | null;
-  project_type?: string | null;
-  completion_date?: string | null;
-  project_stage?: string | null;
-  project_area?: string | null;
-  project_budget?: string | null;
-  nip?: string | null;
-  website?: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "newsletter".
  */
 export interface Newsletter {
@@ -612,6 +597,7 @@ export interface Newsletter {
  */
 export interface ScheduledEmail {
   id: number;
+  linkedOrder: number | Order;
   orderId: string;
   customerEmail: string;
   scheduledAt: string;
@@ -620,6 +606,53 @@ export interface ScheduledEmail {
   emailType: 'post_purchase_questions';
   token: string;
   isSurveyCompleted?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: number;
+  orderId: string;
+  hasSurvey?: boolean | null;
+  survey?: {
+    docs?: (number | SurveyResponse)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  email?: string | null;
+  company_name?: string | null;
+  projects_per_year?: string | null;
+  city?: string | null;
+  project_type?: string | null;
+  completion_date?: string | null;
+  project_stage?: string | null;
+  project_area?: string | null;
+  project_budget?: string | null;
+  nip?: string | null;
+  website?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "survey-responses".
+ */
+export interface SurveyResponse {
+  id: number;
+  order: number | Order;
+  responses?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  completedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -752,16 +785,20 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
-        relationTo: 'clients';
-        value: number | Client;
-      } | null)
-    | ({
         relationTo: 'newsletter';
         value: number | Newsletter;
       } | null)
     | ({
         relationTo: 'scheduled-emails';
         value: number | ScheduledEmail;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: number | Order;
+      } | null)
+    | ({
+        relationTo: 'survey-responses';
+        value: number | SurveyResponse;
       } | null)
     | ({
         relationTo: 'payload-folders';
@@ -1137,25 +1174,6 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "clients_select".
- */
-export interface ClientsSelect<T extends boolean = true> {
-  email?: T;
-  company_name?: T;
-  projects_per_year?: T;
-  city?: T;
-  project_type?: T;
-  completion_date?: T;
-  project_stage?: T;
-  project_area?: T;
-  project_budget?: T;
-  nip?: T;
-  website?: T;
-  createdAt?: T;
-  updatedAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "newsletter_select".
  */
 export interface NewsletterSelect<T extends boolean = true> {
@@ -1168,6 +1186,7 @@ export interface NewsletterSelect<T extends boolean = true> {
  * via the `definition` "scheduled-emails_select".
  */
 export interface ScheduledEmailsSelect<T extends boolean = true> {
+  linkedOrder?: T;
   orderId?: T;
   customerEmail?: T;
   scheduledAt?: T;
@@ -1176,6 +1195,39 @@ export interface ScheduledEmailsSelect<T extends boolean = true> {
   emailType?: T;
   token?: T;
   isSurveyCompleted?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  orderId?: T;
+  hasSurvey?: T;
+  survey?: T;
+  email?: T;
+  company_name?: T;
+  projects_per_year?: T;
+  city?: T;
+  project_type?: T;
+  completion_date?: T;
+  project_stage?: T;
+  project_area?: T;
+  project_budget?: T;
+  nip?: T;
+  website?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "survey-responses_select".
+ */
+export interface SurveyResponsesSelect<T extends boolean = true> {
+  order?: T;
+  responses?: T;
+  completedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

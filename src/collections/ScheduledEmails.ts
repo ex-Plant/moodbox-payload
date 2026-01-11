@@ -28,6 +28,16 @@ export const ScheduledEmails: CollectionConfig = {
   },
   fields: [
     {
+      name: 'linkedOrder',
+      type: 'relationship',
+      relationTo: 'orders',
+      required: true,
+      unique: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'orderId',
       type: 'text',
       required: true,

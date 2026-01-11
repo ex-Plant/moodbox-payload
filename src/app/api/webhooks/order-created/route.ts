@@ -3,12 +3,14 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { ATTRIBUTE_KEY_PL } from '@/lib/CartSchema'
 import { verifyShopifyHmacHeader } from '@/lib/shopify/webhooks/verifyShopifyHmacHeader'
+import { Order } from '../../../../payload-types'
 
 export const dynamic = 'force-dynamic'
 
 type ShopifyOrder = {
   id?: number
   email?: string
+  admin_graphql_api_id?: string
   note_attributes?: Array<{ name: string; value: string }>
 }
 
@@ -47,54 +49,61 @@ async function handleOrderCreate(order: ShopifyOrder) {
   )
   console.log('order:', order)
   const email = order.email
+  const orderId = order.admin_graphql_api_id
 
   if (!email) {
-    console.warn('⚠️ Webhook skipped: No email found in order.')
+    console.warn('⚠️ Webhook skipped: No email  found in order.')
     return
   }
 
-  const clientData: Record<string, unknown> = { email }
+  if (!orderId) {
+    console.warn('⚠️ Webhook skipped:  or orderId found in order.')
+    return
+  }
+
+  const orderData: Record<string, unknown> = { email, orderId }
 
   for (const [payloadKey, shopifyKey] of Object.entries(ATTRIBUTE_KEY_PL)) {
     if (payloadKey === 'email') continue
 
     if (rawAttributes[shopifyKey]) {
-      clientData[payloadKey] = rawAttributes[shopifyKey]
+      orderData[payloadKey] = rawAttributes[shopifyKey]
     }
   }
 
-  console.log(`Processing Client: ${clientData.email}`)
+  console.log(`Processing Order: ${orderId} for ${email}`)
 
   try {
-    // Try to Update First
-    // Since 'email' is unique and indexed, this is very fast.
-    const updateResult = await payload.update({
-      collection: 'clients',
+    const existingOrders = await payload.find({
+      collection: 'orders',
       where: {
-        email: { equals: clientData.email },
+        orderId: { equals: orderId },
       },
-      data: clientData,
+      limit: 1,
     })
 
-    if (updateResult.docs.length > 0) {
-      console.log(`✅ Client updated: ${updateResult.docs[0].id}`)
-      return
+    if (existingOrders.totalDocs > 0) {
+      const existingId = existingOrders.docs[0].id
+      await payload.update({
+        collection: 'orders',
+        id: existingId,
+        data: orderData,
+      })
+      console.log(`✅ Order updated: ${existingId}`)
+    } else {
+      await payload.create({
+        collection: 'orders',
+        data: orderData as unknown as Order,
+      })
+      console.log(`✅ New order created`)
     }
-
-    // If updateResult.docs is empty, the user doesn't exist. Create them.
-    await payload.create({
-      collection: 'clients',
-      data: clientData,
-    })
-    console.log(`✅ New client created`)
   } catch (error: unknown) {
-    // 3. Race Condition Handling
     const errorMessage = error instanceof Error ? error.message : String(error)
     if (errorMessage.includes('unique')) {
-      console.log('ℹ️ Race condition hit: Client was created by another process. Skipping.')
+      console.log('ℹ️ Race condition hit: Order was created by another process. Skipping.')
     } else {
-      console.error(`❌ Error saving client ${clientData.email}:`, error)
-      throw error // Re-throw real errors so Shopify knows to retry
+      console.error(`❌ Error saving order ${orderId}:`, error)
+      throw error
     }
   }
 }

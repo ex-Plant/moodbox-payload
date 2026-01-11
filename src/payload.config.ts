@@ -14,8 +14,9 @@ import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { en } from '@payloadcms/translations/languages/en'
 import { pl } from '@payloadcms/translations/languages/pl'
 import { Users } from './collections/Users'
-import { Clients } from './collections/Clients'
 import { Newsletter } from './collections/Newsletter'
+import { Orders } from './collections/Orders'
+import { SurveyResponses } from './collections/SurveyResponses'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -99,7 +100,7 @@ export default buildConfig({
     push: false,
     migrationDir: './src/migrations',
   }),
-  collections: [Pages, Media, Users, Clients, Newsletter, ScheduledEmails],
+  collections: [Pages, Media, Users, Newsletter, ScheduledEmails, Orders, SurveyResponses],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
 

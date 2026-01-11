@@ -52,7 +52,7 @@ export async function sendScheduledEmail({
 
   if (scheduled.totalDocs === 0) {
     console.log(`No scheduled emails found`)
-    return []
+    return results
   }
   console.log(`💥 Processing batch of ${scheduled.docs.length} scheduled emails...`)
 
@@ -74,7 +74,7 @@ async function sendAndUpdateCollection(
         data: { status: 'failed' },
       })
       results.push({
-        email: doc.customerEmail,
+        email: doc.customerEmail ?? 'Missing email ',
         status: 'failed',
         errorMessage: 'Missing required data',
       })

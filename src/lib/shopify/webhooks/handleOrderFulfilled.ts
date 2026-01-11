@@ -25,6 +25,20 @@ export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null
 
   const payload = await getPayload({ config: configPromise })
 
+  // Find Order
+  const orders = await payload.find({
+    collection: 'orders',
+    where: { orderId: { equals: id } },
+    limit: 1,
+  })
+
+  if (orders.totalDocs === 0) {
+    console.error('Order not found in DB:', id)
+    throw new Error(`Order ${id} not found in database.`)
+  }
+
+  const orderDoc = orders.docs[0]
+
   // Idempotency: avoid duplicate scheduled records for same order
   const existing = await payload.find({
     collection: 'scheduled-emails',
@@ -45,6 +59,7 @@ export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null
   await payload.create({
     collection: 'scheduled-emails',
     data: {
+      linkedOrder: orderDoc.id,
       orderId: id,
       customerEmail: email,
       scheduledAt: createFutureDate({ daysFromNow: 0 }).toISOString(),
