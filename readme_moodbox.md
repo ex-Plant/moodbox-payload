@@ -92,15 +92,26 @@ CRON_SECRET=your-cron-secret
 
 # Docker
 
-start docker locall
-
 ```zsh
-docker run --name moodbox-db \
- -e POSTGRES_PASSWORD=postgres \
- -e POSTGRES_USER=postgres \
- -e POSTGRES_DB=local_moodbox \
- -p 5432:5432 \
- -d postgres:17
+# start docker with config from docker-compose.yml = start db
+docker compose up -d
+
+# Container stops, but db_data volume remains with your database
+docker compose down
+
+# Container stops AND volume deletes - use only when you want clean slate = data loss
+docker compose down -v
+
+# Check container status
+docker ps
+
+# view logs
+docker compose logs postgres
+
+# connect to db directly
+docker exec -it moodbox-db psql -U postgres -d local_moodbox
+
+
 ```
 
 # Migrations
@@ -116,18 +127,29 @@ pg_dump <connection_string> > <dump_file_name>.sql
 import dumped sql file
 From the directory containing the dump file:
 
+# see
+
 ```zsh
+
 cat <dumped file name> | docker exec -i moodbox-db psql -U postgres -d local_moodbox
 ```
 
 # DEV: Docker Iteration (The Sandbox)
 
 1. Run app: npm run dev
-2. Modify Schema: Edit your Payload Collection files.
+2. Modify Schema: Edit your Payload Collection files.#U
 3. Create Migration:
 
 ```zsh
-dotenv -e .env.local -- npx payload migrate:create schema_overhaul_v1
+pnpm run migrate:create <migration name>
+```
+
+# get migration status
+
+Change env to see status for a particular environment
+
+```zsh
+pnpm exec dotenv -e .env.local -- payload migrate:status
 ```
 
 4. Audit the generated SQL in src/migrations
@@ -141,12 +163,8 @@ npm run migrate:docker
 7. ❗️Restore/Reset (If things break):
 
 ```zsh
-    # 1. Stop & Remove old container
-    docker rm -f moodbox-db
-    # 2. Start fresh
-    docker run --name moodbox-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=local_moodbox -p 5432:5432 -d postgres:17
-    # 3. Import Dump
-    cat database_backup.sql | docker exec -i moodbox-db psql -U postgres -d local_moodbox
+docker compose down -v && docker compose up -d
+cat [your_dump_file].sql | docker exec -i moodbox-db psql -U postgres -d local_moodbox
 ```
 
 # STAGING: Cloud Verification (The Safety Net)

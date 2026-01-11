@@ -10,6 +10,7 @@
     "dev": "dotenv -e .env.local -- cross-env NODE_OPTIONS=--no-deprecation next dev --webpack",
     "migrate:docker": "dotenv -e .env.local -- payload migrate",
     "migrate:staging": "dotenv -e .env.staging -- payload migrate",
+    "migrate:create": "dotenv -e .env.local -- payload migrate:create",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && pnpm build && next start",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
