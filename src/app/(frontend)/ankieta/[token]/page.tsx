@@ -15,12 +15,11 @@ export default async function Ankieta({ params }: PropsT) {
   const { token } = await params
 
   let order = null
+  let surveyInfo
 
   try {
     const { orderId, isSurveyCompleted } = await checkSurveyStatus(token)
-
-    //todo
-    if (isSurveyCompleted) return <SurveyCompletedPage />
+    surveyInfo = isSurveyCompleted
 
     order = await getOrderById(orderId)
     if (!order) {
@@ -40,6 +39,8 @@ export default async function Ankieta({ params }: PropsT) {
         .filter((brand): brand is string => !!brand),
     ),
   )
+
+  if (surveyInfo) return <SurveyCompletedPage />
 
   return (
     <main className="mx-auto max-w-[800px] py-32 px-4 xPaddings relative ">

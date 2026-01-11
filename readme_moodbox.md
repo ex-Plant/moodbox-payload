@@ -160,9 +160,11 @@ npm run migrate:docker
 ```
 
 6. Use TablePlus etc. (localhost:5432) to verify data integrity.
+
 7. ❗️Restore/Reset (If things break):
 
 ```zsh
+# This command deletes all the data!
 docker compose down -v && docker compose up -d
 cat [your_dump_file].sql | docker exec -i moodbox-db psql -U postgres -d local_moodbox
 ```
@@ -170,7 +172,7 @@ cat [your_dump_file].sql | docker exec -i moodbox-db psql -U postgres -d local_m
 # STAGING: Cloud Verification (The Safety Net)
 
 1. Test Migration:
-2. Run the migration against Neon Staging from your local machine:
+2. Run the migration against Neon Staging from your local machine or push code to staging:
 
 ```zsh
 npm run migrate:staging
