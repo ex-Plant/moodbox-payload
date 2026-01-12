@@ -64,6 +64,13 @@ export const SurveyResponses: CollectionConfig = {
     {
       name: 'brand_evaluations',
       type: 'array',
+      admin: {
+        initCollapsed: true,
+        components: {
+          Cell: '@/components/BrandEvaluationsCell',
+          RowLabel: '@/components/BrandEvaluationRowLabel',
+        },
+      },
       label: {
         pl: 'Oceny marek',
         en: 'Brand Evaluations',
