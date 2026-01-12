@@ -26,8 +26,8 @@ export const SurveyResponses: CollectionConfig = {
     },
     useAsTitle: 'customer_email',
     defaultColumns: [
-      'customer_email',
       'order',
+      'customer_email',
       'completedAt',
       'rejected_brand',
       'brand_evaluations',
@@ -52,7 +52,13 @@ export const SurveyResponses: CollectionConfig = {
       unique: true,
       admin: {
         components: {
-          Cell: '@/components/OrderLinkCell',
+          Cell: {
+            path: '@/components/LinkCell',
+            clientProps: {
+              href: '/admin/collections/orders',
+              label: 'Połączone zamówienie',
+            },
+          },
         },
       },
     },

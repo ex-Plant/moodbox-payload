@@ -19,7 +19,8 @@ import { SlugField as SlugField_3817bf644402e67bfe6577f60ef982de } from '@payloa
 import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { FolderField as FolderField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { default as default_88d798bacc10e8afea43d170a96dfd12 } from '@/components/ExportCSV'
-import { default as default_b2021dcc86319005b7460af4147f9795 } from '@/components/OrderLinkCell'
+import { default as default_170f827aeff43d47882b5e05b4d645b7 } from '@/components/LinkCell'
+import { default as default_abd519ff56b9c6a0eb74fc29608ad800 } from '@/components/ShopifyLink'
 import { default as default_25fbd7e6c04c81a4651c82b23f2d2b8b } from '@/components/TriggerSendingScheduledEmails'
 import { default as default_bc731314ef959acc737b594781404a73 } from '@/components/BooleanCell'
 import { default as default_e700f4df825d9111186b12e60c4d1658 } from '@/components/ListCell'
@@ -53,7 +54,8 @@ export const importMap = {
   "@payloadcms/ui/rsc#FolderTableCell": FolderTableCell_ab83ff7e88da8d3530831f296ec4756a,
   "@payloadcms/ui/rsc#FolderField": FolderField_ab83ff7e88da8d3530831f296ec4756a,
   "@/components/ExportCSV#default": default_88d798bacc10e8afea43d170a96dfd12,
-  "@/components/OrderLinkCell#default": default_b2021dcc86319005b7460af4147f9795,
+  "@/components/LinkCell#default": default_170f827aeff43d47882b5e05b4d645b7,
+  "@/components/ShopifyLink#default": default_abd519ff56b9c6a0eb74fc29608ad800,
   "@/components/TriggerSendingScheduledEmails#default": default_25fbd7e6c04c81a4651c82b23f2d2b8b,
   "@/components/BooleanCell#default": default_bc731314ef959acc737b594781404a73,
   "@/components/ListCell#default": default_e700f4df825d9111186b12e60c4d1658,

@@ -31,16 +31,21 @@ export const ScheduledEmails: CollectionConfig = {
       name: 'linkedOrder',
       type: 'relationship',
       label: {
-        pl: 'Powiązane zamówienie',
-        en: 'Linked Order',
+        pl: 'Zamówienie',
+        en: 'Order',
       },
       relationTo: 'orders',
       required: true,
       unique: true,
       admin: {
-        position: 'sidebar',
         components: {
-          Cell: '@/components/OrderLinkCell',
+          Cell: {
+            path: '@/components/LinkCell',
+            clientProps: {
+              href: '/admin/collections/orders',
+              label: 'orderId',
+            },
+          },
         },
       },
     },
@@ -54,6 +59,17 @@ export const ScheduledEmails: CollectionConfig = {
       required: true,
       admin: {
         readOnly: true,
+        components: {
+          Cell: '@/components/ShopifyLink',
+          afterInput: [
+            {
+              path: '@/components/ShopifyLink',
+              clientProps: {
+                watchField: 'orderId',
+              },
+            },
+          ],
+        },
       },
     },
     {
