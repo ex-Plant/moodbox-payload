@@ -118,13 +118,19 @@ docker exec -it moodbox-db psql -U postgres -d local_moodbox
 
 Dump db if you want to be extra careful - on Neon free tier we have only 6 hours window to restore changes
 
-> cloud_prod.dump: Saves the cloud data to your Mac.
+```zsh
+
+```
 
 ```zsh
+# create dump
 docker run --rm  <CONNECTION_STRING> > cloud_prod.dump
 
-# Now, take that file and push it into your running moodbox-db container.
-docker exec -i moodbox-db pg_restore -U postgres -d local_moodbox --clean --no-owner --no-privileges < cloud_prod.dump
+# remove old tables
+docker exec -it moodbox-db psql -U postgres -d local_moodbox -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
+
+# add dumped data
+docker exec -i moodbox-db pg_restore -U postgres -d local_moodbox --no-owner --no-privileges < cloud_prod.dump
 
 ```
 

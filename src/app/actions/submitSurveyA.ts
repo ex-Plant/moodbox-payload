@@ -85,26 +85,33 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       improvement_suggestion,
     } = validatedData.data
 
+    const submitData = {
+      order: linkedOrderDocId,
+      customer_email: customerEmail,
+      completedAt: new Date().toISOString(),
+      considered_brands,
+      rejected_brand,
+      brand_evaluations: Object.entries(brand_evaluations).map(([brand_name, evaluation]) => ({
+        brand_name,
+        ...evaluation,
+      })),
+      rejection_reasons,
+      rejection_other,
+      contact_request,
+      contact_brands,
+      missing_brands,
+      improvement_suggestion,
+    }
+
+    console.dir(submitData)
+
+    console.log('submit data:', JSON.stringify(data, null, 2))
+    // console.log('submit data:', submit)
+
     // Create Survey Response
     await payload.create({
       collection: 'survey-responses',
-      data: {
-        order: linkedOrderDocId,
-        customer_email: customerEmail,
-        completedAt: new Date().toISOString(),
-        considered_brands,
-        rejected_brand,
-        brand_evaluations: Object.entries(brand_evaluations).map(([brand_name, evaluation]) => ({
-          brand_name,
-          ...evaluation,
-        })),
-        rejection_reasons,
-        rejection_other,
-        contact_request,
-        contact_brands,
-        missing_brands,
-        improvement_suggestion,
-      },
+      data: submitData,
     })
 
     // Update Order to have survey flag
@@ -132,9 +139,9 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       message,
       generatedDiscount,
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error && typeof error === 'object' && 'data' in error) {
-      console.error('Payload Validation Error:', JSON.stringify(error.data, null, 2))
+      console.dir(data)
     }
     console.error('Error submitting survey:', error)
 
