@@ -105,6 +105,15 @@ describe('API', () => {
       },
     })
     expect(responses.totalDocs).toBe(1)
-    expect(responses.docs[0].responses).toEqual(surveyData)
+    const responseDoc = responses.docs[0]
+    expect(responseDoc.customer_email).toBe(email)
+    expect(responseDoc.considered_brands).toEqual(surveyData.considered_brands)
+    expect(responseDoc.brand_evaluations).toEqual([
+      {
+        brand_name: 'Brand A',
+        rating: 5,
+      },
+    ])
+    expect(responseDoc.contact_request).toBe(false)
   })
 })
