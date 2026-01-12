@@ -1,7 +1,7 @@
-import { ReactNode, useEffect, useState } from 'react'
-import { TenStackFormBase, FormControlProps } from './TenStackFormBase'
 import { Select, SelectContent, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useFieldContext } from '@/lib/hooks/tenStackFormHooks'
+import { ReactNode } from 'react'
+import { FormControlProps, TenStackFormBase } from './TenStackFormBase'
 
 export function TenStackSelect({ children, ...props }: FormControlProps & { children: ReactNode }) {
   const field = useFieldContext<string>()

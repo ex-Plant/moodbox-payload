@@ -132,7 +132,10 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       message,
       generatedDiscount,
     }
-  } catch (error) {
+  } catch (error: any) {
+    if (error && typeof error === 'object' && 'data' in error) {
+      console.error('Payload Validation Error:', JSON.stringify(error.data, null, 2))
+    }
     console.error('Error submitting survey:', error)
 
     // Rollback survey status if it was updated but something failed later
