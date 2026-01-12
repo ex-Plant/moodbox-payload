@@ -53,7 +53,7 @@ export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null
     return
   }
 
-  const token = generateHexToken(16)
+  const token = generateHexToken(16, 'FORM')
   // console.log('ecoded token: ', token)
 
   await payload.create({
