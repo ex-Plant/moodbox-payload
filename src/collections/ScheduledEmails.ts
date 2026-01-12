@@ -30,6 +30,10 @@ export const ScheduledEmails: CollectionConfig = {
     {
       name: 'linkedOrder',
       type: 'relationship',
+      label: {
+        pl: 'Powiązane zamówienie',
+        en: 'Linked Order',
+      },
       relationTo: 'orders',
       required: true,
       unique: true,
@@ -40,6 +44,10 @@ export const ScheduledEmails: CollectionConfig = {
     {
       name: 'orderId',
       type: 'text',
+      label: {
+        pl: 'ID zamówienia',
+        en: 'Order ID',
+      },
       required: true,
       admin: {
         readOnly: true,
@@ -48,6 +56,10 @@ export const ScheduledEmails: CollectionConfig = {
     {
       name: 'customerEmail',
       type: 'email',
+      label: {
+        pl: 'Email klienta',
+        en: 'Customer Email',
+      },
       required: true,
       admin: {
         readOnly: true,
@@ -56,6 +68,10 @@ export const ScheduledEmails: CollectionConfig = {
     {
       name: 'scheduledAt',
       type: 'date',
+      label: {
+        pl: 'Zaplanowane na',
+        en: 'Scheduled At',
+      },
       required: true,
       admin: {
         readOnly: true,
@@ -64,6 +80,10 @@ export const ScheduledEmails: CollectionConfig = {
     {
       name: 'expiresAt',
       type: 'date',
+      label: {
+        pl: 'Wygasa',
+        en: 'Expires At',
+      },
       required: true,
       admin: {
         readOnly: true,
@@ -72,28 +92,45 @@ export const ScheduledEmails: CollectionConfig = {
     {
       name: 'status',
       type: 'select',
+      label: {
+        pl: 'Status',
+        en: 'Status',
+      },
       required: true,
       defaultValue: 'pending',
       options: [
-        { label: 'Pending', value: 'pending' },
-        { label: 'Sent', value: 'sent' },
-        { label: 'Failed', value: 'failed' },
-        { label: 'Cancelled', value: 'cancelled' },
+        { label: { pl: 'Oczekujący', en: 'Pending' }, value: 'pending' },
+        { label: { pl: 'Wysłany', en: 'Sent' }, value: 'sent' },
+        { label: { pl: 'Niepowodzenie', en: 'Failed' }, value: 'failed' },
+        { label: { pl: 'Anulowany', en: 'Cancelled' }, value: 'cancelled' },
       ],
     },
     {
       name: 'emailType',
       type: 'select',
+      label: {
+        pl: 'Typ wiadomości',
+        en: 'Email Type',
+      },
       required: true,
       defaultValue: 'post_purchase_questions',
       admin: {
         readOnly: true,
       },
-      options: [{ label: 'Post purchase questions', value: 'post_purchase_questions' }],
+      options: [
+        {
+          label: { pl: 'Pytania po zakupie', en: 'Post purchase questions' },
+          value: 'post_purchase_questions',
+        },
+      ],
     },
     {
       name: 'token',
       type: 'text',
+      label: {
+        pl: 'Token',
+        en: 'Token',
+      },
       required: true,
       unique: true,
       admin: {
@@ -103,6 +140,10 @@ export const ScheduledEmails: CollectionConfig = {
     {
       name: 'isSurveyCompleted',
       type: 'checkbox',
+      label: {
+        pl: 'Ankieta wypełniona',
+        en: 'Survey Completed',
+      },
       defaultValue: false,
       admin: {
         readOnly: true,

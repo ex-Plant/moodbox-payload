@@ -37,7 +37,10 @@ export const Orders: CollectionConfig = {
     {
       name: 'hasSurvey',
       type: 'checkbox',
-      label: 'Has Survey',
+      label: {
+        pl: 'Ankieta',
+        en: 'Has Survey',
+      },
       defaultValue: false,
       admin: {
         readOnly: true,
@@ -46,13 +49,20 @@ export const Orders: CollectionConfig = {
     {
       name: 'survey',
       type: 'join',
+      label: {
+        pl: 'Ankieta wypełniona',
+        en: 'Survey',
+      },
       collection: 'survey-responses',
       on: 'order',
     },
     {
       name: 'email',
       type: 'email',
-      label: 'Email',
+      label: {
+        pl: 'Adres email',
+        en: 'Email',
+      },
     },
     {
       name: 'company_name',

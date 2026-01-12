@@ -30,10 +30,18 @@ export const Users: CollectionConfig = {
     {
       name: 'name',
       type: 'text',
+      label: {
+        pl: 'Imię i nazwisko',
+        en: 'Name',
+      },
     },
     {
       name: 'test_required',
       type: 'text',
+      label: {
+        pl: 'Pole testowe (wymagane)',
+        en: 'Test Field (Required)',
+      },
       required: true,
     },
   ],
