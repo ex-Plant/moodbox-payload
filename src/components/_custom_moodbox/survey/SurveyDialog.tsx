@@ -14,22 +14,26 @@ import { Label } from '@/components/ui/label'
 import { Props } from '@payloadcms/ui/elements/CodeEditor'
 import Link from 'next/link'
 import { UI_MESSAGES } from './survey_constants'
+import LogoMoodboxSvg from '../common/LogoMoodboxSvg'
 
 type PropsT = {
-  surveyDialoOpen: boolean
+  surveyDialogOpen: boolean
   setSurveyDialogOpen: (open: boolean) => void
   discountCode: string
 }
 export default function SurveyDialog({
   setSurveyDialogOpen,
-  surveyDialoOpen,
+  surveyDialogOpen,
   discountCode,
 }: PropsT) {
   return (
-    <Dialog open={surveyDialoOpen} onOpenChange={setSurveyDialogOpen}>
+    <Dialog open={surveyDialogOpen} onOpenChange={setSurveyDialogOpen}>
       <DialogContent className={` min-h-[200px] max-w-[600px] w-fit content-center bg-white p-8 `}>
         <DialogHeader>
           <DialogTitle>
+            <div className={`flex justify-center pb-4 `}>
+              <LogoMoodboxSvg />
+            </div>
             <p className={`text-center mt-4 mb-8`}>{UI_MESSAGES.THANK_YOU_SURVEY}</p>
           </DialogTitle>
           <DialogDescription></DialogDescription>

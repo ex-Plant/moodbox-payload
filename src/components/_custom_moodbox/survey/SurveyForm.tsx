@@ -35,7 +35,7 @@ export default function SurveyForm({
 }: SurveyFormProps & { token: string }) {
   const { formData, currentStep, setStep, updateFormData, resetFormData } = useSurveyForm()
 
-  const [surveyDialoOpen, setSurveyDialogOpen] = useState(false)
+  const [surveyDialogOpen, setSurveyDialogOpen] = useState(false)
   const [discountCode, setDiscountCode] = useState('')
 
   const [termsAccepted, setTermsAccepted] = useState(false)
@@ -138,7 +138,7 @@ export default function SurveyForm({
       </formContext.Provider>
       <SurveyDialog
         setSurveyDialogOpen={setSurveyDialogOpen}
-        surveyDialoOpen={surveyDialoOpen}
+        surveyDialogOpen={surveyDialogOpen}
         discountCode={discountCode}
       />
 

@@ -4,7 +4,7 @@ export const SurveyResponses: CollectionConfig = {
   slug: 'survey-responses',
   labels: {
     plural: {
-      pl: 'Odpowiedzi Ankiety',
+      pl: 'Wypełnione Ankiety',
       en: 'Survey Responses',
     },
     singular: {
@@ -14,7 +14,7 @@ export const SurveyResponses: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: () => true,
+    // create: () => true,
     update: () => true,
     delete: () => true,
   },
