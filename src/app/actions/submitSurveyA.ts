@@ -8,52 +8,40 @@ import { createDiscountA } from './createDiscountA'
 import { checkSurveyStatus } from './checkSurveyStatus'
 
 export async function submitSurveyA(data: SurveySchemaT, token: string) {
+  let message = 'Wystąpił błąd podczas wysyłania ankiety - spróbuj ponownie.'
+  let docIdToRollback: string | number | undefined
+
   try {
     // Validate the data on the server
     const validatedData = surveySchema.safeParse(data)
 
     if (!validatedData.success) {
-      console.error('Survey validation failed for token:', token, {
-        errors: validatedData.error.issues,
-      })
+      console.error({ errors: validatedData.error.issues })
+      message = 'Nieprawidłowe dane formularza.'
+      throw new Error(message)
+    }
+
+    const { docId, customerEmail, linkedOrderDocId, isSurveyCompleted } =
+      await checkSurveyStatus(token)
+
+    console.log('submitSurveyA.ts:11 - token:', token, 'docId:', docId)
+
+    docIdToRollback = docId
+
+    if (isSurveyCompleted) {
+      message = 'Ta ankieta została już wypełniona'
       return {
         error: true,
-        message: 'Nieprawidłowe dane formularza.',
+        message,
       }
     }
 
-    const { docId, customerEmail, linkedOrderDocId } = await checkSurveyStatus(token)
     const payload = await getPayload({ config: configPromise })
 
     if (!linkedOrderDocId) {
-      console.error('Scheduled email has no linked Order for token:', token)
       return {
         error: true,
-        message: 'Błąd powiązania zamówienia.',
-      }
-    }
-
-    console.log('Survey submitted successfully for token:', token, validatedData.data)
-
-    const {
-      considered_brands,
-      rejected_brand,
-      brand_evaluations,
-      rejection_reasons,
-      rejection_other,
-      contact_request,
-      contact_brands,
-      missing_brands,
-      improvement_suggestion,
-    } = validatedData.data
-
-    // Gerenate code first if the rest of logic fails after 30 days it will expire anyway
-    const generatedDiscount = await createDiscountA()
-
-    if (!generatedDiscount) {
-      return {
-        error: true,
-        message: 'Wystąpił błąd podczas generowania kodu.',
+        message: 'Błąd powiązania zamówienia',
       }
     }
 
@@ -69,14 +57,33 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       },
     })
 
-    // When using 'where', update returns an object with a 'docs' array.
     // If the array is empty, the document was either not found or already completed.
     if (updateResult.docs.length === 0) {
+      message = 'Ta ankieta została już wypełniona.'
       return {
+        message,
         error: true,
-        message: 'Ta ankieta została już wypełniona.',
       }
     }
+
+    const generatedDiscount = await createDiscountA()
+
+    if (!generatedDiscount) {
+      message = 'Wystąpił błąd podczas generowania kodu.'
+      throw new Error(message)
+    }
+
+    const {
+      considered_brands,
+      rejected_brand,
+      brand_evaluations,
+      rejection_reasons,
+      rejection_other,
+      contact_request,
+      contact_brands,
+      missing_brands,
+      improvement_suggestion,
+    } = validatedData.data
 
     // Create Survey Response
     await payload.create({
@@ -115,20 +122,40 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
     await payload.sendEmail({
       to: customerEmail,
       subject,
-      // text: '',
       html,
     })
 
+    message = 'Ankieta została wysłana pomyślnie.'
+
     return {
       error: false,
-      message: 'Ankieta została wysłana pomyślnie.',
+      message,
       generatedDiscount,
     }
   } catch (error) {
     console.error('Error submitting survey:', error)
+
+    // Rollback survey status if it was updated but something failed later
+    if (docIdToRollback) {
+      try {
+        const payload = await getPayload({ config: configPromise })
+        await payload.update({
+          collection: 'scheduled-emails',
+          id: docIdToRollback,
+          data: {
+            isSurveyCompleted: false,
+          },
+        })
+      } catch (rollbackError) {
+        console.error('Failed to rollback survey status:', rollbackError)
+      }
+    }
+
     return {
       error: true,
-      message: 'Wystąpił błąd podczas wysyłania ankiety - spróbuj ponownie.',
+      message,
     }
+  } finally {
+    console.log(message)
   }
 }

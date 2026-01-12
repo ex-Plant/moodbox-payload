@@ -5,6 +5,7 @@ import * as migration_20260110_112644_remove_test_fields from './20260110_112644
 import * as migration_20260110_112741_add_required_field from './20260110_112741_add_required_field'
 import * as migration_20260111_121506_create_orders from './20260111_121506_create_orders'
 import * as migration_20260111_121541_remove_clients from './20260111_121541_remove_clients'
+import * as migration_20260112_124240_survey_responses from './20260112_124240_survey_responses'
 
 export const migrations = [
   {
@@ -41,5 +42,10 @@ export const migrations = [
     up: migration_20260111_121541_remove_clients.up,
     down: migration_20260111_121541_remove_clients.down,
     name: '20260111_121541_remove_clients',
+  },
+  {
+    up: migration_20260112_124240_survey_responses.up,
+    down: migration_20260112_124240_survey_responses.down,
+    name: '20260112_124240_survey_responses',
   },
 ]
