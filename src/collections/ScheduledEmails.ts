@@ -21,7 +21,7 @@ export const ScheduledEmails: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'orderId',
-    defaultColumns: ['orderId', 'customerEmail', 'status', 'scheduledAt'],
+    defaultColumns: ['linkedOrder', 'customerEmail', 'status', 'scheduledAt'],
     components: {
       afterListTable: ['@/components/TriggerSendingScheduledEmails'],
     },
@@ -39,6 +39,9 @@ export const ScheduledEmails: CollectionConfig = {
       unique: true,
       admin: {
         position: 'sidebar',
+        components: {
+          Cell: '@/components/OrderLinkCell',
+        },
       },
     },
     {

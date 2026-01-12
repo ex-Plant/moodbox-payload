@@ -19,6 +19,7 @@ import { SlugField as SlugField_3817bf644402e67bfe6577f60ef982de } from '@payloa
 import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { FolderField as FolderField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { default as default_eec79d7f8b81883fe721d987a00d9d62 } from '@/components/DownloadNewsletterUsers'
+import { default as default_b2021dcc86319005b7460af4147f9795 } from '@/components/OrderLinkCell'
 import { default as default_25fbd7e6c04c81a4651c82b23f2d2b8b } from '@/components/TriggerSendingScheduledEmails'
 import { default as default_e700f4df825d9111186b12e60c4d1658 } from '@/components/ListCell'
 import { default as default_877e155e2d6063e5f6db43d4a226e851 } from '@/components/RejectionSummaryCell'
@@ -69,6 +70,7 @@ export const importMap = {
   '@payloadcms/ui/rsc#FolderTableCell': FolderTableCell_ab83ff7e88da8d3530831f296ec4756a,
   '@payloadcms/ui/rsc#FolderField': FolderField_ab83ff7e88da8d3530831f296ec4756a,
   '@/components/DownloadNewsletterUsers#default': default_eec79d7f8b81883fe721d987a00d9d62,
+  '@/components/OrderLinkCell#default': default_b2021dcc86319005b7460af4147f9795,
   '@/components/TriggerSendingScheduledEmails#default': default_25fbd7e6c04c81a4651c82b23f2d2b8b,
   '@/components/ListCell#default': default_e700f4df825d9111186b12e60c4d1658,
   '@/components/RejectionSummaryCell#default': default_877e155e2d6063e5f6db43d4a226e851,

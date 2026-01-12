@@ -16,6 +16,7 @@ export const SurveyResponses: CollectionConfig = {
     useAsTitle: 'customer_email',
     defaultColumns: [
       'customer_email',
+      'order',
       'completedAt',
       'rejected_brand',
       'brand_evaluations',
@@ -30,10 +31,19 @@ export const SurveyResponses: CollectionConfig = {
   fields: [
     {
       name: 'order',
+      label: {
+        pl: 'Zamówienie',
+        en: 'Order',
+      },
       type: 'relationship',
       relationTo: 'orders',
       required: true,
       unique: true,
+      admin: {
+        components: {
+          Cell: '@/components/OrderLinkCell',
+        },
+      },
     },
     {
       name: 'customer_email',
