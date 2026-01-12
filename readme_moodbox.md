@@ -118,9 +118,21 @@ docker exec -it moodbox-db psql -U postgres -d local_moodbox
 
 Dump db if you want to be extra careful - on Neon free tier we have only 6 hours window to restore changes
 
+> cloud_prod.dump: Saves the cloud data to your Mac.
+
 ```zsh
-pg_dump <connection_string> > <dump_file_name>.sql
+docker run --rm  <CONNECTION_STRING> > cloud_prod.dump
+
+# Now, take that file and push it into your running moodbox-db container.
+docker exec -i moodbox-db pg_restore -U postgres -d local_moodbox --clean --no-owner --no-privileges < cloud_prod.dump
+
 ```
+
+--rm: Deletes this "worker" container as soon as the dump is finished.
+--clean: CRITICAL. This drops existing tables in your local DB before recreating them, ensuring you don't get "already exists" errors.
+--no-owner: Skip setting original cloud users as owners (since your local user is just postgres
+--no-privileges (or -x): Skips the GRANT/REVOKE and ALTER DEFAULT PRIVILEGES commands. Since you are the only developer on your local machine using the postgres user, you don't need the production permission logic.
+--no-owner: You already have this, which prevents errors about the cloud_admin user not owning the tables.
 
 # DEV
 

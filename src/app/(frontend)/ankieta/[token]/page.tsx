@@ -40,7 +40,8 @@ export default async function Ankieta({ params }: PropsT) {
     ),
   )
 
-  if (surveyInfo) return <SurveyCompletedPage />
+  // todo
+  // if (surveyInfo) return <SurveyCompletedPage />
 
   return (
     <main className="mx-auto max-w-[800px] py-32 px-4 xPaddings relative ">
