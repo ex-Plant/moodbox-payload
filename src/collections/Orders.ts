@@ -14,7 +14,7 @@ export const Orders: CollectionConfig = {
   },
   admin: {
     components: {
-      afterListTable: ['@/components/TriggerSendingScheduledEmails'],
+      afterListTable: ['@/components/ExportOrders'],
     },
     useAsTitle: 'orderId',
     defaultColumns: ['orderId', 'email', 'company_name', 'hasSurvey', 'createdAt'],
@@ -41,12 +41,14 @@ export const Orders: CollectionConfig = {
       name: 'hasSurvey',
       type: 'checkbox',
       label: {
-        pl: 'Ankieta',
+        pl: 'Wypełniona ankieta',
         en: 'Has Survey',
       },
       defaultValue: false,
       admin: {
-        readOnly: true,
+        components: {
+          Cell: '@/components/BooleanCell',
+        },
       },
     },
     {

@@ -2,31 +2,25 @@
 
 import handleFileDownload from '@/utilities/handleFileDownload'
 import { useState } from 'react'
-import { Button } from './ui/button'
 import { ErrorMessage } from './ErrorMessage'
+import { Button } from '@payloadcms/ui'
 
-export default function ExportClients() {
+export default function ExportOrders() {
   const [error, setError] = useState(false)
-  const [loading, setLoading] = useState(false)
 
-  async function exportClients() {
+  async function exportOrders() {
     setError(false)
-    setLoading(true)
     try {
-      await handleFileDownload('/api/export/clients', 'Lista klientów')
+      await handleFileDownload('/api/export/orders', 'Zamówienia')
     } catch (e) {
       console.error(e)
       setError(true)
-    } finally {
-      setLoading(false)
     }
   }
 
   return (
     <>
-      <Button isLoading={loading} onClick={exportClients}>
-        Eksportuj
-      </Button>
+      <Button onClick={exportOrders}>Eksportuj</Button>
       {error && <ErrorMessage />}
     </>
   )
