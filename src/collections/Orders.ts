@@ -45,6 +45,7 @@ export const Orders: CollectionConfig = {
       unique: true,
       index: true,
       admin: {
+        readOnly: true,
         components: {
           Cell: '@/components/ShopifyLink',
           afterInput: [
@@ -83,6 +84,7 @@ export const Orders: CollectionConfig = {
       collection: 'survey-responses',
       on: 'order',
       admin: {
+        condition: (data) => !!data?.hasSurvey,
         components: {
           Cell: {
             path: '@/components/LinkCell',

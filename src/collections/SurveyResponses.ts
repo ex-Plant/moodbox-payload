@@ -36,6 +36,7 @@ export const SurveyResponses: CollectionConfig = {
   },
   access: {
     read: () => true,
+    create: () => false,
     // update: () => true,
     delete: () => true,
   },
