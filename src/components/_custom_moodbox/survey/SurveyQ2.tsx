@@ -19,7 +19,7 @@ export default function SurveyQ2({ availableBrands }: PropsT) {
       <form.AppField name="rejected_brand">
         {(field) => (
           <field.Select placeholder={UI_MESSAGES.SELECT_BRAND_OPTIONAL}>
-            <SelectItem value="none">{UI_MESSAGES.NO_SUCH_BRAND_OPTION}</SelectItem>
+            <SelectItem value="Brak">{UI_MESSAGES.NO_SUCH_BRAND_OPTION}</SelectItem>
             {availableBrands.map((brand) => (
               <SelectItem
                 key={`rejected-${brand}`}

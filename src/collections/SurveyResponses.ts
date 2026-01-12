@@ -18,7 +18,7 @@ export const SurveyResponses: CollectionConfig = {
         {
           path: '@/components/ExportCSV',
           clientProps: {
-            route: '/api/export/survey-answers',
+            route: '/api/export/survey',
             fileTitle: 'Ankieta odpowiedzi',
           },
         },
