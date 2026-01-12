@@ -103,9 +103,7 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       improvement_suggestion,
     }
 
-    console.dir(submitData)
-
-    console.log('submit data:', JSON.stringify(data, null, 2))
+    console.log('submit data:', JSON.stringify(submitData, null, 2))
     // console.log('submit data:', submit)
 
     // Create Survey Response

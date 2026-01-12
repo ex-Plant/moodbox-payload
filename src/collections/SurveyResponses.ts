@@ -14,11 +14,17 @@ export const SurveyResponses: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'customer_email',
-    defaultColumns: ['customer_email', 'order', 'completedAt'],
+    defaultColumns: [
+      'customer_email',
+      'completedAt',
+      'rejected_brand',
+      'brand_evaluations',
+      'contact_request',
+    ],
   },
   access: {
     read: () => true,
-    update: () => true,
+    // update: () => true,
     delete: () => true,
   },
   fields: [
@@ -48,6 +54,11 @@ export const SurveyResponses: CollectionConfig = {
       name: 'considered_brands',
       type: 'text',
       hasMany: true,
+      admin: {
+        components: {
+          Cell: '@/components/ListCell',
+        },
+      },
       label: {
         pl: 'Rozważane marki',
         en: 'Considered Brands',
@@ -56,6 +67,11 @@ export const SurveyResponses: CollectionConfig = {
     {
       name: 'rejected_brand',
       type: 'text',
+      admin: {
+        components: {
+          Cell: '@/components/RejectionSummaryCell',
+        },
+      },
       label: {
         pl: 'Odrzucona marka',
         en: 'Rejected Brand',
@@ -68,7 +84,6 @@ export const SurveyResponses: CollectionConfig = {
         initCollapsed: true,
         components: {
           Cell: '@/components/BrandEvaluationsCell',
-          RowLabel: '@/components/BrandEvaluationRowLabel',
         },
       },
       label: {
@@ -107,6 +122,12 @@ export const SurveyResponses: CollectionConfig = {
       name: 'rejection_reasons',
       type: 'text',
       hasMany: true,
+      admin: {
+        hidden: true,
+        components: {
+          Cell: '@/components/ListCell',
+        },
+      },
       label: {
         pl: 'Powody odrzucenia',
         en: 'Rejection Reasons',
@@ -115,6 +136,9 @@ export const SurveyResponses: CollectionConfig = {
     {
       name: 'rejection_other',
       type: 'text',
+      admin: {
+        hidden: true,
+      },
       label: {
         pl: 'Inny powód odrzucenia',
         en: 'Other Rejection Reason',
@@ -123,6 +147,11 @@ export const SurveyResponses: CollectionConfig = {
     {
       name: 'contact_request',
       type: 'checkbox',
+      admin: {
+        components: {
+          Cell: '@/components/BooleanCell',
+        },
+      },
       label: {
         pl: 'Prośba o kontakt',
         en: 'Contact Request',
@@ -133,6 +162,11 @@ export const SurveyResponses: CollectionConfig = {
       name: 'contact_brands',
       type: 'text',
       hasMany: true,
+      admin: {
+        components: {
+          Cell: '@/components/ListCell',
+        },
+      },
       label: {
         pl: 'Marki do kontaktu',
         en: 'Contact Brands',

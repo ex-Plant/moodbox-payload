@@ -11,7 +11,6 @@ export async function checkSurveyStatus(token: string) {
       token: { equals: token },
     },
   })
-
   if (emailResult.docs.length < 1) throw new Error('Nieprawidłowy lub wygasły token.')
 
   const doc = emailResult.docs[0]
