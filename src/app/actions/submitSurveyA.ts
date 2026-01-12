@@ -35,6 +35,18 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
 
     console.log('Survey submitted successfully for token:', token, validatedData.data)
 
+    const {
+      considered_brands,
+      rejected_brand,
+      brand_evaluations,
+      rejection_reasons,
+      rejection_other,
+      contact_request,
+      contact_brands,
+      missing_brands,
+      improvement_suggestion,
+    } = validatedData.data
+
     // Gerenate code first if the rest of logic fails after 30 days it will expire anyway
     const generatedDiscount = await createDiscountA()
 
@@ -71,8 +83,20 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       collection: 'survey-responses',
       data: {
         order: linkedOrderDocId,
-        responses: validatedData.data,
+        customer_email: customerEmail,
         completedAt: new Date().toISOString(),
+        considered_brands,
+        rejected_brand,
+        brand_evaluations: Object.entries(brand_evaluations).map(([brand_name, evaluation]) => ({
+          brand_name,
+          ...evaluation,
+        })),
+        rejection_reasons,
+        rejection_other,
+        contact_request,
+        contact_brands,
+        missing_brands,
+        improvement_suggestion,
       },
     })
 

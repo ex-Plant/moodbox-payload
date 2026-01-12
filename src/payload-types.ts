@@ -643,16 +643,25 @@ export interface Order {
 export interface SurveyResponse {
   id: number;
   order: number | Order;
-  responses?:
+  customer_email: string;
+  completedAt: string;
+  considered_brands?: string[] | null;
+  rejected_brand?: string | null;
+  brand_evaluations?:
     | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
+        brand_name: string;
+        rating: number;
+        reasons?: string[] | null;
+        other_reason?: string | null;
+        id?: string | null;
+      }[]
     | null;
-  completedAt?: string | null;
+  rejection_reasons?: string[] | null;
+  rejection_other?: string | null;
+  contact_request?: boolean | null;
+  contact_brands?: string[] | null;
+  missing_brands?: string | null;
+  improvement_suggestion?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1226,8 +1235,25 @@ export interface OrdersSelect<T extends boolean = true> {
  */
 export interface SurveyResponsesSelect<T extends boolean = true> {
   order?: T;
-  responses?: T;
+  customer_email?: T;
   completedAt?: T;
+  considered_brands?: T;
+  rejected_brand?: T;
+  brand_evaluations?:
+    | T
+    | {
+        brand_name?: T;
+        rating?: T;
+        reasons?: T;
+        other_reason?: T;
+        id?: T;
+      };
+  rejection_reasons?: T;
+  rejection_other?: T;
+  contact_request?: T;
+  contact_brands?: T;
+  missing_brands?: T;
+  improvement_suggestion?: T;
   updatedAt?: T;
   createdAt?: T;
 }
