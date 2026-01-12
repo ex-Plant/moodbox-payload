@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { Button } from './ui/button'
 import { ErrorMessage } from './ErrorMessage'
 
-export default function DownloadClients() {
+export default function ExportClients() {
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
 

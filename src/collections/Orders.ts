@@ -13,6 +13,9 @@ export const Orders: CollectionConfig = {
     },
   },
   admin: {
+    components: {
+      afterListTable: ['@/components/TriggerSendingScheduledEmails'],
+    },
     useAsTitle: 'orderId',
     defaultColumns: ['orderId', 'email', 'company_name', 'hasSurvey', 'createdAt'],
   },
