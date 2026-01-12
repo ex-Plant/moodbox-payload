@@ -183,6 +183,11 @@ export const SurveyResponses: CollectionConfig = {
     {
       name: 'improvement_suggestion',
       type: 'textarea',
+      admin: {
+        components: {
+          Cell: '@/components/LongTextCell',
+        },
+      },
       label: {
         pl: 'Sugestie poprawy',
         en: 'Improvement Suggestions',

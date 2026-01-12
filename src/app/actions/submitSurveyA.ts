@@ -103,8 +103,11 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       improvement_suggestion,
     }
 
-    console.log('submit data:', JSON.stringify(submitData, null, 2))
-    // console.log('submit data:', submit)
+    // console.log('submit data:', JSON.stringify(submitData, null, 2))
+    // console.log('submitSurveyA.ts:107 - ######:')
+    console.dir(submitData, {
+      depth: 4,
+    })
 
     // Create Survey Response
     await payload.create({
