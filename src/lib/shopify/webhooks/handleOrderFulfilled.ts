@@ -69,4 +69,5 @@ export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null
       token,
     },
   })
+  console.log(` ✅ shopify order id: ${id} -> fullfiled `)
 }
