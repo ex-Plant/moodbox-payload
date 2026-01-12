@@ -15,7 +15,15 @@ export const Newsletter: CollectionConfig = {
   },
   admin: {
     components: {
-      afterListTable: ['@/components/DownloadNewsletterUsers'],
+      afterListTable: [
+        {
+          path: '@/components/ExportCSV',
+          clientProps: {
+            route: '/api/export/newsletter',
+            fileTitle: 'Lista Newsletter',
+          },
+        },
+      ],
     },
     useAsTitle: 'email',
     defaultColumns: ['email', 'createdAt'],

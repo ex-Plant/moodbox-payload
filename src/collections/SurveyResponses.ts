@@ -13,6 +13,17 @@ export const SurveyResponses: CollectionConfig = {
     },
   },
   admin: {
+    components: {
+      afterListTable: [
+        {
+          path: '@/components/ExportCSV',
+          clientProps: {
+            route: '/api/export/survey-answers',
+            fileTitle: 'Ankieta odpowiedzi',
+          },
+        },
+      ],
+    },
     useAsTitle: 'customer_email',
     defaultColumns: [
       'customer_email',

@@ -14,7 +14,15 @@ export const Orders: CollectionConfig = {
   },
   admin: {
     components: {
-      afterListTable: ['@/components/ExportOrders'],
+      afterListTable: [
+        {
+          path: '@/components/ExportCSV',
+          clientProps: {
+            route: '/api/export/orders',
+            fileTitle: 'Zamówienia',
+          },
+        },
+      ],
     },
     useAsTitle: 'orderId',
     defaultColumns: ['orderId', 'email', 'company_name', 'hasSurvey', 'createdAt'],
