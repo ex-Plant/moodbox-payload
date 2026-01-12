@@ -2,8 +2,8 @@
 
 import handleFileDownload from '@/utilities/handleFileDownload'
 import { useState } from 'react'
-import { Button } from './ui/button'
 import { ErrorMessage } from './ErrorMessage'
+import { Button } from '@payloadcms/ui'
 
 export default function DownloadNewsletterUsers() {
   const [error, setError] = useState(false)
@@ -24,10 +24,8 @@ export default function DownloadNewsletterUsers() {
 
   return (
     <>
-      <Button isLoading={loading} onClick={exportClients}>
-        Eksportuj
-      </Button>
-      {error && <ErrorMessage />}
+      <Button onClick={exportClients}>Eksportuj</Button>
+      {!error && <ErrorMessage />}
     </>
   )
 }
