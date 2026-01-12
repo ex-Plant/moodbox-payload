@@ -9,6 +9,7 @@ type SurveyCheckboxProps = {
   onCheckedChange: (checked: boolean) => void
   label: ReactNode
   className?: string
+  'aria-invalid'?: boolean
 }
 
 export default function SurveyCheckbox({
@@ -17,6 +18,7 @@ export default function SurveyCheckbox({
   onCheckedChange,
   label,
   className,
+  'aria-invalid': ariaInvalid,
 }: SurveyCheckboxProps) {
   return (
     <div className={cn('flex items-center gap-4', className)}>
@@ -24,11 +26,12 @@ export default function SurveyCheckbox({
         className={cn(
           `size-6 rounded-md border transition-all duration-200
           shadow-xs hover:bg-accent bg-white border-input text-orange
-           data-[state=checked]:bg-mood-brown  data-[state=checked]:text-orange`,
+          data-[state=checked]:bg-mood-brown  data-[state=checked]:text-orange`,
         )}
         id={id}
         checked={checked}
         onCheckedChange={onCheckedChange}
+        aria-invalid={ariaInvalid}
       />
       <Label
         htmlFor={id}

@@ -7,6 +7,7 @@ import SurveyQuestionHeader from './SurveyQuestionHeader'
 import SurveyEvalCard from './SurveyEvalCard'
 import { toggleReasons } from './helpers/toggleReasons'
 import SurveyQWrapper from './SurveyQWrapper'
+import { Field, FieldError } from '../../ui/field'
 
 export default function SurveyQ4() {
   const form = useSurveyContext()
@@ -25,16 +26,20 @@ export default function SurveyQ4() {
         if (!brandEvaluations[brand]?.rating) return null
 
         return (
-          <SurveyEvalCard key={brand} brand={brand} questionId="p4">
-            <form.Field name={`brand_evaluations.${brand}.reasons` as DeepKeys<SurveySchemaT>}>
-              {(field) => {
-                const rating = brandEvaluations[brand].rating
-                const isPositive = (rating || 0) >= 4
-                const reasons = isPositive ? REASONS_P4A : REASONS_P4B
-                const currentReasons = (field.state.value as string[]) || []
+          <form.Field
+            key={brand}
+            name={`brand_evaluations.${brand}.reasons` as DeepKeys<SurveySchemaT>}
+          >
+            {(field) => {
+              const rating = brandEvaluations[brand].rating
+              const isPositive = (rating || 0) >= 4
+              const reasons = isPositive ? REASONS_P4A : REASONS_P4B
+              const currentReasons = (field.state.value as string[]) || []
+              const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
 
-                return (
-                  <div className="space-y-4">
+              return (
+                <SurveyEvalCard brand={brand} questionId="p4" data-invalid={isInvalid}>
+                  <Field data-invalid={isInvalid} className="space-y-4">
                     <p className="font-medium">
                       {isPositive
                         ? UI_MESSAGES.POSITIVE_BRAND_QUESTION
@@ -57,6 +62,7 @@ export default function SurveyQ4() {
                               toggleReasons(!!v, currentReasons, field, reason)
                             }
                             label={reason}
+                            aria-invalid={isInvalid}
                           />
                         )
                       })}
@@ -74,11 +80,12 @@ export default function SurveyQ4() {
                         )}
                       </form.AppField>
                     )}
-                  </div>
-                )
-              }}
-            </form.Field>
-          </SurveyEvalCard>
+                    {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                  </Field>
+                </SurveyEvalCard>
+              )
+            }}
+          </form.Field>
         )
       })}
     </SurveyQWrapper>

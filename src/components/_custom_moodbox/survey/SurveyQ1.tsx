@@ -4,6 +4,7 @@ import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
 import { surveyQuestions, UI_MESSAGES } from './survey_constants'
 import SurveyQWrapper from './SurveyQWrapper'
+import { Field, FieldError } from '../../ui/field'
 type PropsT = {
   availableBrands: string[]
 }
@@ -29,22 +30,27 @@ export default function SurveyQ1({ availableBrands }: PropsT) {
         subtitle={surveyQuestions[0].subtitle}
       />
       <form.Field name="considered_brands">
-        {(field) => (
-          <div className="grid gap-4 md:grid-cols-2">
-            {availableBrands.map((brand) => {
-              const id = `considered-${brand}`
-              return (
-                <SurveyCheckbox
-                  key={id}
-                  id={id}
-                  checked={field.state.value.includes(brand)}
-                  onCheckedChange={(checked) => toggle(!!checked, field, brand)}
-                  label={brand}
-                />
-              )
-            })}
-          </div>
-        )}
+        {(field) => {
+          const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+          return (
+            <Field className="grid gap-4 md:grid-cols-2" data-invalid={isInvalid}>
+              {availableBrands.map((brand) => {
+                const id = `considered-${brand}`
+                return (
+                  <SurveyCheckbox
+                    key={id}
+                    id={id}
+                    checked={field.state.value.includes(brand)}
+                    onCheckedChange={(checked) => toggle(!!checked, field, brand)}
+                    label={brand}
+                    aria-invalid={isInvalid}
+                  />
+                )
+              })}
+              {isInvalid && <FieldError errors={field.state.meta.errors} />}
+            </Field>
+          )
+        }}
       </form.Field>
     </SurveyQWrapper>
   )

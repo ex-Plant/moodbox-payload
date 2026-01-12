@@ -5,7 +5,8 @@ type SurveyEvalCardProps = {
   brand?: string
   questionId?: string
   children: ReactNode
-  className?: String
+  className?: string
+  'data-invalid'?: boolean
 }
 
 export default function SurveyEvalCard({
@@ -13,13 +14,23 @@ export default function SurveyEvalCard({
   questionId,
   children,
   className,
+  'data-invalid': dataInvalid,
 }: SurveyEvalCardProps) {
   return (
     <div
       key={`eval-${questionId}-${brand}`}
-      className={cn('p-6 border rounded-lg bg-white shadow-sm space-y-6', className)}
+      data-invalid={dataInvalid}
+      className={cn(
+        'group/eval-card p-6 border rounded-lg bg-white shadow-sm space-y-6',
+        'data-[invalid=true]:border-destructive data-[invalid=true]:text-destructive',
+        className,
+      )}
     >
-      {brand && <h3 className="text-lg font-bold border-b border-mood-brown pb-2">{brand}</h3>}
+      {brand && (
+        <h3 className="text-lg font-bold border-b border-mood-brown pb-2 group-data-[invalid=true]/eval-card:border-destructive">
+          {brand}
+        </h3>
+      )}
       {children}
     </div>
   )

@@ -58,6 +58,15 @@ export default function SurveyForm({
 
   const formValues = useStore(form.store, (state) => state.values)
   const isSubmitting = useStore(form.store, (s) => s.isSubmitting)
+  const submissionAttempts = useStore(form.store, (s) => s.submissionAttempts)
+  const isFormValid = useStore(
+    form.store,
+    (state) => !state.isValidating && Object.keys(state.errors || {}).length === 0,
+  )
+  const hasFieldErrors = useStore(form.store, (state) =>
+    Object.values(state.fieldMeta).some((meta) => meta.errors.length > 0),
+  )
+  const isInvalid = submissionAttempts > 0 && (!isFormValid || hasFieldErrors)
 
   const consideredBrands = formValues.considered_brands
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -72,6 +81,29 @@ export default function SurveyForm({
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
     }
   }, [formValues, updateFormData])
+
+  // useEffect(() => {
+  //   // 1. Check form-level errors (usually from the schema validator)
+  //   if (form.state.errors.length > 0) {
+  //     console.group('🚫 Form Validation Errors')
+  //     console.table(form.state.errors)
+  //     console.groupEnd()
+  //   }
+
+  //   // 2. Check field-specific errors
+  //   const fieldsWithErrors = Object.entries(form.state.fieldMeta)
+  //     .filter(([_, meta]) => meta.errors.length > 0)
+  //     .map(([name, meta]) => ({
+  //       field: name,
+  //       errors: meta.errors.map((e) => (typeof e === 'object' ? e?.message : e)),
+  //     }))
+
+  //   if (fieldsWithErrors.length > 0) {
+  //     console.group('⚠️ Field Validation Errors')
+  //     console.table(fieldsWithErrors)
+  //     console.groupEnd()
+  //   }
+  // }, [form.state.errors, form.state.fieldMeta])
 
   function nextStep() {
     if (consideredBrands.length < 1) {
@@ -131,6 +163,11 @@ export default function SurveyForm({
                 <Button disabled={!termsAccepted} className={`mt-8`} type="submit" variant="mood">
                   {UI_MESSAGES.SEND_SURVEY}
                 </Button>
+                {isInvalid && (
+                  <p className="mt-2 text-sm text-destructive font-medium ">
+                    {UI_MESSAGES.FIX_ERRORS_BEFORE_SENDING}
+                  </p>
+                )}
               </div>
             )}
           </div>

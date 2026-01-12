@@ -112,6 +112,9 @@ export const UI_MESSAGES = {
   TERMS_ACCEPTANCE_TEXT:
     'Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji pilotażu MoodBox Polska oraz przygotowania raportów dla producentów.',
 
+  // Errors
+  FIX_ERRORS_BEFORE_SENDING: 'Ankieta zawiera błędy',
+
   // Header messages
   WELCOME_MESSAGE: 'Witaj',
   SURVEY_TITLE: 'Podsumowanie pracy z Moodboxem',
