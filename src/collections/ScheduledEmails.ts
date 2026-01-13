@@ -20,7 +20,7 @@ export const ScheduledEmails: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    useAsTitle: 'orderId',
+    useAsTitle: 'linkedOrder',
     defaultColumns: ['linkedOrder', 'customerEmail', 'status', 'scheduledAt'],
     components: {
       afterListTable: ['@/components/TriggerSendingScheduledEmails'],
@@ -40,36 +40,7 @@ export const ScheduledEmails: CollectionConfig = {
       admin: {
         readOnly: true,
         components: {
-          Cell: {
-            path: '@/components/LinkCell',
-            clientProps: {
-              href: '/admin/collections/orders',
-              label: 'orderId',
-            },
-          },
-        },
-      },
-    },
-    {
-      name: 'orderId',
-      type: 'text',
-      label: {
-        pl: 'ID zamówienia',
-        en: 'Order ID',
-      },
-      required: true,
-      admin: {
-        readOnly: true,
-        components: {
           Cell: '@/components/ShopifyLink',
-          afterInput: [
-            {
-              path: '@/components/ShopifyLink',
-              clientProps: {
-                watchField: 'orderId',
-              },
-            },
-          ],
         },
       },
     },

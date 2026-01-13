@@ -22,11 +22,21 @@ export const Orders: CollectionConfig = {
             fileTitle: 'Zamówienia',
           },
         },
+        '@/components/SyncOrdersButton',
       ],
     },
-    useAsTitle: 'orderId',
-    defaultColumns: ['orderId', 'email', 'company_name', 'survey', 'hasSurvey', 'createdAt'],
+    useAsTitle: 'id',
+    defaultColumns: [
+      'id',
+      'email',
+      'shopifyLink',
+      'company_name',
+      'survey',
+      'hasSurvey',
+      'createdAt',
+    ],
   },
+  lockDocuments: false,
   access: {
     read: () => true,
     create: () => true,
@@ -35,27 +45,20 @@ export const Orders: CollectionConfig = {
   },
   fields: [
     {
-      name: 'orderId',
+      name: 'id',
       type: 'text',
-      label: {
-        pl: 'Zamówienie w shopify',
-        en: 'Shopify link',
-      },
-      required: true,
-      unique: true,
-      index: true,
+      label: 'ID',
       admin: {
         readOnly: true,
+      },
+    },
+    {
+      name: 'shopifyLink',
+      type: 'ui',
+      label: 'Shopify',
+      admin: {
         components: {
           Cell: '@/components/ShopifyLink',
-          afterInput: [
-            {
-              path: '@/components/ShopifyLink',
-              clientProps: {
-                watchField: 'orderId',
-              },
-            },
-          ],
         },
       },
     },

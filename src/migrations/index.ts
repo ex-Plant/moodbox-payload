@@ -7,6 +7,7 @@ import * as migration_20260111_121506_create_orders from './20260111_121506_crea
 import * as migration_20260111_121541_remove_clients from './20260111_121541_remove_clients'
 import * as migration_20260112_124240_survey_responses from './20260112_124240_survey_responses'
 import * as migration_20260112_161045_survey_adjustments from './20260112_161045_survey_adjustments'
+import * as migration_20260113_102117_shopify_order_id_as_primary_key from './20260113_102117_shopify_order_id_as_primary_key'
 
 export const migrations = [
   {
@@ -53,5 +54,10 @@ export const migrations = [
     up: migration_20260112_161045_survey_adjustments.up,
     down: migration_20260112_161045_survey_adjustments.down,
     name: '20260112_161045_survey_adjustments',
+  },
+  {
+    up: migration_20260113_102117_shopify_order_id_as_primary_key.up,
+    down: migration_20260113_102117_shopify_order_id_as_primary_key.down,
+    name: '20260113_102117_shopify_order_id_as_primary_key',
   },
 ]

@@ -54,38 +54,7 @@ export const SurveyResponses: CollectionConfig = {
       admin: {
         readOnly: true,
         components: {
-          Cell: {
-            path: '@/components/LinkCell',
-            clientProps: {
-              href: '/admin/collections/orders',
-              label: 'Połączone zamówienie',
-            },
-          },
-        },
-      },
-    },
-    {
-      name: 'orderId',
-      type: 'text',
-      label: {
-        pl: 'Zamówienie w shopify',
-        en: 'Shopify link',
-      },
-      required: true,
-      unique: true,
-      index: true,
-      admin: {
-        readOnly: true,
-        components: {
           Cell: '@/components/ShopifyLink',
-          afterInput: [
-            {
-              path: '@/components/ShopifyLink',
-              clientProps: {
-                watchField: 'orderId',
-              },
-            },
-          ],
         },
       },
     },
