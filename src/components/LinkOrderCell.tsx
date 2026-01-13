@@ -1,11 +1,9 @@
 import { DefaultCellComponentProps } from 'payload'
 
 const LinkOrderCell: React.FC<DefaultCellComponentProps> = ({ rowData }) => {
-  const linkedOrder = rowData.linkedOrder
-
+  const linkedOrder = rowData.linkedOrder || rowData.order
   if (!linkedOrder) return null
 
-  // If linkedOrder is a full object
   const orderId = typeof linkedOrder === 'object' ? linkedOrder.id : linkedOrder
 
   return (

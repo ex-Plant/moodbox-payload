@@ -58,6 +58,7 @@ export const Orders: CollectionConfig = {
       label: 'Shopify',
       admin: {
         components: {
+          Field: '@/components/ShopifyLink',
           Cell: '@/components/ShopifyLink',
         },
       },
@@ -71,6 +72,7 @@ export const Orders: CollectionConfig = {
       },
       defaultValue: false,
       admin: {
+        hidden: true,
         components: {
           Cell: '@/components/BooleanCell',
         },

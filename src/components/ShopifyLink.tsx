@@ -6,11 +6,13 @@ import { useField } from '@payloadcms/ui'
 const SHOPIFY_BASE_URL = 'https://admin.shopify.com/store/moodboxpl/orders'
 
 const ShopifyLink: React.FC<DefaultCellComponentProps & { watchField?: string }> = (props) => {
-  const { cellData, watchField, rowData } = props
+  const { cellData, rowData } = props
 
-  // If watchField is provided, we are in an Edit View (Field context)
-  // Otherwise, we use cellData from the List View (Cell context)
-  const { value: fieldValue } = useField<string>({ path: watchField || '' })
+  // Detect context: cellData exists = list view, no cellData = edit view
+  const isEditMode = !cellData
+
+  // Only use useField in edit mode
+  const { value: fieldValue } = useField<string>({ path: isEditMode ? 'id' : '' })
 
   const data = cellData || fieldValue || rowData?.id
   if (!data) return null
@@ -18,7 +20,7 @@ const ShopifyLink: React.FC<DefaultCellComponentProps & { watchField?: string }>
   const link = `${SHOPIFY_BASE_URL}/${data}`
 
   return (
-    <div style={{ marginTop: watchField ? '8px' : 0 }}>
+    <div style={{ marginBottom: isEditMode ? '8px' : 0 }}>
       <a
         href={link}
         target="_blank"
