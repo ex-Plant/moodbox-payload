@@ -42,12 +42,12 @@ describe('API', () => {
     const order = await payload.create({
       collection: 'orders',
       data: {
-        orderId: orderId,
+        id: orderId,
         email: email,
         company_name: 'Test Company',
       },
     })
-    expect(order.id).toBeDefined()
+    expect(order.id).toBe(orderId)
     expect(order.hasSurvey).toBe(false)
 
     // 2. Create ScheduledEmail linked to Order
@@ -55,7 +55,6 @@ describe('API', () => {
       collection: 'scheduled-emails',
       data: {
         linkedOrder: order.id,
-        orderId: orderId,
         customerEmail: email,
         token: token,
         scheduledAt: new Date().toISOString(),

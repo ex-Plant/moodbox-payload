@@ -597,8 +597,7 @@ export interface Newsletter {
  */
 export interface ScheduledEmail {
   id: number;
-  linkedOrder: number | Order;
-  orderId: string;
+  linkedOrder: string | Order;
   customerEmail: string;
   scheduledAt: string;
   expiresAt: string;
@@ -614,8 +613,7 @@ export interface ScheduledEmail {
  * via the `definition` "orders".
  */
 export interface Order {
-  id: number;
-  orderId: string;
+  id: string;
   hasSurvey?: boolean | null;
   survey?: {
     docs?: (number | SurveyResponse)[];
@@ -642,8 +640,7 @@ export interface Order {
  */
 export interface SurveyResponse {
   id: number;
-  order: number | Order;
-  orderId: string;
+  order: string | Order;
   customer_email: string;
   completedAt: string;
   considered_brands?: string[] | null;
@@ -801,10 +798,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'scheduled-emails';
         value: number | ScheduledEmail;
-      } | null)
-    | ({
-        relationTo: 'orders';
-        value: number | Order;
       } | null)
     | ({
         relationTo: 'survey-responses';
@@ -1197,7 +1190,6 @@ export interface NewsletterSelect<T extends boolean = true> {
  */
 export interface ScheduledEmailsSelect<T extends boolean = true> {
   linkedOrder?: T;
-  orderId?: T;
   customerEmail?: T;
   scheduledAt?: T;
   expiresAt?: T;
@@ -1213,7 +1205,7 @@ export interface ScheduledEmailsSelect<T extends boolean = true> {
  * via the `definition` "orders_select".
  */
 export interface OrdersSelect<T extends boolean = true> {
-  orderId?: T;
+  id?: T;
   hasSurvey?: T;
   survey?: T;
   email?: T;
@@ -1236,7 +1228,6 @@ export interface OrdersSelect<T extends boolean = true> {
  */
 export interface SurveyResponsesSelect<T extends boolean = true> {
   order?: T;
-  orderId?: T;
   customer_email?: T;
   completedAt?: T;
   considered_brands?: T;
