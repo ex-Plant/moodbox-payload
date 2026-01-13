@@ -11,7 +11,7 @@ const COLUMNS = [
   {
     header: 'ID Zamówienia',
     key: 'order',
-    format: (val: number | Order) => (typeof val === 'object' ? val.orderId : val),
+    format: (val: string | Order) => (typeof val === 'object' ? val.id : val),
   },
   {
     header: 'Data ukończenia',

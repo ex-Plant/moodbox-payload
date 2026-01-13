@@ -17,7 +17,6 @@ export async function checkSurveyStatus(token: string) {
   // console.log('checkIfSurvetyCompleted.ts:17 - doc:', doc)
 
   return {
-    orderId: doc.orderId,
     linkedOrderDocId: doc.linkedOrder,
     docId: doc.id,
     isSurveyCompleted: doc.isSurveyCompleted,

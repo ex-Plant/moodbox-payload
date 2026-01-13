@@ -18,12 +18,13 @@ export default async function Ankieta({ params }: PropsT) {
   let surveyInfo
 
   try {
-    const { orderId, isSurveyCompleted } = await checkSurveyStatus(token)
+    const { linkedOrderDocId, isSurveyCompleted } = await checkSurveyStatus(token)
     surveyInfo = isSurveyCompleted
 
-    order = await getOrderById(orderId)
+    const shopifyGid = `gid://shopify/Order/${linkedOrderDocId}`
+    order = await getOrderById(shopifyGid)
     if (!order) {
-      console.error('Order not found:', orderId)
+      console.error('Order not found:', shopifyGid)
       notFound()
     }
   } catch (error) {
