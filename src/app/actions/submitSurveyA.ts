@@ -113,6 +113,7 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
     await payload.create({
       collection: 'survey-responses',
       data: submitData,
+      draft: false,
     })
 
     // Update Order to have survey flag
