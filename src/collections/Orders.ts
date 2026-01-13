@@ -38,7 +38,7 @@ export const Orders: CollectionConfig = {
       name: 'orderId',
       type: 'text',
       label: {
-        pl: 'Shopify link',
+        pl: 'Zamówienie w shopify',
         en: 'Shopify link',
       },
       required: true,
