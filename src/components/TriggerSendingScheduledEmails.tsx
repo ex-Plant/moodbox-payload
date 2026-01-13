@@ -2,13 +2,11 @@
 
 import { useState } from 'react'
 import { sendEmailsManually } from '@/lib/shopify/webhooks/sendScheduledEmail'
-import { ErrorMessage } from './ErrorMessage'
-import { Button, useSelection } from '@payloadcms/ui'
+import { Button, useSelection, toast } from '@payloadcms/ui'
 
 export default function TriggerSendingScheduledEmails() {
   const { selected } = useSelection()
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
+  const [isSyncing, setIsSyncing] = useState(false)
 
   const selectedIds = Array.from(selected.entries())
     .filter(([_, checked]) => checked)
@@ -17,30 +15,29 @@ export default function TriggerSendingScheduledEmails() {
   const selectedCount = selectedIds.length
 
   async function triggerSend() {
-    console.log('TriggerSendingScheduledEmails.tsx:24 - triggerSend 🍆:')
+    if (isSyncing) return
+    setIsSyncing(true)
+
+    const t = toast.info('Wysyłanie...')
     try {
-      setError(null)
-
       if (selectedCount === 0) throw new Error('Wybierz przynajmniej jedną wiadomość do wysłania')
-
       const results = await sendEmailsManually({ ids: selectedIds })
 
       console.log(`✅ ok`, {
         processed: results.length,
         details: results,
       })
-
-      setSuccess(true)
-      setTimeout(() => {
-        setSuccess(false)
-      }, 5000)
+      toast.success(`Wysłano`)
+      window.location.reload()
     } catch (e) {
       console.error(e)
-      setError(e instanceof Error ? e.message : 'Wystąpił błąd podczas wysyłania wiadomości')
+      toast.dismiss(t)
+      const message = e instanceof Error ? e.message : 'Wystąpił błąd podczas wysyłania wiadomości'
+      toast.error(message)
+    } finally {
+      setIsSyncing(false)
     }
   }
-
-  // console.log('TriggerSendingScheduledEmails.tsx:47 - selected:', selected)
 
   return (
     <div>
@@ -49,20 +46,6 @@ export default function TriggerSendingScheduledEmails() {
           ? `Wyślij do wybranych (${selectedCount})`
           : 'Wybierz wiadomości do wysłania'}
       </Button>
-
-      {error && <ErrorMessage message={error} />}
-
-      {success && (
-        <p
-          style={{
-            color: '#16a34a',
-            fontWeight: '500',
-            marginBottom: '8px',
-          }}
-        >
-          Wiadomości zostały wysłane
-        </p>
-      )}
 
       <div>
         {selectedCount === 0 && (
