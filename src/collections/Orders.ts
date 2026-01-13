@@ -1,4 +1,5 @@
 import { CollectionConfig } from 'payload'
+import { linkedInternalOrderField } from '@/fields/linkedInternalOrder'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
@@ -190,5 +191,6 @@ export const Orders: CollectionConfig = {
         readOnly: true,
       },
     },
+    linkedInternalOrderField,
   ],
 }

@@ -598,6 +598,7 @@ export interface Newsletter {
 export interface ScheduledEmail {
   id: number;
   linkedOrder: string | Order;
+  linkedInternalOrder?: string | null;
   customerEmail: string;
   scheduledAt: string;
   expiresAt: string;
@@ -631,6 +632,7 @@ export interface Order {
   project_budget?: string | null;
   nip?: string | null;
   website?: string | null;
+  linkedInternalOrder?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -641,6 +643,7 @@ export interface Order {
 export interface SurveyResponse {
   id: number;
   order: string | Order;
+  linkedInternalOrder?: string | null;
   customer_email: string;
   completedAt: string;
   considered_brands?: string[] | null;
@@ -1190,6 +1193,7 @@ export interface NewsletterSelect<T extends boolean = true> {
  */
 export interface ScheduledEmailsSelect<T extends boolean = true> {
   linkedOrder?: T;
+  linkedInternalOrder?: T;
   customerEmail?: T;
   scheduledAt?: T;
   expiresAt?: T;
@@ -1219,6 +1223,7 @@ export interface OrdersSelect<T extends boolean = true> {
   project_budget?: T;
   nip?: T;
   website?: T;
+  linkedInternalOrder?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1228,6 +1233,7 @@ export interface OrdersSelect<T extends boolean = true> {
  */
 export interface SurveyResponsesSelect<T extends boolean = true> {
   order?: T;
+  linkedInternalOrder?: T;
   customer_email?: T;
   completedAt?: T;
   considered_brands?: T;
