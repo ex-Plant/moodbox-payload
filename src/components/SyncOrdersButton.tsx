@@ -32,6 +32,7 @@ export default function SyncOrdersButton() {
     }
   }
 
+  //todo hide this
   return (
     <div>
       <Button onClick={handleSync} disabled={isSyncing} buttonStyle="secondary">
