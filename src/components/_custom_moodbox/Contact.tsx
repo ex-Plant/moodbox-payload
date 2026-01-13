@@ -14,6 +14,7 @@ export default function Contact() {
     defaultValues: {
       message: '',
       subject: '',
+      email: '',
     },
     validators: {
       onSubmit: contactSchema,
@@ -61,6 +62,15 @@ export default function Contact() {
               showError={true}
               className={`placeholder:text-muted-foreground min-h-[200px] px-4`}
               placeholder={'Treść wiadomości'}
+            />
+          )}
+        </form.AppField>
+        <form.AppField name="email">
+          {(field) => (
+            <field.Input
+              showError={true}
+              placeholder={'Twój email'}
+              className={`border-none placeholder:text-muted-foreground`}
             />
           )}
         </form.AppField>
