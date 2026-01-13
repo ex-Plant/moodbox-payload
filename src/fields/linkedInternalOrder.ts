@@ -8,12 +8,11 @@ export const linkedInternalOrderField: Field = {
   },
   type: 'text',
   required: false,
-  unique: true,
   admin: {
     readOnly: true,
     components: {
       Cell: {
-        path: '@/components/LinkCell',
+        path: '@/components/LinkOrderCell',
         clientProps: {
           href: '/admin/collections/orders',
           label: 'id',

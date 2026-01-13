@@ -20,9 +20,10 @@ import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } f
 import { FolderField as FolderField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { default as default_88d798bacc10e8afea43d170a96dfd12 } from '@/components/ExportCSV'
 import { default as default_abd519ff56b9c6a0eb74fc29608ad800 } from '@/components/ShopifyLink'
-import { default as default_170f827aeff43d47882b5e05b4d645b7 } from '@/components/LinkCell'
+import { default as default_f2c537d231e58beb86164a1ca68ce6e0 } from '@/components/LinkOrderCell'
 import { default as default_bc731314ef959acc737b594781404a73 } from '@/components/BooleanCell'
 import { default as default_25fbd7e6c04c81a4651c82b23f2d2b8b } from '@/components/TriggerSendingScheduledEmails'
+import { default as default_caaabe5f62ee0a95ddf4429df4bc4964 } from '@/components/SurveyLinkCell'
 import { default as default_01c46bbcd84bd69ce5e218a8768f265b } from '@/components/SyncOrdersButton'
 import { default as default_e700f4df825d9111186b12e60c4d1658 } from '@/components/ListCell'
 import { default as default_877e155e2d6063e5f6db43d4a226e851 } from '@/components/RejectionSummaryCell'
@@ -73,9 +74,10 @@ export const importMap = {
   '@payloadcms/ui/rsc#FolderField': FolderField_ab83ff7e88da8d3530831f296ec4756a,
   '@/components/ExportCSV#default': default_88d798bacc10e8afea43d170a96dfd12,
   '@/components/ShopifyLink#default': default_abd519ff56b9c6a0eb74fc29608ad800,
-  '@/components/LinkCell#default': default_170f827aeff43d47882b5e05b4d645b7,
+  '@/components/LinkOrderCell#default': default_f2c537d231e58beb86164a1ca68ce6e0,
   '@/components/BooleanCell#default': default_bc731314ef959acc737b594781404a73,
   '@/components/TriggerSendingScheduledEmails#default': default_25fbd7e6c04c81a4651c82b23f2d2b8b,
+  '@/components/SurveyLinkCell#default': default_caaabe5f62ee0a95ddf4429df4bc4964,
   '@/components/SyncOrdersButton#default': default_01c46bbcd84bd69ce5e218a8768f265b,
   '@/components/ListCell#default': default_e700f4df825d9111186b12e60c4d1658,
   '@/components/RejectionSummaryCell#default': default_877e155e2d6063e5f6db43d4a226e851,
