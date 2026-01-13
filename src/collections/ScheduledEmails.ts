@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { authenticated } from '../access/authenticated'
+import { linkedInternalOrderField } from '@/fields/linkedInternalOrder'
 
 export const ScheduledEmails: CollectionConfig = {
   slug: 'scheduled-emails',
@@ -44,6 +45,7 @@ export const ScheduledEmails: CollectionConfig = {
         },
       },
     },
+    linkedInternalOrderField,
     {
       name: 'customerEmail',
       type: 'email',

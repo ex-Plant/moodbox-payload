@@ -1,4 +1,5 @@
 import { CollectionConfig } from 'payload'
+import { linkedInternalOrderField } from '@/fields/linkedInternalOrder'
 
 export const SurveyResponses: CollectionConfig = {
   slug: 'survey-responses',
@@ -44,7 +45,7 @@ export const SurveyResponses: CollectionConfig = {
     {
       name: 'order',
       label: {
-        pl: 'Zamówienie',
+        pl: 'Link do Shopify',
         en: 'Order',
       },
       type: 'relationship',
@@ -58,6 +59,7 @@ export const SurveyResponses: CollectionConfig = {
         },
       },
     },
+    linkedInternalOrderField,
     {
       name: 'customer_email',
       type: 'email',
