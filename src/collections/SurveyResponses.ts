@@ -65,6 +65,31 @@ export const SurveyResponses: CollectionConfig = {
       },
     },
     {
+      name: 'orderId',
+      type: 'text',
+      label: {
+        pl: 'Zamówienie w shopify',
+        en: 'Shopify link',
+      },
+      required: true,
+      unique: true,
+      index: true,
+      admin: {
+        readOnly: true,
+        components: {
+          Cell: '@/components/ShopifyLink',
+          afterInput: [
+            {
+              path: '@/components/ShopifyLink',
+              clientProps: {
+                watchField: 'orderId',
+              },
+            },
+          ],
+        },
+      },
+    },
+    {
       name: 'customer_email',
       type: 'email',
       label: {

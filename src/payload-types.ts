@@ -643,6 +643,7 @@ export interface Order {
 export interface SurveyResponse {
   id: number;
   order: number | Order;
+  orderId: string;
   customer_email: string;
   completedAt: string;
   considered_brands?: string[] | null;
@@ -1235,6 +1236,7 @@ export interface OrdersSelect<T extends boolean = true> {
  */
 export interface SurveyResponsesSelect<T extends boolean = true> {
   order?: T;
+  orderId?: T;
   customer_email?: T;
   completedAt?: T;
   considered_brands?: T;

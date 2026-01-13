@@ -54,7 +54,7 @@ export const ScheduledEmails: CollectionConfig = {
       name: 'orderId',
       type: 'text',
       label: {
-        pl: 'Zamówienie w shopify',
+        pl: 'ID zamówienia',
         en: 'Order ID',
       },
       required: true,

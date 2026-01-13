@@ -115,6 +115,57 @@ export const GET_ORDER_BY_ID_QUERY = `
   }
 `
 
+export const GET_ALL_ORDERS_QUERY = `
+  query GetAllOrders($first: Int!, $after: String) {
+    orders(first: $first, after: $after, query: "status:any", reverse: true) {
+      edges {
+        cursor
+        node {
+          id
+          name
+          email
+          createdAt
+          updatedAt
+          noteAttributes {
+            name
+            value
+          }
+          customer {
+            id
+            email
+            firstName
+            lastName
+          }
+          lineItems(first: 50) {
+            edges {
+              node {
+                name
+                quantity
+                product {
+                  title
+                  handle
+                  metafield(namespace: "custom", key: "brand") {
+                    key
+                    value
+                  }
+                }
+              }
+            }
+          }
+          fulfillments(first: 10) {
+            createdAt
+            displayStatus
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`
+
 export const CREATE_DISCOUNT_CODE_MUTATION = `
   mutation discountCodeBasicCreate($basicCodeDiscount: DiscountCodeBasicInput!) {
     discountCodeBasicCreate(basicCodeDiscount: $basicCodeDiscount) {
