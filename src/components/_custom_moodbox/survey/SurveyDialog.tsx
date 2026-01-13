@@ -38,7 +38,7 @@ export default function SurveyDialog({
           </DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <div className={`flex flex-col items-center justify-center text-xl  gap-2`}>
+        <div className={`flex flex-col items-center justify-center text-lg  gap-2`}>
           <p className={`text-center`}>{UI_MESSAGES.YOUR_CODE_IS}</p>
           <p className={`text-center`}>{discountCode} </p>
           <p className={`text-center`}>{UI_MESSAGES.SAME_CODE_IN_EMAIL}</p>
