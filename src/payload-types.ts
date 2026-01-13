@@ -632,7 +632,6 @@ export interface Order {
   project_budget?: string | null;
   nip?: string | null;
   website?: string | null;
-  linkedInternalOrder?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1223,7 +1222,6 @@ export interface OrdersSelect<T extends boolean = true> {
   project_budget?: T;
   nip?: T;
   website?: T;
-  linkedInternalOrder?: T;
   updatedAt?: T;
   createdAt?: T;
 }

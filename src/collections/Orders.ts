@@ -191,6 +191,5 @@ export const Orders: CollectionConfig = {
         readOnly: true,
       },
     },
-    linkedInternalOrderField,
   ],
 }
