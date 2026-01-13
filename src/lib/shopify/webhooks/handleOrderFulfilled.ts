@@ -5,15 +5,16 @@ import configPromise from '@payload-config'
 import { createFutureDate } from '../../../utilities/createFutureDate'
 import { generateHexToken } from '../../../utilities/generateTokenString'
 type ShopifyOrderWebhookBodyT = {
+  id?: number
   email?: string
   admin_graphql_api_id?: string
 }
 export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null): Promise<void> {
-  const id = data?.admin_graphql_api_id
+  const shopifyId = String(data?.id)
   const email = data?.email
   // console.log('Webhook data:', data)
 
-  if (!id) {
+  if (!shopifyId || shopifyId === 'undefined') {
     console.error('No order ID provided')
     throw new Error('No order ID found in webhook data')
   }
@@ -26,30 +27,32 @@ export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null
   const payload = await getPayload({ config: configPromise })
 
   // Find Order
-  const orders = await payload.find({
-    collection: 'orders',
-    where: { orderId: { equals: id } },
-    limit: 1,
-  })
+  const orderDoc = await payload
+    .findByID({
+      collection: 'orders',
+      id: shopifyId,
+    })
+    .catch(() => null)
 
-  if (orders.totalDocs === 0) {
-    console.error('Order not found in DB:', id)
-    throw new Error(`Order ${id} not found in database.`)
+  if (!orderDoc) {
+    console.error('Order not found in DB:', shopifyId)
+    throw new Error(`Order ${shopifyId} not found in database.`)
   }
-
-  const orderDoc = orders.docs[0]
 
   // Idempotency: avoid duplicate scheduled records for same order
   const existing = await payload.find({
     collection: 'scheduled-emails',
     limit: 1,
     where: {
-      and: [{ orderId: { equals: id } }, { emailType: { equals: 'post_purchase_questions' } }],
+      and: [
+        { linkedOrder: { equals: shopifyId } },
+        { emailType: { equals: 'post_purchase_questions' } },
+      ],
     },
   })
 
   if (existing.totalDocs > 0) {
-    console.log('Skipping - scheduled email already exists for order:', id)
+    console.log('Skipping - scheduled email already exists for order:', shopifyId)
     return
   }
 
@@ -59,8 +62,7 @@ export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null
   await payload.create({
     collection: 'scheduled-emails',
     data: {
-      linkedOrder: orderDoc.id,
-      orderId: id,
+      linkedOrder: shopifyId,
       customerEmail: email,
       scheduledAt: createFutureDate({ daysFromNow: 0 }).toISOString(),
       expiresAt: createFutureDate({ daysFromNow: 7 }).toISOString(),
@@ -69,5 +71,5 @@ export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null
       token,
     },
   })
-  console.log(` ✅ shopify order id: ${id} -> fullfiled `)
+  console.log(` ✅ shopify order id: ${shopifyId} -> fullfiled `)
 }
