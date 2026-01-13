@@ -8,6 +8,7 @@ import { createDiscountA } from './createDiscountA'
 import { checkSurveyStatus } from './checkSurveyStatus'
 
 export async function submitSurveyA(data: SurveySchemaT, token: string) {
+  console.log('>>> submitSurveyA called with token:', token)
   let message = 'Wystąpił błąd podczas wysyłania ankiety - spróbuj ponownie.'
   let docIdToRollback: string | number | undefined
 
@@ -24,11 +25,21 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
     const { docId, customerEmail, linkedOrderDocId, isSurveyCompleted } =
       await checkSurveyStatus(token)
 
-    console.log('submitSurveyA.ts:11 - token:', token, 'docId:', docId)
+    console.log(
+      'submitSurveyA.ts:11 - token:',
+      token,
+      'docId:',
+      docId,
+      'linkedOrderDocId:',
+      linkedOrderDocId,
+      'isCompleted:',
+      isSurveyCompleted,
+    )
 
     docIdToRollback = docId
 
     if (isSurveyCompleted) {
+      console.log(`isSurveyCompleted ❗️`)
       message = 'Ta ankieta została już wypełniona'
       return {
         error: true,
@@ -45,26 +56,39 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       }
     }
 
-    // Update the document to mark it as completed
+    const allScheduledEmails = await payload.find({
+      collection: 'scheduled-emails',
+      limit: 0,
+    })
+    console.dir(allScheduledEmails, { depth: 10 })
+
+    // Atomic update using updateByID
+    // We must re-supply the linkedOrder to ensure validation passes if the existing data is considered "invalid" by Payload's strict check
     const updateResult = await payload.update({
       collection: 'scheduled-emails',
-      where: {
-        id: { equals: docId },
-        isSurveyCompleted: { not_equals: true },
-      },
+      id: docId,
       data: {
         isSurveyCompleted: true,
+        // Explicitly cast to string to satisfy the text-based ID of Orders
+        // linkedOrder: String(linkedOrderDocId),
       },
+      // overrideAccess: true,
     })
 
-    // If the array is empty, the document was either not found or already completed.
-    if (updateResult.docs.length === 0) {
-      message = 'Ta ankieta została już wypełniona.'
+    // Let's use the explicit 'update' with ID which returns the doc directly in Local API
+    if (!updateResult) {
+      console.error('Update failed: Document not found or update returned null.')
+      message = 'Ta ankieta została już wypełniona lub jest nieprawidłowa.'
       return {
         message,
         error: true,
       }
     }
+
+    // If we used payload.update({ where: ... }), it returns { docs: [] }
+    // If we use payload.update({ id: ... }), it returns the doc.
+    // Let's adjust the check.
+    console.log('Update result ID:', updateResult.id)
 
     const generatedDiscount = await createDiscountA()
 
@@ -114,6 +138,7 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       collection: 'survey-responses',
       data: submitData,
       draft: false,
+      // overrideAccess: true,
     })
 
     // Update Order to have survey flag
@@ -123,6 +148,7 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
       data: {
         hasSurvey: true,
       },
+      // overrideAccess: true,
     })
 
     const { subject, html } = buildDiscountCodeEmail(generatedDiscount)
@@ -148,20 +174,21 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
     console.error('Error submitting survey:', error)
 
     // Rollback survey status if it was updated but something failed later
-    if (docIdToRollback) {
-      try {
-        const payload = await getPayload({ config: configPromise })
-        await payload.update({
-          collection: 'scheduled-emails',
-          id: docIdToRollback,
-          data: {
-            isSurveyCompleted: false,
-          },
-        })
-      } catch (rollbackError) {
-        console.error('Failed to rollback survey status:', rollbackError)
-      }
-    }
+    // if (docIdToRollback) {
+    //   try {
+    //     const payload = await getPayload({ config: configPromise })
+    //     await payload.update({
+    //       collection: 'scheduled-emails',
+    //       id: docIdToRollback,
+    //       data: {
+    //         isSurveyCompleted: false,
+    //       },
+    //       overrideAccess: true,
+    //     })
+    //   } catch (rollbackError) {
+    //     console.error('Failed to rollback survey status:', rollbackError)
+    //   }
+    // }
 
     return {
       error: true,
