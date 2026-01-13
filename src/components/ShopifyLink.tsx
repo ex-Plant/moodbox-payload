@@ -20,7 +20,7 @@ const ShopifyLink: React.FC<DefaultCellComponentProps & { watchField?: string }>
   const link = `${SHOPIFY_BASE_URL}/${id}`
 
   return (
-    <div style={{ marginTop: watchField ? '4px' : 0 }}>
+    <div style={{ marginTop: watchField ? '8px' : 0 }}>
       <a href={link} target="_blank" rel="noopener noreferrer" className="relationship-cell">
         {link}
       </a>

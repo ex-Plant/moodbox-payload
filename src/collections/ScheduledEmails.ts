@@ -31,13 +31,14 @@ export const ScheduledEmails: CollectionConfig = {
       name: 'linkedOrder',
       type: 'relationship',
       label: {
-        pl: 'Zamówienie',
+        pl: 'Połączone zamówienie',
         en: 'Order',
       },
       relationTo: 'orders',
       required: true,
       unique: true,
       admin: {
+        readOnly: true,
         components: {
           Cell: {
             path: '@/components/LinkCell',
@@ -88,7 +89,7 @@ export const ScheduledEmails: CollectionConfig = {
       name: 'scheduledAt',
       type: 'date',
       label: {
-        pl: 'Zaplanowane na',
+        pl: 'Wysyłka zaplanowana na',
         en: 'Scheduled At',
       },
       required: true,
@@ -166,6 +167,9 @@ export const ScheduledEmails: CollectionConfig = {
       defaultValue: false,
       admin: {
         readOnly: true,
+        components: {
+          Cell: '@/components/BooleanCell',
+        },
       },
     },
   ],

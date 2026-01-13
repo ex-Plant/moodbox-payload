@@ -52,6 +52,7 @@ export const SurveyResponses: CollectionConfig = {
       required: true,
       unique: true,
       admin: {
+        readOnly: true,
         components: {
           Cell: {
             path: '@/components/LinkCell',
@@ -71,18 +72,25 @@ export const SurveyResponses: CollectionConfig = {
         en: 'Customer Email',
       },
       required: true,
+      admin: {
+        readOnly: true,
+      },
     },
     {
       name: 'completedAt',
       type: 'date',
       label: 'Completed At',
       required: true,
+      admin: {
+        readOnly: true,
+      },
     },
     {
       name: 'considered_brands',
       type: 'text',
       hasMany: true,
       admin: {
+        readOnly: true,
         components: {
           Cell: '@/components/ListCell',
         },
@@ -96,6 +104,7 @@ export const SurveyResponses: CollectionConfig = {
       name: 'rejected_brand',
       type: 'text',
       admin: {
+        readOnly: true,
         components: {
           Cell: '@/components/RejectionSummaryCell',
         },
@@ -109,6 +118,7 @@ export const SurveyResponses: CollectionConfig = {
       name: 'brand_evaluations',
       type: 'array',
       admin: {
+        readOnly: true,
         initCollapsed: true,
         components: {
           Cell: '@/components/BrandEvaluationsCell',
@@ -151,6 +161,7 @@ export const SurveyResponses: CollectionConfig = {
       type: 'text',
       hasMany: true,
       admin: {
+        readOnly: true,
         hidden: true,
         components: {
           Cell: '@/components/ListCell',
@@ -165,6 +176,7 @@ export const SurveyResponses: CollectionConfig = {
       name: 'rejection_other',
       type: 'text',
       admin: {
+        readOnly: true,
         hidden: true,
       },
       label: {
@@ -176,6 +188,7 @@ export const SurveyResponses: CollectionConfig = {
       name: 'contact_request',
       type: 'checkbox',
       admin: {
+        readOnly: true,
         components: {
           Cell: '@/components/BooleanCell',
         },
@@ -191,6 +204,7 @@ export const SurveyResponses: CollectionConfig = {
       type: 'text',
       hasMany: true,
       admin: {
+        readOnly: true,
         components: {
           Cell: '@/components/ListCell',
         },
@@ -207,11 +221,15 @@ export const SurveyResponses: CollectionConfig = {
         pl: 'Brakujące marki',
         en: 'Missing Brands',
       },
+      admin: {
+        readOnly: true,
+      },
     },
     {
       name: 'improvement_suggestion',
       type: 'textarea',
       admin: {
+        readOnly: true,
         components: {
           Cell: '@/components/LongTextCell',
         },

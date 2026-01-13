@@ -72,6 +72,7 @@ describe('API', () => {
       brand_evaluations: {
         'Brand A': {
           rating: 5,
+          reasons: ['quality', 'price'],
         },
       },
       contact_request: false,
