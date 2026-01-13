@@ -122,12 +122,13 @@ export const GET_ALL_ORDERS_QUERY = `
         cursor
         node {
           id
+          legacyResourceId
           name
           email
           createdAt
           updatedAt
-          noteAttributes {
-            name
+          customAttributes {
+            key
             value
           }
           customer {
