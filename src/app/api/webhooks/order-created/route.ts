@@ -49,19 +49,19 @@ async function handleOrderCreate(order: ShopifyOrder) {
   )
   console.log('order:', order)
   const email = order.email
-  const orderId = order.admin_graphql_api_id
+  const shopifyId = String(order.id)
 
   if (!email) {
     console.warn('⚠️ Webhook skipped: No email  found in order.')
     return
   }
 
-  if (!orderId) {
-    console.warn('⚠️ Webhook skipped:  or orderId found in order.')
+  if (!shopifyId) {
+    console.warn('⚠️ Webhook skipped: No id found in order.')
     return
   }
 
-  const orderData: Record<string, unknown> = { email, orderId }
+  const orderData: Record<string, unknown> = { email }
 
   for (const [payloadKey, shopifyKey] of Object.entries(ATTRIBUTE_KEY_PL)) {
     if (payloadKey === 'email') continue
@@ -71,38 +71,39 @@ async function handleOrderCreate(order: ShopifyOrder) {
     }
   }
 
-  console.log(`Processing Order: ${orderId} for ${email}`)
+  console.log(`Processing Order: ${shopifyId} for ${email}`)
 
   try {
-    const existingOrders = await payload.find({
-      collection: 'orders',
-      where: {
-        orderId: { equals: orderId },
-      },
-      limit: 1,
-    })
+    const existingOrder = await payload
+      .findByID({
+        collection: 'orders',
+        id: shopifyId,
+      })
+      .catch(() => null)
 
-    if (existingOrders.totalDocs > 0) {
-      const existingId = existingOrders.docs[0].id
+    if (existingOrder) {
       await payload.update({
         collection: 'orders',
-        id: existingId,
+        id: shopifyId,
         data: orderData,
       })
-      console.log(`✅ Order updated: ${existingId}`)
+      console.log(`✅ Order updated: ${shopifyId}`)
     } else {
       await payload.create({
         collection: 'orders',
-        data: orderData as unknown as Order,
+        data: {
+          ...orderData,
+          id: shopifyId,
+        } as unknown as Order,
       })
-      console.log(`✅ New order created`)
+      console.log(`✅ New order created: ${shopifyId}`)
     }
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : String(error)
     if (errorMessage.includes('unique')) {
       console.log('ℹ️ Race condition hit: Order was created by another process. Skipping.')
     } else {
-      console.error(`❌ Error saving order ${orderId}:`, error)
+      console.error(`❌ Error saving order ${shopifyId}:`, error)
       throw error
     }
   }
