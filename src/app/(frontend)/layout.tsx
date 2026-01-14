@@ -4,7 +4,7 @@ import { cn } from '@/utilities/ui'
 import { Inclusive_Sans } from 'next/font/google'
 import React from 'react'
 
-import { Header } from '@/Header/Component'
+import { Header } from '@/components/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
