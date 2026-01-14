@@ -1,13 +1,14 @@
 'use client'
 
-import { formContext, useAppForm } from '@/lib/hooks/tenStackFormHooks'
-import { surveySchema } from '@/lib/SurveySchema'
-import useSurveyForm from '@/lib/hooks/useSurveyForm'
-import { useStore } from '@tanstack/react-form'
-import { Button } from '@/components/ui/button'
-import { useEffect, useRef, useState } from 'react'
-import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import { submitSurveyA } from '@/app/actions/submitSurveyA'
+import { formContext, useAppForm } from '@/lib/hooks/tenStackFormHooks'
+import useSurveyForm from '@/lib/hooks/useSurveyForm'
+import { surveySchema } from '@/lib/SurveySchema'
+import { toastMessage, ToastType } from '@/lib/toasts/toasts'
+import { useStore } from '@tanstack/react-form'
+import { useEffect, useRef, useState } from 'react'
+import FixedLoader from '../FixedLoader'
+import SurveyDialog from './SurveyDialog'
 import SurveyHeader from './SurveyHeader'
 import SurveyQ1 from './SurveyQ1'
 import SurveyQ2 from './SurveyQ2'
@@ -17,11 +18,9 @@ import SurveyQ5 from './SurveyQ5'
 import SurveyQ6 from './SurveyQ6'
 import SurveyQ7 from './SurveyQ7'
 import SurveyQ8 from './SurveyQ8'
-import SurveyDialog from './SurveyDialog'
 import SurveyStepWrapper from './SurveyStepWrapper'
-import { UI_MESSAGES } from './survey_constants'
-import SurveyCheckbox from './SurveyCheckbox'
-import FixedLoader from '../FixedLoader'
+import useCheckFormErrors from '../../../lib/hooks/useCheckFormErrors'
+import SurveyFooter from './SurveyFooter'
 
 type SurveyFormProps = {
   availableBrands: string[]
@@ -33,12 +32,10 @@ export default function SurveyForm({
   customerName,
   token,
 }: SurveyFormProps & { token: string }) {
-  const { formData, currentStep, setStep, updateFormData, resetFormData } = useSurveyForm()
+  const { formData, currentStep, updateFormData, resetFormData } = useSurveyForm()
 
   const [surveyDialogOpen, setSurveyDialogOpen] = useState(false)
   const [discountCode, setDiscountCode] = useState('')
-
-  const [termsAccepted, setTermsAccepted] = useState(false)
 
   const form = useAppForm({
     defaultValues: formData,
@@ -58,17 +55,7 @@ export default function SurveyForm({
 
   const formValues = useStore(form.store, (state) => state.values)
   const isSubmitting = useStore(form.store, (s) => s.isSubmitting)
-  const submissionAttempts = useStore(form.store, (s) => s.submissionAttempts)
-  const isFormValid = useStore(
-    form.store,
-    (state) => !state.isValidating && Object.keys(state.errors || {}).length === 0,
-  )
-  const hasFieldErrors = useStore(form.store, (state) =>
-    Object.values(state.fieldMeta).some((meta) => meta.errors.length > 0),
-  )
-  const isInvalid = submissionAttempts > 0 && (!isFormValid || hasFieldErrors)
 
-  const consideredBrands = formValues.considered_brands
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
@@ -82,36 +69,7 @@ export default function SurveyForm({
     }
   }, [formValues, updateFormData])
 
-  // useEffect(() => {
-  //   // 1. Check form-level errors (usually from the schema validator)
-  //   if (form.state.errors.length > 0) {
-  //     console.group('🚫 Form Validation Errors')
-  //     console.table(form.state.errors)
-  //     console.groupEnd()
-  //   }
-
-  //   // 2. Check field-specific errors
-  //   const fieldsWithErrors = Object.entries(form.state.fieldMeta)
-  //     .filter(([_, meta]) => meta.errors.length > 0)
-  //     .map(([name, meta]) => ({
-  //       field: name,
-  //       errors: meta.errors.map((e) => (typeof e === 'object' ? e?.message : e)),
-  //     }))
-
-  //   if (fieldsWithErrors.length > 0) {
-  //     console.group('⚠️ Field Validation Errors')
-  //     console.table(fieldsWithErrors)
-  //     console.groupEnd()
-  //   }
-  // }, [form.state.errors, form.state.fieldMeta])
-
-  function nextStep() {
-    if (consideredBrands.length < 1) {
-      toastMessage(UI_MESSAGES.SELECT_AT_LEAST_ONE_BRAND, ToastType.Info)
-      return
-    }
-    if (currentStep < 3) setStep(currentStep + 1)
-  }
+  useCheckFormErrors(form)
 
   return (
     <>
@@ -145,32 +103,7 @@ export default function SurveyForm({
               <SurveyQ8 />
             </SurveyStepWrapper>
           )}
-
-          <div className={`flex flex-col items-end w-full `}>
-            {currentStep < 3 && (
-              <Button className={``} type="button" variant="mood" onClick={nextStep}>
-                {UI_MESSAGES.NEXT_STEP}
-              </Button>
-            )}
-            {currentStep === 3 && (
-              <div>
-                <SurveyCheckbox
-                  id="terms-acceptance"
-                  checked={termsAccepted}
-                  onCheckedChange={setTermsAccepted}
-                  label={UI_MESSAGES.TERMS_ACCEPTANCE_TEXT}
-                />
-                <Button disabled={!termsAccepted} className={`mt-8`} type="submit" variant="mood">
-                  {UI_MESSAGES.SEND_SURVEY}
-                </Button>
-                {isInvalid && (
-                  <p className="mt-2 text-sm text-destructive font-medium ">
-                    {UI_MESSAGES.FIX_ERRORS_BEFORE_SENDING}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
+          <SurveyFooter />
         </form>
       </formContext.Provider>
       <SurveyDialog
