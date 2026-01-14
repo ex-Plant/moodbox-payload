@@ -18,8 +18,8 @@ export default function NavItem({ className, isOnTop, animationDuration, item, i
   return (
     <Link
       className={cn(
-        `pointer-events-auto col-span-1 text-right`,
-        isOnTop ? 'opacity-100' : 'opacity-0',
+        `col-span-1 text-right`,
+        isOnTop ? 'opacity-100 pointer-events-auto ' : 'opacity-0 pointer-events-none',
         isHome ? ' text-white' : 'text-mood-dark-gray ',
         animationDuration,
         className,
@@ -29,7 +29,7 @@ export default function NavItem({ className, isOnTop, animationDuration, item, i
     >
       <span
         className={cn(
-          `border-b border-transparent delay-200pb-0.5`,
+          `border-b border-transparent delay-200 pb-0.5`,
           isHome ? '  hover:border-white ' : ' hover:border-mood-dark-gray  ',
           animationDuration,
         )}

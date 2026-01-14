@@ -27,18 +27,17 @@ export default function Nav({ headerData }: { headerData: Header }) {
   }, [])
 
   return (
-    <nav
-      className={`xPaddings pointer-events-none fixed top-0 right-0 left-0 z-10 mx-auto max-w-[1440px]`}
-    >
+    <nav className={`xPaddings fixed top-0 right-0 left-0 z-10 mx-auto max-w-[1440px]`}>
       <div
         className={cn(
-          `relative flex  items-center justify-between border-b`,
+          `relative flex items-center justify-between border-b`,
           isOnTop ? 'border-background h-16 xl:h-20' : 'h-14 border-transparent',
           animDuration,
         )}
       >
-        <Link className={`pointer-events-auto col-span-3`} href={'/'}>
-          <div
+        <div className={`pointer-events-auto col-span-3`}>
+          <Link
+            href="/"
             className={cn(
               `absolute top-0 bottom-0 left-0 flex items-center`,
               isOnTop ? `translate-x-0 opacity-100` : `translate-x-[-50vw] opacity-0`,
@@ -46,17 +45,17 @@ export default function Nav({ headerData }: { headerData: Header }) {
             )}
           >
             <LogoText />
-          </div>
+          </Link>
           <div
             className={cn(
-              `bg-background pointer-events-none fixed top-0 right-0 left-0 flex h-14 items-center justify-center`,
-              isOnTop ? `opacity-0` : `opacity-100`,
+              `bg-background fixed top-0 right-0 left-0 flex h-14 items-center justify-center`,
+              isOnTop ? `opacity-0 pointer-events-none` : `opacity-100 pointer-events-auto`,
               animDuration,
             )}
           >
             <ScrollToTopContainer
               className={cn(
-                `h-10`,
+                `h-10 w-10`,
                 isOnTop ? `translate-y-[-200px] rotate-180` : `translate-y-0 rotate-0`,
                 animDuration,
               )}
@@ -64,7 +63,7 @@ export default function Nav({ headerData }: { headerData: Header }) {
               <LogoMoodboxSvg />
             </ScrollToTopContainer>
           </div>
-        </Link>
+        </div>
         <div className="flex items-center gap-8">
           {headerData.navItems?.map((item) => (
             <NavItem
