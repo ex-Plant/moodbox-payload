@@ -8,8 +8,10 @@ import { cn } from '@/utilities/ui'
 import { Header } from '@/payload-types'
 import LogoMoodboxSvg from '../common/LogoMoodboxSvg'
 import ScrollToTopContainer from '../common/ScrollToTopContainer'
+import { usePathname } from 'next/navigation'
 export default function Nav({ headerData }: { headerData: Header }) {
   const [isOnTop, setIsOnTop] = useState(true)
+  const isHome = usePathname() === '/'
 
   const animDuration = 'duration-200'
 
@@ -71,6 +73,7 @@ export default function Nav({ headerData }: { headerData: Header }) {
               item={item}
               isOnTop={isOnTop}
               animationDuration={animDuration}
+              isHome={isHome}
             />
           ))}
         </div>
