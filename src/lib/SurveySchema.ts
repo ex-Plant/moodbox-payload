@@ -35,7 +35,7 @@ export const surveySchema = z
   })
   .superRefine((data, ctx) => {
     // Ensure rejection_reasons is required if a brand is rejected
-    if (data.rejected_brand && data.rejected_brand !== 'none') {
+    if (data.rejected_brand && data.rejected_brand !== 'Brak') {
       if (!data.rejection_reasons || data.rejection_reasons.length === 0) {
         ctx.addIssue({
           code: 'custom',

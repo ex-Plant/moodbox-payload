@@ -4,7 +4,7 @@ import { submitSurveyA } from '@/app/actions/submitSurveyA'
 import { formContext, useAppForm } from '@/lib/hooks/tenStackFormHooks'
 import useSurveyForm from '@/lib/hooks/useSurveyForm'
 import { surveySchema } from '@/lib/SurveySchema'
-import { toastMessage, ToastType } from '@/lib/toasts/toasts'
+import { toastMessage, ToastPosition, ToastType } from '@/lib/toasts/toasts'
 import { useStore } from '@tanstack/react-form'
 import { useEffect, useRef, useState } from 'react'
 import FixedLoader from '../FixedLoader'
@@ -45,7 +45,8 @@ export default function SurveyForm({
 
     onSubmit: async (data) => {
       const res = await submitSurveyA(data.value, token)
-      if (res.error) return toastMessage(res.message, ToastType.Error)
+      if (res.error)
+        return toastMessage(res.message, ToastType.Error, ToastPosition.BottomCenter, 10000)
 
       setDiscountCode(res.generatedDiscount ?? '')
       setSurveyDialogOpen(true)

@@ -34,7 +34,6 @@ export async function createDiscountA() {
     console.log(UI_MESSAGES.DISCOUNT_SUCCESS_MESSAGE, result.discountId)
     return code
   } else {
-    console.log(UI_MESSAGES.DISCOUNT_FAILURE_MESSAGE, result.errors)
-    return null
+    throw new Error(UI_MESSAGES.DISCOUNT_FAILURE_MESSAGE)
   }
 }

@@ -99,8 +99,8 @@ export const UI_MESSAGES = {
 
   // Discount related
   WELCOME_DISCOUNT_TITLE: 'Welcome Discount',
-  DISCOUNT_SUCCESS_MESSAGE: 'Discount created successfully:',
-  DISCOUNT_FAILURE_MESSAGE: 'Failed to create discount:',
+  DISCOUNT_SUCCESS_MESSAGE: 'Kod rabatowy został wygenerowany pomyślnie:',
+  DISCOUNT_FAILURE_MESSAGE: 'Wystąpił błąd podczas generowania kodu rabatowego.',
 
   // Dialog messages
   THANK_YOU_SURVEY: 'Dziękujemy za wypełnienie ankiety!',
