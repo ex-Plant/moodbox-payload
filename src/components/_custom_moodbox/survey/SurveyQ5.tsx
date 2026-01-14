@@ -12,7 +12,12 @@ export default function SurveyQ5() {
   const form = useSurveyContext()
   const rejectedBrand = useStore(form.store, (state) => state.values.rejected_brand)
 
-  if (!rejectedBrand || rejectedBrand === 'none') return null
+  if (
+    !rejectedBrand ||
+    rejectedBrand.toLocaleLowerCase() === 'none' ||
+    rejectedBrand.toLocaleLowerCase() === 'brak'
+  )
+    return null
 
   return (
     <SurveyQWrapper className="space-y-6">
