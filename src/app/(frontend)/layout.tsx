@@ -9,7 +9,7 @@ import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
-import { FooterServer } from '@/Footer/FooterServer'
+import { FooterServer } from '@/components/Footer/FooterServer'
 import { getServerSideURL } from '@/utilities/getURL'
 import { ToastContainer } from 'react-toastify'
 import './globals.css'

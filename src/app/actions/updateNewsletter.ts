@@ -1,7 +1,7 @@
 'use server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { inputSchemaT } from '../../Footer/NewsletterForm'
+import { inputSchemaT } from '../../components/Footer/NewsletterForm'
 export default async function updateNewsLetter(data: inputSchemaT) {
   try {
     const payload = await getPayload({ config: configPromise })
