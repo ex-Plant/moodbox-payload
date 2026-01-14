@@ -8,17 +8,19 @@ type PropsT = {
   isOnTop: boolean
   animationDuration: string
   item: NonNullable<Header['navItems']>[number]
+  isHome: boolean
 }
 
-export default function NavItem({ className, isOnTop, animationDuration, item }: PropsT) {
+export default function NavItem({ className, isOnTop, animationDuration, item, isHome }: PropsT) {
   const { href, newTabProps, url } = handleCMSLink(item) || {}
 
   /* Ensure we don't break any styles set by richText */
   return (
     <Link
       className={cn(
-        `pointer-events-auto col-span-1 text-right text-white`,
+        `pointer-events-auto col-span-1 text-right`,
         isOnTop ? 'opacity-100' : 'opacity-0',
+        isHome ? ' text-white' : 'text-mood-dark-gray ',
         animationDuration,
         className,
       )}
@@ -27,7 +29,8 @@ export default function NavItem({ className, isOnTop, animationDuration, item }:
     >
       <span
         className={cn(
-          `border-b border-transparent delay-200 hover:border-white pb-0.5`,
+          `border-b border-transparent delay-200pb-0.5`,
+          isHome ? '  hover:border-white ' : ' hover:border-mood-dark-gray  ',
           animationDuration,
         )}
       >

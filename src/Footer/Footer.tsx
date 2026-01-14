@@ -30,7 +30,7 @@ export default function FooterClient({ footerItems }: { footerItems: Footer['nav
           <Link href={'mailto:hello@moodbox.pl'} className={`font-normal`}>
             <div
               className={cn(
-                `hover:border-mood-dark-brown border-b border-transparent delay-200 duration-200 pb-0.5 lowercase`,
+                `hover:border-mood-dark-brown border-b border-transparent delay-200 duration-200 pb-0.5 lowercase w-fit`,
               )}
             >
               hello@moodbox.pl

@@ -64,8 +64,8 @@ export async function handleOrderFulfilled(data: ShopifyOrderWebhookBodyT | null
     data: {
       linkedOrder: shopifyId,
       customerEmail: email,
-      scheduledAt: createFutureDate({ daysFromNow: 0 }).toISOString(),
-      expiresAt: createFutureDate({ daysFromNow: 7 }).toISOString(),
+      scheduledAt: createFutureDate({ daysFromNow: 7 }).toISOString(),
+      expiresAt: createFutureDate({ daysFromNow: 14 }).toISOString(),
       status: 'pending',
       emailType: 'post_purchase_questions',
       token,

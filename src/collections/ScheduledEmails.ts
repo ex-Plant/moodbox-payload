@@ -32,8 +32,8 @@ export const ScheduledEmails: CollectionConfig = {
       name: 'linkedOrder',
       type: 'relationship',
       label: {
-        pl: 'Połączone zamówienie',
-        en: 'Order',
+        pl: 'Shopify',
+        en: 'Shopify',
       },
       relationTo: 'orders',
       required: true,

@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload'
-import { linkedInternalOrderField } from '@/fields/linkedInternalOrder'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
@@ -59,6 +58,7 @@ export const Orders: CollectionConfig = {
       label: 'Shopify',
       admin: {
         components: {
+          Field: '@/components/ShopifyLink',
           Cell: '@/components/ShopifyLink',
         },
       },
@@ -72,6 +72,7 @@ export const Orders: CollectionConfig = {
       },
       defaultValue: false,
       admin: {
+        hidden: true,
         components: {
           Cell: '@/components/BooleanCell',
         },
@@ -91,7 +92,7 @@ export const Orders: CollectionConfig = {
         condition: (data) => !!data?.hasSurvey,
         components: {
           Cell: {
-            path: '@/components/LinkCell',
+            path: '@/components/SurveyLinkCell',
             clientProps: {
               href: '/admin/collections/survey-responses',
               label: 'Ankieta',

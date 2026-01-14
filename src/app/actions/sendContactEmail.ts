@@ -1,0 +1,38 @@
+'use server'
+
+import { getPayload } from 'payload'
+import payloadConfig from '../../payload.config'
+import { contactSchema, contactSchemaT } from '../../schemas/contactFormSchema'
+
+export async function sendContactEmail(data: contactSchemaT) {
+  const payload = await getPayload({ config: payloadConfig })
+
+  let message = 'Nie udało się wysłać wiadomości - spróbuj jeszcze raz.'
+
+  try {
+    const validatedData = contactSchema.safeParse(data)
+
+    if (!validatedData.success) {
+      console.error({ errors: validatedData.error.issues })
+      message = 'Nieprawidłowe dane formularza.'
+      throw new Error(message)
+    }
+
+    await payload.sendEmail({
+      to: process.env.EMAIL_USER,
+      subject: `Moodbox kontakt: ${data.subject}`,
+      text: data.message,
+    })
+
+    return {
+      error: false,
+      message: 'Dziękujemy za wiadomość!',
+    }
+  } catch (e) {
+    message = e instanceof Error ? e.message : message
+    return {
+      error: true,
+      message,
+    }
+  }
+}
