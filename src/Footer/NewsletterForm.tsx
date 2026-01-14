@@ -2,7 +2,9 @@ import { useAppForm } from '@/lib/hooks/tenStackFormHooks'
 import z from 'zod'
 import { toastMessage, ToastPosition, ToastType } from '../lib/toasts/toasts'
 import updateNewsLetter from '../app/actions/updateNewsletter'
-import { useForm } from '@tanstack/react-form'
+import { useStore } from '@tanstack/react-form'
+import { useState } from 'react'
+import { wait } from 'payload/shared'
 
 const inputSchema = z.object({
   email: z.string().min(1),
@@ -11,6 +13,8 @@ const inputSchema = z.object({
 export type inputSchemaT = z.infer<typeof inputSchema>
 
 export default function NewsletterForm() {
+  const [submissionBlocked, setSubmissionBlocked] = useState(false)
+
   const form = useAppForm({
     defaultValues: {
       email: '',
@@ -19,6 +23,7 @@ export default function NewsletterForm() {
       onSubmit: inputSchema,
     },
     onSubmit: async (data) => {
+      setSubmissionBlocked(true)
       const { error, message } = await updateNewsLetter(data.value)
 
       toastMessage(
@@ -27,8 +32,14 @@ export default function NewsletterForm() {
         ToastPosition.BottomCenter,
         5000,
       )
+
+      // Rate limiting check
+      await wait(5000)
+      setSubmissionBlocked(false)
     },
   })
+
+  const isSubmitting = useStore(form.store, (s) => s.isSubmitting) || submissionBlocked
 
   return (
     <form
@@ -51,8 +62,12 @@ export default function NewsletterForm() {
           )
         }}
       </form.AppField>
-      <button type="submit" className="whitespace-nowrap border-l px-4 border-mood-brown ">
-        Zapisz się
+      <button
+        disabled={isSubmitting}
+        type="submit"
+        className="whitespace-nowrap border-l px-4 border-mood-brown "
+      >
+        {isSubmitting ? 'Zapisuje' : 'Zapisz się'}
       </button>
     </form>
   )
