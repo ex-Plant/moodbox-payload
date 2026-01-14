@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { cn } from '@/utilities/ui'
 import NewsletterForm from './NewsletterForm'
 import LogoMoodboxSvg from '../components/_custom_moodbox/common/LogoMoodboxSvg'
-
 export default function FooterClient({ footerItems }: { footerItems: Footer['navItems'] }) {
   return (
     <footer className={`xPaddings relative mx-auto mt-auto w-full max-w-[1440px] pb-12 `}>

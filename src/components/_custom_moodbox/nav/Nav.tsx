@@ -69,7 +69,7 @@ export default function Nav({ headerData }: { headerData: Header }) {
           {headerData.navItems?.map((item) => (
             <NavItem
               key={item.id}
-              className={` mr-4 ml-auto xl:mr-0 xl:ml-0`}
+              className={` mr-4 last:mr-0 ml-auto xl:mr-0 xl:ml-0`}
               item={item}
               isOnTop={isOnTop}
               animationDuration={animDuration}
