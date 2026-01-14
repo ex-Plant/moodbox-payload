@@ -2,6 +2,7 @@ import { useAppForm } from '@/lib/hooks/tenStackFormHooks'
 import z from 'zod'
 import { toastMessage, ToastPosition, ToastType } from '../lib/toasts/toasts'
 import updateNewsLetter from '../app/actions/updateNewsletter'
+import { useForm } from '@tanstack/react-form'
 
 const inputSchema = z.object({
   email: z.string().min(1),
@@ -18,20 +19,17 @@ export default function NewsletterForm() {
       onSubmit: inputSchema,
     },
     onSubmit: async (data) => {
-      try {
-        await updateNewsLetter(data.value)
-        toastMessage(
-          `✌️ Dzięki - email zapisany`,
-          ToastType.Success,
-          ToastPosition.BottomCenter,
-          5000,
-        )
-      } catch (e) {
-        const message = e instanceof Error ? e.message : `Coś poszlo nie tak: ${e}`
-        toastMessage(message, ToastType.Error, ToastPosition.BottomCenter, 10000)
-      }
+      const { error, message } = await updateNewsLetter(data.value)
+
+      toastMessage(
+        message,
+        error ? ToastType.Success : ToastType.Error,
+        ToastPosition.BottomCenter,
+        5000,
+      )
     },
   })
+
   return (
     <form
       onSubmit={(e) => {
