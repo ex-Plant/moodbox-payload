@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { ATTRIBUTE_KEY_PL } from '@/lib/CartSchema'
 import { Order } from '../../../../payload-types'
+import { escapeCSVValue } from '@/utilities/escapeCSVValue'
 
 // Add this mapping object at the top of your route.ts
 const CLIENT_FIELD_LABELS: Record<string, string> = {
@@ -35,14 +36,7 @@ export async function GET() {
     for (const item of data) {
       const values = originalColNames.map((col) => {
         const value = item[col as keyof Order]
-        // Handle values that contain commas or quotes
-        if (
-          typeof value === 'string' &&
-          (value.includes(',') || value.includes('"') || value.includes('\n'))
-        ) {
-          return `"${value.replace(/"/g, '""')}"` // Escape quotes by doubling them
-        }
-        return value || '' // Convert null/undefined to empty string
+        return escapeCSVValue(value)
       })
       csvRows.push(values.join(','))
     }

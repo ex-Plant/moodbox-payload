@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { SurveyResponse, Order } from '../../../../payload-types'
+import { escapeCSVValue } from '../../../../utilities/escapeCSVValue'
 
 const COLUMNS = [
   {
@@ -78,11 +79,7 @@ export async function GET() {
         // @ts-expect-error - dynamic formatting
         const formattedValue = col.format(rawValue)
 
-        const stringValue = String(formattedValue ?? '')
-        if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
-          return `"${stringValue.replace(/"/g, '""')}"`
-        }
-        return stringValue
+        return escapeCSVValue(formattedValue)
       }).join(',')
     })
 

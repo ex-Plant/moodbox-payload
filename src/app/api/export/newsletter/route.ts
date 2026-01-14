@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { Newsletter } from '../../../../payload-types'
+import { escapeCSVValue } from '@/utilities/escapeCSVValue'
 
 const NEWSLETTER_FIELD_LABELS: Record<string, string> = {
   createdAt: 'utworzono',
@@ -34,14 +35,7 @@ export async function GET() {
     for (const item of data) {
       const values = originalColNames.map((col) => {
         const value = item[col as keyof Newsletter]
-        // Handle values that contain commas or quotes
-        if (
-          typeof value === 'string' &&
-          (value.includes(',') || value.includes('"') || value.includes('\n'))
-        ) {
-          return `"${value.replace(/"/g, '""')}` // Escape quotes by doubling them
-        }
-        return value || '' // Convert null/undefined to empty string
+        return escapeCSVValue(value)
       })
       csvRows.push(values.join(','))
     }
