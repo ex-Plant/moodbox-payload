@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     topic === 'products/update' ||
     topic === 'products/create' ||
     topic === 'products/delete' ||
-    topic === 'inventory_level/update'
+    topic === 'inventory_levels/update'
   ) {
     // Revalidate your collections and products cache
     revalidateTag('collections', 'max')

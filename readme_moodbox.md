@@ -182,14 +182,14 @@ orders/fulfilled        - Order marked as fulfilled
 products/update         - Product information changed
 products/create         - New product added
 products/delete         - Product removed
-inventory_level/update - Product quantity/inventory changed
+inventory_levels/update - Product quantity/inventory changed
 ```
 
 #### Product Data Synchronization
 
 When products or inventory are modified in Shopify, the system ensures real-time data consistency:
 
-1. **Webhook Trigger**: Product changes (`products/update`, `products/create`, `products/delete`) or inventory changes (`inventory_level/update`) fire webhooks
+1. **Webhook Trigger**: Product changes (`products/update`, `products/create`, `products/delete`) or inventory changes (`inventory_levels/update`) fire webhooks
 2. **Cache Invalidation**: `/api/webhooks/products-updated` endpoint receives the webhook
 3. **HMAC Verification**: Webhook authenticity is cryptographically verified
 4. **Cache Revalidation**: Next.js cache tags for `collections` and `products` are invalidated
@@ -415,7 +415,7 @@ Set up in Shopify Admin → Settings → Notifications → Webhooks:
 - `products/update` → `https://your-domain.com/api/webhooks/products-updated`
 - `products/create` → `https://your-domain.com/api/webhooks/products-updated`
 - `products/delete` → `https://your-domain.com/api/webhooks/products-updated`
-- `inventory_level/update` → `https://your-domain.com/api/webhooks/products-updated`
+- `inventory_levels/update` → `https://your-domain.com/api/webhooks/products-updated`
 
 **Order Webhooks:**
 

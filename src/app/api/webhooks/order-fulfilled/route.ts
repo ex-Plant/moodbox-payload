@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyShopifyHmacHeader } from '@/lib/shopify/webhooks/verifyShopifyHmacHeader'
 import { handleOrderFulfilled } from '@/lib/shopify/webhooks/handleOrderFulfilled'
+import { revalidateTag } from 'next/cache'
 
 export const dynamic = 'force-dynamic'
 
