@@ -2,18 +2,24 @@ import { getPayload as getPayloadClient } from 'payload'
 import { NextResponse } from 'next/server'
 import configPromise from '@payload-config'
 import { buildDiscountCodeEmail } from '../../../utilities/email_templates/buildDiscountCodeEmail'
+import { checkAuth } from '@/utilities/checkAuth'
 
 export async function GET() {
   try {
+    // Authentication check
+    const isAuthenticated = await checkAuth()
+    if (!isAuthenticated) {
+      return NextResponse.json(
+        { error: 'Unauthorized - please log in to the admin panel' },
+        { status: 401 },
+      )
+    }
+
     const payload = await getPayloadClient({
       config: configPromise,
     })
 
     console.log('Sending test email 🍆')
-
-    // const { subject, html } = buildPostOrderEmail(
-    //   'http://localhost:3000/ankieta/ba0b6a7a-c9ab-4cb8-a237-417926cddef0',
-    // )
 
     const { subject, html } = buildDiscountCodeEmail('To jest testowy kod rabatowy 🍆 : 123345')
 

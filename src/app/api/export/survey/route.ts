@@ -1,7 +1,8 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { SurveyResponse, Order } from '../../../../payload-types'
-import { escapeCSVValue } from '../../../../utilities/escapeCSVValue'
+import { SurveyResponse, Order } from '@/payload-types'
+import { escapeCSVValue } from '@/utilities/escapeCSVValue'
+import { checkAuth } from '@/utilities/checkAuth'
 
 const COLUMNS = [
   {
@@ -60,6 +61,12 @@ const COLUMNS = [
 ]
 
 export async function GET() {
+  // Authentication check
+  const isAuthenticated = await checkAuth()
+  if (!isAuthenticated) {
+    return new Response('Unauthorized - please log in to the admin panel', { status: 401 })
+  }
+
   const payload = await getPayload({ config: configPromise })
 
   const { docs } = await payload.find({

@@ -1,8 +1,9 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { ATTRIBUTE_KEY_PL } from '@/lib/CartSchema'
-import { Order } from '../../../../payload-types'
+import { Order } from '@/payload-types'
 import { escapeCSVValue } from '@/utilities/escapeCSVValue'
+import { checkAuth } from '@/utilities/checkAuth'
 
 // Add this mapping object at the top of your route.ts
 const CLIENT_FIELD_LABELS: Record<string, string> = {
@@ -11,6 +12,12 @@ const CLIENT_FIELD_LABELS: Record<string, string> = {
 }
 
 export async function GET() {
+  // Authentication check
+  const isAuthenticated = await checkAuth()
+  if (!isAuthenticated) {
+    return new Response('Unauthorized - please log in to the admin panel', { status: 401 })
+  }
+
   const payload = await getPayload({ config: configPromise })
 
   const clients = await payload.find({
