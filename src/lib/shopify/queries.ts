@@ -45,55 +45,11 @@ export const PRODUCT_FRAGMENT = `
 	}
 `
 
-export const GET_ALL_PRODUCTS_QUERY = `
-	${PRODUCT_FRAGMENT}
-	query GetAllProducts($first: Int = 100, $after: String) {
-		products(first: $first, after: $after) {
-			edges {
-				cursor
-				node {
-					...ProductFragment
-				}
-			}
-			pageInfo {
-				hasNextPage
-				endCursor
-			}
-		}
-	}
-`
-
 export const GET_PRODUCT_BY_HANDLE_QUERY = `
 	${PRODUCT_FRAGMENT}
 	query GetProductByHandle($handle: String!) {
 		product(handle: $handle) {
 			...ProductFragment
-		}
-	}
-`
-
-export const GET_COLLECTION_BY_HANDLE_QUERY = `
-	${PRODUCT_FRAGMENT}
-	query GetCollectionByHandle($handle: String!, $first: Int = 100) {
-		collection(handle: $handle) {
-			id
-			handle
-			title
-			description
-			image {
-				id
-				url
-				altText
-				width
-				height
-			}
-			products(first: $first) {
-				edges {
-					node {
-						...ProductFragment
-					}
-				}
-			}
 		}
 	}
 `

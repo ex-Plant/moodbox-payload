@@ -15,7 +15,7 @@ type ShopifyFetchParamsT = {
 export async function shopifyFetch<T>({
   query,
   variables = {},
-  // cache = 'no-cache',
+  cache = 'no-cache',
   tags = [],
 }: ShopifyFetchParamsT): Promise<ShopifyResponseT<T> | null> {
   if (!SHOPIFY_STOREFRONT_ACCESS_TOKEN) throw new Error(' ❗SHOPIFY_STOREFRONT_ACCESS_TOKEN')
@@ -30,9 +30,9 @@ export async function shopifyFetch<T>({
       'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_ACCESS_TOKEN,
     },
     body: JSON.stringify({ query, variables }),
-    // cache,
+    cache,
     next: {
-      revalidate: process.env.NODE_ENV === 'development' ? 0 : 60,
+      // revalidate: process.env.NODE_ENV === 'development' ? 0 : 60,
       tags,
     },
   })

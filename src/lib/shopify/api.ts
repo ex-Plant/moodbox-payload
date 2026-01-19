@@ -5,8 +5,6 @@ import { shopifyFetch } from './client'
 import {
   CREATE_CART_MUTATION,
   GET_ALL_COLLECTIONS_QUERY,
-  GET_ALL_PRODUCTS_QUERY,
-  GET_COLLECTION_BY_HANDLE_QUERY,
   GET_PRODUCT_BY_HANDLE_QUERY,
 } from './queries'
 import { CartT, CollectionT, ProductT } from './types'
@@ -16,7 +14,7 @@ export async function getProductByHandle(handle: string): Promise<ProductT | nul
     query: GET_PRODUCT_BY_HANDLE_QUERY,
     variables: { handle },
     cache: 'force-cache',
-    tags: [`product-${handle}`],
+    tags: [`products`],
   })
 
   if (!response) return null
