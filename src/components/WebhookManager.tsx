@@ -23,27 +23,6 @@ export default function WebhookManager() {
     list: false,
   })
 
-  async function testWebhook(formData: FormData) {
-    const webhookId = formData.get('webhookId') as string
-    if (!webhookId) return
-
-    setIsLoading((prev) => ({ ...prev, test: true }))
-    setTestResult('')
-
-    try {
-      const response = await fetch(`/api/webhooks/test/${webhookId}`, {
-        method: 'POST',
-      })
-
-      const result = await response.json()
-      setTestResult(JSON.stringify(result, null, 2))
-    } catch (error) {
-      setTestResult(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`)
-    } finally {
-      setIsLoading((prev) => ({ ...prev, test: false }))
-    }
-  }
-
   async function deleteWebhook(formData: FormData) {
     const webhookId = formData.get('webhookId') as string
     // alert(webhookId)
@@ -168,39 +147,6 @@ export default function WebhookManager() {
       </div>
 
       <div className="grid gap-8 md:grid-cols-1">
-        {/* Test Webhook */}
-        <div className="border rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Test Webhook</h2>
-          <form action={testWebhook} className="space-y-4">
-            <div>
-              <label htmlFor="test-webhook-id" className="block text-sm font-medium mb-2">
-                Webhook ID
-              </label>
-              <input
-                id="test-webhook-id"
-                name="webhookId"
-                type="text"
-                placeholder="e.g., 2093890077019"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={isLoading.test}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading.test ? 'Testing...' : 'Test Webhook'}
-            </button>
-          </form>
-          {testResult && (
-            <div className="mt-4">
-              <h3 className="font-medium mb-2">Result:</h3>
-              <pre className="bg-gray-100 p-4 rounded text-sm overflow-x-auto">{testResult}</pre>
-            </div>
-          )}
-        </div>
-
         {/* Delete Webhook */}
         <div className="border rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">Delete Webhook</h2>
