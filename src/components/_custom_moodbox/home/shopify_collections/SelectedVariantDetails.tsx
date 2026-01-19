@@ -1,36 +1,37 @@
 import React from 'react'
-import { ProductVariantT } from '@/lib/shopify/types'
+import { ProductVariantT, ProductT } from '@/lib/shopify/types'
 import { cn } from '@/utilities/ui'
 
 type PropsT = {
   fullScreen: boolean
   selected: ProductVariantT
   title: string
+  brand: ProductT['brand']
 }
 
-export default function SelectedVariantDetails({ fullScreen, selected, title }: PropsT) {
+export default function SelectedVariantDetails({ fullScreen, selected, title, brand }: PropsT) {
   return (
     <div>
       <p
         className={cn(
-          `line-clamp-1 pt-1 text-[0.625rem] leading-tight font-bold text-[#9d9c9c]`,
-          fullScreen ? 'text-[1.25rem]' : '',
+          `pt-1 text-[0.625rem] leading-tight font-bold text-[#9d9c9c]`,
+          fullScreen ? 'text-[1.25rem]' : 'line-clamp-1 ',
         )}
       >
         {selected.product?.productType}
       </p>
       <p
         className={cn(
-          `line-clamp-1 text-[0.875rem] leading-tight font-bold text-foreground`,
-          fullScreen ? 'text-[1.75rem]' : '',
+          `text-[0.875rem] leading-tight font-bold text-foreground`,
+          fullScreen ? 'text-[1.75rem]' : 'line-clamp-1 ',
         )}
       >
-        {selected.product?.description}
+        {brand?.value ?? ''}
       </p>
       <h4
         className={cn(
-          `text-mood-dark-gray line-clamp-1 text-[0.75rem] leading-tight`,
-          fullScreen ? 'text-[1.5rem]' : '',
+          `text-mood-dark-gray  text-[0.75rem] leading-tight`,
+          fullScreen ? 'text-[1.5rem]' : 'line-clamp-1',
         )}
       >
         {title}

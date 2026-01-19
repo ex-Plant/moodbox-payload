@@ -20,15 +20,17 @@ export type ProductVariantT = {
     value: string
   }[]
   price: MoneyT
-  compareAtPrice: MoneyT | null
-  image: ImageT | null
+  image: {
+    id: string
+    url: string
+    altText: string | null
+  } | null
   product?: {
     productType: string
     description: string
-    descriptionHtml: string
-    availableForSale: boolean
-    tags: string[]
-    vendor: string
+    brand?: {
+      value: string
+    }
   }
 }
 
@@ -57,6 +59,9 @@ export type ProductT = {
       node: ProductVariantT
     }[]
   }
+  brand: {
+    value: string
+  } | null
   secondName: {
     key: string
     value: string

@@ -44,7 +44,12 @@ export default function CollectionSliderProduct({
       </div>
 
       <div className={`w-full`}>
-        <SelectedVariantDetails fullScreen={fullScreen} selected={selected} title={title} />
+        <SelectedVariantDetails
+          fullScreen={fullScreen}
+          selected={selected}
+          title={title}
+          brand={slide.brand}
+        />
         <Variants
           fullScreen={fullScreen}
           selected={selected}

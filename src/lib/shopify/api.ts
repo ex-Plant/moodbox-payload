@@ -11,21 +11,6 @@ import {
 } from './queries'
 import { CartT, CollectionT, ProductT } from './types'
 
-export async function getAllProducts(): Promise<ProductT[]> {
-  const response = await shopifyFetch<{
-    products: {
-      edges: { node: ProductT }[]
-    }
-  }>({
-    query: GET_ALL_PRODUCTS_QUERY,
-    cache: 'no-store',
-    tags: ['products'],
-  })
-
-  if (!response) return []
-  return response.data.products.edges.map((edge) => edge.node)
-}
-
 export async function getProductByHandle(handle: string): Promise<ProductT | null> {
   const response = await shopifyFetch<{ product: ProductT | null }>({
     query: GET_PRODUCT_BY_HANDLE_QUERY,
@@ -64,30 +49,6 @@ export const getCachedProductsByCollection = cache(
     }))
   },
 )
-
-export async function getProductsByCollection(): Promise<
-  { collection: string; handle: string; products: ProductT[] }[]
-> {
-  const collections = await getAllCollections()
-
-  return collections.map((collection) => ({
-    collection: collection.title,
-    handle: collection.handle,
-    products: collection.products.edges.map((edge) => edge.node),
-  }))
-}
-
-export async function getCollectionByHandle(handle: string): Promise<CollectionT | null> {
-  const response = await shopifyFetch<{ collection: CollectionT | null }>({
-    query: GET_COLLECTION_BY_HANDLE_QUERY,
-    variables: { handle },
-    cache: 'force-cache',
-    tags: [`collection-${handle}`],
-  })
-  if (!response) return null
-
-  return response.data.collection
-}
 
 export async function createCart(
   lineItems: { merchandiseId: string; quantity: number }[],
