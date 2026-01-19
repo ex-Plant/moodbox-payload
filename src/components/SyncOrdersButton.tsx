@@ -5,6 +5,9 @@ import { Button, toast } from '@payloadcms/ui'
 import { syncOrdersA } from '@/app/actions/syncOrdersA'
 
 export default function SyncOrdersButton() {
+  // This was for testing but I am also leaving it just in case we need to sync for some reason
+
+  return null
   const [isSyncing, setIsSyncing] = useState(false)
 
   const handleSync = async () => {
