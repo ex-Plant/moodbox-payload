@@ -177,23 +177,24 @@ Navigate to `/api/webhooks` in your browser while logged into the admin panel.
 #### Common Webhook Topics
 
 ```
-orders/create     - New order placed
-orders/fulfilled  - Order marked as fulfilled
-products/update   - Product information changed
-products/create   - New product added
-products/delete   - Product removed
+orders/create           - New order placed
+orders/fulfilled        - Order marked as fulfilled
+products/update         - Product information changed
+products/create         - New product added
+products/delete         - Product removed
+inventory_level/update - Product quantity/inventory changed
 ```
 
 #### Product Data Synchronization
 
-When products are modified in Shopify, the system ensures real-time data consistency:
+When products or inventory are modified in Shopify, the system ensures real-time data consistency:
 
-1. **Webhook Trigger**: `products/update`, `products/create`, or `products/delete` webhook fires
+1. **Webhook Trigger**: Product changes (`products/update`, `products/create`, `products/delete`) or inventory changes (`inventory_level/update`) fire webhooks
 2. **Cache Invalidation**: `/api/webhooks/products-updated` endpoint receives the webhook
 3. **HMAC Verification**: Webhook authenticity is cryptographically verified
 4. **Cache Revalidation**: Next.js cache tags for `collections` and `products` are invalidated
-5. **Fresh Data**: Subsequent page loads fetch updated product information from Shopify
-6. **Frontend Update**: Product listings, collections, and related components display current data
+5. **Fresh Data**: Subsequent page loads fetch updated product information and current inventory levels from Shopify
+6. **Frontend Update**: Product listings, collections, and availability indicators display current data
 
 **Benefits:**
 
@@ -217,7 +218,7 @@ SHOPIFY_ADMIN_API_URL=https://your-store.myshopify.com/admin/api/2024-10
 - `/api/webhooks/list` - List all webhooks
 - `/api/webhooks/create` - Create new webhook
 - `/api/webhooks/delete/[id]` - Delete webhook by ID
-- `/api/webhooks/products-updated` - Product change handler
+- `/api/webhooks/products-updated` - Product and inventory change handler
 - `/api/webhooks/order-fulfilled` - Order fulfillment handler
 - `/api/webhooks/order-created` - New order handler
 
@@ -409,6 +410,18 @@ SHOPIFY_WEBHOOK_SECRET=webhook-secret
 
 Set up in Shopify Admin → Settings → Notifications → Webhooks:
 
+**Product & Inventory Webhooks:**
+
+- `products/update` → `https://your-domain.com/api/webhooks/products-updated`
+- `products/create` → `https://your-domain.com/api/webhooks/products-updated`
+- `products/delete` → `https://your-domain.com/api/webhooks/products-updated`
+- `inventory_level/update` → `https://your-domain.com/api/webhooks/products-updated`
+
+**Order Webhooks:**
+
+- `orders/create` → `https://your-domain.com/api/webhooks/order-created`
+- `orders/fulfilled` → `https://your-domain.com/api/webhooks/order-fulfilled`
+
 ```
 Event: Order creation
 URL: https://yourdomain.com/api/webhooks/order-created
@@ -443,6 +456,7 @@ Required Admin API scopes:
 
 - `read_orders` - Access order data
 - `write_discounts` - Create discount codes
+- `read_inventory` - Access inventory levels (for inventory webhooks)
 - `read_customers` - Customer data access
 - `write_content` - Metafield management (if used)
 

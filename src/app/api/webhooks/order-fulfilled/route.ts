@@ -14,6 +14,8 @@ export async function POST(req: NextRequest) {
   const topic = req.headers.get(`x-shopify-topic`)
   if (topic === 'orders/fulfilled') {
     try {
+      revalidateTag('collections', 'max')
+      revalidateTag('products', 'max')
       await handleOrderFulfilled(verified.body)
       return NextResponse.json({ success: true })
     } catch (e) {

@@ -13,8 +13,13 @@ export async function POST(request: NextRequest) {
 
   const topic = request.headers.get('x-shopify-topic')
 
-  if (topic === 'products/update' || topic === 'products/create' || topic === 'products/delete') {
-    // Revalidate your collections cache
+  if (
+    topic === 'products/update' ||
+    topic === 'products/create' ||
+    topic === 'products/delete' ||
+    topic === 'inventory_level/update'
+  ) {
+    // Revalidate your collections and products cache
     revalidateTag('collections', 'max')
     revalidateTag('products', 'max')
 
