@@ -1,4 +1,462 @@
-# 📧 Email System
+# 🛒 Order Management & Email System
+
+## 🏛️ System Architecture
+
+Moodbox operates on a **hybrid e-commerce architecture** that leverages two specialized platforms:
+
+### 🎯 Platform Responsibilities
+
+#### Shopify (E-commerce Engine)
+
+**Handles all customer-facing commerce operations:**
+
+- Product catalog and inventory management
+- Shopping cart and checkout process
+- Payment processing and order fulfillment
+- Customer account management
+- Newsletter subscription capture during checkout
+- Tax calculation and shipping
+- Order status management
+
+#### Payload CMS (Admin & Analytics Backend)
+
+**Handles business intelligence and customer engagement:**
+
+- Order data aggregation and reporting
+- Customer survey collection and analysis
+- Automated email campaigns and scheduling
+- Discount code generation and management
+- Newsletter subscriber management
+- Admin dashboard and content management
+- Survey response analytics
+
+### 🔄 Integration Philosophy
+
+**Shopify = Transaction Processing | Payload = Customer Lifecycle Management**
+
+- **Shopify**: Optimized for high-volume e-commerce transactions
+- **Payload**: Optimized for complex data relationships and automated workflows
+- **Webhooks**: Real-time data synchronization between platforms
+- **API Calls**: Programmatic discount creation and order enrichment
+
+## 🎯 Complete Customer Journey
+
+### 🔄 Data Flow Architecture
+
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   Customer      │     │    Shopify      │     │    Payload      │
+│   Frontend      │────▶│   Checkout      │────▶│   CMS Backend   │
+│                 │     │   Processing    │     │   Processing    │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+        │                       │                       │
+        │                       │                       │
+        ▼                       ▼                       ▼
+   Cart Form ───────────▶ Webhook ────────────▶ Survey Email
+   (Next.js)            (orders/create)       (7 days later)
+
+                                              ┌─────────────────┐
+                                              │  Survey Response │
+                                              │  + Discount Gen  │
+                                              └─────────────────┘
+```
+
+### 📊 System Integration Points
+
+#### Real-time Webhooks
+
+- **orders/create**: Order data + newsletter signup → Payload
+- **orders/fulfilled**: Trigger survey email scheduling
+
+#### Programmatic API Calls
+
+- **Discount Creation**: Payload → Shopify Admin API
+- **Order Sync**: Payload → Shopify Admin API (manual/bulk)
+
+#### Data Synchronization
+
+- **Source of Truth**: Shopify owns order transactions
+- **Analytics Hub**: Payload owns customer insights
+- **Newsletter**: Dual-managed (Shopify capture → Payload storage)
+
+## 📦 Order Creation Process
+
+1. **Cart Form** (`CartForm.tsx`):
+   - Customer fills out form with personal details and consents
+   - Form validates using `cartSchema` (Zod validation)
+   - Calls `checkoutA()` action
+
+2. **Checkout Action** (`checkoutA.ts`):
+   - Validates form data against schema
+   - Maps form fields to Shopify attributes using `ATTRIBUTE_KEY_PL`
+   - Creates Shopify cart with:
+     - Selected products from cart
+     - Fixed fee product ("box-stala-cena")
+     - Customer attributes (Polish field names)
+   - Redirects to Shopify checkout URL
+
+3. **Shopify Checkout**:
+   - Customer completes payment on Shopify
+   - Newsletter checkbox: "Chcę być na bieżąco z nowościami Moodbox"
+   - Order created in Shopify
+
+### 🔗 Webhook Processing
+
+4. **Order Created Webhook** (`/api/webhooks/order-created`):
+   - Receives `orders/create` webhook from Shopify
+   - Extracts `buyer_accepts_marketing` boolean from newsletter checkbox
+   - Creates/updates order record in Payload CMS
+   - **Newsletter Signup**: If checkbox checked, adds email to newsletter collection
+   - Maps custom attributes back to English field names
+
+5. **Order Fulfilled Webhook** (`/api/webhooks/order-fulfilled`):
+   - Triggers when order status changes to "fulfilled"
+   - Creates scheduled email record with secure token
+   - Links to original order for survey data
+   - Schedules feedback email 7 days later (expires 14 days)
+
+### 📧 Email & Survey System
+
+6. **Automated Email Sending** (`/api/cron/send-feedback-emails`):
+   - Cron job processes due emails (status: pending, scheduledAt <= now)
+   - Generates secure survey link with HMAC token
+   - Sends post-purchase feedback email
+
+7. **Survey Response** (`submitSurveyA.ts`):
+   - Customer clicks survey link → validates token
+   - Submits detailed brand feedback survey
+   - **Discount Code Creation**: Generates 10% off discount via `createDiscountA()`
+   - Sends discount code email to customer
+   - Updates order record with survey completion flag
+
+### 💰 Discount Code System
+
+#### Creation Flow
+
+- **Trigger**: Survey submission (`submitSurveyA.ts`)
+- **Generation**: `createDiscountA()` creates unique 6-character code (MOODBOX prefix)
+- **Shopify API**: Uses `discountCodeBasicCreate` mutation
+- **Configuration**:
+  - 10% off entire order
+  - Single use per customer
+  - 30-day expiration
+  - Available on all products
+
+#### Technical Details
+
+- **GraphQL Mutation**: `CREATE_DISCOUNT_CODE_MUTATION` in `adminQueries.ts`
+- **API Function**: `createDiscountCode()` in `adminApi.ts`
+- **Token Generation**: `generateHexToken(6, 'MOODBOX')`
+
+## 🔗 Webhook Management System
+
+### 📋 Overview
+
+The webhook management system provides a secure, user-friendly interface for managing Shopify webhooks without manual curl commands.
+
+### 🎯 Features
+
+#### Webhook Operations
+
+- **List Webhooks**: View all configured webhooks with details (ID, topic, address, format, creation date)
+- **Create Webhooks**: Add new webhooks with custom topics and addresses
+- **Delete Webhooks**: Remove unwanted webhooks by ID
+
+#### Security & Access
+
+- **Admin Authentication**: Requires login to Payload CMS admin panel
+- **Server-side API Calls**: All Shopify API interactions happen securely on the server
+- **HMAC Verification**: Webhook payloads are cryptographically verified
+
+### 🚀 Usage
+
+#### Accessing Webhook Manager
+
+Navigate to `/api/webhooks` in your browser while logged into the admin panel.
+
+#### Common Webhook Topics
+
+```
+orders/create     - New order placed
+orders/fulfilled  - Order marked as fulfilled
+products/update   - Product information changed
+products/create   - New product added
+products/delete   - Product removed
+```
+
+#### Product Data Synchronization
+
+When products are modified in Shopify, the system ensures real-time data consistency:
+
+1. **Webhook Trigger**: `products/update`, `products/create`, or `products/delete` webhook fires
+2. **Cache Invalidation**: `/api/webhooks/products-updated` endpoint receives the webhook
+3. **HMAC Verification**: Webhook authenticity is cryptographically verified
+4. **Cache Revalidation**: Next.js cache tags for `collections` and `products` are invalidated
+5. **Fresh Data**: Subsequent page loads fetch updated product information from Shopify
+6. **Frontend Update**: Product listings, collections, and related components display current data
+
+**Benefits:**
+
+- **Real-time Updates**: Product changes appear immediately without manual cache clearing
+- **Performance**: Efficient cache invalidation prevents stale data issues
+- **Reliability**: HMAC verification ensures webhook authenticity
+- **Scalability**: Cache revalidation works across multiple server instances
+
+### 🔧 Configuration
+
+#### Environment Variables
+
+```env
+SHOPIFY_ADMIN_ACCESS_TOKEN=your_admin_token_here
+SHOPIFY_ADMIN_API_URL=https://your-store.myshopify.com/admin/api/2024-10
+```
+
+#### Webhook Endpoints
+
+- `/api/webhooks` - Management interface
+- `/api/webhooks/list` - List all webhooks
+- `/api/webhooks/create` - Create new webhook
+- `/api/webhooks/delete/[id]` - Delete webhook by ID
+- `/api/webhooks/products-updated` - Product change handler
+- `/api/webhooks/order-fulfilled` - Order fulfillment handler
+- `/api/webhooks/order-created` - New order handler
+
+## 📊 Data Synchronization
+
+### Manual Sync (`SyncOrdersButton.tsx`)
+
+- **Purpose**: One-time bulk import of existing Shopify orders
+- **Process**: `syncOrdersA()` fetches all orders via Admin API
+- **Status**: Currently disabled (`return null`)
+- **Use Case**: Initial data migration or emergency sync
+
+### Webhook vs Manual Sync
+
+- **Webhook**: Real-time, handles new orders automatically
+- **Manual**: Bulk operations, historical data import
+- **Data Mapping**: Both use same attribute mapping (`ATTRIBUTE_KEY_PL`)
+
+## 🏗️ Architecture Components
+
+### Core Collections (Payload CMS)
+
+- `orders` - Order records with customer data (mirrored from Shopify)
+- `scheduled-emails` - Pending/processed email queue with HMAC tokens
+- `survey-responses` - Detailed customer feedback and brand evaluations
+- `newsletter` - Email marketing subscribers (captured at checkout)
+
+### Shopify API Layers
+
+- **Storefront API**: Product browsing, cart creation, checkout
+- **Admin API**: Order management, discount codes, customer data
+- **Webhooks**: Real-time order status updates and events
+
+## 💡 Why This Architecture?
+
+### 🎯 Strategic Benefits
+
+#### Shopify Advantages
+
+- **Battle-tested**: Handles millions of transactions daily
+- **Compliance**: Built-in tax, shipping, and payment compliance
+- **Scalability**: Automatic scaling for traffic spikes
+- **Features**: Rich e-commerce features (abandoned cart, etc.)
+- **Reliability**: 99.9% uptime SLA
+
+#### Payload CMS Advantages
+
+- **Flexibility**: Custom data models for complex relationships
+- **Automation**: Advanced workflow and email scheduling
+- **Analytics**: Rich querying and reporting capabilities
+- **Integration**: Easy API integrations with external services
+- **Developer Experience**: Modern React-based admin interface
+
+### 🔒 Risk Mitigation
+
+#### Separation of Concerns
+
+- **Shopify Outage**: Orders still process, data syncs when service restored
+- **Payload Issues**: E-commerce continues, webhooks queue automatically
+- **Independent Scaling**: Each system scales based on its workload
+- **Technology Evolution**: Can upgrade either platform independently
+
+#### Data Redundancy
+
+- **Shopify**: Primary order/transaction data
+- **Payload**: Analytical copy with additional metadata
+- **Newsletter**: Dual capture (Shopify + Payload forms)
+- **Surveys**: Rich feedback data not available in Shopify
+
+### Key Files
+
+```
+src/
+├── app/actions/
+│   ├── checkoutA.ts          # Cart → Shopify checkout
+│   ├── createDiscountA.ts    # Generate discount codes
+│   ├── submitSurveyA.ts      # Process survey responses
+│   └── syncOrdersA.ts        # Bulk order import
+├── app/api/webhooks/
+│   ├── order-created/        # Order + newsletter processing
+│   └── order-fulfilled/      # Schedule feedback emails
+├── lib/shopify/
+│   ├── queries.ts            # Storefront GraphQL queries
+│   ├── adminQueries.ts       # Admin API queries
+│   └── adminApi.ts           # Admin API functions
+└── components/
+    ├── SyncOrdersButton.tsx  # Manual sync UI
+    └── _custom_moodbox/home/cart/CartForm.tsx  # Order form
+```
+
+## 🔧 Operational Procedures
+
+### 📊 Monitoring & Maintenance
+
+#### Daily Checks
+
+- **Shopify Orders**: Verify webhook delivery in Shopify admin
+- **Payload Dashboard**: Check scheduled emails queue
+- **Email Delivery**: Monitor bounce rates and delivery status
+- **Survey Completion**: Track survey response rates
+
+#### Weekly Maintenance
+
+- **Data Sync**: Spot-check order data consistency
+- **Discount Codes**: Review generated codes in Shopify
+- **Newsletter Growth**: Analyze subscriber acquisition
+- **Survey Analytics**: Review customer feedback trends
+
+### 🚨 Troubleshooting Guide
+
+#### Webhook Failures
+
+```
+Problem: Orders not appearing in Payload
+Solution:
+1. Check Shopify webhook delivery status
+2. Verify webhook URLs in Shopify admin
+3. Review Payload logs for webhook processing errors
+4. Use manual sync as fallback: SyncOrdersButton
+```
+
+#### Email Delivery Issues
+
+```
+Problem: Survey emails not sending
+Solution:
+1. Check cron job execution in hosting provider
+2. Verify CRON_SECRET environment variable
+3. Review scheduled-emails collection for stuck records
+4. Check email service provider status
+```
+
+#### Discount Code Problems
+
+```
+Problem: Codes not working in Shopify
+Solution:
+1. Verify discount creation in Shopify admin
+2. Check API permissions for discount creation
+3. Review createDiscountA() logs for errors
+4. Test code manually in Shopify checkout
+```
+
+#### Data Inconsistencies
+
+```
+Problem: Order data mismatch between systems
+Solution:
+1. Use SyncOrdersButton for bulk reconciliation
+2. Check webhook payload parsing logic
+3. Verify ATTRIBUTE_KEY_PL mapping consistency
+4. Manual data correction in Payload admin
+```
+
+### 📈 Performance Optimization
+
+#### Shopify Optimization
+
+- Minimize custom attributes (affects checkout performance)
+- Use efficient GraphQL queries
+- Implement proper error handling for API calls
+
+#### Payload Optimization
+
+- Use database indexes on frequently queried fields
+- Implement proper caching for survey forms
+- Monitor cron job execution times
+- Optimize email template rendering
+
+## 🔧 Environment Variables
+
+```env
+# Email Configuration
+EMAIL_USER=your-email@domain.com
+EMAIL_PASS=your-email-password
+NEXT_PUBLIC_SERVER_URL=https://yourdomain.com
+CRON_SECRET=your-cron-secret
+
+# Shopify API
+SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
+SHOPIFY_ACCESS_TOKEN=storefront-api-token
+SHOPIFY_ADMIN_API_ACCESS_TOKEN=admin-api-token
+SHOPIFY_WEBHOOK_SECRET=webhook-secret
+```
+
+## ⚙️ Shopify Configuration
+
+### Required Webhooks
+
+Set up in Shopify Admin → Settings → Notifications → Webhooks:
+
+```
+Event: Order creation
+URL: https://yourdomain.com/api/webhooks/order-created
+Format: JSON
+Secret: [SHOPIFY_WEBHOOK_SECRET]
+```
+
+```
+Event: Order fulfillment
+URL: https://yourdomain.com/api/webhooks/order-fulfilled
+Format: JSON
+Secret: [SHOPIFY_WEBHOOK_SECRET]
+```
+
+### Checkout Settings
+
+**Online Store → Themes → Customize → Checkout:**
+
+1. **Email Marketing Section**:
+   - Enable email marketing checkbox
+   - Set text to: `Chcę być na bieżąco z nowościami Moodbox`
+   - Position: After customer information (recommended)
+
+2. **Additional Scripts** (if needed):
+   - Add custom tracking or validation scripts
+
+### API Permissions
+
+**Apps → [Your App] → API Permissions:**
+
+Required Admin API scopes:
+
+- `read_orders` - Access order data
+- `write_discounts` - Create discount codes
+- `read_customers` - Customer data access
+- `write_content` - Metafield management (if used)
+
+Required Storefront API scopes:
+
+- `unauthenticated_read_product_listings` - Product browsing
+- `unauthenticated_read_product_inventory` - Stock levels
+- `unauthenticated_write_checkouts` - Cart/checkout creation
+
+### Products Setup
+
+- **Fixed Fee Product**: Create "box-stala-cena" product for shipping/tax handling
+- **Product Metafields**: Configure `brand` metafield for survey analytics
+- **Inventory**: Ensure products are available for purchase
 
 ## 📧 Email Templates
 
@@ -36,59 +494,6 @@ export function generateNameEmailHTML(data: any) {
 - `text`: `{ content, bold?, marginBottom? }`
 - `button`: `{ label, url }`
 - `raw`: `{ html }` (For manual tweaks)
-
-## 📅 Scheduled Emails
-
-Automated post-purchase customer feedback system.
-
-### 🔄 Workflow
-
-1. **Order Fulfillment** (`handleOrderFulfilled.ts`):
-   - Shopify webhook triggers when order is fulfilled
-   - Creates scheduled email record with secure token
-   - Scheduled immediately, expires in 7 days
-
-2. **Manual Sending** (`TriggerSendingScheduledEmails.tsx`):
-   - Admin selects emails in `/admin/collections/scheduled-emails`
-   - Click "Wyślij do wybranych (X)" button
-   - Requires at least one selection
-
-3. **Automated Sending** (`sendScheduledEmail.ts`):
-   - Cron job at `/api/cron/send-feedback-emails`
-   - Sends due emails + cleans up expired ones
-
-### 🎯 Key Features
-
-- **Dual Modes**: Manual selective + automated cron
-- **Security**: HMAC tokens with 14-day expiration
-- **Status Tracking**: pending → sent/failed
-- **Error Recovery**: Failed emails can be manually retried
-- **Idempotency**: Prevents duplicate emails per order
-
-### 📊 Admin Monitoring
-
-- View all scheduled emails in collection
-- Status indicators (pending/sent/failed/cancelled)
-- Manual retry for failed emails
-- Real-time feedback on send operations
-
-### 🔧 Technical Details
-
-#### Core Functions
-
-- `handleOrderFulfilled()` - Creates scheduled emails
-- `sendEmailsManually(ids[])` - Manual selective sending
-- `sendScheduledEmail()` - Automated cron processing
-- `sendAndUpdateCollection()` - Shared sending logic
-
-#### Environment Variables
-
-```env
-EMAIL_USER=your-email@domain.com
-EMAIL_PASS=your-email-password
-NEXT_PUBLIC_SERVER_URL=https://yourdomain.com
-CRON_SECRET=your-cron-secret
-```
 
 # Docker
 

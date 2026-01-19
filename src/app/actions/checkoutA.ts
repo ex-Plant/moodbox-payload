@@ -38,10 +38,10 @@ export async function checkoutA(cartItems: string[], formData: CartSchemaT) {
 
   // TODO add again after testing
   // Add the flat fee product variant
-  // lineItems.push({
-  //   merchandiseId: flatFeeProduct.variants.edges[0].node.id,
-  //   quantity: 1,
-  // })
+  lineItems.push({
+    merchandiseId: flatFeeProduct.variants.edges[0].node.id,
+    quantity: 1,
+  })
 
   // add custom attributes
   // console.log('📦 lineItems before createCart:', lineItems);
@@ -49,10 +49,6 @@ export async function checkoutA(cartItems: string[], formData: CartSchemaT) {
   const cart = await createCart(lineItems, attributes)
 
   if (cart?.checkoutUrl) {
-    // await payload.create({
-    //   collection: 'contacts', // Your custom collection
-    //   data: formData
-    // })
     redirect(cart.checkoutUrl)
   } else {
     console.log(`❌ Uncaught error in checkout`)
