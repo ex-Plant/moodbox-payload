@@ -25,7 +25,7 @@ export default function FooterClient({ footerItems }: { footerItems: Footer['nav
             ))}
           </div>
         </FooterCat>
-        <FooterCat title={'Kontakt'}>
+        {/* <FooterCat title={'Kontakt'}>
           <div
             className={cn(
               `hover:border-mood-dark-brown border-b border-transparent delay-200 duration-200 pb-0.5 lowercase w-fit`,
@@ -35,7 +35,7 @@ export default function FooterClient({ footerItems }: { footerItems: Footer['nav
               hello@moodbox.pl
             </Link>
           </div>
-        </FooterCat>
+        </FooterCat> */}
         <div className={` xl:col-start-9 xl:col-span-4 pr-4`}>
           <FooterCat title={'Newsletter'} className={'xl:px-4 '} />
           <NewsletterForm />
