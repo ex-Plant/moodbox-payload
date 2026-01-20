@@ -6,10 +6,7 @@ import { fixupPluginRules } from '@eslint/compat'
 
 export default ts.config(
   {
-    extends: [
-      js.configs.recommended,
-      ...ts.configs.recommended,
-    ],
+    extends: [js.configs.recommended, ...ts.configs.recommended],
   },
   {
     plugins: {

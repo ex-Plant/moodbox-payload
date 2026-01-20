@@ -2,7 +2,7 @@ name: Backup Neon DB to Seohost
 
 on:
   schedule:
-    - cron: "0 2 * * 0"
+    - cron: '0 2 * * 0'
   workflow_dispatch:
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
         run: |
           TIMESTAMP=$(date +%Y%m%d-%H%M%S)
           FILENAME="moodbox-backup-${TIMESTAMP}.sql.gz"
-          
+
           # 1. Run Docker container to dump the data
           # 2. Pipe it to gzip running on the host machine
           # This is cleaner than mounting volumes
