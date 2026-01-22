@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
+import { isAdmin } from '../../access/is-admin'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -17,15 +18,25 @@ export const Users: CollectionConfig = {
   access: {
     admin: authenticated,
     create: authenticated,
-    delete: authenticated,
+    delete: isAdmin,
     read: authenticated,
-    update: authenticated,
+    update: ({ req: { user }, id }) => user?.role === 'admin' || user?.id === id,
   },
   admin: {
-    defaultColumns: ['name', 'email'],
+    defaultColumns: ['name', 'email', 'role'],
     useAsTitle: 'name',
   },
   auth: true,
+  hooks: {
+    beforeDelete: [
+      async ({ req }) => {
+        const userCount = await req.payload.count({ collection: 'users' })
+        if (userCount.totalDocs <= 1) {
+          throw new Error('Nie można usunąć ostatniego użytkownika')
+        }
+      },
+    ],
+  },
   fields: [
     {
       name: 'name',
@@ -36,13 +47,21 @@ export const Users: CollectionConfig = {
       },
     },
     {
-      name: 'test_required',
-      type: 'text',
+      name: 'role',
+      type: 'select',
       label: {
-        pl: 'Pole testowe (wymagane)',
-        en: 'Test Field (Required)',
+        pl: 'Rola',
+        en: 'Role',
       },
+      options: [
+        { label: 'Admin', value: 'admin' },
+        { label: 'Editor', value: 'editor' },
+      ],
+      defaultValue: 'editor',
       required: true,
+      access: {
+        update: ({ req: { user } }) => user?.role === 'admin',
+      },
     },
   ],
   timestamps: true,

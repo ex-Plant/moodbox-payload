@@ -562,7 +562,7 @@ export interface PartnersBlock {
 export interface User {
   id: number;
   name?: string | null;
-  test_required: string;
+  role: 'admin' | 'editor';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1159,7 +1159,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
-  test_required?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
