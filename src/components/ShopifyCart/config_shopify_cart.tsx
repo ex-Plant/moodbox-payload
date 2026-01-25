@@ -62,16 +62,6 @@ export const config_shopify_cart: Block = {
       localized: true,
     },
     {
-      name: 'fixedPriceLabel',
-      type: 'text',
-      label: {
-        en: 'Fixed Price Label',
-        pl: 'Stała cena',
-      },
-      required: true,
-      localized: true,
-    },
-    {
       name: 'formTipText',
       type: 'textarea',
       label: {

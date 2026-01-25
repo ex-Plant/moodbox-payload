@@ -448,7 +448,6 @@ export interface ShopifyCartBlock {
   selectedItemsLabel: string;
   additionalInfoLabel: string;
   companyDataLabel: string;
-  fixedPriceLabel: string;
   formTipText: string;
   proceedToCheckoutLabel: string;
   deleteAllLabel: string;
@@ -986,7 +985,6 @@ export interface ShopifyCartBlockSelect<T extends boolean = true> {
   selectedItemsLabel?: T;
   additionalInfoLabel?: T;
   companyDataLabel?: T;
-  fixedPriceLabel?: T;
   formTipText?: T;
   proceedToCheckoutLabel?: T;
   deleteAllLabel?: T;

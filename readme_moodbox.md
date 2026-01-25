@@ -608,14 +608,9 @@ cat [your_dump_file].sql | docker exec -i moodbox-db psql -U postgres -d local_m
 
 # STAGING: Cloud Verification (The Safety Net)
 
-1. Test Migration:
-2. Run the migration against Neon Staging from your local machine or push code to staging:
+1. Push files to staging, it will trigger migration on staging neon db.
 
-```zsh
-npm run migrate:staging
-```
-
-3. Verification: Open your Vercel Preview URL (which points to this Staging DB) and ensure the app works.
+2. Verification: Open your Vercel Preview URL (which points to this Staging DB) and ensure the app works.
 
 # PRODUCTION: Deployment (The Release)
 
