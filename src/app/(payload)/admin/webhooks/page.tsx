@@ -1,6 +1,8 @@
 import { checkAuth } from '@/utilities/checkAuth'
 import WebhookManager from '@/components/WebhookManager'
 
+export const dynamic = 'force-dynamic'
+
 export default async function WebhooksPage() {
   // Check authentication server-side
   const isAuthenticated = await checkAuth()

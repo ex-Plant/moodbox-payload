@@ -2,13 +2,13 @@ import { getServerSideSitemap } from 'next-sitemap'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { unstable_cache } from 'next/cache'
-import { slugs as EXCLUDED_SLUGS } from '@/../sitemap-excludes.json'
+import { env } from '@/lib/env'
 
 const getPagesSitemap = unstable_cache(
   async () => {
     const payload = await getPayload({ config })
-    // Env is validated during build via src/lib/env.ts
-    const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL
+
+    const SITE_URL = env.NEXT_PUBLIC_SERVER_URL
 
     const results = await payload.find({
       collection: 'pages',
@@ -32,7 +32,10 @@ const getPagesSitemap = unstable_cache(
 
     const sitemap = results.docs
       ? results.docs
-          .filter((page) => Boolean(page?.slug) && !EXCLUDED_SLUGS.includes(page.slug))
+          .filter(
+            (page) =>
+              Boolean(page?.slug) && !['test', 'home-copy', 'email-previews'].includes(page.slug),
+          )
           .map((page) => ({
             loc: page?.slug === 'home' ? `${SITE_URL}/` : `${SITE_URL}/${page?.slug}`,
             lastmod: page.updatedAt || dateFallback,
@@ -41,6 +44,7 @@ const getPagesSitemap = unstable_cache(
 
     return sitemap
   },
+
   ['pages-sitemap'],
   {
     tags: ['pages-sitemap'],
@@ -49,6 +53,5 @@ const getPagesSitemap = unstable_cache(
 
 export async function GET() {
   const sitemap = await getPagesSitemap()
-
   return getServerSideSitemap(sitemap)
 }

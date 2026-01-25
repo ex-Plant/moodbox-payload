@@ -28,6 +28,8 @@ export async function generateStaticParams() {
     },
   })
 
+  console.log('page.tsx:31 - pages:', pages)
+
   const params = pages.docs
     ?.filter((doc) => {
       return doc.slug !== 'home'
@@ -54,15 +56,6 @@ export default async function Page({ params: paramsPromise }: Args) {
   const page: RequiredDataFromCollectionSlug<'pages'> | null = await queryPageBySlug({
     slug: decodedSlug,
   })
-
-  // console.log({ slug, decodedSlug, url, page })
-
-  // try {
-  //   const order = await getOrderById('gid://shopify/Order/7377856430427')
-  //   console.dir(order, { colors: true, depth: null })
-  // } catch (e) {
-  //   console.log(e)
-  // }
 
   if (!page) return notFound()
 

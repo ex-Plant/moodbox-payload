@@ -1,5 +1,4 @@
-/* eslint-disable no-undef, @typescript-eslint/no-require-imports */
-const { patterns } = require('./sitemap-excludes.json')
+/* eslint-disable no-undef */
 
 // Env is validated during build via src/lib/env.ts
 // If build succeeded, NEXT_PUBLIC_SERVER_URL is guaranteed to be set
@@ -9,7 +8,15 @@ const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL
 module.exports = {
   siteUrl: SITE_URL,
   generateRobotsTxt: true,
-  exclude: patterns,
+  exclude: [
+    '/pages-sitemap.xml',
+    '/test*',
+    '/search*',
+    '/posts*',
+    '/home-copy*',
+    '/email-previews*',
+    '/icon-*',
+  ],
   robotsTxtOptions: {
     policies: [
       {
