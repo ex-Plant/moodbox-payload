@@ -1,5 +1,7 @@
 'use server'
 
+import { env } from '@/lib/env'
+
 export type ShopifyAdminResponseT<T> = {
   data: T
   errors?: Array<{ message: string }>
@@ -10,21 +12,15 @@ type ShopifyAdminFetchParamsT = {
   variables?: Record<string, unknown>
 }
 
-const SHOPIFY_ADMIN_API_URL: string | undefined = process.env.SHOPIFY_ADMIN_API_URL
-const SHOPIFY_ADMIN_ACCESS_TOKEN: string | undefined = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN
-
 export async function shopifyAdminFetch<T>({
   query,
   variables = {},
 }: ShopifyAdminFetchParamsT): Promise<ShopifyAdminResponseT<T> | null> {
-  if (!SHOPIFY_ADMIN_API_URL) throw new Error('❗SHOPIFY_ADMIN_API_URL is missing')
-  if (!SHOPIFY_ADMIN_ACCESS_TOKEN) throw new Error('❗SHOPIFY_ADMIN_ACCESS_TOKEN is missing')
-
-  const response: Response = await fetch(SHOPIFY_ADMIN_API_URL, {
+  const response: Response = await fetch(env.SHOPIFY_ADMIN_API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Shopify-Access-Token': SHOPIFY_ADMIN_ACCESS_TOKEN,
+      'X-Shopify-Access-Token': env.SHOPIFY_ADMIN_ACCESS_TOKEN,
     },
     body: JSON.stringify({ query, variables }),
   })

@@ -4,6 +4,7 @@ import { BasePayload, getPayload, PaginatedDocs, type Where } from 'payload'
 import configPromise from '@payload-config'
 import { buildPostOrderEmail } from '../../../utilities/email_templates/buildPostOrderEmail'
 import { ScheduledEmail } from '../../../payload-types'
+import { env } from '@/lib/env'
 
 type ResultsT = Array<{ email: string; status: string; errorMessage?: string }>
 
@@ -82,9 +83,7 @@ async function sendAndUpdateCollection(
       continue
     }
 
-    const baseUrl: string = process.env.NEXT_PUBLIC_SERVER_URL ?? ''
-
-    if (!baseUrl) throw new Error('❌ NEXT_PUBLIC_SERVER_URL missing ')
+    const baseUrl: string = env.NEXT_PUBLIC_SERVER_URL
 
     const linkUrl: string = `${baseUrl}/ankieta/${doc.token}`
     console.log('linkUrl: ', linkUrl, 'baseUrl: ', baseUrl)

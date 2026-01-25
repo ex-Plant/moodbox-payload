@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { checkAuth } from '@/utilities/checkAuth'
+import { env } from '@/lib/env'
 
 export async function DELETE(
   request: NextRequest,
@@ -27,7 +28,7 @@ export async function DELETE(
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'X-Shopify-Access-Token': process.env.SHOPIFY_ADMIN_ACCESS_TOKEN ?? '',
+          'X-Shopify-Access-Token': env.SHOPIFY_ADMIN_ACCESS_TOKEN,
         },
       },
     )

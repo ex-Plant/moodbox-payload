@@ -1,9 +1,7 @@
 'use server'
 
+import { env } from '@/lib/env'
 import { ShopifyResponseT } from './types'
-
-const SHOPIFY_STORE_DOMAIN = process.env.SHOPIFY_STOREFRONT_API_URL
-const SHOPIFY_STOREFRONT_ACCESS_TOKEN = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN
 
 type ShopifyFetchParamsT = {
   query: string
@@ -18,16 +16,11 @@ export async function shopifyFetch<T>({
   cache = 'no-cache',
   tags = [],
 }: ShopifyFetchParamsT): Promise<ShopifyResponseT<T> | null> {
-  if (!SHOPIFY_STOREFRONT_ACCESS_TOKEN) throw new Error(' ❗SHOPIFY_STOREFRONT_ACCESS_TOKEN')
-  if (!SHOPIFY_STORE_DOMAIN) throw new Error('❗SHOPIFY_STORE_DOMAIN')
-
-  // console.log('🚀', { query, variables });
-
-  const response = await fetch(SHOPIFY_STORE_DOMAIN, {
+  const response = await fetch(env.SHOPIFY_STOREFRONT_API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_ACCESS_TOKEN,
+      'X-Shopify-Storefront-Access-Token': env.SHOPIFY_STOREFRONT_ACCESS_TOKEN,
     },
     body: JSON.stringify({ query, variables }),
     cache,

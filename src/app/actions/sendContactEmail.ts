@@ -3,6 +3,7 @@
 import { getPayload } from 'payload'
 import payloadConfig from '../../payload.config'
 import { contactSchema, contactSchemaT } from '../../schemas/contactFormSchema'
+import { env } from '@/lib/env'
 
 export async function sendContactEmail(data: contactSchemaT) {
   const payload = await getPayload({ config: payloadConfig })
@@ -19,7 +20,7 @@ export async function sendContactEmail(data: contactSchemaT) {
     }
 
     await payload.sendEmail({
-      to: process.env.EMAIL_USER,
+      to: env.EMAIL_USER,
       subject: `Moodbox kontakt: ${data.subject}`,
       text: data.message,
     })

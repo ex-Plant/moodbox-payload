@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { checkAuth } from '@/utilities/checkAuth'
+import { env } from '@/lib/env'
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,7 +32,7 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Shopify-Access-Token': process.env.SHOPIFY_ADMIN_ACCESS_TOKEN ?? '',
+        'X-Shopify-Access-Token': env.SHOPIFY_ADMIN_ACCESS_TOKEN,
       },
       body: JSON.stringify(webhookData),
     })

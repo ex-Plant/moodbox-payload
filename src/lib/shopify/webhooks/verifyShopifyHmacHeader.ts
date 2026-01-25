@@ -2,18 +2,9 @@ import 'server-only'
 
 import { createHmac, timingSafeEqual } from 'crypto'
 import { NextRequest } from 'next/server'
+import { env } from '@/lib/env'
 
 export async function verifyShopifyHmacHeader(req: NextRequest) {
-  const secret = process.env.SHOPIFY_API_SECRET
-  if (!secret) {
-    console.error('❌ SHOPIFY_API_SECRET is not defined ')
-
-    return {
-      message: 'Server configuration error',
-      status: 500,
-    }
-  }
-
   const hmacHeader = req.headers.get('x-shopify-hmac-sha256')
 
   if (!hmacHeader)
@@ -24,7 +15,7 @@ export async function verifyShopifyHmacHeader(req: NextRequest) {
 
   try {
     const rawBody = await req.text()
-    const generatedHash = createHmac('sha256', /*  */ secret).update(rawBody).digest()
+    const generatedHash = createHmac('sha256', env.SHOPIFY_API_SECRET).update(rawBody).digest()
     const checksum = Buffer.from(hmacHeader, 'base64')
 
     if (

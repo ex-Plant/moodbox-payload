@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { checkAuth } from '@/utilities/checkAuth'
+import { env } from '@/lib/env'
 
 export async function GET(request: NextRequest) {
   try {
@@ -16,7 +17,7 @@ export async function GET(request: NextRequest) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'X-Shopify-Access-Token': process.env.SHOPIFY_ADMIN_ACCESS_TOKEN ?? '',
+        'X-Shopify-Access-Token': env.SHOPIFY_ADMIN_ACCESS_TOKEN,
       },
     })
 

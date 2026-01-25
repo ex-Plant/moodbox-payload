@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import configPromise from '@payload-config'
 import { buildDiscountCodeEmail } from '../../../utilities/email_templates/buildDiscountCodeEmail'
 import { checkAuth } from '@/utilities/checkAuth'
+import { env } from '@/lib/env'
 
 export async function GET() {
   try {
@@ -24,7 +25,7 @@ export async function GET() {
     const { subject, html } = buildDiscountCodeEmail('To jest testowy kod rabatowy 🍆 : 123345')
 
     await payload.sendEmail({
-      to: process.env.EMAIL_USER || '',
+      to: env.EMAIL_USER,
       subject,
       // text: '',
       html,
