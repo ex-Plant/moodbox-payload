@@ -1,0 +1,12 @@
+{
+  "slugs": ["test", "home-copy", "email-previews"],
+  "patterns": [
+    "/pages-sitemap.xml",
+    "/test*",
+    "/search*",
+    "/posts*",
+    "/home-copy*",
+    "/email-previews*",
+    "/icon-*"
+  ]
+}

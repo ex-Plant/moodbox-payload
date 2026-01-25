@@ -1,13 +1,15 @@
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SERVER_URL ||
-  process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-  'https://example.com'
+/* eslint-disable no-undef, @typescript-eslint/no-require-imports */
+const { patterns } = require('./sitemap-excludes.json')
+
+// Env is validated during build via src/lib/env.ts
+// If build succeeded, NEXT_PUBLIC_SERVER_URL is guaranteed to be set
+const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: SITE_URL,
   generateRobotsTxt: true,
-  exclude: ['/pages-sitemap.xml', '/*'],
+  exclude: patterns,
   robotsTxtOptions: {
     policies: [
       {
