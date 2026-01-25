@@ -7,9 +7,10 @@ import CartItems from './CartItems'
 
 type PropsT = {
   allProducts: ProductT[]
+  moodboxPrice?: string
 } & ShopifyCartBlock
 
-export default function CartSection({ allProducts, ...props }: PropsT) {
+export default function CartSection({ allProducts, moodboxPrice, ...props }: PropsT) {
   const { cartItems } = useCart()
 
   const allVariants = allProducts.flatMap((el) => {
@@ -23,7 +24,9 @@ export default function CartSection({ allProducts, ...props }: PropsT) {
         <aside className={`xl:col-span-3 xl:pl-4`}>
           <CartItems selected={selected} {...props} />
         </aside>
-        <div className={`mt-4 xl:col-span-9 xl:col-start-5 xl:mt-0`}>{<CartForm {...props} />}</div>
+        <div className={`mt-4 xl:col-span-9 xl:col-start-5 xl:mt-0`}>
+          <CartForm moodboxPrice={moodboxPrice} {...props} />
+        </div>
       </div>
     </section>
   )

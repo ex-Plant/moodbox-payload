@@ -16,11 +16,15 @@ import { CircleHelp as CircleQuestionMark } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 import { ShopifyCartBlock } from '@/payload-types'
 import RichText from '@/components/RichText'
-import useCartForm from '../../../../lib/hooks/useCartForm'
+import useCartForm from '@/lib/hooks/useCartForm'
 import { useEffect, useRef } from 'react'
 import LogoMoodboxSvg from '../../common/LogoMoodboxSvg'
 
-export default function CartForm({ ...props }: ShopifyCartBlock) {
+type PropsT = {
+  moodboxPrice?: string
+} & ShopifyCartBlock
+
+export default function CartForm({ moodboxPrice, ...props }: PropsT) {
   const { cartItems } = useCart()
   const { formData, updateFormData } = useCartForm()
 
@@ -46,7 +50,6 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
 
   // Subscribe to form changes and update Zustand store in real-time
   const formValues = useStore(form.store, (state) => state.values)
-
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
@@ -233,9 +236,7 @@ export default function CartForm({ ...props }: ShopifyCartBlock) {
 
       <div className={`flex flex-col gap-4 pt-4 xl:mr-4 xl:items-end`}>
         <div className={`grid gap-2`}>
-          <p className={`ml-auto text-[2rem] text-nowrap xl:text-[2.5rem]`}>
-            {props.fixedPriceLabel || '39 PLN'}
-          </p>
+          <p className={`ml-auto text-[2rem] text-nowrap xl:text-[2.5rem]`}>{moodboxPrice}</p>
           <Tip
             disabled={!emptyCart}
             content={props.emptyBasketLabel || 'Koszyk jest pusty'}
