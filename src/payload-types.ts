@@ -161,6 +161,10 @@ export interface Page {
   textPage?: boolean | null;
   hero?: {
     media?: (number | null) | Media;
+    /**
+     * Optional image shown while video loads. Use first frame of video for best results.
+     */
+    poster?: (number | null) | Media;
     title?: {
       root: {
         type: string;
@@ -861,6 +865,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         media?: T;
+        poster?: T;
         title?: T;
         add_subtitle?: T;
         subtitle?: T;

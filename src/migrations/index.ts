@@ -11,6 +11,7 @@ import * as migration_20260113_102117_shopify_order_id_as_primary_key from './20
 import * as migration_20260113_170000_add_linked_internal_order from './20260113_170000_add_linked_internal_order';
 import * as migration_20260122_201205_add_user_role from './20260122_201205_add_user_role';
 import * as migration_20260125_191732_remove_fixed_price_label from './20260125_191732_remove_fixed_price_label';
+import * as migration_20260126_140530_add_poster_to_video_ from './20260126_140530_add_poster_to_video_';
 
 export const migrations = [
   {
@@ -76,6 +77,11 @@ export const migrations = [
   {
     up: migration_20260125_191732_remove_fixed_price_label.up,
     down: migration_20260125_191732_remove_fixed_price_label.down,
-    name: '20260125_191732_remove_fixed_price_label'
+    name: '20260125_191732_remove_fixed_price_label',
+  },
+  {
+    up: migration_20260126_140530_add_poster_to_video_.up,
+    down: migration_20260126_140530_add_poster_to_video_.down,
+    name: '20260126_140530_add_poster_to_video_'
   },
 ];

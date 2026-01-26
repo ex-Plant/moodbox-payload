@@ -12,7 +12,7 @@ import LogoMoodboxSvg from '../_custom_moodbox/common/LogoMoodboxSvg'
 
 export const Hero: React.FC<Page['hero']> = (props) => {
   if (!props || !props.media) return null
-  const { media, title, add_button, add_subtitle, subtitle, button_link } = props
+  const { media, title, add_button, add_subtitle, subtitle, button_link, poster } = props
 
   return (
     <section className={`relative min-h-[600px] w-full`}>
@@ -25,6 +25,7 @@ export const Hero: React.FC<Page['hero']> = (props) => {
         videoClassName={`relative h-screen min-h-[600px] w-full object-cover xl:w-screen `}
         resource={media}
         className={`relative h-screen min-h-[600px] w-full object-cover xl:w-screen `}
+        poster={poster}
       />
       {/* mask over the video to make it more readable */}
       <div className={`bg-mood-dark-brown absolute inset-0 opacity-10 pointer-events-none`}></div>

@@ -19,6 +19,17 @@ export const config_hero: Field = {
       required: false,
     },
     {
+      name: 'poster',
+      type: 'upload',
+      label: 'Video Poster',
+      relationTo: 'media',
+      required: false,
+      admin: {
+        description:
+          'Optional image shown while video loads. Use first frame of video for best results.',
+      },
+    },
+    {
       name: 'title',
       type: 'richText',
       label: 'Title',
