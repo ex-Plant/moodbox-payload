@@ -78,6 +78,7 @@ export default function SelectedVariantImg({
       {variant.availableForSale ? (
         <div
           role={`button`}
+          aria-label={checked ? 'Usuń z koszyka' : 'Dodaj do koszyka'}
           onClick={(e) => toggle(e)}
           className={cn(
             `absolute top-0 right-0 z-10 p-2`,

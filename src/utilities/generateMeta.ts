@@ -33,7 +33,7 @@ export const generateMeta = async (args: { doc: Partial<Page> | null }): Promise
     'Moodbox - pierwsza platforma w Polsce z próbkami materiałów wnętrzarskich. Dla projektantów: szybki dostęp do próbek w jednym boxie. Dla producentów: nowy kanał sprzedaży.'
 
   return {
-    description: doc?.meta?.description,
+    description,
     openGraph: mergeOpenGraph({
       images: ogImage ? [{ url: ogImage }] : undefined,
       title,

@@ -23,6 +23,9 @@ export default function FooterClient({ footerItems }: { footerItems: Footer['nav
             ))}
             <span
               id="cookie_settings"
+              role="button"
+              tabIndex={0}
+              aria-label="Ustawienia cookies"
               className={`
               hover:border-mood-dark-brown border-b border-transparent delay-200 duration-200 pb-0.5 font-normal w-fit cursor-pointer `}
             >

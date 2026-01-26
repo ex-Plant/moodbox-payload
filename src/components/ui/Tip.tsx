@@ -13,6 +13,7 @@ type TipProps = React.PropsWithChildren<{
   disabled?: boolean
   defaultContent?: boolean
   delay?: number
+  ariaLabel?: string
 }>
 export const Tip = ({
   content,
@@ -22,6 +23,7 @@ export const Tip = ({
   disabled,
   side = 'top',
   delay = 400,
+  ariaLabel = 'Pokaż wskazówkę',
 }: TipProps) => {
   const [open, setOpen] = React.useState(false)
 
@@ -60,7 +62,7 @@ export const Tip = ({
           <span
             tabIndex={0}
             role={`button`}
-            aria-label="Wskazówka"
+            aria-label={ariaLabel}
             className={cn('cursor-pointer ', className)}
             onMouseEnter={(e) => handleMouseEvent(`mouseenter`, e)}
             onMouseLeave={(e) => handleMouseEvent(`mouseleave`, e)}

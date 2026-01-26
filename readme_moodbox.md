@@ -466,6 +466,36 @@ Required Storefront API scopes:
 - `unauthenticated_read_product_inventory` - Stock levels
 - `unauthenticated_write_checkouts` - Cart/checkout creation
 
+### Homepage Redirect to Custom Frontend
+
+To seamlessly redirect customers from the default Shopify storefront to your custom Next.js/Payload CMS frontend, modify the Shopify theme template:
+
+**Access Theme Editor:**
+
+- Navigate to [Shopify Admin → Online Store → Themes](https://admin.shopify.com/store/moodboxpl/themes/188348531035)
+- Click "Edit code" on your live theme
+- Open `layout/theme.liquid`
+
+**Add Redirect Code:**
+Insert this code block at the beginning of the `<head>` section:
+
+```liquid
+{% if template == 'index' %}
+  <meta http-equiv="refresh" content="0; url=https://moodbox.pl">
+  <style>body{opacity:0;}</style>
+  <script>
+    window.location.replace('https://moodbox.pl');
+  </script>
+{% endif %}
+```
+
+**How it works:**
+
+- **Template Check**: Only redirects when viewing the homepage (`template == 'index'`)
+- **Multiple Methods**: Uses meta refresh, CSS opacity, and JavaScript redirect for maximum compatibility
+- **Seamless UX**: Customers visiting your Shopify domain are instantly redirected to the custom frontend
+- **Preserves Other Pages**: Product pages, collections, and checkout remain on Shopify
+
 ### Products Setup
 
 - **Fixed Fee Product**: Create "box-stala-cena" product for shipping/tax handling

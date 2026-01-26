@@ -38,6 +38,7 @@ export default function Nav({ headerData }: { headerData: Header }) {
         <div className={`pointer-events-auto col-span-3`}>
           <Link
             href="/"
+            aria-label="home"
             className={cn(
               `absolute top-0 bottom-0 left-0 flex items-center`,
               isOnTop ? `translate-x-0 opacity-100` : `translate-x-[-50vw] opacity-0`,

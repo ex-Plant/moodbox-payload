@@ -12,7 +12,6 @@ type Webhook = {
 }
 
 export default function WebhookManager() {
-  const [testResult, setTestResult] = useState<string>('')
   const [deleteResult, setDeleteResult] = useState<string>('')
   const [createResult, setCreateResult] = useState<string>('')
   const [webhooksList, setWebhooksList] = useState<Webhook[]>([])
