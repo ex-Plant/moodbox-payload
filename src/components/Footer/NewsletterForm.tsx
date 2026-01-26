@@ -35,8 +35,6 @@ export default function NewsletterForm() {
         5000,
       )
 
-      // Rate limiting check
-      await wait(5000)
       setSubmissionBlocked(false)
     },
   })
@@ -71,14 +69,6 @@ export default function NewsletterForm() {
           )
         }}
       </form.AppField>
-      {/* <button
-        disabled={isSubmitting}
-        type="submit"
-        className="whitespace-nowrap border-l px-4 border-mood-brown "
-      >
-        {isSubmitting ? 'Zapisuje' : 'Zapisz się'}
-      </button> */}
-
       <div className={`border-l px-4 border-mood-dark-brown flex items-center oput`}>
         <Button
           disabled={isSubmitting}
