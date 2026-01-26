@@ -1,6 +1,5 @@
 // Silktide Consent Manager Configuration
 // https://silktide.com/consent-manager/
-/* eslint-disable no-undef */
 
 if (typeof silktideCookieBannerManager !== 'undefined') {
   silktideCookieBannerManager.updateCookieBannerConfig({

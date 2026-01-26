@@ -36,6 +36,6 @@ export default ts.config(
     },
   },
   {
-    ignores: ['.next/'],
+    ignores: ['.next/', 'public/vendor/silktide/**'],
   },
 )
