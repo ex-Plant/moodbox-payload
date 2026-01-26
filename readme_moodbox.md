@@ -224,18 +224,53 @@ SHOPIFY_ADMIN_API_URL=https://your-store.myshopify.com/admin/api/2024-10
 
 ## 📊 Data Synchronization
 
-### Manual Sync (`SyncOrdersButton.tsx`)
+### Order Synchronization System
 
-- **Purpose**: One-time bulk import of existing Shopify orders
-- **Process**: `syncOrdersA()` fetches all orders via Admin API
-- **Status**: Currently disabled (`return null`)
-- **Use Case**: Initial data migration or emergency sync
+The system provides multiple methods for synchronizing order data between Shopify and Payload CMS, ensuring data consistency and enabling manual recovery from webhook failures.
 
-### Webhook vs Manual Sync
+#### 📍 Sync Administration Page (`/admin/sync`)
 
-- **Webhook**: Real-time, handles new orders automatically
-- **Manual**: Bulk operations, historical data import
-- **Data Mapping**: Both use same attribute mapping (`ATTRIBUTE_KEY_PL`)
+**Access**: Available at `/admin/sync` in the Payload admin panel (requires authentication)
+
+**Features**:
+
+- **Server-side Authentication**: Uses `checkAuth()` for secure access control
+- **Unified Interface**: Single page for all sync operations
+- **Real-time Feedback**: Toast notifications for sync status and results
+
+#### 🔄 Bulk Order Synchronization (`SyncOrdersButton.tsx`)
+
+- **Purpose**: Import/sync all existing Shopify orders to Payload CMS
+- **Process**: `syncOrdersA()` fetches orders in batches of 50 via GraphQL Admin API
+- **Data Mapping**: Uses `ATTRIBUTE_KEY_PL` mapping for Polish field translation
+- **Upsert Logic**: Creates new orders or updates existing ones based on Shopify ID
+- **Pagination**: Handles large datasets with GraphQL cursor pagination
+- **Use Case**: Initial data migration, bulk reconciliation, emergency recovery
+- **Status**: Active and available in admin sync page
+
+#### 🎯 Individual Order Synchronization (`SyncOrderByIdButton.tsx`)
+
+- **Purpose**: Sync a specific order by Shopify Order ID
+- **Process**: `syncOrderByIdA()` fetches single order and processes through webhook handlers
+- **Input**: Accepts numeric Shopify Order ID (converts to GraphQL ID format)
+- **Full Processing**: Runs both `handleOrderCreated` and `handleOrderFulfilled` logic
+- **Use Case**: Targeted sync for specific orders, testing webhook logic, manual corrections
+- **Benefits**: Ensures complete order processing including scheduled emails and survey setup
+
+### Synchronization Methods Comparison
+
+| Method         | Trigger                    | Scope                  | Use Case                       | Processing              |
+| -------------- | -------------------------- | ---------------------- | ------------------------------ | ----------------------- |
+| **Webhook**    | Automatic (Shopify events) | Individual orders      | Normal operation               | Real-time               |
+| **Bulk Sync**  | Manual (Admin UI)          | All orders (paginated) | Data migration, reconciliation | Batch processing        |
+| **Sync by ID** | Manual (Admin UI)          | Single order           | Targeted fixes, testing        | Full webhook simulation |
+
+**Common Features**:
+
+- All methods use `ATTRIBUTE_KEY_PL` mapping for Polish field translation
+- Data upsert logic (create or update based on Shopify ID)
+- Error handling with detailed logging
+- Access controlled via Payload admin authentication
 
 ## 🏗️ Architecture Components
 
@@ -292,21 +327,25 @@ SHOPIFY_ADMIN_API_URL=https://your-store.myshopify.com/admin/api/2024-10
 
 ```
 src/
+├── app/(payload)/admin/sync/page.tsx          # Sync administration interface
 ├── app/actions/
 │   ├── checkoutA.ts          # Cart → Shopify checkout
 │   ├── createDiscountA.ts    # Generate discount codes
 │   ├── submitSurveyA.ts      # Process survey responses
-│   └── syncOrdersA.ts        # Bulk order import
+│   ├── syncOrdersA.ts        # Bulk order synchronization
+│   └── syncOrderByIdA.ts     # Individual order sync by ID
 ├── app/api/webhooks/
 │   ├── order-created/        # Order + newsletter processing
 │   └── order-fulfilled/      # Schedule feedback emails
+├── components/
+│   ├── SyncOrdersButton.tsx       # Bulk sync UI component
+│   ├── SyncOrderByIdButton.tsx    # Individual order sync UI
+│   └── ui/access-denied.tsx       # Reusable auth error component
 ├── lib/shopify/
 │   ├── queries.ts            # Storefront GraphQL queries
 │   ├── adminQueries.ts       # Admin API queries
 │   └── adminApi.ts           # Admin API functions
-└── components/
-    ├── SyncOrdersButton.tsx  # Manual sync UI
-    └── _custom_moodbox/home/cart/CartForm.tsx  # Order form
+└── components/_custom_moodbox/home/cart/CartForm.tsx  # Order form
 ```
 
 ## 🔧 Operational Procedures
@@ -317,12 +356,13 @@ src/
 
 - **Shopify Orders**: Verify webhook delivery in Shopify admin
 - **Payload Dashboard**: Check scheduled emails queue
+- **Order Sync**: Monitor sync operations via `/admin/sync` if webhooks fail
 - **Email Delivery**: Monitor bounce rates and delivery status
 - **Survey Completion**: Track survey response rates
 
 #### Weekly Maintenance
 
-- **Data Sync**: Spot-check order data consistency
+- **Data Sync**: Spot-check order data consistency via `/admin/sync`
 - **Discount Codes**: Review generated codes in Shopify
 - **Newsletter Growth**: Analyze subscriber acquisition
 - **Survey Analytics**: Review customer feedback trends
@@ -367,10 +407,33 @@ Solution:
 ```
 Problem: Order data mismatch between systems
 Solution:
-1. Use SyncOrdersButton for bulk reconciliation
-2. Check webhook payload parsing logic
-3. Verify ATTRIBUTE_KEY_PL mapping consistency
-4. Manual data correction in Payload admin
+1. Use Bulk Sync (/admin/sync) for full reconciliation
+2. Use Sync by ID for targeted order fixes
+3. Check webhook payload parsing logic
+4. Verify ATTRIBUTE_KEY_PL mapping consistency
+5. Manual data correction in Payload admin
+```
+
+#### Sync Operation Issues
+
+```
+Problem: Bulk sync fails or hangs
+Solution:
+1. Check Shopify Admin API rate limits
+2. Verify SHOPIFY_ADMIN_ACCESS_TOKEN permissions
+3. Review console logs for specific error messages
+4. Consider smaller batches if timeout occurs
+5. Use Sync by ID for individual problematic orders
+```
+
+```
+Problem: Sync by ID doesn't work
+Solution:
+1. Verify the Order ID format (numeric, e.g., 58348234823)
+2. Confirm order exists in Shopify admin
+3. Check network connectivity to Shopify API
+4. Review error messages in browser console
+5. Ensure proper admin authentication
 ```
 
 ### 📈 Performance Optimization
