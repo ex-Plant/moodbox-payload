@@ -8,7 +8,7 @@ import type { Props as MediaProps } from '../types'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 
 export const VideoMedia: React.FC<MediaProps> = (props) => {
-  const { onClick, resource, videoClassName, poster } = props
+  const { onClick, poster, priority, resource, videoClassName } = props
 
   const videoRef = useRef<HTMLVideoElement>(null)
   // const [showFallback] = useState<boolean>()
@@ -32,20 +32,25 @@ export const VideoMedia: React.FC<MediaProps> = (props) => {
 
   if (resource && typeof resource === 'object') {
     return (
-      <video
-        autoPlay
-        className={cn(videoClassName)}
-        controls={false}
-        loop
-        muted
-        onClick={onClick}
-        playsInline
-        poster={posterUrl}
-        preload="auto"
-        ref={videoRef}
-      >
-        <source src={getMediaUrl(resource.url)} />
-      </video>
+      <>
+        {posterUrl && priority && (
+          <link as="image" fetchPriority="high" href={posterUrl} rel="preload" />
+        )}
+        <video
+          autoPlay
+          className={cn(videoClassName)}
+          controls={false}
+          loop
+          muted
+          onClick={onClick}
+          playsInline
+          poster={posterUrl}
+          preload="auto"
+          ref={videoRef}
+        >
+          <source src={getMediaUrl(resource.url)} />
+        </video>
+      </>
     )
   }
 
