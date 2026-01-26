@@ -23,8 +23,16 @@ export default function FooterClient({ footerItems }: { footerItems: Footer['nav
             {footerItems?.map((item) => (
               <FooterLink key={item.id} item={item} />
             ))}
+            <span
+              id="cookie_settings"
+              className={`
+            hover:border-mood-dark-brown border-b border-transparent delay-200 duration-200 pb-0.5 font-normal w-fit cursor-pointer `}
+            >
+              ustawienia cookie
+            </span>
           </div>
         </FooterCat>
+
         <div className={`xl:col-start-9 xl:col-span-4 pr-4`}>
           <FooterCat title={'Newsletter'} className={'xl:px-4 '} />
           <NewsletterForm />

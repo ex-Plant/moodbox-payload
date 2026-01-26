@@ -506,44 +506,25 @@ class SilktideCookieBanner {
   }
 
   createCookieIcon() {
-    this.cookieIcon = document.createElement('button')
-    this.cookieIcon.id = 'silktide-cookie-icon'
+    // Use existing footer element instead of creating a floating icon
+    this.cookieIcon = document.getElementById('cookie_settings')
+    if (!this.cookieIcon) return
+
     this.cookieIcon.title = 'Manage your cookie preferences for this site'
-    this.cookieIcon.innerHTML = this.getCookieIconContent()
+    this.cookieIcon.style.cursor = 'pointer'
 
     if (this.config.text?.banner?.preferencesButtonAccessibleLabel) {
       this.cookieIcon.ariaLabel = this.config.text?.banner?.preferencesButtonAccessibleLabel
     }
 
-    // Ensure wrapper exists
-    if (!this.wrapper || !document.body.contains(this.wrapper)) {
-      this.createWrapper()
-    }
-
-    // Append child to wrapper
-    this.wrapper.appendChild(this.cookieIcon)
-
-    // Add positioning class from config
-    if (this.cookieIcon && this.config.cookieIcon?.position) {
-      this.cookieIcon.classList.add(this.config.cookieIcon.position)
-    }
-
-    // Add color scheme class from config
-    if (this.cookieIcon && this.config.cookieIcon?.colorScheme) {
-      this.cookieIcon.classList.add(this.config.cookieIcon.colorScheme)
-    }
+    // Don't move to wrapper - keep in footer, don't apply floating positioning
   }
-
   showCookieIcon() {
-    if (this.cookieIcon) {
-      this.cookieIcon.style.display = 'flex'
-    }
+    // No-op: footer element stays visible
   }
 
   hideCookieIcon() {
-    if (this.cookieIcon) {
-      this.cookieIcon.style.display = 'none'
-    }
+    // No-op: footer element stays visible
   }
 
   /**
@@ -752,15 +733,10 @@ class SilktideCookieBanner {
 
   preventBodyScroll() {
     document.body.style.overflow = 'hidden'
-    // Prevent iOS Safari scrolling
-    document.body.style.position = 'fixed'
-    document.body.style.width = '100%'
   }
 
   allowBodyScroll() {
     document.body.style.overflow = ''
-    document.body.style.position = ''
-    document.body.style.width = ''
   }
 }
 
@@ -818,9 +794,5 @@ class SilktideCookieBanner {
   window.silktideCookieBannerManager.updateCookieBannerConfig = updateCookieBannerConfig
   window.silktideCookieBannerManager.injectScript = injectScript
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCookieBanner, { once: true })
-  } else {
-    initCookieBanner()
-  }
+  // Don't auto-initialize - let config.js call updateCookieBannerConfig() instead
 })()

@@ -4,13 +4,12 @@
 if (typeof silktideCookieBannerManager !== 'undefined') {
   silktideCookieBannerManager.updateCookieBannerConfig({
     background: { showBackground: true },
-    cookieIcon: { position: 'bottomLeft' },
     cookieTypes: [
       {
         id: 'necessary',
         name: 'Niezbędne',
         description:
-          '<p>Te pliki cookie są niezbędne do prawidłowego działania strony i nie można ich wyłączyć.</p>',
+          '<p>Te pliki cook/*  */ie są niezbędne do prawidłowego działania strony i nie można ich wyłączyć.</p>',
         required: true,
       },
       {
