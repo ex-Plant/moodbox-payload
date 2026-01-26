@@ -95,6 +95,7 @@ export default function SelectedVariantImg({
                 !selectable && !checked ? `cursor-not-allowed` : 'cursor-pointer',
               )}
               checked={checked}
+              aria-label={checked ? 'Usuń z koszyka' : 'Dodaj do koszyka'}
             />
           )}
         </div>

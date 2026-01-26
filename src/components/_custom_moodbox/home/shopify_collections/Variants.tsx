@@ -24,9 +24,11 @@ export default function Variants({ fullScreen, variants, setSelected, selected }
     >
       {variants.map((el, i) => (
         <button
+          type="button"
           className={cn(`aspect-square w-full cursor-pointer`, fullScreen && 'size-[50px]')}
           key={i}
           onClick={() => selectVariant(el)}
+          aria-label={`Wybierz wariant`}
         >
           <VariantImg variant={el.node} fullScreen={fullScreen} selected={selected} />
         </button>

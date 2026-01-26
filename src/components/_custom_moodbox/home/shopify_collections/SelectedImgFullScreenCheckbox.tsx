@@ -21,6 +21,7 @@ export default function SelectedVariantImgFullScreen({ selectable, checked }: Pr
           !selectable && !checked ? `cursor-not-allowed` : 'cursor-pointer',
         )}
         checked={checked}
+        aria-label={checked ? 'Usuń z koszyka' : 'Dodaj do koszyka'}
       />
     </Tip>
   )

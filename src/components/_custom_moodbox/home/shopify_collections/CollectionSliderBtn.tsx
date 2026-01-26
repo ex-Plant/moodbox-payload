@@ -25,6 +25,7 @@ export default function CollectionSliderBtn({
 
   return (
     <button
+      type="button"
       style={{
         paddingTop: !isFullScreen ? `${imgHeight / 2}px` : ``,
       }}
@@ -37,6 +38,7 @@ export default function CollectionSliderBtn({
         className,
       )}
       onClick={onClick}
+      aria-label={direction === 'left' ? 'Poprzedni slajd' : 'Następny slajd'}
     >
       {direction === 'left' ? (
         <ChevronLeft className={iconClass} />

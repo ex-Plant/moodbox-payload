@@ -15,6 +15,7 @@ export function TenStackCheckbox(props: FormControlProps) {
         onBlur={field.handleBlur}
         onCheckedChange={(e) => field.handleChange(e === true)}
         aria-invalid={isInvalid}
+        aria-label={props.ariaLabel}
         className={`mr-2`}
       />
     </TenStackFormBase>

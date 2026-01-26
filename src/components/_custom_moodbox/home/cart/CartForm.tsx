@@ -151,7 +151,10 @@ export default function CartForm({ moodboxPrice, ...props }: PropsT) {
 
           <form.AppField name="project_type">
             {(field) => (
-              <field.Select placeholder={props.projectTypePlaceholder || 'Typ projektu'}>
+              <field.Select
+                ariaLabel={props.projectTypePlaceholder || 'Typ'}
+                placeholder={props.projectTypePlaceholder || 'Typ projektu'}
+              >
                 {props.projectTypeOptions?.map((option) => (
                   <SelectItem key={option.id} value={option.label}>
                     {option.label}
@@ -163,7 +166,10 @@ export default function CartForm({ moodboxPrice, ...props }: PropsT) {
 
           <form.AppField name="project_area">
             {(field) => (
-              <field.Select placeholder={props.projectAreaPlaceholder || 'Powierzchnia projektu'}>
+              <field.Select
+                ariaLabel={props.projectAreaPlaceholder || 'Metraż'}
+                placeholder={props.projectAreaPlaceholder || 'Powierzchnia projektu'}
+              >
                 {props.projectAreaValues?.map((option) => (
                   <SelectItem key={option.id} value={option.label}>
                     {option.label}
@@ -183,7 +189,10 @@ export default function CartForm({ moodboxPrice, ...props }: PropsT) {
 
           <form.AppField name="project_budget">
             {(field) => (
-              <field.Select placeholder={props.projectBudget || 'Budżet projektu'}>
+              <field.Select
+                ariaLabel={props.projectBudget || 'Budżet'}
+                placeholder={props.projectBudget || 'Budżet projektu'}
+              >
                 {props.projectBudgetValues?.map((option) => (
                   <SelectItem key={option.id} value={option.label}>
                     {option.label}
@@ -195,7 +204,10 @@ export default function CartForm({ moodboxPrice, ...props }: PropsT) {
 
           <form.AppField name="project_stage">
             {(field) => (
-              <field.Select placeholder={props.projectStagePlaceholder || 'Etap projektu'}>
+              <field.Select
+                ariaLabel={props.projectStagePlaceholder || 'Etap projektu'}
+                placeholder={props.projectStagePlaceholder || 'Etap projektu'}
+              >
                 {props.projectStageOptions?.map((option) => (
                   <SelectItem key={option.id} value={option.label}>
                     {option.label}
@@ -210,7 +222,9 @@ export default function CartForm({ moodboxPrice, ...props }: PropsT) {
       <div className={`grid gap-2 pt-4`}>
         <div className={`flex items-center`}>
           <div className="w-fit">
-            <form.AppField name="consents.consent1">{(field) => <field.Checkbox />}</form.AppField>
+            <form.AppField name="consents.consent1">
+              {(field) => <field.Checkbox ariaLabel="Zgoda na przetwarzanie danych (wymagana)" />}
+            </form.AppField>
           </div>
           {props.consentText && (
             <RichText
@@ -222,7 +236,9 @@ export default function CartForm({ moodboxPrice, ...props }: PropsT) {
         </div>
         <div className={`flex items-center`}>
           <div className="w-fit">
-            <form.AppField name="consents.consent2">{(field) => <field.Checkbox />}</form.AppField>
+            <form.AppField name="consents.consent2">
+              {(field) => <field.Checkbox ariaLabel="Zgoda na kontakt marketingowy (wymagana)" />}
+            </form.AppField>
           </div>
           {props.consentText2 && (
             <RichText

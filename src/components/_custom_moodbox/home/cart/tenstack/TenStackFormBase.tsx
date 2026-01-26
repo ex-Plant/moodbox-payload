@@ -12,6 +12,7 @@ import { cn } from '@/utilities/ui'
 
 export type FormControlProps = {
   label?: string
+  ariaLabel?: string
   description?: string
   placeholder?: string
   showError?: boolean
