@@ -47,6 +47,7 @@ export const generateMeta = async (args: { doc: Partial<Page> | null }): Promise
       url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
     }),
     title,
-    robots: 'noindex, nofollow',
+    // Allow indexing only on Vercel production; block staging, preview, dev (VERCEL_ENV is set by Vercel)
+    robots: process.env.VERCEL_ENV === 'production' ? undefined : 'noindex, nofollow',
   }
 }

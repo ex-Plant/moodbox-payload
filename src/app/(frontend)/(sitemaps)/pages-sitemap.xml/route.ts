@@ -46,9 +46,7 @@ const getPagesSitemap = unstable_cache(
   },
 
   ['pages-sitemap'],
-  {
-    tags: ['pages-sitemap'],
-  },
+  { tags: ['pages-sitemap'] },
 )
 
 export async function GET() {
