@@ -9,7 +9,7 @@ if (typeof silktideCookieBannerManager !== 'undefined') {
         id: 'necessary',
         name: 'Niezbędne',
         description:
-          '<p>Te pliki cook/*  */ie są niezbędne do prawidłowego działania strony i nie można ich wyłączyć.</p>',
+          '<p>Te pliki cookie są niezbędne do prawidłowego działania strony i nie można ich wyłączyć.</p>',
         required: true,
       },
       {
