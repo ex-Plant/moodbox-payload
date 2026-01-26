@@ -135,6 +135,7 @@ export type ShopifyResponseT<T> = {
 
 export type OrderT = {
   id: string
+  legacyResourceId: string
   name: string
   email: string
   createdAt: string
