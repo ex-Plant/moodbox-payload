@@ -60,7 +60,7 @@ export const Tip = ({
           <span
             tabIndex={0}
             role={`button`}
-            // type="button"
+            aria-label="Wskazówka"
             className={cn('cursor-pointer ', className)}
             onMouseEnter={(e) => handleMouseEvent(`mouseenter`, e)}
             onMouseLeave={(e) => handleMouseEvent(`mouseleave`, e)}
