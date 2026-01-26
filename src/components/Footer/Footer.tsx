@@ -3,8 +3,6 @@
 import FooterCat from './FooterCat'
 import FooterLink from './FooterLink'
 import { Footer } from '@/payload-types'
-import Link from 'next/link'
-import { cn } from '@/utilities/ui'
 import NewsletterForm from './NewsletterForm'
 import LogoMoodboxSvg from '../_custom_moodbox/common/LogoMoodboxSvg'
 export default function FooterClient({ footerItems }: { footerItems: Footer['navItems'] }) {
@@ -26,7 +24,7 @@ export default function FooterClient({ footerItems }: { footerItems: Footer['nav
             <span
               id="cookie_settings"
               className={`
-            hover:border-mood-dark-brown border-b border-transparent delay-200 duration-200 pb-0.5 font-normal w-fit cursor-pointer `}
+              hover:border-mood-dark-brown border-b border-transparent delay-200 duration-200 pb-0.5 font-normal w-fit cursor-pointer `}
             >
               ustawienia cookie
             </span>

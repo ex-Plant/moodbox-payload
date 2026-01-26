@@ -12,7 +12,7 @@ export default function FooterLink({ className, item }: PropsT) {
   const { href, newTabProps, url } = handleCMSLink(item) || {}
 
   return (
-    <Link {...newTabProps} href={href || url || ''} className={`font-normal`}>
+    <Link {...newTabProps} href={href || url || ''} className={`font-normal w-fit `}>
       <span
         className={cn(
           `hover:border-mood-dark-brown border-b border-transparent delay-200 duration-200 pb-0.5`,

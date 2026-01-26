@@ -32,7 +32,7 @@ if (typeof silktideCookieBannerManager !== 'undefined') {
     text: {
       banner: {
         description:
-          "<p>Używamy plików cookie niezbędnych do prawidłowego funkcjonowania strony <a href='/privacy-policy' target='_blank'>Polityka prywatności</a></p>",
+          "<p>Używamy plików cookie niezbędnych do prawidłowego funkcjonowania strony <a href='/privacy-policy'>Polityka prywatności</a></p>",
         acceptAllButtonText: 'Akceptuj wszystkie',
         rejectNonEssentialButtonText: 'Odrzuć opcjonalne',
         preferencesButtonText: 'Preferencje',
