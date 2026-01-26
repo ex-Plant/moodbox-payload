@@ -22,7 +22,6 @@ export const Orders: CollectionConfig = {
             fileTitle: 'Zamówienia',
           },
         },
-        '@/components/SyncOrdersButton',
       ],
     },
     useAsTitle: 'id',
