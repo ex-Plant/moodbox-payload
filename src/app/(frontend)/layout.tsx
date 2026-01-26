@@ -12,9 +12,10 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { FooterServer } from '@/components/Footer/FooterServer'
 import { getServerSideURL } from '@/utilities/getURL'
 import { ToastContainer } from 'react-toastify'
-import './globals.css'
+import './styles/globals.css'
+import './styles/consent-manager.css'
 import { RootLayoutDebugWrapper } from '../../components/DebugTools/RootLayoutDebugWrapper'
-// import Script from 'next/script'
+import Script from 'next/script'
 
 const inclusive_Sans = Inclusive_Sans({
   variable: '--font-sans',
@@ -33,14 +34,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     >
       <head>
         <InitTheme />
-        {/* <Script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          data-cbid="2b038946-2a09-4077-b9eb-386fbab1255b"
-          data-blockingmode="auto"
-          type="text/javascript"
-          strategy="beforeInteractive"
-        /> */}
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
@@ -55,6 +48,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </RootLayoutDebugWrapper>
           <ToastContainer />
         </Providers>
+        <Script src="/vendor/silktide/consent-manager.js" strategy="afterInteractive" />
+        <Script src="/vendor/silktide/config.js" strategy="afterInteractive" />
       </body>
     </html>
   )
