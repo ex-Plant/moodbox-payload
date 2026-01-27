@@ -9,7 +9,6 @@ import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { cache } from 'react'
-import PageClient from './page.client'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })

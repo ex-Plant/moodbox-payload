@@ -12,15 +12,12 @@ export const ShopifyCartServer: React.FC<ShopifyCartBlock> = async (props) => {
   ])
   const allProducts = productsByCollection.flatMap((collection) => collection.products)
 
-  const moodboxPrice = moodboxProduct?.variants.edges[0]?.node.price
-  const formattedPrice = moodboxPrice
-    ? `${Number(moodboxPrice.amount)} ${moodboxPrice.currencyCode}`
-    : undefined
+  const moodboxPrice = moodboxProduct?.variants.edges[0]?.node
 
   return (
     <Suspense fallback={null}>
       {/* <Delimiter/ */}
-      <CartSection allProducts={allProducts} moodboxPrice={formattedPrice} {...props} />
+      <CartSection allProducts={allProducts} moodboxPrice={moodboxPrice} {...props} />
     </Suspense>
   )
 }

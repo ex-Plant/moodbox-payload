@@ -1,13 +1,13 @@
 'use client'
 import useCart from '@/lib/hooks/useCart'
-import { ProductT } from '@/lib/shopify/types'
+import { ProductT, ProductVariantT } from '@/lib/shopify/types'
 import { ShopifyCartBlock } from '@/payload-types'
 import CartForm from './CartForm'
 import CartItems from './CartItems'
 
 type PropsT = {
   allProducts: ProductT[]
-  moodboxPrice?: string
+  moodboxPrice: ProductVariantT | undefined
 } & ShopifyCartBlock
 
 export default function CartSection({ allProducts, moodboxPrice, ...props }: PropsT) {

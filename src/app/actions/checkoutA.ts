@@ -1,10 +1,20 @@
 'use server'
 import { ATTRIBUTE_KEY_PL, cartSchema, CartSchemaT } from '@/lib/CartSchema'
-import { createCart, getProductByHandle } from '@/lib/shopify/api'
+import { createCart } from '@/lib/shopify/api'
 import { redirect } from 'next/navigation'
+import { ProductVariantT } from '@/lib/shopify/types'
 
-export async function checkoutA(cartItems: string[], formData: CartSchemaT) {
+export async function checkoutA(
+  cartItems: string[],
+  formData: CartSchemaT,
+  moodboxPrice: ProductVariantT | undefined,
+) {
   // console.log(formData, 'formData')
+
+  if (!moodboxPrice) {
+    console.log(`❌ Brakująca cena boxa `)
+    return { error: true, message: 'Coś poszło nie tak - brakująca cena' }
+  }
 
   try {
     cartSchema.parse(formData)
@@ -23,23 +33,15 @@ export async function checkoutA(cartItems: string[], formData: CartSchemaT) {
       value: String((formData as Record<string, unknown>)[k] ?? ''),
     }))
 
-  // this is to get the fixed price of the box
-  const flatFeeProduct = await getProductByHandle('box-stala-cena')
-  if (!flatFeeProduct?.variants?.edges?.[0]?.node?.id) {
-    console.log(`❌ adding flat fee product failed`)
-    return { error: true, message: 'Coś poszło nie tak' }
-  }
-
   // Create line items from variant IDs
   const lineItems = cartItems.map((id) => ({
     merchandiseId: id,
     quantity: 1,
   }))
 
-  // TODO add again after testing
   // Add the flat fee product variant
   lineItems.push({
-    merchandiseId: flatFeeProduct.variants.edges[0].node.id,
+    merchandiseId: moodboxPrice.id,
     quantity: 1,
   })
 

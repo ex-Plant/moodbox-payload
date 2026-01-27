@@ -18,15 +18,20 @@ import { ShopifyCartBlock } from '@/payload-types'
 import RichText from '@/components/RichText'
 import useCartForm from '@/lib/hooks/useCartForm'
 import { useEffect, useRef } from 'react'
-import FixedLoader from '../../FixedLoader'
+import FixedLoader from '@/components/_custom_moodbox/FixedLoader'
+import { ProductVariantT } from '@/lib/shopify/types'
 
 type PropsT = {
-  moodboxPrice?: string
+  moodboxPrice: ProductVariantT | undefined
 } & ShopifyCartBlock
 
 export default function CartForm({ moodboxPrice, ...props }: PropsT) {
   const { cartItems } = useCart()
   const { formData, updateFormData } = useCartForm()
+
+  const boxPrice = moodboxPrice
+    ? `${Number(moodboxPrice?.price.amount)} ${moodboxPrice?.price.currencyCode}`
+    : undefined
 
   const form = useAppForm({
     defaultValues: formData,
@@ -36,7 +41,7 @@ export default function CartForm({ moodboxPrice, ...props }: PropsT) {
     onSubmit: async (data) => {
       // console.log('🚀 formData: ', data.value);
       updateFormData(data.value)
-      const res = await checkoutA(cartItems, data.value)
+      const res = await checkoutA(cartItems, data.value, moodboxPrice)
       console.log('res', res)
 
       if (res.error) {
@@ -252,7 +257,7 @@ export default function CartForm({ moodboxPrice, ...props }: PropsT) {
 
       <div className={`flex flex-col gap-4 pt-4 xl:mr-4 xl:items-end`}>
         <div className={`grid gap-2`}>
-          <p className={`ml-auto text-[2rem] text-nowrap xl:text-[2.5rem]`}>{moodboxPrice}</p>
+          <p className={`ml-auto text-[2rem] text-nowrap xl:text-[2.5rem]`}>{boxPrice}</p>
           <Tip
             disabled={!emptyCart}
             content={props.emptyBasketLabel || 'Koszyk jest pusty'}
