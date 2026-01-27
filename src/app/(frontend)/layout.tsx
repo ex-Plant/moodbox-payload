@@ -51,6 +51,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 }
 
 export const metadata: Metadata = {
+  description:
+    'Moodbox - pierwsza platforma w Polsce z próbkami materiałów wnętrzarskich. Szybki dostęp do próbek w jednym boxie.',
   metadataBase: new URL(getServerSideURL()),
   openGraph: mergeOpenGraph(),
   twitter: {
