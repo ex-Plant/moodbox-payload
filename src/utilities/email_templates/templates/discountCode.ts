@@ -32,7 +32,7 @@ export function generateDiscountCodeEmailHTML(discountCode: string): string {
             font-size: 24px;
             font-weight: bold;
             color: #472f27;">
-          KOD: ${discountCode}
+              ${discountCode}
         </div>`,
     },
     {

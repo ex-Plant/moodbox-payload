@@ -10,9 +10,6 @@ import { notFound } from 'next/navigation'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { cache } from 'react'
 import PageClient from './page.client'
-// import { createDiscountCode, getOrderById } from '../../../lib/shopify/adminApi'
-// import { getOrderById } from '../../../lib/shopify/adminApi'
-// import { getAllShopifyCustomersWithOrders } from '../../../lib/shopify/adminApi'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -27,8 +24,6 @@ export async function generateStaticParams() {
       slug: true,
     },
   })
-
-  console.log('page.tsx:31 - pages:', pages)
 
   const params = pages.docs
     ?.filter((doc) => {
@@ -52,7 +47,6 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { slug = 'home' } = await paramsPromise
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
-  // const url = '/' + decodedSlug
   const page: RequiredDataFromCollectionSlug<'pages'> | null = await queryPageBySlug({
     slug: decodedSlug,
   })

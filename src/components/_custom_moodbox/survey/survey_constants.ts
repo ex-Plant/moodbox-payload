@@ -67,7 +67,7 @@ export const surveyQuestions = [
   },
   {
     id: 'q8',
-    title: 'Jedna rzecz, którą możemy poprawić w MoodBox:',
+    title: 'Jedna rzecz, którą możemy poprawić w Moodbox:',
   },
 ] as const
 
@@ -110,7 +110,7 @@ export const UI_MESSAGES = {
 
   // Terms and conditions
   TERMS_ACCEPTANCE_TEXT:
-    'Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji pilotażu MoodBox Polska oraz przygotowania raportów dla producentów.',
+    'Wyrażam zgodę na przetwarzanie moich danych osobowych w celu realizacji pilotażu Moodbox Polska oraz przygotowania raportów dla producentów.',
 
   // Errors
   FIX_ERRORS_BEFORE_SENDING: 'Ankieta zawiera błędy',

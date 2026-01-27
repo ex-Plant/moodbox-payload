@@ -274,6 +274,7 @@ export default function CartForm({ moodboxPrice, ...props }: PropsT) {
           </Tip>
         </div>
       </div>
+
       {isSubmitting && (
         <div className={`pointer-events-none absolute inset-0 flex items-center justify-center`}>
           <LogoMoodboxSvg className={`animate-bounce `} />
