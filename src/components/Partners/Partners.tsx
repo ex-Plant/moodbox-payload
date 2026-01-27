@@ -34,34 +34,33 @@ export const Partners: React.FC<PartnersBlock> = ({ partners }) => {
   }
 
   return (
-    <>
-      <section className={`xPaddings mx-auto max-w-[1440px] xPaddings`}>
-        <Swiper
-          {...config}
-          className={cn(
-            'flex  bg-mood-dark-brown duration-500 transition-opacity ',
-            swiperIsReady ? 'opacity-100' : 'opacity-0',
-          )}
-        >
-          {partners?.map((partner) => {
-            return (
-              <SwiperSlide key={partner.id}>
-                <div
-                  key={partner.id}
-                  className="w-full h-[150px] relative flex items-center justify-center  "
-                >
-                  <ImageMedia
-                    resource={partner.partner}
-                    size="(max-width: 1468px) 20vw, 250px"
-                    fill={true}
-                    imgClassName="object-contain"
-                  />
-                </div>
-              </SwiperSlide>
-            )
-          })}
-        </Swiper>
-      </section>
-    </>
+    <section className={`xPaddings mx-auto max-w-[1440px] xPaddings`}>
+      <Swiper
+        {...config}
+        className={cn(
+          'flex  bg-mood-dark-brown duration-500 transition-opacity ',
+          swiperIsReady ? 'opacity-100' : 'opacity-0',
+        )}
+      >
+        {partners?.map((partner) => {
+          return (
+            <SwiperSlide key={partner.id}>
+              <div
+                key={partner.id}
+                className="w-full h-[150px] relative flex items-center justify-center  "
+              >
+                <ImageMedia
+                  resource={partner.partner}
+                  size="(max-width: 1468px) 20vw, 250px"
+                  fill={true}
+                  imgClassName="object-contain"
+                  quality={90}
+                />
+              </div>
+            </SwiperSlide>
+          )
+        })}
+      </Swiper>
+    </section>
   )
 }

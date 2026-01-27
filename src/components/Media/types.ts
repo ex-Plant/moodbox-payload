@@ -20,4 +20,5 @@ export interface Props {
   src?: StaticImageData // for static media
   videoClassName?: string
   poster?: MediaType | string | number | null // poster image for video
+  quality?: number
 }

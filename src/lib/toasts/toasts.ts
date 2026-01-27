@@ -17,7 +17,7 @@ export function toastMessage(
   message: string,
   type: ToastType = ToastType.Success,
   position: ToastPosition = ToastPosition.BottomCenter,
-  autoClose: number = 1000,
+  autoClose: number = 5000,
 ) {
   toast[type](message, {
     position: position,
