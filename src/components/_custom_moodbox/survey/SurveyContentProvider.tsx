@@ -2,21 +2,22 @@
 
 import { createContext, useContext, ReactNode } from 'react'
 import type { SurveyContent } from '@/payload-types'
-import { DEFAULT_SURVEY_CONTENT } from './survey-content-defaults'
 
-const SurveyContentContext = createContext<SurveyContent>(DEFAULT_SURVEY_CONTENT)
+const SurveyContentContext = createContext<SurveyContent | null>(null)
 
 type SurveyContentProviderPropsT = {
   children: ReactNode
-  content: SurveyContent | null
+  content: SurveyContent
 }
 
 export function SurveyContentProvider({ children, content }: SurveyContentProviderPropsT) {
-  return (
-    <SurveyContentContext.Provider value={content ?? DEFAULT_SURVEY_CONTENT}>
-      {children}
-    </SurveyContentContext.Provider>
-  )
+  return <SurveyContentContext.Provider value={content}>{children}</SurveyContentContext.Provider>
 }
 
-export const useSurveyContent = () => useContext(SurveyContentContext)
+export function useSurveyContent(): SurveyContent {
+  const context = useContext(SurveyContentContext)
+  if (!context) {
+    throw new Error('useSurveyContent must be used within SurveyContentProvider')
+  }
+  return context
+}

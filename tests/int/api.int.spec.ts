@@ -77,7 +77,8 @@ describe('API', () => {
       contact_request: false,
     }
 
-    const result = await submitSurveyA(surveyData, token)
+    const discountConfig = { title: 'Test Discount', percentage: 10 }
+    const result = await submitSurveyA(surveyData, token, discountConfig)
 
     // 4. Verify Result
     expect(result.error).toBe(false)

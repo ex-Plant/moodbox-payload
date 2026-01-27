@@ -5,6 +5,7 @@ import { getOrderById } from '@/lib/shopify/adminApi'
 import SurveyCompletedPage from '../../../../components/_custom_moodbox/nav/SurveyCompletedPage'
 import { checkSurveyStatus } from '../../../actions/checkSurveyStatus'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import { DEFAULT_SURVEY_CONTENT } from '@/components/_custom_moodbox/survey/survey-content-defaults'
 import type { SurveyContent } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
@@ -19,18 +20,16 @@ export default async function Ankieta({ params }: PropsT) {
   let order = null
   let surveyInfo
 
-  const surveyContent = (await getCachedGlobal('survey-content', 0)()) as SurveyContent
-
-  console.log('page.tsx:25 - surveyContent:', surveyContent)
+  const surveyContent =
+    ((await getCachedGlobal('survey-content', 0)()) as SurveyContent) ?? DEFAULT_SURVEY_CONTENT
 
   try {
     const { linkedOrderDocId, isSurveyCompleted } = await checkSurveyStatus(token)
     surveyInfo = isSurveyCompleted
 
-    const shopifyGid = `gid://shopify/Order/${linkedOrderDocId}`
-    order = await getOrderById(shopifyGid)
+    order = await getOrderById(`gid://shopify/Order/${linkedOrderDocId}`)
     if (!order) {
-      console.error('Order not found:', shopifyGid)
+      console.error('Order not found:', linkedOrderDocId)
       notFound()
     }
   } catch (error) {

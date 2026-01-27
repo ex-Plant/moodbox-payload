@@ -8,7 +8,16 @@ import { createDiscountA } from './createDiscountA'
 import { checkSurveyStatus } from './checkSurveyStatus'
 import { Order } from '../../payload-types'
 
-export async function submitSurveyA(data: SurveySchemaT, token: string) {
+type DiscountConfigT = {
+  title: string
+  percentage: number
+}
+
+export async function submitSurveyA(
+  data: SurveySchemaT,
+  token: string,
+  discountConfig: DiscountConfigT,
+) {
   try {
     const payload = await getPayload({ config: configPromise })
 
@@ -53,7 +62,7 @@ export async function submitSurveyA(data: SurveySchemaT, token: string) {
     }
 
     // Generate discount AFTER successful commit
-    const generatedDiscount = await createDiscountA()
+    const generatedDiscount = await createDiscountA(discountConfig)
     const { subject, html } = buildDiscountCodeEmail(generatedDiscount)
 
     try {

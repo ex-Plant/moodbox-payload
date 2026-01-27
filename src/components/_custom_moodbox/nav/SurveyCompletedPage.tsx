@@ -1,14 +1,12 @@
 import Link from 'next/link'
 import type { SurveyContent } from '@/payload-types'
-import { DEFAULT_SURVEY_CONTENT } from '../survey/survey-content-defaults'
 
 type SurveyCompletedPagePropsT = {
-  surveyContent: SurveyContent | null
+  surveyContent: SurveyContent
 }
 
 export default function SurveyCompletedPage({ surveyContent }: SurveyCompletedPagePropsT) {
-  const content = surveyContent ?? DEFAULT_SURVEY_CONTENT
-  const { completed } = content.uiMessages
+  const { completed } = surveyContent.uiMessages
 
   return (
     <main className="mx-auto max-w-[800px] py-32 px-4 xPaddings text-center grow content-center">

@@ -109,6 +109,20 @@ export const SurveyContent: GlobalConfig = {
       fields: [{ name: 'text', type: 'text', required: true }],
     },
 
+    // Discount settings
+    {
+      name: 'discountPercentage',
+      type: 'number',
+      label: { pl: 'Procent rabatu', en: 'Discount Percentage' },
+      required: true,
+      defaultValue: 10,
+      min: 1,
+      max: 100,
+      admin: {
+        description: 'Wartość rabatu w procentach (np. 10 = 10%)',
+      },
+    },
+
     // Reasons
     {
       name: 'reasonsPositive',

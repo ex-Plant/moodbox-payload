@@ -28,7 +28,7 @@ type SurveyFormPropsT = {
   availableBrands: string[]
   customerName: string | undefined
   token: string
-  surveyContent: SurveyContent | null
+  surveyContent: SurveyContent
 }
 
 export default function SurveyForm({
@@ -49,7 +49,11 @@ export default function SurveyForm({
     },
 
     onSubmit: async (data) => {
-      const res = await submitSurveyA(data.value, token)
+      const discountConfig = {
+        title: surveyContent.uiMessages.discount.welcomeDiscountTitle,
+        percentage: surveyContent.discountPercentage ?? 10,
+      }
+      const res = await submitSurveyA(data.value, token, discountConfig)
       if (res.error)
         return toastMessage(res.message, ToastType.Error, ToastPosition.BottomCenter, 10000)
 

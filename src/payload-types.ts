@@ -1442,6 +1442,10 @@ export interface SurveyContent {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Wartość rabatu w procentach (np. 10 = 10%)
+   */
+  discountPercentage: number;
   reasonsPositive?:
     | {
         text: string;
@@ -1628,6 +1632,7 @@ export interface SurveyContentSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  discountPercentage?: T;
   reasonsPositive?:
     | T
     | {

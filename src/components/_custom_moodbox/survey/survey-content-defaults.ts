@@ -37,6 +37,7 @@ export const DEFAULT_SURVEY_CONTENT: SurveyContent = {
       subtitle: null,
     },
   },
+  discountPercentage: 10,
   ratings: [
     { text: 'użyję tylko warunkowo', id: '1' },
     { text: 'raczej użyję', id: '2' },
