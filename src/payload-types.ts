@@ -110,10 +110,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'survey-content': SurveyContent;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'survey-content': SurveyContentSelect<false> | SurveyContentSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1390,6 +1392,139 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "survey-content".
+ */
+export interface SurveyContent {
+  id: number;
+  questions: {
+    q1: {
+      title: string;
+      subtitle?: string | null;
+    };
+    q2: {
+      title: string;
+      subtitle?: string | null;
+    };
+    q3: {
+      title: string;
+      subtitle?: string | null;
+    };
+    q4: {
+      title: string;
+      subtitle?: string | null;
+    };
+    /**
+     * Użyj {rejectedBrand} jako placeholder dla nazwy marki
+     */
+    q5: {
+      title: string;
+      subtitle?: string | null;
+    };
+    q6: {
+      title: string;
+      subtitle?: string | null;
+    };
+    q7: {
+      title: string;
+      subtitle?: string | null;
+    };
+    q8: {
+      title: string;
+      subtitle?: string | null;
+    };
+  };
+  /**
+   * Kolejność = wartość oceny (pierwszy = 1, ostatni = 5)
+   */
+  ratings?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Wartość rabatu w procentach (np. 10 = 10%)
+   */
+  discountPercentage: number;
+  reasonsPositive?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  reasonsNegative?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  reasonsRejection?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  uiMessages: {
+    toasts: {
+      maxBrandsSelected: string;
+      maxReasonsSelected: string;
+      selectAtLeastOneBrand: string;
+    };
+    formLabels: {
+      selectBrandOptional: string;
+      noSuchBrandOption: string;
+      yourAnswerPlaceholder: string;
+      whichBrands: string;
+      specifyExactly: string;
+    };
+    questionTexts: {
+      positiveBrandQuestion: string;
+      negativeBrandQuestion: string;
+      selectMax2: string;
+    };
+    buttons: {
+      yes: string;
+      no: string;
+      nextStep: string;
+      sendSurvey: string;
+    };
+    discount: {
+      welcomeDiscountTitle: string;
+      discountSuccessMessage: string;
+      discountFailureMessage: string;
+    };
+    dialog: {
+      thankYouSurvey: string;
+      yourCodeIs: string;
+      sameCodeInEmail: string;
+      goToMoodbox: string;
+    };
+    terms: {
+      termsAcceptanceText: string;
+    };
+    errors: {
+      fixErrorsBeforeSending: string;
+    };
+    header: {
+      welcomeMessage: string;
+      surveyTitle: string;
+      surveyDescription: string;
+      stepLabel: string;
+      stepSeparator: string;
+      totalSteps: string;
+    };
+    completed: {
+      surveyAlreadyCompletedTitle: string;
+      surveyAlreadyCompletedThankYou: string;
+      surveyAlreadyCompletedInstructions: string;
+      contactEmail: string;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1429,6 +1564,170 @@ export interface FooterSelect<T extends boolean = true> {
               label?: T;
             };
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "survey-content_select".
+ */
+export interface SurveyContentSelect<T extends boolean = true> {
+  questions?:
+    | T
+    | {
+        q1?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+            };
+        q2?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+            };
+        q3?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+            };
+        q4?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+            };
+        q5?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+            };
+        q6?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+            };
+        q7?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+            };
+        q8?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+            };
+      };
+  ratings?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  discountPercentage?: T;
+  reasonsPositive?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  reasonsNegative?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  reasonsRejection?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  uiMessages?:
+    | T
+    | {
+        toasts?:
+          | T
+          | {
+              maxBrandsSelected?: T;
+              maxReasonsSelected?: T;
+              selectAtLeastOneBrand?: T;
+            };
+        formLabels?:
+          | T
+          | {
+              selectBrandOptional?: T;
+              noSuchBrandOption?: T;
+              yourAnswerPlaceholder?: T;
+              whichBrands?: T;
+              specifyExactly?: T;
+            };
+        questionTexts?:
+          | T
+          | {
+              positiveBrandQuestion?: T;
+              negativeBrandQuestion?: T;
+              selectMax2?: T;
+            };
+        buttons?:
+          | T
+          | {
+              yes?: T;
+              no?: T;
+              nextStep?: T;
+              sendSurvey?: T;
+            };
+        discount?:
+          | T
+          | {
+              welcomeDiscountTitle?: T;
+              discountSuccessMessage?: T;
+              discountFailureMessage?: T;
+            };
+        dialog?:
+          | T
+          | {
+              thankYouSurvey?: T;
+              yourCodeIs?: T;
+              sameCodeInEmail?: T;
+              goToMoodbox?: T;
+            };
+        terms?:
+          | T
+          | {
+              termsAcceptanceText?: T;
+            };
+        errors?:
+          | T
+          | {
+              fixErrorsBeforeSending?: T;
+            };
+        header?:
+          | T
+          | {
+              welcomeMessage?: T;
+              surveyTitle?: T;
+              surveyDescription?: T;
+              stepLabel?: T;
+              stepSeparator?: T;
+              totalSteps?: T;
+            };
+        completed?:
+          | T
+          | {
+              surveyAlreadyCompletedTitle?: T;
+              surveyAlreadyCompletedThankYou?: T;
+              surveyAlreadyCompletedInstructions?: T;
+              contactEmail?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
