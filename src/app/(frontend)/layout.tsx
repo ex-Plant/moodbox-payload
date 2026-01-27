@@ -30,10 +30,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       lang="pl"
       suppressHydrationWarning
     >
-      <head>
-        {/* <link href="/favicon.ico" rel="icon" sizes="32x32" /> */}
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-      </head>
       <body
         className={`flex min-h-screen flex-col outline antialiased relative bg-background text-foreground`}
       >
@@ -52,10 +48,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
 export const metadata: Metadata = {
   description:
-    'Moodbox - pierwsza platforma w Polsce z próbkami materiałów wnętrzarskich. Szybki dostęp do próbek w jednym boxie.',
+    'Moodbox - pierwsza w Polsce platforma z próbkami materiałów wnętrzarskich dla projektantów. Szybki dostęp do próbek w jednym boxie.  ',
   metadataBase: new URL(getServerSideURL()),
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',
+  },
+  icons: {
+    icon: { url: '/favicon.svg', type: 'image/svg+xml' },
   },
 }
