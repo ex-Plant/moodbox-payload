@@ -18,7 +18,7 @@ import { ShopifyCartBlock } from '@/payload-types'
 import RichText from '@/components/RichText'
 import useCartForm from '@/lib/hooks/useCartForm'
 import { useEffect, useRef } from 'react'
-import LogoMoodboxSvg from '../../common/LogoMoodboxSvg'
+import FixedLoader from '../../FixedLoader'
 
 type PropsT = {
   moodboxPrice?: string
@@ -275,11 +275,7 @@ export default function CartForm({ moodboxPrice, ...props }: PropsT) {
         </div>
       </div>
 
-      {isSubmitting && (
-        <div className={`pointer-events-none absolute inset-0 flex items-center justify-center`}>
-          <LogoMoodboxSvg className={`animate-bounce `} />
-        </div>
-      )}
+      <FixedLoader active={isSubmitting} />
     </form>
   )
 }

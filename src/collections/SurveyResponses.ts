@@ -179,6 +179,10 @@ export const SurveyResponses: CollectionConfig = {
         pl: 'Inny powód odrzucenia',
         en: 'Other Rejection Reason',
       },
+      defaultValue: {
+        pl: 'Brak',
+        en: 'None',
+      },
     },
     {
       name: 'contact_request',

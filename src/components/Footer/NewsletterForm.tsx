@@ -4,7 +4,6 @@ import { toastMessage, ToastPosition, ToastType } from '@/lib/toasts/toasts'
 import updateNewsLetter from '@/app/actions/updateNewsletter'
 import { useStore } from '@tanstack/react-form'
 import { useState } from 'react'
-import { wait } from 'payload/shared'
 import { Button } from '@/components/ui/button'
 import { FieldError } from '@/components/ui/field'
 
