@@ -1,15 +1,23 @@
 import Link from 'next/link'
-import { UI_MESSAGES } from '../survey/survey_constants'
+import type { SurveyContent } from '@/payload-types'
+import { DEFAULT_SURVEY_CONTENT } from '../survey/survey-content-defaults'
 
-export default function SurveyCompletedPage() {
+type SurveyCompletedPagePropsT = {
+  surveyContent: SurveyContent | null
+}
+
+export default function SurveyCompletedPage({ surveyContent }: SurveyCompletedPagePropsT) {
+  const content = surveyContent ?? DEFAULT_SURVEY_CONTENT
+  const { completed } = content.uiMessages
+
   return (
     <main className="mx-auto max-w-[800px] py-32 px-4 xPaddings text-center grow content-center">
-      <h1 className="text-2xl font-bold mb-4">{UI_MESSAGES.SURVEY_ALREADY_COMPLETED_TITLE}</h1>
-      <p>{UI_MESSAGES.SURVEY_ALREADY_COMPLETED_THANK_YOU}</p>
+      <h1 className="text-2xl font-bold mb-4">{completed.surveyAlreadyCompletedTitle}</h1>
+      <p>{completed.surveyAlreadyCompletedThankYou}</p>
       <div className={`pt-2 text-balance space-y-2`}>
-        <p>{UI_MESSAGES.SURVEY_ALREADY_COMPLETED_INSTRUCTIONS}</p>
+        <p>{completed.surveyAlreadyCompletedInstructions}</p>
         <p>
-          <Link href={`mailto:${UI_MESSAGES.CONTACT_EMAIL}`}>{UI_MESSAGES.CONTACT_EMAIL}</Link>
+          <Link href={`mailto:${completed.contactEmail}`}>{completed.contactEmail}</Link>
         </p>
       </div>
     </main>

@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import { toastMessage, ToastType } from '../../../lib/toasts/toasts'
 import { Button } from '../../ui/button'
-import { UI_MESSAGES } from './survey_constants'
 import SurveyCheckbox from './SurveyCheckbox'
 import { useStore } from '@tanstack/react-form'
 import useSurveyForm from '../../../lib/hooks/useSurveyForm'
 import { useSurveyContext } from '../../../lib/hooks/tenStackFormHooks'
+import { useSurveyContent } from './SurveyContentProvider'
 
 export default function SurveyFooter() {
   const { currentStep, setStep } = useSurveyForm()
   const form = useSurveyContext()
+  const { uiMessages } = useSurveyContent()
 
   const formValues = useStore(form.store, (state) => state.values)
   const submissionAttempts = useStore(form.store, (s) => s.submissionAttempts)
@@ -27,7 +28,7 @@ export default function SurveyFooter() {
 
   function nextStep() {
     if (consideredBrands.length < 1) {
-      toastMessage(UI_MESSAGES.SELECT_AT_LEAST_ONE_BRAND, ToastType.Info)
+      toastMessage(uiMessages.toasts.selectAtLeastOneBrand, ToastType.Info)
       return
     }
     if (currentStep < 3) setStep(currentStep + 1)
@@ -37,7 +38,7 @@ export default function SurveyFooter() {
     <div className={`flex flex-col items-end w-full `}>
       {currentStep < 3 && (
         <Button className={``} type="button" variant="mood" onClick={nextStep}>
-          {UI_MESSAGES.NEXT_STEP}
+          {uiMessages.buttons.nextStep}
         </Button>
       )}
       {currentStep === 3 && (
@@ -46,14 +47,14 @@ export default function SurveyFooter() {
             id="terms-acceptance"
             checked={termsAccepted}
             onCheckedChange={setTermsAccepted}
-            label={UI_MESSAGES.TERMS_ACCEPTANCE_TEXT}
+            label={uiMessages.terms.termsAcceptanceText}
           />
           <Button disabled={!termsAccepted} className={`mt-8`} type="submit" variant="mood">
-            {UI_MESSAGES.SEND_SURVEY}
+            {uiMessages.buttons.sendSurvey}
           </Button>
           {isInvalid && (
             <p className="mt-2 text-sm text-destructive font-medium ">
-              {UI_MESSAGES.FIX_ERRORS_BEFORE_SENDING}
+              {uiMessages.errors.fixErrorsBeforeSending}
             </p>
           )}
         </div>

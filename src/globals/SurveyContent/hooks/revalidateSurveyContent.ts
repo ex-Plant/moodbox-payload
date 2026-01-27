@@ -9,7 +9,7 @@ export const revalidateSurveyContent: GlobalAfterChangeHook = ({
   if (!context.disableRevalidate) {
     payload.logger.info(`Revalidating survey-content`)
 
-    revalidateTag('global_survey-content')
+    revalidateTag('global_survey-content', 'max')
   }
 
   return doc

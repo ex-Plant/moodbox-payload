@@ -2,9 +2,10 @@ import SurveyCheckbox from './SurveyCheckbox'
 import { useSurveyContext } from '@/lib/hooks/tenStackFormHooks'
 import { toastMessage, ToastType } from '@/lib/toasts/toasts'
 import SurveyQuestionHeader from './SurveyQuestionHeader'
-import { surveyQuestions, UI_MESSAGES } from './survey_constants'
 import SurveyQWrapper from './SurveyQWrapper'
 import { Field, FieldError } from '../../ui/field'
+import { useSurveyContent } from './SurveyContentProvider'
+
 type PropsT = {
   availableBrands: string[]
 }
@@ -16,19 +17,17 @@ type FieldApi = {
 
 export default function SurveyQ1({ availableBrands }: PropsT) {
   const form = useSurveyContext()
+  const { questions, uiMessages } = useSurveyContent()
 
   function toggle(checked: boolean, field: FieldApi, brand: string) {
     if (!checked) return field.handleChange(field.state.value.filter((b: string) => b !== brand))
     if (field.state.value.length < 3) return field.handleChange([...field.state.value, brand])
-    toastMessage(UI_MESSAGES.MAX_BRANDS_SELECTED, ToastType.Warning)
+    toastMessage(uiMessages.toasts.maxBrandsSelected, ToastType.Warning)
   }
 
   return (
     <SurveyQWrapper>
-      <SurveyQuestionHeader
-        title={surveyQuestions[0].title}
-        subtitle={surveyQuestions[0].subtitle}
-      />
+      <SurveyQuestionHeader title={questions.q1.title} subtitle={questions.q1.subtitle} />
       <form.Field name="considered_brands">
         {(field) => {
           const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
