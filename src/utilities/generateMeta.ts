@@ -30,7 +30,7 @@ export const generateMeta = async (args: { doc: Partial<Page> | null }): Promise
 
   const description =
     doc?.meta?.description ||
-    'Moodbox - pierwsza platforma w Polsce z próbkami materiałów wnętrzarskich. Dla projektantów: szybki dostęp do próbek w jednym boxie. Dla producentów: nowy kanał sprzedaży.'
+    'Moodbox - pierwsza platforma w Polsce z próbkami materiałów wnętrzarskich. Szybki dostęp do próbek w jednym boxie.'
 
   return {
     description,
