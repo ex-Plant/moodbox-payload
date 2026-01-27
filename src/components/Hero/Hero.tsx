@@ -49,7 +49,7 @@ export const Hero: React.FC<Page['hero']> = (props) => {
           {add_button && (
             <div className={`pt-12 xl:pt-28`}>
               <Link href={button_link?.url || '#'} className={cn(`cursor-pointer leading-normal`)}>
-                <Button variant={`mood`} size={`sm`} className="py-2">
+                <Button variant={`mood`} size={`sm`} className="py-2 xl:py-4 ">
                   {button_link?.label}
                 </Button>
               </Link>
