@@ -21,17 +21,22 @@ import SurveyQ8 from './SurveyQ8'
 import SurveyStepWrapper from './SurveyStepWrapper'
 import useCheckFormErrors from '../../../lib/hooks/useCheckFormErrors'
 import SurveyFooter from './SurveyFooter'
+import { SurveyContentProvider } from './SurveyContentProvider'
+import type { SurveyContent } from '@/payload-types'
 
-type SurveyFormProps = {
+type SurveyFormPropsT = {
   availableBrands: string[]
   customerName: string | undefined
+  token: string
+  surveyContent: SurveyContent | null
 }
 
 export default function SurveyForm({
   availableBrands,
   customerName,
   token,
-}: SurveyFormProps & { token: string }) {
+  surveyContent,
+}: SurveyFormPropsT) {
   const { formData, currentStep, updateFormData, resetFormData } = useSurveyForm()
 
   const [surveyDialogOpen, setSurveyDialogOpen] = useState(false)
@@ -73,7 +78,7 @@ export default function SurveyForm({
   useCheckFormErrors(form)
 
   return (
-    <>
+    <SurveyContentProvider content={surveyContent}>
       <formContext.Provider value={form}>
         <form
           onSubmit={(e) => {
@@ -114,6 +119,6 @@ export default function SurveyForm({
       />
 
       <FixedLoader active={isSubmitting} />
-    </>
+    </SurveyContentProvider>
   )
 }
