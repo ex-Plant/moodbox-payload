@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation'
 
 import SurveyForm from '@/components/_custom_moodbox/survey/SurveyForm'
 import { getOrderById } from '@/lib/shopify/adminApi'
-import SurveyCompletedPage from '../../../../components/_custom_moodbox/nav/SurveyCompletedPage'
-import { checkSurveyStatus } from '../../../actions/checkSurveyStatus'
+import SurveyCompletedPage from '@/components/_custom_moodbox/nav/SurveyCompletedPage'
+import { checkSurveyStatus } from '@/app/actions/checkSurveyStatus'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { DEFAULT_SURVEY_CONTENT } from '@/components/_custom_moodbox/survey/survey-content-defaults'
 import type { SurveyContent } from '@/payload-types'
@@ -21,7 +21,7 @@ export default async function Ankieta({ params }: PropsT) {
   let surveyInfo
 
   const surveyContent =
-    ((await getCachedGlobal('survey-content', 0)()) as SurveyContent) ?? DEFAULT_SURVEY_CONTENT
+    ((await getCachedGlobal('survey-content')()) as SurveyContent) ?? DEFAULT_SURVEY_CONTENT
 
   try {
     const { linkedOrderDocId, isSurveyCompleted } = await checkSurveyStatus(token)
