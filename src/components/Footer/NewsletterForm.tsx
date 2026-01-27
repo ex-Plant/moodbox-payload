@@ -61,7 +61,7 @@ export default function NewsletterForm() {
                 />
               }
               <field.Input
-                className={`bg-transparent border-none text-background  placeholder:text-mood-dark-brown placeholder:text-sm  text-sm w-[200px] xl:w-full focus-visible:border-none shadow-none focus-visible:ring-0 selection:bg-mood-brown pl-0 xl:pl-2 `}
+                className={`bg-transparent border-none text-mood-dark-brown  placeholder:text-mood-dark-brown placeholder:text-sm  text-sm w-[200px] xl:w-full focus-visible:border-none shadow-none focus-visible:ring-0 pl-0 xl:pl-2 `}
                 type={`email`}
                 placeholder={'Wpisz swój e-mail'}
               />
