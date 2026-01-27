@@ -5,8 +5,6 @@ import { Inclusive_Sans } from 'next/font/google'
 import React from 'react'
 
 import { Header } from '@/components/Header/Component'
-import { Providers } from '@/providers'
-import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
 import { FooterServer } from '@/components/Footer/FooterServer'
@@ -33,21 +31,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       suppressHydrationWarning
     >
       <head>
-        <InitTheme />
-        <link href="/favicon.ico" rel="icon" sizes="32x32" />
+        {/* <link href="/favicon.ico" rel="icon" sizes="32x32" /> */}
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body
         className={`flex min-h-screen flex-col outline antialiased relative bg-background text-foreground`}
       >
-        <Providers>
-          <RootLayoutDebugWrapper>
-            <Header />
-            {children}
-            <FooterServer />
-          </RootLayoutDebugWrapper>
-          <ToastContainer />
-        </Providers>
+        <RootLayoutDebugWrapper>
+          <Header />
+          {children}
+          <FooterServer />
+        </RootLayoutDebugWrapper>
+        <ToastContainer />
         <Script src="/vendor/silktide/consent-manager.js" strategy="afterInteractive" />
         <Script src="/vendor/silktide/config.js" strategy="afterInteractive" />
       </body>

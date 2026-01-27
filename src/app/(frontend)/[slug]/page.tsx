@@ -55,8 +55,6 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   return (
     <main className={cn(page.textPage && 'mt-32')}>
-      <PageClient />
-
       {draft && <LivePreviewListener />}
 
       {!page.textPage && <Hero {...page.hero} />}
