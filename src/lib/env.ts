@@ -23,6 +23,7 @@ const envSchema = z.object({
 
   // Email
   EMAIL_USER: z.string().min(1),
+  EMAIL_CONTACT_USER: z.string().min(1),
   EMAIL_PASS: z.string().min(1),
   EMAIL_HOST: z.string().min(1),
 })

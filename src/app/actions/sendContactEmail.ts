@@ -20,7 +20,7 @@ export async function sendContactEmail(data: contactSchemaT) {
     }
 
     await payload.sendEmail({
-      to: env.EMAIL_USER,
+      to: env.EMAIL_CONTACT_USER,
       subject: `Moodbox kontakt: ${data.subject}`,
       text: data.message,
     })

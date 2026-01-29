@@ -111,11 +111,13 @@ export interface Config {
     header: Header;
     footer: Footer;
     'survey-content': SurveyContent;
+    'contact-content': ContactContent;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'survey-content': SurveyContentSelect<false> | SurveyContentSelect<true>;
+    'contact-content': ContactContentSelect<false> | ContactContentSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1525,6 +1527,38 @@ export interface SurveyContent {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-content".
+ */
+export interface ContactContent {
+  id: number;
+  header: string;
+  subjectPlaceholder: string;
+  messagePlaceholder: string;
+  emailPlaceholder: string;
+  buttonText: string;
+  /**
+   * Optional additional content displayed below the form
+   */
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1729,6 +1763,21 @@ export interface SurveyContentSelect<T extends boolean = true> {
               contactEmail?: T;
             };
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-content_select".
+ */
+export interface ContactContentSelect<T extends boolean = true> {
+  header?: T;
+  subjectPlaceholder?: T;
+  messagePlaceholder?: T;
+  emailPlaceholder?: T;
+  buttonText?: T;
+  richText?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -4,12 +4,21 @@ import { useAppForm } from '@/lib/hooks/tenStackFormHooks'
 import FixedLoader from './FixedLoader'
 import { useStore } from '@tanstack/react-form'
 import { Button } from '../ui/button'
-import { sendContactEmail } from '../../app/actions/sendContactEmail'
-import { toastMessage, ToastPosition, ToastType } from '../../lib/toasts/toasts'
+import { sendContactEmail } from '@/app/actions/sendContactEmail'
+import { toastMessage, ToastPosition, ToastType } from '@/lib/toasts/toasts'
 import { Delimiter } from '../Delimiter/Delimiter'
-import { contactSchema, contactSchemaT } from '../../schemas/contactFormSchema'
+import { contactSchema, contactSchemaT } from '@/schemas/contactFormSchema'
+import RichText from '@/components/RichText'
+import type { ContactContent } from '@/payload-types'
 
-export default function Contact() {
+export default function Contact({
+  header,
+  subjectPlaceholder,
+  messagePlaceholder,
+  emailPlaceholder,
+  buttonText,
+  richText,
+}: Omit<ContactContent, 'id'>) {
   const form = useAppForm({
     defaultValues: {
       message: '',
@@ -39,7 +48,7 @@ export default function Contact() {
 
   return (
     <main className="mx-auto max-w-[1440px]  py-32  ">
-      <Delimiter blockType={'delimiterBlock'} title={` Skontaktuj się z nami`} />
+      <Delimiter blockType={'delimiterBlock'} title={header} />
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -51,7 +60,7 @@ export default function Contact() {
           {(field) => (
             <field.Input
               showError={true}
-              placeholder={'Temat'}
+              placeholder={subjectPlaceholder}
               className={`border-none placeholder:text-muted-foreground`}
             />
           )}
@@ -61,7 +70,7 @@ export default function Contact() {
             <field.Textarea
               showError={true}
               className={`placeholder:text-muted-foreground min-h-[200px] px-4`}
-              placeholder={'Treść wiadomości'}
+              placeholder={messagePlaceholder}
             />
           )}
         </form.AppField>
@@ -69,15 +78,21 @@ export default function Contact() {
           {(field) => (
             <field.Input
               showError={true}
-              placeholder={'Twój email'}
+              placeholder={emailPlaceholder}
               className={`border-none placeholder:text-muted-foreground`}
             />
           )}
         </form.AppField>
         <Button disabled={isSubmitting} className={`mt-8`} type="submit" variant="mood">
-          Wyślij
+          {buttonText}
         </Button>
       </form>
+
+      {richText && (
+        <div className="w-[min(80vw,800px)] xPaddings pt-8">
+          <RichText data={richText} enableGutter={false} />
+        </div>
+      )}
 
       <FixedLoader active={isSubmitting} />
     </main>

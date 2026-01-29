@@ -14,6 +14,7 @@ import * as migration_20260125_191732_remove_fixed_price_label from './20260125_
 import * as migration_20260126_140530_add_poster_to_video_ from './20260126_140530_add_poster_to_video_';
 import * as migration_20260127_152042_add_survey_content_global from './20260127_152042_add_survey_content_global';
 import * as migration_20260127_155319_add_discount_percentage from './20260127_155319_add_discount_percentage';
+import * as migration_20260129_095104_add_contact_content from './20260129_095104_add_contact_content';
 
 export const migrations = [
   {
@@ -94,6 +95,11 @@ export const migrations = [
   {
     up: migration_20260127_155319_add_discount_percentage.up,
     down: migration_20260127_155319_add_discount_percentage.down,
-    name: '20260127_155319_add_discount_percentage'
+    name: '20260127_155319_add_discount_percentage',
+  },
+  {
+    up: migration_20260129_095104_add_contact_content.up,
+    down: migration_20260129_095104_add_contact_content.down,
+    name: '20260129_095104_add_contact_content'
   },
 ];

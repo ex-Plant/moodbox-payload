@@ -20,6 +20,7 @@ import { SurveyResponses } from './collections/SurveyResponses'
 import { Footer } from './components/Footer/config'
 import { Header } from './components/Header/config'
 import { SurveyContent } from './globals/SurveyContent/config'
+import { ContactContent } from './globals/ContactContent/config'
 import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
 import { ScheduledEmails } from './collections/ScheduledEmails'
@@ -103,7 +104,7 @@ export default buildConfig({
   }),
   collections: [Pages, Media, Users, Newsletter, ScheduledEmails, Orders, SurveyResponses],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, SurveyContent],
+  globals: [Header, Footer, SurveyContent, ContactContent],
 
   plugins: [
     ...plugins,
