@@ -7,7 +7,11 @@ const defaultOpenGraph: Metadata['openGraph'] = {
     'Moodbox - pierwsza platforma w Polsce z próbkami materiałów wnętrzarskich. Dla projektantów: szybki dostęp do próbek w jednym boxie. Dla producentów: nowy kanał sprzedaży.',
   images: [
     {
-      url: `${getServerSideURL()}/website-template-OG.webp`,
+      url: `${getServerSideURL()}/website-template-OG.png`,
+      width: 1440,
+      height: 1271,
+      type: 'image/png',
+      alt: 'Moodbox - Próbki Materiałów Wnętrzarskich',
     },
   ],
   siteName: 'Moodbox',
