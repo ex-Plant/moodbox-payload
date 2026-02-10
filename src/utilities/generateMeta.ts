@@ -7,16 +7,21 @@ import { getServerSideURL } from './getURL'
 
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL()
+  const fallback = serverUrl + '/website-template-OG.png'
 
-  let url = serverUrl + '/website-template-OG.png'
+  if (!image || typeof image !== 'object' || !('url' in image)) return fallback
 
-  if (image && typeof image === 'object' && 'url' in image) {
-    const ogUrl = image.sizes?.og?.url
+  const rawUrl = image.sizes?.og?.url ?? image.url
+  if (!rawUrl) return fallback
 
-    url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url
-  }
+  // Vercel Blob URLs are already absolute — use directly
+  if (rawUrl.startsWith('http')) return rawUrl
 
-  return url
+  // Payload /api/media/file/ paths are inaccessible to external crawlers
+  // when using Vercel Blob storage — fall back to static OG image
+  if (rawUrl.startsWith('/api/media/')) return fallback
+
+  return serverUrl + rawUrl
 }
 
 export const generateMeta = async (args: { doc: Partial<Page> | null }): Promise<Metadata> => {
