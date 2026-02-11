@@ -13,6 +13,7 @@ export default function CartItem({ selected }: PropsT) {
   const { deleteCartItem } = useCart()
 
   const src = selected.image?.url
+  const title = selected.title === 'Default Title' ? selected.product?.title : selected.title
 
   return (
     <li className={`flex gap-2`}>
@@ -27,11 +28,9 @@ export default function CartItem({ selected }: PropsT) {
           {selected.product?.productType}
         </p>
         <p className={`line-clamp-1 text-[0.875rem] leading-tight font-bold text-black`}>
-          {selected.product?.description}
+          {selected.product?.brand?.value ?? ''}
         </p>
-        <h6 className={`text-mood-dark-gray line-clamp-1 text-[0.75rem] leading-tight`}>
-          {selected.title}
-        </h6>
+        <h6 className={`text-mood-dark-gray line-clamp-1 text-[0.75rem] leading-tight`}>{title}</h6>
       </div>
 
       <Tip content={`Usuń z koszyka`} className={`item-start ml-auto flex pt-1`}>

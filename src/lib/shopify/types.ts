@@ -26,8 +26,8 @@ export type ProductVariantT = {
     altText: string | null
   } | null
   product?: {
+    title: string
     productType: string
-    description: string
     brand?: {
       value: string
     }

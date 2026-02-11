@@ -33,8 +33,11 @@ export const PRODUCT_FRAGMENT = `
 						altText
 					}
 					product {
+					title
 					productType
-					description
+					brand: metafield(namespace: "custom", key: "brand") {
+						value
+					}
 					}
 				}
 			}
