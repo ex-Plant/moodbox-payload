@@ -4,7 +4,6 @@ export const handleCMSLink = (
   item: NonNullable<Header['navItems']>[number] | NonNullable<Footer['navItems']>[number],
 ) => {
   const { type, newTab, reference, url } = item.link
-
   const href =
     type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
       ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${

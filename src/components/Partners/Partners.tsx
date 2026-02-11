@@ -54,7 +54,7 @@ export const Partners: React.FC<PartnersBlock> = ({ partners }) => {
                   size="(max-width: 1468px) 20vw, 250px"
                   fill={true}
                   imgClassName="object-contain"
-                  quality={90}
+                  quality={100}
                 />
               </div>
             </SwiperSlide>
