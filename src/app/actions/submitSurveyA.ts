@@ -63,7 +63,8 @@ export async function submitSurveyA(
 
     // Generate discount AFTER successful commit
     const generatedDiscount = await createDiscountA(discountConfig)
-    const { subject, html } = buildDiscountCodeEmail(generatedDiscount)
+    const emailContent = await payload.findGlobal({ slug: 'email-content' })
+    const { subject, html } = buildDiscountCodeEmail(generatedDiscount, emailContent.discountCode)
 
     try {
       await payload.sendEmail({

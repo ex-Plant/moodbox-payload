@@ -1568,23 +1568,23 @@ export interface EmailContent {
   surveyInvitation: {
     subject: string;
     title: string;
-    paragraph1: string;
-    paragraph2: string;
-    paragraph3: string;
-    paragraph4: string;
-    buttonLabel: string;
-    footer: string;
+    paragraph1?: string | null;
+    paragraph2?: string | null;
+    paragraph3?: string | null;
+    paragraph4?: string | null;
+    buttonLabel?: string | null;
+    footer?: string | null;
   };
   discountCode: {
     subject: string;
-    greeting: string;
-    thankYou: string;
-    codeIntro: string;
-    codeActiveNote: string;
-    codeValidityNote: string;
-    closingNote: string;
-    buttonLabel: string;
-    footer: string;
+    greeting?: string | null;
+    thankYou?: string | null;
+    codeIntro?: string | null;
+    codeActiveNote?: string | null;
+    codeValidityNote?: string | null;
+    closingNote?: string | null;
+    buttonLabel?: string | null;
+    footer?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;

@@ -65,6 +65,8 @@ async function sendAndUpdateCollection(
   scheduled: PaginatedDocs<ScheduledEmail>,
   results: ResultsT,
 ) {
+  const emailContent = await payload.findGlobal({ slug: 'email-content' })
+
   // this is defensive - it shouldnt't be possible
   for (const doc of scheduled.docs as unknown as ScheduledEmail[]) {
     if (!doc.token || !doc.customerEmail) {
@@ -87,7 +89,7 @@ async function sendAndUpdateCollection(
 
     const linkUrl: string = `${baseUrl}/ankieta/${doc.token}`
     console.log('linkUrl: ', linkUrl, 'baseUrl: ', baseUrl)
-    const { subject, html } = buildPostOrderEmail(linkUrl)
+    const { subject, html } = buildPostOrderEmail(linkUrl, emailContent.surveyInvitation)
 
     await payload.sendEmail({
       to: doc.customerEmail,
