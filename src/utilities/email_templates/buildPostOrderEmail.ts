@@ -1,11 +1,23 @@
 import { generatePostOrderEmailHTML } from './templates/postOrder'
 
-export function buildPostOrderEmail(linkUrl: string): {
+type SurveyInvitationContentT = {
+  subject: string
+  title: string
+  paragraph1?: string | null
+  paragraph2?: string | null
+  paragraph3?: string | null
+  paragraph4?: string | null
+  buttonLabel?: string | null
+  footer?: string | null
+}
+
+export function buildPostOrderEmail(
+  linkUrl: string,
+  content: SurveyInvitationContentT,
+): {
   subject: string
   html: string
 } {
-  const subject: string = 'Moodbox Polska — Twoja opinia jest dla nas ważna'
-  const html: string = generatePostOrderEmailHTML(linkUrl)
-
-  return { subject, html }
+  const html = generatePostOrderEmailHTML(linkUrl, content)
+  return { subject: content.subject, html }
 }

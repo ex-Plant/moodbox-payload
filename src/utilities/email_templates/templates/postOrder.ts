@@ -1,35 +1,35 @@
 import { EmailItemT } from '../email_templates_constants'
 import { renderEmailTemplate } from '../render_email_template'
 
-export function generatePostOrderEmailHTML(linkUrl: string): string {
-  const title = 'Dziękujemy za skorzystanie z Moodbox Polska.'
-  const footer = 'Zespół Moodbox Polska'
+type SurveyInvitationContentT = {
+  title: string
+  paragraph1?: string | null
+  paragraph2?: string | null
+  paragraph3?: string | null
+  paragraph4?: string | null
+  buttonLabel?: string | null
+  footer?: string | null
+}
 
-  const items: EmailItemT[] = [
-    {
-      type: 'text',
-      content:
-        'Jesteśmy na etapie pilotażu i rozwijamy Moodbox w oparciu o realne doświadczenia projektantów.',
-    },
-    {
-      type: 'text',
-      content:
-        'Twoja opinia pomaga nam lepiej zrozumieć potrzeby i kierunek dalszego rozwoju Moodboxa.',
-    },
-    {
-      type: 'text',
-      content: 'Wypełnienie ankiety zajmie tylko około 2–3 minut.',
-    },
-    {
-      type: 'text',
-      content: 'Po jej wypełnieniu otrzymasz kod rabatowy na kolejne zamówienie w Moodbox Polska.',
-    },
-    {
-      type: 'button',
-      label: 'WYPEŁNIJ ANKIETĘ',
-      url: linkUrl,
-    },
-  ]
+export function generatePostOrderEmailHTML(
+  linkUrl: string,
+  content: SurveyInvitationContentT,
+): string {
+  const items = (
+    [
+      content.paragraph1 ? { type: 'text' as const, content: content.paragraph1 } : null,
+      content.paragraph2 ? { type: 'text' as const, content: content.paragraph2 } : null,
+      content.paragraph3 ? { type: 'text' as const, content: content.paragraph3 } : null,
+      content.paragraph4 ? { type: 'text' as const, content: content.paragraph4 } : null,
+      content.buttonLabel
+        ? { type: 'button' as const, label: content.buttonLabel, url: linkUrl }
+        : null,
+    ] as (EmailItemT | null)[]
+  ).filter((item): item is EmailItemT => item !== null)
 
-  return renderEmailTemplate({ title, items, footer })
+  return renderEmailTemplate({
+    title: content.title,
+    items,
+    footer: content.footer ?? undefined,
+  })
 }

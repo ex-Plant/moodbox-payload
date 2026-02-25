@@ -16,6 +16,7 @@ import * as migration_20260127_152042_add_survey_content_global from './20260127
 import * as migration_20260127_155319_add_discount_percentage from './20260127_155319_add_discount_percentage';
 import * as migration_20260129_095104_add_contact_content from './20260129_095104_add_contact_content';
 import * as migration_20260225_191439_add_email_content_global from './20260225_191439_add_email_content_global';
+import * as migration_20260225_194000_make_email_content_fields_optional from './20260225_194000_make_email_content_fields_optional';
 
 export const migrations = [
   {
@@ -106,6 +107,11 @@ export const migrations = [
   {
     up: migration_20260225_191439_add_email_content_global.up,
     down: migration_20260225_191439_add_email_content_global.down,
-    name: '20260225_191439_add_email_content_global'
+    name: '20260225_191439_add_email_content_global',
+  },
+  {
+    up: migration_20260225_194000_make_email_content_fields_optional.up,
+    down: migration_20260225_194000_make_email_content_fields_optional.down,
+    name: '20260225_194000_make_email_content_fields_optional'
   },
 ];

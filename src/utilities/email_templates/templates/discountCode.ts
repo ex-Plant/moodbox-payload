@@ -1,29 +1,34 @@
-import { env } from '@/lib/env'
-import { EmailItemT } from '../email_templates_constants'
+import { BRAND_COLORS, EmailItemT } from '../email_templates_constants'
 import { renderEmailTemplate } from '../render_email_template'
 
-export function generateDiscountCodeEmailHTML(discountCode: string): string {
-  const title = ''
-  const footer = 'Zespół Moodbox Polska'
+type DiscountCodeContentT = {
+  greeting?: string | null
+  thankYou?: string | null
+  codeIntro?: string | null
+  codeActiveNote?: string | null
+  codeValidityNote?: string | null
+  closingNote?: string | null
+  buttonLabel?: string | null
+  footer?: string | null
+}
 
-  const items: EmailItemT[] = [
-    {
-      type: 'text',
-      content: 'Dzień dobry,',
-      marginBottom: '0px',
-    },
-    {
-      type: 'text',
-      content: 'Dziękujemy za wypełnienie ankiety.',
-      marginBottom: '0px',
-    },
-    {
-      type: 'text',
-      content: 'Przesyłamy indywidualny kod rabatowy na kolejne zamówienie w Moodbox Polska:',
-    },
-    {
-      type: 'raw',
-      html: `
+export function generateDiscountCodeEmailHTML(
+  discountCode: string,
+  content: DiscountCodeContentT,
+  buttonUrl: string,
+): string {
+  const items = (
+    [
+      content.greeting
+        ? { type: 'text' as const, content: content.greeting, marginBottom: '0px' }
+        : null,
+      content.thankYou
+        ? { type: 'text' as const, content: content.thankYou, marginBottom: '0px' }
+        : null,
+      content.codeIntro ? { type: 'text' as const, content: content.codeIntro } : null,
+      {
+        type: 'raw' as const,
+        html: `
         <div style=
           "background-color: white;
             padding: 20px;
@@ -31,30 +36,22 @@ export function generateDiscountCodeEmailHTML(discountCode: string): string {
             margin: 20px 0;
             font-size: 24px;
             font-weight: bold;
-            color: #472f27;">
+            color: ${BRAND_COLORS.moodDarkBrown};">
               ${discountCode}
         </div>`,
-    },
-    {
-      type: 'text',
-      content: 'Kod jest aktywny i gotowy do użycia przy składaniu zamówienia.',
-      marginBottom: '0px',
-    },
-    {
-      type: 'text',
-      content: 'Ważny przez 30 dni od daty otrzymania tej wiadomości.',
-      marginBottom: '0px',
-    },
-    {
-      type: 'text',
-      content: 'Jeśli pojawią się pytania - jesteśmy do dyspozycji.',
-    },
-    {
-      type: 'button',
-      label: 'ZAMÓW MOODBOX',
-      url: env.NEXT_PUBLIC_SERVER_URL,
-    },
-  ]
+      },
+      content.codeActiveNote
+        ? { type: 'text' as const, content: content.codeActiveNote, marginBottom: '0px' }
+        : null,
+      content.codeValidityNote
+        ? { type: 'text' as const, content: content.codeValidityNote, marginBottom: '0px' }
+        : null,
+      content.closingNote ? { type: 'text' as const, content: content.closingNote } : null,
+      content.buttonLabel
+        ? { type: 'button' as const, label: content.buttonLabel, url: buttonUrl }
+        : null,
+    ] as (EmailItemT | null)[]
+  ).filter((item): item is EmailItemT => item !== null)
 
-  return renderEmailTemplate({ title, items, footer })
+  return renderEmailTemplate({ items, footer: content.footer ?? undefined })
 }
