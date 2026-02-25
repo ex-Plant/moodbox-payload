@@ -112,12 +112,14 @@ export interface Config {
     footer: Footer;
     'survey-content': SurveyContent;
     'contact-content': ContactContent;
+    'email-content': EmailContent;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'survey-content': SurveyContentSelect<false> | SurveyContentSelect<true>;
     'contact-content': ContactContentSelect<false> | ContactContentSelect<true>;
+    'email-content': EmailContentSelect<false> | EmailContentSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1559,6 +1561,36 @@ export interface ContactContent {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-content".
+ */
+export interface EmailContent {
+  id: number;
+  surveyInvitation: {
+    subject: string;
+    title: string;
+    paragraph1: string;
+    paragraph2: string;
+    paragraph3: string;
+    paragraph4: string;
+    buttonLabel: string;
+    footer: string;
+  };
+  discountCode: {
+    subject: string;
+    greeting: string;
+    thankYou: string;
+    codeIntro: string;
+    codeActiveNote: string;
+    codeValidityNote: string;
+    closingNote: string;
+    buttonLabel: string;
+    footer: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1778,6 +1810,40 @@ export interface ContactContentSelect<T extends boolean = true> {
   emailPlaceholder?: T;
   buttonText?: T;
   richText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-content_select".
+ */
+export interface EmailContentSelect<T extends boolean = true> {
+  surveyInvitation?:
+    | T
+    | {
+        subject?: T;
+        title?: T;
+        paragraph1?: T;
+        paragraph2?: T;
+        paragraph3?: T;
+        paragraph4?: T;
+        buttonLabel?: T;
+        footer?: T;
+      };
+  discountCode?:
+    | T
+    | {
+        subject?: T;
+        greeting?: T;
+        thankYou?: T;
+        codeIntro?: T;
+        codeActiveNote?: T;
+        codeValidityNote?: T;
+        closingNote?: T;
+        buttonLabel?: T;
+        footer?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
