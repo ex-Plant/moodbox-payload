@@ -15,6 +15,7 @@ import * as migration_20260126_140530_add_poster_to_video_ from './20260126_1405
 import * as migration_20260127_152042_add_survey_content_global from './20260127_152042_add_survey_content_global';
 import * as migration_20260127_155319_add_discount_percentage from './20260127_155319_add_discount_percentage';
 import * as migration_20260129_095104_add_contact_content from './20260129_095104_add_contact_content';
+import * as migration_20260225_191439_add_email_content_global from './20260225_191439_add_email_content_global';
 
 export const migrations = [
   {
@@ -100,6 +101,11 @@ export const migrations = [
   {
     up: migration_20260129_095104_add_contact_content.up,
     down: migration_20260129_095104_add_contact_content.down,
-    name: '20260129_095104_add_contact_content'
+    name: '20260129_095104_add_contact_content',
+  },
+  {
+    up: migration_20260225_191439_add_email_content_global.up,
+    down: migration_20260225_191439_add_email_content_global.down,
+    name: '20260225_191439_add_email_content_global'
   },
 ];
